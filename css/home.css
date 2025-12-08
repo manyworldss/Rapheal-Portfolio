@@ -1,0 +1,688 @@
+/* Home Page Specific Styles */
+
+/* Layout & Spacing */
+.book-layout {
+    padding-top: var(--spacing-md);
+    padding-bottom: var(--spacing-lg);
+    position: relative;
+}
+
+/* Decorative Book Corner */
+.book-layout::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(135deg, var(--accent-color) 0%, transparent 50%);
+    opacity: 0.08;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.book-layout::after {
+    content: '';
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 150px;
+    height: 150px;
+    background: linear-gradient(315deg, var(--accent-color) 0%, transparent 50%);
+    opacity: 0.06;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ============================================
+   BOOKMARK NAVIGATION (Same as Case Study Pages)
+   ============================================ */
+.cheeky-menu {
+    position: fixed;
+    top: 0;
+    right: 40px;
+    z-index: 9999;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+.bookmark-ribbon {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(135deg, #7B1E1E 0%, #5a1616 100%);
+    color: #F0EFEB;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 85%, 0 100%);
+    transition: height 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Expanded State */
+.cheeky-menu.expanded .bookmark-ribbon {
+    height: 300px;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 95%, 0 100%);
+}
+
+.menu-toggle {
+    background: none;
+    border: none;
+    color: #F0EFEB;
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    cursor: pointer;
+    padding: 20px 10px 15px 10px;
+    width: 100%;
+    text-align: center;
+    outline: none;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 10000;
+    pointer-events: auto;
+    display: block;
+}
+
+.menu-toggle:hover {
+    color: white;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+    transform: scale(1.05);
+}
+
+.menu-toggle:active {
+    transform: scale(0.95);
+}
+
+.menu-items {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    margin-top: 15px;
+    opacity: 0;
+    transform: translateY(-15px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+    visibility: hidden;
+}
+
+/* Show items when expanded */
+.cheeky-menu.expanded .menu-items {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    visibility: visible;
+    transition-delay: 0.15s;
+}
+
+.menu-items a {
+    color: #FFFFFF;
+    text-decoration: none;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 700;
+    transition: all 0.2s ease;
+    padding: 5px 10px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    display: block;
+}
+
+.menu-items a:hover {
+    transform: scale(1.1);
+    color: #FFD700;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+}
+
+/* Hide old nav */
+.site-nav {
+    display: none;
+}
+
+/* Hero Section - Title Page Style */
+.hero-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+    padding: var(--spacing-md) 0;
+    position: relative;
+}
+
+/* Decorative top flourish */
+.hero-section::before {
+    content: '❧';
+    display: block;
+    font-size: 1.8rem;
+    color: var(--accent-color);
+    margin-bottom: var(--spacing-sm);
+    opacity: 0.6;
+}
+
+.hero-content {
+    max-width: 750px;
+}
+
+/* Role Title - UX Designer | Researcher | Developer */
+.role-title {
+    display: block;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+}
+
+.headline {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-primary);
+    line-height: 1.15;
+    position: relative;
+}
+
+.intro-text {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    max-width: 580px;
+    margin: 0 auto var(--spacing-sm) auto;
+    line-height: 1.75;
+}
+
+/* Hero Social Icons */
+.hero-socials {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-sm);
+    padding-top: var(--spacing-sm);
+    border-top: 1px solid var(--border-color);
+}
+
+.social-icon {
+    color: var(--accent-color);
+    transition: all 0.3s ease;
+    opacity: 0.7;
+    padding: 8px;
+}
+
+.social-icon:hover {
+    transform: translateY(-3px);
+    opacity: 1;
+}
+
+.social-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke-width: 1.5px;
+}
+
+/* Projects Section */
+.projects-section {
+    margin-bottom: var(--spacing-lg);
+    perspective: 1000px;
+    position: relative;
+}
+
+/* No section divider for projects */
+.projects-section::before {
+    display: none;
+}
+
+.section-title {
+    font-size: 1.8rem;
+    margin-bottom: var(--spacing-md);
+    text-align: center;
+    position: relative;
+    display: block;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 2px;
+    background: var(--accent-color);
+    margin: var(--spacing-xs) auto 0;
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+}
+
+.project-card {
+    padding: var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 380px;
+    background-color: #FFFCF5;
+    border: 1px solid var(--border-color);
+    position: relative;
+    transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transform-style: preserve-3d;
+    transform-origin: left center;
+}
+
+.project-card:hover {
+    transform: rotateY(-4deg) translateX(8px);
+    box-shadow: -12px 15px 35px rgba(0, 0, 0, 0.1);
+    border-color: var(--accent-color);
+    z-index: 10;
+}
+
+/* "Book Spine" effect on hover */
+.project-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg, var(--accent-color) 0%, #5a1616 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.project-card:hover::before {
+    opacity: 1;
+}
+
+.card-content {
+    margin-bottom: var(--spacing-sm);
+    transform: translateZ(20px);
+}
+
+.project-type {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    display: block;
+    margin-bottom: var(--spacing-xs);
+}
+
+.project-title {
+    font-size: 1.6rem;
+    margin-bottom: var(--spacing-xs);
+}
+
+.project-desc {
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-sm);
+    line-height: 1.65;
+    font-size: 0.95rem;
+}
+
+.read-more {
+    font-style: italic;
+    font-weight: 700;
+    border-bottom: 1px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.read-more:hover {
+    border-bottom-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+.card-image .placeholder-img {
+    width: 100%;
+    height: 160px;
+    background: linear-gradient(135deg, #E8E8E8 0%, #D0D0D0 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-style: italic;
+}
+
+.card-image .project-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    object-position: center top;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+    cursor: zoom-in;
+}
+
+.project-card:hover .project-img {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* ============================================
+   ABOUT SECTION - Page of Paper Effect
+   ============================================ */
+.about-section {
+    margin-bottom: var(--spacing-lg);
+    padding: var(--spacing-sm) 0;
+    position: relative;
+}
+
+/* Section divider - Floral Heart */
+.about-section::before {
+    content: '❦';
+    display: block;
+    text-align: center;
+    font-size: 1.5rem;
+    color: var(--accent-color);
+    margin-bottom: var(--spacing-sm);
+    opacity: 0.5;
+}
+
+.about-paper {
+    background-color: #FFFDF8;
+    padding: var(--spacing-lg) var(--spacing-xl);
+    max-width: 850px;
+    margin: 0 auto;
+    position: relative;
+    border: 1px solid #D8D0C8;
+    box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.04),
+        0 8px 24px rgba(0, 0, 0, 0.05),
+        inset 0 0 60px rgba(139, 90, 43, 0.03);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* Subtle ruled lines background */
+    background-image:
+        repeating-linear-gradient(to bottom,
+            transparent,
+            transparent 27px,
+            rgba(139, 90, 43, 0.08) 27px,
+            rgba(139, 90, 43, 0.08) 28px);
+    background-position: 0 45px;
+}
+
+.about-paper:hover {
+    transform: translateY(-3px);
+    box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.04),
+        0 12px 30px rgba(0, 0, 0, 0.08),
+        inset 0 0 60px rgba(139, 90, 43, 0.03);
+}
+
+/* Decorative corner fold */
+.about-paper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 45px;
+    height: 45px;
+    background: linear-gradient(135deg, transparent 50%, #E5DDD4 50%);
+    pointer-events: none;
+    box-shadow: -2px 2px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Paper clip decoration */
+.about-paper::before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: -20px;
+    width: 40px;
+    height: 50px;
+    background-image: url('../images/paperclip.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    transform: rotate(-10deg);
+    opacity: 0.8;
+}
+
+/* Left margin line (like notebook paper) */
+.paper-content {
+    position: relative;
+    padding-left: var(--spacing-md);
+}
+
+.paper-content::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: rgba(180, 60, 60, 0.2);
+}
+
+.about-paper .section-title {
+    text-align: center;
+    display: block;
+    font-size: 1.8rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--text-primary);
+    background: #FFFDF8;
+    position: relative;
+    z-index: 1;
+}
+
+.about-paper .section-title::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 2px;
+    background: var(--accent-color);
+    margin: var(--spacing-xs) auto 0;
+}
+
+.bio-text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: var(--spacing-md);
+    text-align: justify;
+    color: var(--text-secondary);
+    background: rgba(255, 253, 248, 0.8);
+}
+
+.drop-cap {
+    float: left;
+    font-size: 3.5rem;
+    line-height: 0.8;
+    margin-right: 0.5rem;
+    margin-top: 0.1rem;
+    font-weight: 700;
+}
+
+.hobbies-container {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid var(--border-color);
+    padding-top: var(--spacing-md);
+    margin-top: var(--spacing-md);
+    background: rgba(255, 253, 248, 0.9);
+}
+
+.hobby-group {
+    flex: 1;
+    text-align: center;
+    padding: 0 var(--spacing-xs);
+}
+
+.hobby-group h4 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: var(--spacing-xs);
+    opacity: 0.9;
+}
+
+.hobby-list {
+    list-style: none;
+}
+
+.hobby-list li {
+    margin-bottom: 0.4rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    transition: color 0.2s ease;
+}
+
+.hobby-list li:hover {
+    color: var(--accent-color);
+}
+
+/* Footer */
+.site-footer {
+    text-align: center;
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    position: relative;
+}
+
+/* Decorative flourish */
+.site-footer::before {
+    content: '✦ ✦ ✦';
+    display: block;
+    letter-spacing: 0.5em;
+    color: var(--accent-color);
+    opacity: 0.4;
+    margin-bottom: var(--spacing-sm);
+    font-size: 0.5rem;
+}
+
+.social-links-footer {
+    margin-bottom: var(--spacing-xs);
+}
+
+.social-links-footer a {
+    margin: 0 var(--spacing-sm);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    transition: color 0.3s ease;
+}
+
+.social-links-footer a:hover {
+    color: var(--accent-color);
+}
+
+.separator {
+    color: var(--accent-color);
+    margin: 0 4px;
+    opacity: 0.5;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .cheeky-menu {
+        top: var(--spacing-sm);
+        right: var(--spacing-sm);
+    }
+
+    .bookmark-ribbon {
+        width: 70px;
+        padding: 10px 12px 14px;
+        font-size: 0.75rem;
+    }
+
+    .menu-toggle {
+        font-size: 0.7rem;
+    }
+
+    .menu-items a {
+        font-size: 0.7rem;
+    }
+
+    .hero-section {
+        padding: var(--spacing-sm) 0;
+        margin-top: var(--spacing-lg);
+    }
+
+    .headline {
+        font-size: 2rem;
+    }
+
+    .headline::before {
+        font-size: 0.65rem;
+    }
+
+    .intro-text {
+        font-size: 1rem;
+    }
+
+    .project-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .project-card {
+        min-height: auto;
+    }
+
+    .hobbies-container {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+
+    .about-paper {
+        padding: var(--spacing-md);
+        background-image: none;
+    }
+
+    .about-paper::before {
+        display: none;
+    }
+
+    .paper-content::before {
+        display: none;
+    }
+
+    .paper-content {
+        padding-left: 0;
+    }
+
+    .drop-cap {
+        font-size: 2.8rem;
+    }
+
+    .book-layout::before,
+    .book-layout::after {
+        display: none;
+    }
+}
+
+/* Animation Classes */
+.fade-in-stagger {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.about-section.visible .fade-in-stagger:nth-child(1) {
+    transition-delay: 0.2s;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.about-section.visible .fade-in-stagger:nth-child(2) {
+    transition-delay: 0.4s;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.about-section.visible .fade-in-stagger:nth-child(3) {
+    transition-delay: 0.6s;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Fade in sections */
+.fade-in-section {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}

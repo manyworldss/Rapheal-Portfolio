@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Celio Case Study | Rapheal Suber</title>
+    <link rel="stylesheet" href="css/global.css?v=27">
+    <link rel="stylesheet" href="css/case-study.css?v=27">
+</head>
+
+<body>
+    <main class="container book-layout">
+
+        <!-- Cheeky Menu (Bookmark) -->
+        <nav class="cheeky-menu" id="bookmark-nav">
+            <div class="bookmark-ribbon">
+                <button class="menu-toggle serif" aria-label="Toggle Menu">Menu</button>
+                <div class="menu-items sans">
+                    <a href="index.html">Home</a>
+                    <a href="illumi.html">Illumi</a>
+                    <a href="index.html#contact">Contact</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Case Study Header -->
+        <header class="cs-header">
+            <span class="cs-category sans text-accent">B2C Mobile First Web Application</span>
+            <h1 class="cs-title serif">Celio: A Case Study in Mitigating Cognitive Anxiety and Systemic Risk</h1>
+            <p class="cs-subtitle sans">
+                Celio is a live platform tackling the cognitive load of international travel for
+                Celiacs. It combines a robust Translation Card (with audio) and Sage
+                    AI, ensuring users are empowered and their safety message is heard.
+            </p>
+            <div class="cs-meta sans">
+                <div class="meta-item">
+                    Role: UX Researcher, Designer, and Full Stack Developer
+                </div>
+                <div class="meta-item">
+                    Stack: Django, Alpine.js, Web Speech API
+                </div>
+                <div class="meta-item">
+                    Timeline: 9 Months
+                </div>
+            </div>
+            <a href="https://celioapp.up.railway.app" target="_blank" class="cta-button sans">View Live App &rarr;</a>
+        </header>
+
+        <!-- Content Sections -->
+        <article class="cs-content">
+
+            <!-- Section 1: The Reality -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <h2 class="serif">01. The Challenge: Closing the Trust Gap</h2>
+                </div>
+                <div class="section-body sans">
+                    <p>
+                        Let's be real: traveling with Celiac disease is terrifying. It's not just a "dietary
+                        preference". It's a medical necessity where a single crumb ruins the trip. The core friction is
+                        the immense cognitive load of constantly assessing risk and the fear of
+                            miscommunication in high stress, foreign environments.
+                    </p>
+                    <p>
+                        I built Celio because I live this. The goal was to close the Trust
+                            Gap that exists when you hand over a translated note and just <em>hope</em> it
+                        works. Existing solutions are often clinical, require server dependence, and increase
+                        anxiety. These are luxuries you don't have when you're hungry in a remote Italian village.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Section 2: What Celio Does -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <h2 class="serif">02. The Strategy: A Survival Kit Approach</h2>
+                </div>
+                <div class="section-body sans">
+                    <p>
+                        Celio is more than a tool; it's a survival kit rooted in strategic design. It
+                        tackles the problem by focusing on communication reliability and vetted information:
+                    </p>
+                    <div class="insight-grid">
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">1. The Translation Card</h3>
+                            <p>
+                                The Translation Card: The heavy lifter. It translates needs with
+                                urgency and clarity, using the Web Speech API for vocal communication.
+                            </p>
+                        </div>
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">2. Sage AI</h3>
+                            <p>
+                                Sage AI: The integrated AI assistant. By consolidating Travel
+                                    Guides into the chat, users get vetted, safe recommendations and
+                                information instantly, reducing siloed workflows.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Before/After Comparison: E-Card -->
+                    <div class="visual-comparison">
+                        <div class="visual-block">
+                            <div class="comparison-label before-label sans">Before</div>
+                            <img src="images/Before E Card Prototype.png" alt="Early E-Card Prototype"
+                                class="comparison-img">
+                            <span class="caption">Early E-Card: Functional but lacked visual urgency.</span>
+                        </div>
+                        <div class="visual-block">
+                            <div class="comparison-label after-label sans">After</div>
+                            <img src="images/HighResPurpleCard.png" alt="Final E-Card Design" class="comparison-img">
+                            <span class="caption">Final E-Card: Bold, clear, with audio support.</span>
+                        </div>
+                    </div>
+
+                    <!-- Before/After Comparison: Sage AI -->
+                    <div class="visual-comparison" style="margin-top: var(--spacing-xl);">
+                        <div class="visual-block">
+                            <div class="comparison-label before-label sans">Before</div>
+                            <img src="images/Before Sage UI.png" alt="Early Sage AI Interface" class="comparison-img">
+                            <span class="caption">Early Sage AI: Cluttered, text-heavy interface.</span>
+                        </div>
+                        <div class="visual-block">
+                            <div class="comparison-label after-label sans">After</div>
+                            <img src="images/SageAI-DarkMode-Final.png" alt="Final Sage AI Design"
+                                class="comparison-img">
+                            <span class="caption">Final Sage AI: Clean, conversational, dark mode interface.</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: Research and Insights -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <h2 class="serif">03. Discovery: Hypothesis Driven Research</h2>
+                </div>
+                <div class="section-body sans">
+                    <p>
+                        I didn't guess; I initiated a qualitative research phase (N=12) with severe
+                        allergy travelers to establish design hypotheses. The consensus was clear: anxiety directly
+                        stems from a lack of control and communication integrity.
+                    </p>
+
+                    <div class="insight-grid">
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">Insight: The "Audio Mandate"</h3>
+                            <p>
+                                10/12 participants feared staff wouldn't read the screen. This mandated
+                                Offline Audio Support, which uses the Web Speech API
+                                to ensure the safety message is verbally heard, literally solving an accessibility
+                                issue.
+                            </p>
+                        </div>
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">Insight: Lag Creates Doubt</h3>
+                            <p>
+                                Users equated UI lag with system unreliability. This drove a technical pivot to
+                                Alpine.js for client side state management,
+                                eliminating server reloads. The result is an instant, native feel that builds
+                                crucial trust through performance.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: Under the Hood -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <h2 class="serif">04. Technical Feasibility and The Code</h2>
+                </div>
+                <div class="section-body sans">
+                    <p>
+                        I chose a simple but robust stack. Django anchors the backend for scalability
+                        and handles complex i18n translations. Crucially, Alpine.js
+                        manages the frontend state, providing that necessary "snappy" feel without the bloat of larger
+                        frameworks.
+                    </p>
+                    <p>
+                        The most critical technical decision was ensuring Offline First persistence.
+                        The Card caches the target language and safety messages locally, guaranteeing communication
+                        ability even when signal is lost in a subway or a remote village.
+                    </p>
+                    <div class="full-width-image">
+                        <video controls
+                            style="width: 100%; max-height: 600px; border: 2px solid var(--border-color); border-radius: 4px; background: #000;">
+                            <source src="images/e%20card%20demo%20final.mov" type="video/quicktime">
+                            <source src="images/e%20card%20demo%20final.mov" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <span class="caption">The Card in action: Simple, bold, and fully persistent. Designed to reduce
+                            cognitive load.</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 5: The Impact -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <h2 class="serif">05. Outcomes, Learnings, and Growth</h2>
+                </div>
+                <div class="section-body sans">
+                    <p>
+                        Celio confirms that our focus must be on trust, not data display. By rigorously
+                        testing the human emotion surrounding the product, I created a tool that
+                        empowers users to confidently say "Yes" to that dinner invitation. The project taught me that
+                        hypothesis driven research is mandatory to ship a truly accessible and robust
+                        solution.
+                    </p>
+                    <a href="https://celioapp.up.railway.app" target="_blank" class="cta-button sans">Try Celio Now
+                        &rarr;</a>
+                </div>
+            </section>
+
+        </article>
+
+        <footer class="cs-footer sans">
+            <a href="index.html" class="back-link-clean serif">Back to Home</a>
+        </footer>
+    </main>
+    <script src="js/main.js?v=27"></script>
+</body>
+
+</html>
