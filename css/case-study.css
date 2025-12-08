@@ -455,20 +455,33 @@
     }
 
     .cheeky-menu {
-        right: 15px;
+        right: 10px;
+        top: 0;
     }
 
     .bookmark-ribbon {
-        width: 55px;
-        height: 80px;
+        width: 60px;
+        height: 70px;
     }
 
     .menu-toggle {
-        font-size: 0.65rem;
-        padding: 15px 5px 10px 5px;
+        font-size: 0.6rem;
+        padding: 12px 5px 8px 5px;
+        letter-spacing: 0.1em;
     }
 
     .cheeky-menu.expanded .bookmark-ribbon {
-        height: 250px;
+        height: 180px;
+    }
+
+    .menu-items {
+        gap: 12px;
+        margin-top: 8px;
+    }
+
+    .menu-items a {
+        font-size: 0.65rem;
+        padding: 8px 6px;
+        letter-spacing: 0.08em;
     }
 }

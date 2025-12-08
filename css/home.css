@@ -575,22 +575,34 @@
 /* Responsive */
 @media (max-width: 768px) {
     .cheeky-menu {
-        top: var(--spacing-sm);
-        right: var(--spacing-sm);
+        top: 0;
+        right: 10px;
     }
 
     .bookmark-ribbon {
-        width: 70px;
-        padding: 10px 12px 14px;
-        font-size: 0.75rem;
+        width: 60px;
+        height: 70px;
     }
 
     .menu-toggle {
-        font-size: 0.7rem;
+        font-size: 0.6rem;
+        padding: 12px 5px 8px 5px;
+        letter-spacing: 0.1em;
+    }
+
+    .cheeky-menu.expanded .bookmark-ribbon {
+        height: 180px;
+    }
+
+    .menu-items {
+        gap: 12px;
+        margin-top: 8px;
     }
 
     .menu-items a {
-        font-size: 0.7rem;
+        font-size: 0.65rem;
+        padding: 8px 6px;
+        letter-spacing: 0.08em;
     }
 
     .hero-section {
