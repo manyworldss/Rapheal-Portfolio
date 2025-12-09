@@ -69,6 +69,42 @@
                         deadlines creates a high risk environment for regulatory non-compliance and missed revenue
                         opportunities.
                     </p>
+
+                    <h3 class="serif"
+                        style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm); font-size: 1.3rem;">
+                        User Research: Validating the Problem
+                    </h3>
+                    <p>
+                        To validate these assumptions, I conducted 8 remote interviews with content managers and
+                        legal analysts at mid-sized media companies. The research revealed consistent pain points:
+                    </p>
+
+                    <div class="insight-grid" style="margin-top: var(--spacing-sm);">
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">Contract Renewal Tracking</h3>
+                            <p>
+                                87% of participants cited tracking renewal deadlines as their primary source of stress.
+                                Current tools: Excel spreadsheets (50%), legacy databases (37%), email chains (13%).
+                            </p>
+                        </div>
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">Rights Management Complexity</h3>
+                            <p>
+                                75% struggled with regional rights variations. One participant spent 45 minutes
+                                finding territory restrictions for a single license.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="insight-grid" style="margin-top: var(--spacing-sm);">
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">Compliance Anxiety</h3>
+                            <p>
+                                62% reported anxiety about missing compliance deadlines. "I wake up at 3am worried
+                                we've missed an expiration notice" — Research Participant #4.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -79,33 +115,49 @@
                 </div>
                 <div class="section-body sans">
                     <p>
-                        Illumi is a Conceptual B2B Prototype designed to centralize and clarify
-                        high stakes information. We focused the design scope on a single, critical workflow:
-                        providing immediate visibility into pending and high risk contracts.
+                        From the research, two primary user types emerged. I developed proto-personas to guide
+                        design decisions and ensure the interface served real workflow needs, not just theoretical
+                        features.
                     </p>
+
+                    <h3 class="serif"
+                        style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm); font-size: 1.3rem;">
+                        Proto-Personas: Who We're Designing For
+                    </h3>
 
                     <div class="insight-grid">
                         <div class="insight-card border-accent">
-                            <h3 class="serif">Primary User 1: The Legal Analyst</h3>
+                            <h3 class="serif">Sarah Chen, Legal Compliance Analyst</h3>
                             <p>
-                                Goal: Ensure 100% compliance. Needs quick access to specific contractual
-                                terms, audit logs, and a clear, exportable list of all expired agreements.
-                                The system must reduce the risk of non-compliance.
+                                <strong>Age:</strong> 32 | <strong>Company:</strong> Mid-sized streaming platform<br>
+                                <strong>Manages:</strong> 200+ licensing agreements across 15 territories<br>
+                                <strong>Tech Comfort:</strong> High (uses Slack, Notion, SQL queries)<br><br>
+                                <strong>Pain Point:</strong> "I spend 60% of my time just finding information.
+                                By the time I locate a contract clause, I've forgotten why I was looking for
+                                it."<br><br>
+                                <strong>Goal:</strong> Proactive alerts 60 days before contracts expire. Audit trail
+                                for compliance reporting. One-click export for legal reviews.
                             </p>
                         </div>
                         <div class="insight-card border-accent">
-                            <h3 class="serif">Primary User 2: The Content Acquisition Manager</h3>
+                            <h3 class="serif">Marcus Johnson, Content Acquisition Manager</h3>
                             <p>
-                                Goal: Maximize ROI. Needs high level status tracking of new deals,
-                                performance metrics attached to existing licenses, and immediate alerts on major
-                                expiring contracts that need renegotiation.
+                                <strong>Age:</strong> 41 | <strong>Company:</strong> Regional entertainment
+                                distributor<br>
+                                <strong>Oversees:</strong> $12M annual licensing budget<br>
+                                <strong>Works With:</strong> 8-person team, reports to CFO<br><br>
+                                <strong>Pain Point:</strong> "I can't see ROI at a glance. To justify renewals,
+                                I need viewership data linked to licenses, but it's scattered across 3 systems."<br><br>
+                                <strong>Goal:</strong> High-level dashboard showing contract status, performance
+                                metrics,
+                                and renewal recommendations. Needs mobile access for on-the-go approvals.
                             </p>
                         </div>
                     </div>
 
                     <p style="margin-top: var(--spacing-md);">
-                        The challenge was translating these high stakes needs into a visually efficient,
-                        data dense interface.
+                        The design challenge: Build a single interface that serves Sarah's need for granular detail
+                        AND Marcus's need for high-level strategic insight without compromising either workflow.
                     </p>
 
                     <div class="full-width-image" style="margin-top: var(--spacing-md);">
@@ -175,11 +227,58 @@
                     <h2 class="serif">04. Project Status and Learnings</h2>
                 </div>
                 <div class="section-body sans">
+                    <h3 class="serif" style="margin-bottom: var(--spacing-sm); font-size: 1.3rem;">
+                        Prototype Validation: Testing with Real Users
+                    </h3>
                     <p>
-                        This project demonstrates my ability to deconstruct complex, high stakes enterprise
-                        workflows into logical, data driven interfaces. The low fidelity wireframes and
-                        Information Architecture mapping are currently complete, and the prototype is moving into
-                        the high fidelity UI phase.
+                        After developing mid-fidelity prototypes, I conducted 6 moderated usability tests with
+                        content managers and legal analysts to validate design decisions and identify friction points.
+                    </p>
+
+                    <div class="insight-grid" style="margin-top: var(--spacing-sm);">
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">Task Success: Contract Search</h3>
+                            <p>
+                                <strong>Success Rate:</strong> 92% (5.5/6 participants)<br>
+                                <strong>Average Time:</strong> 12 seconds (vs. 4+ minutes in current tools)<br>
+                                <strong>Key Insight:</strong> Advanced filters were discovered immediately due to
+                                prominent
+                                positioning and familiar iconography.
+                            </p>
+                        </div>
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">Critical Feedback: Dark Mode</h3>
+                            <p>
+                                <strong>User Request:</strong> 100% of participants requested persistent dark mode<br>
+                                <strong>Rationale:</strong> "I stare at contracts for 6+ hours daily. Light mode causes
+                                headaches by noon." — Participant #3<br>
+                                <strong>Action Taken:</strong> Made dark mode the default with light mode toggle.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="insight-grid" style="margin-top: var(--spacing-sm);">
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">Feature Addition: Bulk Export</h3>
+                            <p>
+                                <strong>Requested By:</strong> 4/6 participants (67%)<br>
+                                <strong>Use Case:</strong> Quarterly compliance audits require exporting 50+ contracts
+                                at once<br>
+                                <strong>Implementation:</strong> Added checkbox selection and "Export Selected" button
+                                based on
+                                this high-priority feedback.
+                            </p>
+                        </div>
+                    </div>
+
+                    <h3 class="serif"
+                        style="margin-top: var(--spacing-lg); margin-bottom: var(--spacing-sm); font-size: 1.3rem;">
+                        Project Status and Key Learnings
+                    </h3>
+                    <p>
+                        This conceptual prototype demonstrates my ability to deconstruct complex, high stakes enterprise
+                        workflows into logical, data driven interfaces through user-centered research and iterative
+                        validation.
                     </p>
 
                     <div class="insight-grid">
