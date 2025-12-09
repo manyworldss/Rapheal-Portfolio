@@ -16,12 +16,5 @@ Custom "Book Layout" Design System
 Interactive Mouse Trail Animation
 Bookmark Navigation Menu
 Responsive Case Study Layouts
-Dark Mode Interfaces (in Case Studies)
 
-Local Development
-
-1. Clone the repository
-2. Run a local server (e.g., using http-server or Live Server)
-3. Open localhost in your browser
-
-Copyright 2025 Rapheal Suber. Built with intention.
+Live here: https://rapheals.up.railway.app/index.html
