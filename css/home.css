@@ -485,6 +485,28 @@
     opacity: 0.8;
 }
 
+/* Profile Photo in About Section */
+.about-photo-container {
+    text-align: center;
+    margin: var(--spacing-md) 0;
+}
+
+.about-photo {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center top;
+    border: 4px solid var(--accent-color);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about-photo:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+}
+
 .bio-text {
     font-size: 1.1rem;
     line-height: 1.8;
