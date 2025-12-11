@@ -53,9 +53,6 @@
     cursor: pointer;
     padding: 20px 10px 15px 10px;
     width: 100%;
-    /* Full width of ribbon */
-    height: 100%;
-    /* Full height of top part */
     min-height: 48px;
     /* A11y Touch Target */
     text-align: center;
