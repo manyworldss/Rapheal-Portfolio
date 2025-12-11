@@ -30,6 +30,17 @@
     clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 95%, 0 100%);
 }
 
+/* Disclaimer Box */
+.disclaimer-box {
+    border-left: 3px solid var(--accent-color);
+    background: rgba(123, 30, 30, 0.05);
+    /* Very faint burgundy */
+    padding: 1.5rem;
+    margin: 2rem 0;
+    text-align: left;
+    border-radius: 0 8px 8px 0;
+}
+
 .menu-toggle {
     background: none;
     border: none;
@@ -42,6 +53,11 @@
     cursor: pointer;
     padding: 20px 10px 15px 10px;
     width: 100%;
+    /* Full width of ribbon */
+    height: 100%;
+    /* Full height of top part */
+    min-height: 48px;
+    /* A11y Touch Target */
     text-align: center;
     outline: none;
     transition: all 0.3s ease;
@@ -49,6 +65,8 @@
     z-index: 10000;
     pointer-events: auto;
     display: block;
+    touch-action: manipulation;
+    /* Removes 300ms tap delay */
 }
 
 .menu-toggle:hover {

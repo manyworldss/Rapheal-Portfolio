@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initScrollAnimations();
     initCheekyMenu();
+    initLightbox();
 });
 
 /* Mouse Trail Animation - "Burgundy Ink" Style */
@@ -99,31 +100,31 @@ function initScrollAnimations() {
 }
 
 /* Cheeky Menu Toggle - Bookmark Style */
+/* Cheeky Menu Toggle - Bookmark Style */
+/* Cheeky Menu Toggle - Bookmark Style */
 function initCheekyMenu() {
     const menu = document.getElementById('bookmark-nav');
     const toggle = document.querySelector('.menu-toggle');
 
     if (menu && toggle) {
-        // Use both onclick and addEventListener for maximum compatibility
-        toggle.onclick = function (e) {
+        // Toggle menu on click
+        toggle.addEventListener('click', function (e) {
             e.preventDefault();
-            e.stopPropagation();
+            e.stopPropagation(); // Stop bubbling to document
             menu.classList.toggle('expanded');
-            console.log('Menu toggled:', menu.classList.contains('expanded'));
-        };
-
-        // Also add touchstart for mobile
-        toggle.addEventListener('touchstart', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            menu.classList.toggle('expanded');
-        }, { passive: false });
+        });
 
         // Close when clicking outside
         document.addEventListener('click', function (e) {
+            // If menu is expanded AND click is NOT inside the menu
             if (menu.classList.contains('expanded') && !menu.contains(e.target)) {
                 menu.classList.remove('expanded');
             }
+        });
+
+        // Prevent clicks inside the menu from closing it (extra safety)
+        menu.addEventListener('click', function (e) {
+            e.stopPropagation();
         });
     }
 }
@@ -161,11 +162,3 @@ function initLightbox() {
         });
     });
 }
-
-// Initialize all
-document.addEventListener('DOMContentLoaded', () => {
-    initMouseTrail();
-    initScrollAnimations();
-    initCheekyMenu();
-    initLightbox();
-});
