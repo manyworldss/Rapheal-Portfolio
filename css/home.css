@@ -298,7 +298,7 @@
 }
 
 .project-card:hover {
-    transform: rotateY(-4deg) translateX(8px);
+    transform: rotateY(-4deg) translateX(8px) translateY(-5px);
     box-shadow: -12px 15px 35px rgba(0, 0, 0, 0.1);
     border-color: var(--accent-color);
     z-index: 10;
