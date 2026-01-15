@@ -169,82 +169,168 @@
 }
 
 /* Hero Section - Title Page Style */
+/* Hero Section - Title Page Style */
 .hero-section {
+    min-height: 80vh;
+    /* Reduced from 90vh to keep it punchy */
     display: flex;
-    flex-direction: column;
     align-items: center;
-    text-align: center;
-    margin-bottom: var(--spacing-lg);
-    padding: var(--spacing-md) 0;
+    justify-content: center;
     position: relative;
-}
-
-/* Decorative top flourish */
-.hero-section::before {
-    content: '❧';
-    display: block;
-    font-size: 1.8rem;
-    color: var(--accent-color);
-    margin-bottom: var(--spacing-sm);
-    opacity: 0.6;
+    padding: var(--spacing-xl) 0;
 }
 
 .hero-content {
-    max-width: 750px;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    /* Slight adjust */
+    align-items: center;
+    gap: var(--spacing-xl);
+    text-align: left;
+}
+
+/* Anchored Text Container */
+.hero-text-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border-left: 2px solid var(--accent-color);
+    /* The Anchor */
+    padding-left: var(--spacing-lg);
 }
 
 /* Role Title - UX Designer | Researcher | Developer */
 .role-title {
-    display: block;
-    font-size: 0.85rem;
+    display: inline-block;
+    font-size: 0.9rem;
     text-transform: uppercase;
-    letter-spacing: 0.2em;
-    font-weight: 600;
+    letter-spacing: 0.25em;
+    font-weight: 700;
+    color: var(--accent-color);
     margin-bottom: var(--spacing-sm);
+    /* Removed underline, rely on left border */
 }
 
 .headline {
-    font-size: 3rem;
+    font-size: clamp(3rem, 5vw, 4.8rem);
+    /* Massive editorial size */
     margin-bottom: var(--spacing-sm);
     color: var(--text-primary);
-    line-height: 1.15;
+    line-height: 0.95;
+    /* Tight leading */
+    letter-spacing: -0.03em;
+    /* Tight tracking */
     position: relative;
+    font-weight: 800;
+}
+
+.separator-line {
+    width: 80px;
+    height: 4px;
+    /* Chunky Swiss bar */
+    background-color: var(--text-primary);
+    margin: var(--spacing-sm) 0 var(--spacing-md) 0;
 }
 
 .intro-text {
-    font-size: 1.15rem;
+    font-size: 1.25rem;
     color: var(--text-secondary);
-    max-width: 580px;
-    margin: 0 auto var(--spacing-sm) auto;
-    line-height: 1.75;
+    max-width: 90%;
+    margin-bottom: var(--spacing-md);
+    line-height: 1.6;
+    font-weight: 500;
+    /* Heavier for readability */
 }
 
 /* Hero Social Icons */
 .hero-socials {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     gap: var(--spacing-md);
-    margin-top: var(--spacing-sm);
-    padding-top: var(--spacing-sm);
-    border-top: 1px solid var(--border-color);
+    margin-top: var(--spacing-md);
+    /* Removed top border for cleaner look */
+}
+
+/* Mobile Responsiveness for Hero */
+@media (max-width: 768px) {
+    .headline {
+        font-size: 2.8rem;
+        word-wrap: break-word;
+        /* Prevent overflow */
+    }
+
+    .hero-text-wrapper {
+        padding-left: var(--spacing-md);
+        /* Less padding on mobile */
+        border-left-width: 3px;
+        /* Slightly thicker visible anchor */
+    }
+
+    .intro-text {
+        font-size: 1.1rem;
+        /* Slightly smaller for readability on small screens */
+    }
+
+    .hero-content {
+        gap: var(--spacing-lg);
+    }
 }
 
 .social-icon {
-    color: var(--accent-color);
-    transition: all 0.3s ease;
-    opacity: 0.7;
+    color: var(--text-primary);
+    /* Darker default */
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    opacity: 0.8;
     padding: 8px;
+    border: 1px solid transparent;
+    border-radius: 50%;
 }
 
 .social-icon:hover {
-    transform: translateY(-3px);
+    transform: translateY(-5px) rotate(8deg);
+    /* Playful hover */
     opacity: 1;
+    color: var(--accent-color);
+    border-color: var(--accent-color);
+    background: rgba(123, 30, 30, 0.05);
 }
 
 .social-icon svg {
     width: 24px;
     height: 24px;
-    stroke-width: 1.5px;
+    stroke-width: 2px;
+}
+
+/* Profile Photo Container */
+.hero-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* "Pasted" Photo Styling */
+.profile-photo {
+    width: 100%;
+    max-width: 380px;
+    height: auto;
+    border-radius: 2px;
+    /* Sharp corners for photo look */
+    border: 8px solid #fff;
+    /* Photo border */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.1);
+    transform: rotate(2.5deg);
+    /* Jaunty angle */
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+}
+
+.profile-photo:hover {
+    transform: rotate(0deg) scale(1.02);
+    /* Straighten on hover */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    z-index: 10;
 }
 
 /* Projects Section */
