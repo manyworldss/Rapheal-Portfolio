@@ -1,6 +1,6 @@
 Rapheal Suber Portfolio
 
-This is the personal portfolio website for Rapheal Suber, a UX Designer and Developer. Ideally viewed on desktop but fully responsive for mobile devices.
+This is the personal portfolio website for Rapheal Suber, a UX Researcher and Developer. Ideally viewed on desktop but fully responsive for mobile devices.
 
 Technological Stack
 
