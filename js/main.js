@@ -1,8 +1,7 @@
-/* Main JavaScript */
+/* Main JavaScript - Cyberpunk Terminal Aesthetic */
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('Portfolio loaded.');
+    console.log('System initialized. Awaiting commands...');
 
-    // Only init mouse trail if canvas exists (home page)
     const canvas = document.getElementById('mouse-trail');
     if (canvas) {
         initMouseTrail();
@@ -11,22 +10,23 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations();
     initCheekyMenu();
     initLightbox();
+    initDecryptionReveal();
 });
 
-/* Mouse Trail Animation - "Burgundy Ink" Style */
+/* ============================================
+   MOUSE TRAIL - Electric Blue Particles
+   ============================================ */
 function initMouseTrail() {
     const canvas = document.getElementById('mouse-trail');
     if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
-
     let width = window.innerWidth;
     let height = window.innerHeight;
 
     canvas.width = width;
     canvas.height = height;
 
-    // Handle resize
     window.addEventListener('resize', () => {
         width = window.innerWidth;
         height = window.innerHeight;
@@ -37,18 +37,17 @@ function initMouseTrail() {
     const particles = [];
     const mouse = { x: 0, y: 0 };
 
-    // Track mouse
     window.addEventListener('mousemove', (e) => {
         mouse.x = e.clientX;
         mouse.y = e.clientY;
 
         for (let i = 0; i < 2; i++) {
             particles.push({
-                x: mouse.x + (Math.random() - 0.5) * 2,
-                y: mouse.y + (Math.random() - 0.5) * 2,
-                size: Math.random() * 3 + 2,
+                x: mouse.x + (Math.random() - 0.5) * 4,
+                y: mouse.y + (Math.random() - 0.5) * 4,
+                size: Math.random() * 2 + 1,
                 life: 1,
-                color: '#7B1E1E'
+                color: '#00d4ff' // Electric blue match
             });
         }
     });
@@ -58,14 +57,18 @@ function initMouseTrail() {
 
         for (let i = 0; i < particles.length; i++) {
             const p = particles[i];
-
             ctx.beginPath();
             ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(123, 30, 30, ${p.life})`;
+            ctx.fillStyle = `rgba(0, 212, 255, ${p.life * 0.8})`; 
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = '#00d4ff';
             ctx.fill();
 
-            p.life -= 0.02;
-            p.size *= 0.95;
+            p.life -= 0.03;
+            p.size *= 0.96;
+            
+            p.x += (Math.random() - 0.5) * 1;
+            p.y -= Math.random() * 2; // Drift up like spark/smoke
 
             if (p.life <= 0) {
                 particles.splice(i, 1);
@@ -79,59 +82,95 @@ function initMouseTrail() {
     animate();
 }
 
-/* Scroll Animations (Intersection Observer) */
+/* ============================================
+   SCROLL ANIMATIONS (Terminal Boot Reveal)
+   ============================================ */
 function initScrollAnimations() {
     const observerOptions = {
-        threshold: 0.1
+        threshold: 0.15,
+        rootMargin: "0px 0px -50px 0px"
     };
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
+
+                // If this is the terminal reveal, trigger text cascade
+                if (entry.target.classList.contains('terminal-reveal')) {
+                    const paragraphs = entry.target.querySelectorAll('p');
+                    paragraphs.forEach((p, index) => {
+                        p.style.opacity = '0';
+                        p.style.transform = 'translateY(10px)';
+                        p.style.transition = `all 0.4s ease ${index * 0.3}s`;
+                        
+                        setTimeout(() => {
+                            p.style.opacity = '1';
+                            p.style.transform = 'translateY(0)';
+                        }, 50);
+                    });
+                    
+                    const dataBlocks = entry.target.querySelectorAll('.data-block');
+                    dataBlocks.forEach((block, index) => {
+                        block.style.opacity = '0';
+                        block.style.transform = 'scale(0.95)';
+                        block.style.transition = `all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) ${(paragraphs.length * 0.3) + (index * 0.2)}s`;
+                        
+                        setTimeout(() => {
+                            block.style.opacity = '1';
+                            block.style.transform = 'scale(1)';
+                        }, 50);
+                    });
+                }
             }
         });
     }, observerOptions);
 
-    document.querySelectorAll('.project-card, .about-inner, .hero-content, .hobby-group, .cs-section').forEach(el => {
-        el.classList.add('fade-in-section');
+    document.querySelectorAll('.project-card, .hero-content, .fade-in-section, .terminal-reveal, .cs-section').forEach(el => {
         observer.observe(el);
     });
 }
 
-/* Cheeky Menu Toggle - Bookmark Style */
-/* Cheeky Menu Toggle - Bookmark Style */
-/* Cheeky Menu Toggle - Bookmark Style */
+/* ============================================
+   COMMAND PALETTE NAVIGATION
+   ============================================ */
 function initCheekyMenu() {
     const menu = document.getElementById('bookmark-nav');
     const toggle = document.querySelector('.menu-toggle');
 
     if (menu && toggle) {
-        // Toggle menu on click
         toggle.addEventListener('click', function (e) {
             e.preventDefault();
-            e.stopPropagation(); // Stop bubbling to document
+            e.stopPropagation();
             menu.classList.toggle('expanded');
-        });
-
-        // Close when clicking outside
-        document.addEventListener('click', function (e) {
-            // If menu is expanded AND click is NOT inside the menu
-            if (menu.classList.contains('expanded') && !menu.contains(e.target)) {
-                menu.classList.remove('expanded');
+            
+            if (menu.classList.contains('expanded')) {
+                toggle.textContent = '[ CLOSE_SYS ]';
+            } else {
+                toggle.textContent = '< SYS_NAV >';
             }
         });
 
-        // Prevent clicks inside the menu from closing it (extra safety)
+        document.addEventListener('click', function (e) {
+            if (menu.classList.contains('expanded') && !menu.contains(e.target)) {
+                menu.classList.remove('expanded');
+                toggle.textContent = '< SYS_NAV >';
+            }
+        });
+
         menu.addEventListener('click', function (e) {
             e.stopPropagation();
         });
+        
+        // Ensure starting text is correct
+        toggle.textContent = '< SYS_NAV >';
     }
 }
 
-/* Lightbox Functionality */
+/* ============================================
+   LIGHTBOX 
+   ============================================ */
 function initLightbox() {
-    // Create lightbox elements if they don't exist
     if (!document.querySelector('.lightbox-overlay')) {
         const overlay = document.createElement('div');
         overlay.className = 'lightbox-overlay';
@@ -140,7 +179,6 @@ function initLightbox() {
         overlay.appendChild(img);
         document.body.appendChild(overlay);
 
-        // Close on click
         overlay.addEventListener('click', function () {
             overlay.classList.remove('active');
         });
@@ -148,17 +186,56 @@ function initLightbox() {
 
     const overlay = document.querySelector('.lightbox-overlay');
     const lightboxImg = overlay.querySelector('.lightbox-img');
-
-    // Attach click listeners to zoomable images
     const zoomableImages = document.querySelectorAll('.project-img, .comparison-img, img[style*="cursor: zoom-in"]');
 
     zoomableImages.forEach(img => {
-        img.style.cursor = 'zoom-in'; // Enforce cursor
+        img.style.cursor = 'crosshair'; // Cyberpunk touch instead of zoom-in
         img.addEventListener('click', function (e) {
-            e.stopPropagation(); // Prevent bubbling
+            e.stopPropagation();
             lightboxImg.src = this.src;
             lightboxImg.alt = this.alt;
             overlay.classList.add('active');
         });
     });
+}
+
+/* ============================================
+   DECRYPTION REVEAL ANIMATION
+   ============================================ */
+function initDecryptionReveal() {
+    const spineElement = document.querySelector('.author-spine');
+    if (!spineElement) return;
+    
+    // Setup for decryption
+    const originalText = 'RAPHEAL MANWELL SUBER';
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*()<>{}[]';
+    let currentIteration = 0;
+    const maxIterations = 20; 
+    
+    // First clear and set a fixed width so it doesn't jump around
+    spineElement.textContent = originalText;
+    
+    const intervalId = setInterval(() => {
+        spineElement.textContent = originalText.split('').map((char, index) => {
+            if (index < currentIteration) {
+                return originalText[index]; // Resolved letter
+            }
+            if (originalText[index] === ' ') {
+                return ' '; // Keep spaces
+            }
+            return chars[Math.floor(Math.random() * chars.length)]; // Random cypher
+        }).join('');
+        
+        if (currentIteration >= originalText.length) {
+            clearInterval(intervalId);
+            // Add a completion flash class if desired
+            spineElement.style.textShadow = '0 0 20px #00d4ff, 0 0 40px #00d4ff';
+            setTimeout(() => {
+                spineElement.style.textShadow = ''; // Return to CSS default
+            }, 300);
+        }
+        
+        currentIteration += 1/3; // Speed controller (lower = slower reveal per letter)
+        
+    }, 40); // 40ms per frame
 }
