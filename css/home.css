@@ -585,7 +585,7 @@
 
 .about-content-grid {
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 1fr;
     gap: var(--spacing-xl);
     align-items: start;
 }
