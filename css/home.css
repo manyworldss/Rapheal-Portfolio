@@ -280,7 +280,7 @@
 }
 
 .intro-text {
-    font-size: 1.15rem;
+    font-size: 1.25rem;
     color: var(--text-secondary);
     max-width: 85%;
     margin-bottom: var(--spacing-md);
@@ -434,7 +434,7 @@
     color: var(--text-secondary);
     margin-bottom: var(--spacing-md);
     line-height: 1.6;
-    font-size: 0.95rem;
+    font-size: 1.05rem;
 }
 
 .read-more {
@@ -629,7 +629,7 @@
 /* Terminal Sequence Text */
 .terminal-text p {
     font-family: var(--font-mono);
-    font-size: 0.95rem;
+    font-size: 1.05rem;
     line-height: 1.8;
     color: var(--text-secondary);
     margin-bottom: var(--spacing-sm);
@@ -901,7 +901,7 @@
 
 .exp-details {
     color: var(--text-secondary);
-    font-size: 0.95rem;
+    font-size: 1.05rem;
 }
 
 /* ============================================
