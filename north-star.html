@@ -6,17 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>North Star Case Study | Rapheal Suber</title>
     <meta name="description"
-        content="North Star Case Study: A human-factors–driven AI model evaluation platform measuring trust and failure modes.">
+        content="North Star: A human-in-the-loop evaluation platform that measures Automation Bias — when professionals change a correct answer after receiving confident but wrong AI advice.">
     <meta property="og:title" content="North Star Case Study | Rapheal Suber">
     <meta property="og:description"
-        content="A human-factors–driven AI model evaluation platform that measures how and when humans over-trust AI systems.">
+        content="A human-in-the-loop evaluation platform that measures Automation Bias — when professionals defer to confident but wrong AI.">
     <meta property="og:image" content="https://rapheals.up.railway.app/images/north-star-dashboard.png">
     <meta property="og:url" content="https://rapheals.up.railway.app/north-star.html">
     <meta property="og:type" content="article">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="North Star Case Study | Rapheal Suber">
     <meta name="twitter:description"
-        content="Measuring how and when humans over-trust AI systems through structured evaluation.">
+        content="Measuring Automation Bias: when professionals change correct answers after confident but wrong AI advice.">
     <meta name="twitter:image" content="https://rapheals.up.railway.app/images/north-star-dashboard.png">
     <link rel="canonical" href="https://rapheals.up.railway.app/north-star.html">
     <link rel="stylesheet" href="css/global.css?v=31">
@@ -42,157 +42,224 @@
         <!-- Case Study Header -->
         <header class="cs-header">
             <span class="cs-category sans text-accent">AI Evaluation Infrastructure | Human Factors</span>
-            <h1 class="cs-title serif">North Star: Quantifying Human-AI Trust Dynamics</h1>
+            <h1 class="cs-title serif">North Star: Measuring Automation Bias in Professional Workflows</h1>
             <p class="cs-subtitle sans">
-                North Star is evaluation infrastructure grounded in Human Factors, HCI, and applied data analysis.
-                It measures <em>how</em> and <em>when</em> humans over-trust AI systems, surfacing critical failure
-                modes standard benchmarks miss.
+                A human-in-the-loop evaluation platform that measures the moment a professional changes a correct answer
+                after receiving confident but wrong AI advice. It does not evaluate the model. It evaluates the human
+                response to the model.
             </p>
             <div class="cs-meta sans">
                 <div class="meta-item">
                     Role: Project Lead & Developer
                 </div>
                 <div class="meta-item">
-                    Stack: Python (FastAPI), Next.js, Postgres
+                    Stack: Python (FastAPI), Next.js 16, PostgreSQL
+                </div>
+                <div class="meta-item">
+                    Deploy: Railway (two services)
                 </div>
                 <div class="meta-item">
                     Status: In Production
                 </div>
             </div>
-
         </header>
 
         <!-- Content Sections -->
         <article class="cs-content">
 
-            <!-- Section 1: The Why -->
+            <!-- Section 1: Overview -->
             <section class="cs-section">
                 <div class="section-header">
-                    <h2 class="serif">01. The Purpose: Beyond Standard Benchmarks</h2>
+                    <h2 class="serif">01. Overview</h2>
                 </div>
                 <div class="section-body sans">
                     <p>
-                        Standard benchmarks measure model capability, but they often fail to capture the human element
-                        of AI interaction.
-                        North Star exists to build a <strong>human-factors–driven AI model evaluation platform</strong>.
+                        I built North Star because I kept noticing something that no benchmark was measuring. AI models
+                        were being evaluated in isolation. Accuracy scores, reasoning benchmarks, coding tests. Nobody
+                        was asking what happens to the person using the tool.
                     </p>
                     <p>
-                        This is <strong>not</strong> a chatbot. It is a rigorous evaluation engine designed to:
+                        I was using AI daily and started catching myself agreeing with responses I hadn't fully verified.
+                        That instinct to question, to push back, was getting quieter. I wanted to know if that was just
+                        me, or if it was measurable.
+                    </p>
+                    <p>
+                        North Star is the result of that question. It is a human-in-the-loop evaluation platform that
+                        measures <strong>Automation Bias</strong>: the moment a professional changes a correct answer
+                        after receiving confident but wrong AI advice. It does not evaluate the model. It evaluates the
+                        human response to the model.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Section 2: The Problem -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <h2 class="serif">02. The Problem</h2>
+                </div>
+                <div class="section-body sans">
+                    <p>
+                        Current AI evaluation is almost entirely model-centric. Benchmarks like MMLU and HumanEval
+                        measure what a model gets right in a vacuum. What they cannot capture is how a model's confidence
+                        affects human decision-making. Whether a doctor, analyst, or engineer is more likely to defer
+                        to a wrong answer simply because it was stated with authority.
+                    </p>
+                    <p>
+                        This gap matters more as AI becomes embedded in professional workflows. Automation Bias is a
+                        documented Human Factors phenomenon with roots in aviation and medical research. As AI copilots
+                        enter every industry, the same risks apply. The data to understand them at scale does not yet
+                        exist. Users are not being asked these questions.
+                    </p>
+                    <div class="insight-grid">
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">What benchmarks measure</h3>
+                            <p>
+                                Model accuracy, reasoning, and coding ability. Evaluated in isolation, with no human
+                                in the loop.
+                            </p>
+                        </div>
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">What benchmarks miss</h3>
+                            <p>
+                                How model confidence shapes human decisions. When professionals override correct
+                                judgement to defer to a wrong but authoritative AI.
+                            </p>
+                        </div>
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">What North Star measures</h3>
+                            <p>
+                                The behavioral change. The moment a human updates a correct answer in response to
+                                confident, incorrect AI input.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: Design Decisions -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <h2 class="serif">03. Design Decisions</h2>
+                </div>
+                <div class="section-body sans">
+                    <p>
+                        The most deliberate decision in the platform is using static, pre-calculated AI injections
+                        rather than calling a live model. This is the question I get asked most, so it is worth being
+                        direct about the answer.
+                    </p>
+                    <p>
+                        To measure automation bias, the AI must provide a confident, incorrect recommendation every
+                        single time. A live model is non-deterministic. It might give the right answer, hedge, or vary
+                        its response across sessions. Any of those outcomes breaks the experiment, because the behavioral
+                        change can no longer be attributed to a known stimulus. Static injection means every participant
+                        receives the exact same response. That consistency is what makes cross-session comparison valid.
+                        It is the same principle that makes aviation simulation studies use scripted failures rather than
+                        waiting for something to go wrong organically.
+                    </p>
+                    <p>
+                        The scenarios were built around a second principle: the AI response has to sound plausible.
+                        A completely wrong answer is easy to reject. The goal was to construct responses that embed a
+                        real fact inside a flawed logical chain. Confident enough to create doubt, grounded enough in
+                        truth to seem authoritative. Each scenario was matched to a cognitive bias relevant to that
+                        professional role.
                     </p>
                     <ul class="feature-list">
-                        <li>Measure <strong>how</strong> and <strong>when</strong> humans over-trust AI systems
-                            (Automation Bias).</li>
-                        <li>Surface safety-relevant failure modes that automated benchmarks miss.</li>
-                        <li>Produce structured, reproducible evaluation data for real AI teams.</li>
+                        <li><strong>Metric fixation</strong> for UX</li>
+                        <li><strong>Statistical authority</strong> for data analysis</li>
+                        <li><strong>Tool deference</strong> for engineering</li>
+                        <li><strong>Risk framing</strong> for security</li>
+                        <li><strong>Efficiency framing</strong> for recruiting</li>
                     </ul>
                 </div>
             </section>
 
-            <!-- Section 2: Core Concepts -->
+            <!-- Section 4: Technical Execution -->
             <section class="cs-section">
                 <div class="section-header">
-                    <h2 class="serif">02. Human Factors at the Core</h2>
+                    <h2 class="serif">04. Technical Execution</h2>
                 </div>
                 <div class="section-body sans">
                     <p>
-                        The system guides <strong>what is measured</strong> based on critical cognitive principles:
+                        The platform is a full-stack application with a Python FastAPI backend and a Next.js 16
+                        frontend, deployed as two separate services on Railway.
                     </p>
                     <div class="insight-grid">
                         <div class="insight-card border-accent">
-                            <h3 class="serif">Trust Calibration</h3>
+                            <h3 class="serif">Backend: 4-Stage Session API</h3>
                             <p>
-                                Investigating Over-reliance and Automation Bias. We measure if users accept incorrect AI
-                                outputs because of perceived intelligence.
+                                Each stage is a discrete endpoint that writes to PostgreSQL. This lets partial sessions
+                                be tracked and ghost sessions from abandoned tabs be identified through temporal
+                                analysis.
                             </p>
                         </div>
                         <div class="insight-card border-accent">
-                            <h3 class="serif">Cognitive Load</h3>
+                            <h3 class="serif">Frontend: React State Flow</h3>
                             <p>
-                                Assessing how model outputs affect decision-making under pressure and identifying Mode
-                                Confusion.
+                                The evaluation flow is managed entirely through React state with no page reloads between
+                                stages. The results dashboard pulls aggregate data from a single backend endpoint.
                             </p>
                         </div>
                         <div class="insight-card border-accent">
-                            <h3 class="serif">Error Detection</h3>
+                            <h3 class="serif">Results Dashboard</h3>
                             <p>
-                                Analyzing recovery behavior—do users catch mistakes? And does the model's confidence
-                                signaling affect this rate?
+                                Trust and confidence scores are visualised across scenarios with color-coded Likert
+                                bars. Green for low bias risk, amber for moderate, red for high automation bias
+                                detected.
+                            </p>
+                        </div>
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">Environment and Deploy</h3>
+                            <p>
+                                The <code>NEXT_PUBLIC_API_URL</code> variable is injected at build time so the same
+                                codebase runs against localhost in development and the Railway backend in production
+                                without any code changes.
                             </p>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Section 3: Architecture -->
+            <!-- Section 5: Screenshots -->
             <section class="cs-section">
                 <div class="section-header">
-                    <h2 class="serif">03. System Architecture</h2>
+                    <h2 class="serif">05. Platform Screenshots</h2>
                 </div>
                 <div class="section-body sans">
-                    <p>
-                        North Star is built as a three-layer evaluation engine:
-                    </p>
-                    <div class="insight-grid">
-                        <div class="insight-card border-accent">
-                            <h3 class="serif">1. Model Interface Layer</h3>
-                            <p>
-                                Supports multiple LLM APIs (Claude, GPT-4, Gemini) with versioned prompt execution and
-                                controlled temperature/context settings.
-                            </p>
+                    <div class="screenshot-grid">
+                        <div class="screenshot-placeholder">
+                            <span class="placeholder-label sans">[ Evaluation Flow ]</span>
                         </div>
-                        <div class="insight-card border-accent">
-                            <h3 class="serif">2. Evaluation Scenario Engine</h3>
-                            <p>
-                                structured task categories including safety-critical reasoning, ambiguous instructions,
-                                and adversarial prompts to test authority signaling.
-                            </p>
+                        <div class="screenshot-placeholder">
+                            <span class="placeholder-label sans">[ Results Dashboard ]</span>
                         </div>
-                        <div class="insight-card border-accent">
-                            <h3 class="serif">3. Human Evaluation Layer</h3>
-                            <p>
-                                The HF Core. Uses structured rubrics (Likert scales for trust, confidence calibration)
-                                and psychometric design to ensure inter-rater reliability.
-                            </p>
+                        <div class="screenshot-placeholder">
+                            <span class="placeholder-label sans">[ Scenario View ]</span>
                         </div>
-                    </div>
-                    <p style="margin-top: 1.5rem;">
-                        <strong>Data First Design:</strong> Postgres is the system of record, with a schema designed for
-                        analysis (Models, Prompts, Sessions, Failure Events) rather than just UI convenience.
-                    </p>
-                </div>
-            </section>
-
-            <!-- Section 4: Visuals -->
-            <section class="cs-section">
-                <div class="section-header">
-                    <h2 class="serif">04. The Platform</h2>
-                </div>
-                <div class="section-body sans">
-                    <div class="full-width-image">
-                        <img src="images/north-star-dashboard.png" alt="North Star Analytics Dashboard"
-                            class="project-img" loading="lazy">
-                        <span class="caption">The North Star Dashboard: Visualizing confidence vs. correctness and trust
-                            inflation curves.</span>
+                        <div class="screenshot-placeholder">
+                            <span class="placeholder-label sans">[ Bias Score Breakdown ]</span>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Section 5: Impact -->
+            <!-- Section 6: Reflection -->
             <section class="cs-section">
                 <div class="section-header">
-                    <h2 class="serif">05. Answering the "So What?"</h2>
+                    <h2 class="serif">06. Reflection</h2>
                 </div>
                 <div class="section-body sans">
                     <p>
-                        The ultimate goal of North Star is to answer a single, critical question for safety and
-                        reliability engineers:
+                        This is not a finished research tool. It is a proof of concept for an infrastructure that I
+                        think needs to exist. The methodology is grounded in real Human Factors research, the data model
+                        is designed to support serious analysis, and the scenarios reflect failure modes that are already
+                        happening in professional settings today.
                     </p>
-                    <blockquote class="pull-quote serif">
-                        "Where does this model cause humans to make worse decisions?"
-                    </blockquote>
                     <p>
-                        By surfacing failure frequency by task type and analyzing trust inflation/deflation curves,
-                        North Star provides the feedback loop necessary to build safer, more reliable AI systems.
+                        What I learned building it is that the engineering decisions in an evaluation platform are
+                        fundamentally different from the decisions in a product. Every choice, from static injection to
+                        the Likert scale range to the order of the stages, is a methodological decision as much as a
+                        technical one. Getting that right required thinking like a researcher, not just a developer.
+                        That intersection is where I want to work.
                     </p>
                 </div>
             </section>

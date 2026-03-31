@@ -29,7 +29,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(0, 212, 255, 0.05);
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(0, 0, 0, 0.04);
     position: relative;
 }
 
@@ -47,8 +47,8 @@
 .cheeky-menu.expanded .bookmark-ribbon {
     width: 280px;
     height: 380px;
-    background: rgba(10, 10, 15, 0.95);
-    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(0, 212, 255, 0.1);
+    background: rgba(248, 248, 246, 0.98);
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(0, 0, 0, 0.06);
     align-items: flex-start;
     padding: 20px 30px;
 }
@@ -123,7 +123,7 @@
     border-left: 2px solid transparent;
     display: block;
     position: relative;
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(0, 0, 0, 0.02);
 }
 
 .menu-items a::before {
@@ -133,7 +133,7 @@
     top: 0;
     height: 100%;
     width: 0;
-    background: rgba(0, 212, 255, 0.1);
+    background: rgba(0, 0, 0, 0.06);
     transition: width 0.3s ease;
     z-index: -1;
 }
@@ -141,7 +141,7 @@
 .menu-items a:hover {
     color: var(--accent-blue);
     border-left: 2px solid var(--accent-blue);
-    text-shadow: 0 0 8px rgba(0, 212, 255, 0.4);
+    text-shadow: none;
     transform: translateX(5px);
 }
 
@@ -156,7 +156,7 @@
 /* Disclaimer Box */
 .disclaimer-box {
     border-left: 3px solid var(--accent-orange);
-    background: rgba(255, 107, 53, 0.05);
+    background: rgba(0, 0, 0, 0.03);
     padding: 1.5rem;
     margin: 2rem 0;
     text-align: left;
@@ -183,7 +183,7 @@
     color: var(--accent-blue);
     padding: 4px 12px;
     border: 1px solid var(--border-glow);
-    background: rgba(0, 212, 255, 0.05);
+    background: rgba(0, 0, 0, 0.04);
 }
 
 .cs-title {
@@ -192,7 +192,7 @@
     line-height: 1.15;
     color: var(--text-primary);
     font-family: var(--font-sans);
-    text-shadow: 0 0 15px rgba(0, 212, 255, 0.15);
+    text-shadow: none;
 }
 
 .cs-subtitle {
@@ -225,7 +225,7 @@
 /* CTA Button */
 .cta-button {
     display: inline-block;
-    background: rgba(0, 212, 255, 0.1);
+    background: rgba(0, 0, 0, 0.06);
     color: var(--accent-blue);
     padding: 12px 24px;
     font-size: 0.9rem;
@@ -237,13 +237,13 @@
     border: 1px solid var(--accent-blue);
     margin-top: var(--spacing-md);
     transition: all 0.3s ease;
-    box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.12);
 }
 
 .cta-button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
-    background: rgba(0, 212, 255, 0.2);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+    background: rgba(0, 0, 0, 0.12);
     color: #fff;
 }
 
@@ -272,7 +272,7 @@
 .section-header h2 {
     font-size: 1.4rem;
     color: var(--accent-blue);
-    border-bottom: 1px solid rgba(0, 212, 255, 0.3);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.18);
     padding-bottom: var(--spacing-xs);
     display: inline-block;
     font-family: var(--font-mono);
@@ -290,7 +290,7 @@
 
 /* User Definition Cards */
 .user-definition {
-    background: rgba(10, 10, 15, 0.6);
+    background: rgba(0, 0, 0, 0.03);
     border-left: 2px solid var(--accent-blue);
     padding: var(--spacing-md);
     margin-bottom: var(--spacing-md);
@@ -330,7 +330,7 @@
 .insight-card:hover {
     transform: translateY(-3px);
     border-color: var(--border-glow);
-    box-shadow: 0 8px 25px rgba(0, 212, 255, 0.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
 }
 
 .insight-card h3 {
@@ -358,7 +358,7 @@
     padding-left: var(--spacing-md);
     border-left: 2px solid var(--accent-blue);
     margin-bottom: var(--spacing-sm);
-    background: rgba(10, 10, 15, 0.5);
+    background: rgba(0, 0, 0, 0.03);
     color: var(--text-secondary);
 }
 
@@ -373,7 +373,7 @@
 .placeholder-img {
     width: 100%;
     height: 300px;
-    background: rgba(0, 212, 255, 0.05);
+    background: rgba(0, 0, 0, 0.04);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -385,7 +385,7 @@
 
 .caption {
     font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(0, 0, 0, 0.4);
     font-family: var(--font-mono);
     text-align: center;
     display: block;
@@ -412,7 +412,7 @@
     max-height: 700px;
     object-fit: contain;
     border: 1px solid var(--glass-border);
-    background: #050508;
+    background: #f5f5f3;
     display: block;
     transition: all 0.4s ease;
     cursor: crosshair;
@@ -421,7 +421,7 @@
 .comparison-img:hover {
     transform: scale(1.02);
     border-color: var(--accent-blue);
-    box-shadow: 0 15px 40px rgba(0, 212, 255, 0.15);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
 }
 
 .comparison-label {
@@ -437,13 +437,13 @@
 }
 
 .before-label {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.06);
     color: var(--text-secondary);
     border: 1px solid var(--glass-border);
 }
 
 .after-label {
-    background: rgba(0, 212, 255, 0.15);
+    background: rgba(0, 0, 0, 0.08);
     color: var(--accent-blue);
     border: 1px solid var(--border-glow);
 }
@@ -456,6 +456,28 @@
     height: 400px;
 }
 
+.screenshot-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+    margin: var(--spacing-lg) 0;
+}
+
+.screenshot-placeholder {
+    height: 280px;
+    border: 1px dashed var(--border-glow);
+    background: rgba(0, 0, 0, 0.02);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.placeholder-label {
+    font-size: 0.75rem;
+    color: rgba(0, 0, 0, 0.3);
+    letter-spacing: 0.05em;
+}
+
 .hero-image-display {
     margin: var(--spacing-lg) 0;
 }
@@ -465,13 +487,13 @@
     max-height: 500px;
     object-fit: contain;
     border: 1px solid var(--glass-border);
-    background: #050508;
+    background: #f5f5f3;
     transition: all 0.3s ease;
 }
 
 .hero-image-display img:hover {
     border-color: var(--accent-blue);
-    box-shadow: 0 10px 30px rgba(0, 212, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
 }
 
 /* Tech List */
@@ -522,7 +544,7 @@
 
 .back-link-clean:hover {
     color: var(--accent-blue);
-    text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+    text-shadow: none;
 }
 
 /* Responsive */

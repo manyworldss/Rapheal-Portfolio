@@ -47,7 +47,7 @@ function initMouseTrail() {
                 y: mouse.y + (Math.random() - 0.5) * 4,
                 size: Math.random() * 2 + 1,
                 life: 1,
-                color: '#00d4ff' // Electric blue match
+                color: '#111111' // Monochrome match
             });
         }
     });
@@ -59,9 +59,9 @@ function initMouseTrail() {
             const p = particles[i];
             ctx.beginPath();
             ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(0, 212, 255, ${p.life * 0.8})`; 
-            ctx.shadowBlur = 10;
-            ctx.shadowColor = '#00d4ff';
+            ctx.fillStyle = `rgba(0, 0, 0, ${p.life * 0.5})`;
+            ctx.shadowBlur = 0;
+            ctx.shadowColor = 'transparent';
             ctx.fill();
 
             p.life -= 0.03;
@@ -229,7 +229,7 @@ function initDecryptionReveal() {
         if (currentIteration >= originalText.length) {
             clearInterval(intervalId);
             // Add a completion flash class if desired
-            spineElement.style.textShadow = '0 0 20px #00d4ff, 0 0 40px #00d4ff';
+            spineElement.style.textShadow = 'none';
             setTimeout(() => {
                 spineElement.style.textShadow = ''; // Return to CSS default
             }, 300);
