@@ -18,26 +18,28 @@
     <meta name="twitter:description"
         content="Mitigating traveler anxiety for Celiacs through hypothesis-driven design.">
     <meta name="twitter:image" content="https://rapheals.up.railway.app/images/HighResPurpleCard.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Jost:ital,wght@0,300;0,400;0,500;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="canonical" href="https://rapheals.up.railway.app/celio.html">
-    <link rel="stylesheet" href="css/global.css?v=31">
-    <link rel="stylesheet" href="css/case-study.css?v=31">
+    <link rel="stylesheet" href="css/global.css?v=33">
+    <link rel="stylesheet" href="css/case-study.css?v=33">
+    <link rel="stylesheet" href="css/print.css" media="print">
 </head>
 
 <body>
-    <main class="container book-layout">
+    <!-- Ambient sand particle canvas -->
+    <canvas id="sand-canvas" aria-hidden="true" style="position: fixed; inset: 0; pointer-events: none; z-index: 0;"></canvas>
 
-        <!-- Cheeky Menu (Bookmark) -->
-        <nav class="cheeky-menu" id="bookmark-nav">
-            <div class="bookmark-ribbon">
-                <button class="menu-toggle" aria-label="Toggle Navigation">&lt; SYS_NAV &gt;</button>
-                <div class="menu-items">
-                    <a href="index.html">/Home_Interface</a>
-                    <a href="north-star.html">Module::North_Star</a>
-                    <a href="celio.html">Module::Celio</a>
-                    <a href="illumi.html">Module::Illumi</a>
-                </div>
-            </div>
+    <!-- Top Bar Navigation -->
+    <header class="topbar" style="position: sticky; top: 0; z-index: 9999; display: flex; justify-content: space-between; align-items: center; padding: 0 3vw; height: 80px; border-bottom: 1px solid var(--glass-border-dim); background: rgba(13, 11, 8, 0.95); backdrop-filter: blur(10px);">
+        <a href="index.html" class="identity-sigil" aria-label="Rapheal Suber" style="font-family: var(--font-display); font-size: 1.6rem; font-weight: 600; color: var(--spice); letter-spacing: 0.05em; text-decoration: none; position: relative;">RS</a>
+        <nav class="topbar-nav" aria-label="Site navigation" style="display: flex; align-items: center;">
+            <a href="index.html" class="nav-trigger" style="font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.3s ease;">← Back to Home</a>
         </nav>
+    </header>
+
+    <main class="container book-layout" style="position: relative; z-index: 1;">
 
         <!-- Case Study Header -->
         <header class="cs-header">
@@ -59,7 +61,10 @@
                     Timeline: 9 Months
                 </div>
             </div>
-            <a href="https://celioapp.up.railway.app" target="_blank" class="cta-button sans">View Live App &rarr;</a>
+            <div class="header-actions">
+                <a href="https://celioapp.up.railway.app" target="_blank" class="cta-button sans">View Live App &rarr;</a>
+                <button onclick="window.print()" class="cta-button cta-button--secondary sans" id="download-pdf-btn">Download Research PDF &darr;</button>
+            </div>
         </header>
 
         <!-- Content Sections -->
@@ -231,13 +236,145 @@
                 </div>
             </section>
 
+            <!-- ── EXTENDED RESEARCH DOCUMENT ── -->
+            <div class="research-divider sans" id="extended-research">
+                <span class="research-divider__label">Extended Research Document</span>
+            </div>
+
+            <!-- Section 6: Origin -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <h2 class="serif">06. Why I Built This</h2>
+                </div>
+                <div class="section-body sans">
+                    <p>
+                        I started building Celio shortly after a trip to Mexico. Communicating my allergy needs to resort staff was genuinely difficult, and it got worse at airports where I was trying to order food quickly with no shared language. Celio came out of that frustration. At its core it reduces the anxiety that comes with eating safely when you have a food allergy abroad.
+                    </p>
+                    <p>
+                        One of the most difficult things about having celiac disease is communicating it while traveling. That gets even harder when there's a language barrier. You're not just explaining a preference — you're explaining something that makes you sick. Celio exists to make that easier.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Section 7: Research Process -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <h2 class="serif">07. Research Process</h2>
+                </div>
+                <div class="section-body sans">
+                    <p>
+                        Before I wrote a single line of code I spent two months talking to people.
+                    </p>
+                    <p>
+                        I found participants on Reddit, Facebook, and Discord. Some were reluctant at first but most opened up once they understood what I was building. I also recruited friends, family, and classmates. At one point I had over 50 people actively using the app and giving feedback. That level of engagement told me the problem was real and the solution was resonating.
+                    </p>
+                    <div class="insight-grid">
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">Research Question 1</h3>
+                            <p>What does communicating a dietary need abroad actually feel like in the moment?</p>
+                        </div>
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">Research Question 2</h3>
+                            <p>Where does the fear live — before the meal, at the table, or after?</p>
+                        </div>
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">Research Question 3</h3>
+                            <p>What would genuinely make someone feel safe?</p>
+                        </div>
+                    </div>
+                    <p>
+                        The feedback that surprised me most led to the audio feature. I hadn't planned it — users brought it up on their own. They also asked about Apple Wallet integration and flagged that the interface felt laggy, which I ended up fixing by switching to Alpine.js. Those three things came entirely from listening.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Section 8: Five Findings -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <h2 class="serif">08. What Changed Because of Research</h2>
+                </div>
+                <div class="section-body sans">
+                    <div class="finding-list">
+                        <div class="finding-item">
+                            <div class="finding-number sans">01</div>
+                            <div class="finding-content">
+                                <h3 class="serif">The card felt sluggish</h3>
+                                <p>Participants described the e-card as laggy and slow to update. It wasn't smooth. I traced the issue back to HTMX and switched to Alpine.js which made interactions instant. A tool people use in stressful real-world situations can't feel hesitant.</p>
+                            </div>
+                        </div>
+                        <div class="finding-item">
+                            <div class="finding-number sans">02</div>
+                            <div class="finding-content">
+                                <h3 class="serif">Text alone wasn't enough</h3>
+                                <p>Staff at restaurants were used to translation apps having audio. Without it there was tension — showing a silent screen only worked about half the time. Users felt noticeably more confident once audio was added and so did the staff they were communicating with. Safety goes both ways.</p>
+                            </div>
+                        </div>
+                        <div class="finding-item">
+                            <div class="finding-number sans">03</div>
+                            <div class="finding-content">
+                                <h3 class="serif">It needed to work under pressure</h3>
+                                <p>When I heard people describing real struggles using the card in live situations I went straight into problem solving mode. I wanted it to be intuitive enough that someone could use it while stressed, standing up, handing their phone across a table. That meant rebuilding the UI with simplicity and responsiveness as the priority, not just functionality.</p>
+                            </div>
+                        </div>
+                        <div class="finding-item">
+                            <div class="finding-number sans">04</div>
+                            <div class="finding-content">
+                                <h3 class="serif">People were using it in ways I didn't expect</h3>
+                                <p>A few users told me they'd used Celio at weddings and catered events — they just sent a PDF of their e-card when asked about dietary preferences. That felt great to hear. I built it for restaurants abroad and people were extending it into their everyday lives at home.</p>
+                            </div>
+                        </div>
+                        <div class="finding-item">
+                            <div class="finding-number sans">05</div>
+                            <div class="finding-content">
+                                <h3 class="serif">Apple Wallet makes complete sense</h3>
+                                <p>The Apple Wallet has essentially replaced the physical wallet for a lot of people. Adding the e-card there is just another layer of safety on a trip. Users already trust it. Having your allergy card one tap away without opening an app is exactly the kind of friction reduction that matters when you're in an unfamiliar place.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 9: Reflection -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <h2 class="serif">09. What I Learned</h2>
+                </div>
+                <div class="section-body sans">
+                    <p>
+                        Building Celio taught me that research isn't optional when you're building something real. You can have a great idea and still get the product wrong if you don't understand what people actually need. The audio feature, the Apple Wallet request, the interface feedback — none of that came from me sitting alone thinking about the product. It came from listening. That's the part I'll take into every project going forward.
+                    </p>
+                    <div class="tech-stack-block">
+                        <h3 class="sans tech-stack-heading">Tech Stack</h3>
+                        <div class="tech-stack-grid">
+                            <div class="tech-stack-item">
+                                <span class="tech-stack-label">Backend</span>
+                                <span class="tech-stack-value">Django 5.0, PostgreSQL, Django REST Framework, custom translation engine</span>
+                            </div>
+                            <div class="tech-stack-item">
+                                <span class="tech-stack-label">Frontend</span>
+                                <span class="tech-stack-value">Alpine.js, HTMX, Tailwind CSS</span>
+                            </div>
+                            <div class="tech-stack-item">
+                                <span class="tech-stack-label">Infrastructure</span>
+                                <span class="tech-stack-value">Docker, Railway, CI/CD pipeline</span>
+                            </div>
+                            <div class="tech-stack-item">
+                                <span class="tech-stack-label">Accessibility</span>
+                                <span class="tech-stack-value">WCAG 2.1 AA compliant, keyboard navigation, screen reader support</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="window.print()" class="cta-button cta-button--secondary sans" style="margin-top: var(--spacing-md);">Download Research PDF &darr;</button>
+                </div>
+            </section>
+
         </article>
 
         <footer class="cs-footer sans">
             <a href="index.html" class="back-link-clean serif">Back to Home</a>
         </footer>
     </main>
-    <script src="js/main.js?v=31"></script>
+    <script src="js/main.js?v=34"></script>
 </body>
 
 </html>

@@ -1,241 +1,206 @@
-/* Main JavaScript - Cyberpunk Terminal Aesthetic */
+/* ============================================
+   DUNE PORTFOLIO — Main JS
+   Sand particles · Panel system · Lightbox
+   ============================================ */
+
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('System initialized. Awaiting commands...');
-
-    const canvas = document.getElementById('mouse-trail');
-    if (canvas) {
-        initMouseTrail();
-    }
-
-    initScrollAnimations();
-    initCheekyMenu();
+    initSandParticles();
+    initPanelSystem();
     initLightbox();
-    initDecryptionReveal();
+    initCaseStudyScrollAnimations();
 });
 
 /* ============================================
-   MOUSE TRAIL - Electric Blue Particles
+   SAND PARTICLES
+   Ambient dust drifting upward — Arrakis air
    ============================================ */
-function initMouseTrail() {
-    const canvas = document.getElementById('mouse-trail');
+function initSandParticles() {
+    const canvas = document.getElementById('sand-canvas');
     if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
-    let width = window.innerWidth;
-    let height = window.innerHeight;
+    let W = window.innerWidth;
+    let H = window.innerHeight;
 
-    canvas.width = width;
-    canvas.height = height;
+    function resize() {
+        W = canvas.width  = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
 
-    window.addEventListener('resize', () => {
-        width = window.innerWidth;
-        height = window.innerHeight;
-        canvas.width = width;
-        canvas.height = height;
-    });
-
+    const COUNT = 120;
     const particles = [];
-    const mouse = { x: 0, y: 0 };
 
-    window.addEventListener('mousemove', (e) => {
+    class Grain {
+        constructor(randomY = false) {
+            this.reset(randomY);
+        }
+        reset(randomY = false) {
+            this.x    = Math.random() * W;
+            this.y    = randomY ? Math.random() * H : H + Math.random() * 80;
+            this.r    = Math.random() * 1.1 + 0.2;
+            this.vx   = (Math.random() - 0.5) * 0.25;
+            this.vy   = -(Math.random() * 0.35 + 0.08);
+            this.life = Math.random() * 0.11 + 0.03;  // opacity
+        }
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            if (this.y < -5) this.reset(false);
+            if (this.x < -5) this.x = W + 5;
+            if (this.x > W + 5) this.x = -5;
+        }
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(196, 148, 26, ${this.life})`;
+            ctx.fill();
+        }
+    }
+
+    for (let i = 0; i < COUNT; i++) {
+        particles.push(new Grain(true));  // start scattered across screen
+    }
+
+    // Mouse interaction: disturb nearby grains
+    const mouse = { x: -1000, y: -1000 };
+    window.addEventListener('mousemove', e => {
         mouse.x = e.clientX;
         mouse.y = e.clientY;
-
+        // Spawn a burst of 2 extra grains at cursor
         for (let i = 0; i < 2; i++) {
-            particles.push({
-                x: mouse.x + (Math.random() - 0.5) * 4,
-                y: mouse.y + (Math.random() - 0.5) * 4,
-                size: Math.random() * 2 + 1,
-                life: 1,
-                color: '#111111' // Monochrome match
-            });
+            const g = new Grain(false);
+            g.x  = mouse.x + (Math.random() - 0.5) * 20;
+            g.y  = mouse.y + (Math.random() - 0.5) * 20;
+            g.vy = -(Math.random() * 0.6 + 0.2);
+            g.vx = (Math.random() - 0.5) * 0.6;
+            g.life = Math.random() * 0.16 + 0.06;
+            particles.push(g);
+            if (particles.length > COUNT + 80) particles.splice(0, 1);
         }
     });
 
-    function animate() {
-        ctx.clearRect(0, 0, width, height);
-
-        for (let i = 0; i < particles.length; i++) {
-            const p = particles[i];
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(0, 0, 0, ${p.life * 0.5})`;
-            ctx.shadowBlur = 0;
-            ctx.shadowColor = 'transparent';
-            ctx.fill();
-
-            p.life -= 0.03;
-            p.size *= 0.96;
-            
-            p.x += (Math.random() - 0.5) * 1;
-            p.y -= Math.random() * 2; // Drift up like spark/smoke
-
-            if (p.life <= 0) {
-                particles.splice(i, 1);
-                i--;
-            }
+    function frame() {
+        ctx.clearRect(0, 0, W, H);
+        for (const g of particles) {
+            g.update();
+            g.draw();
         }
+        requestAnimationFrame(frame);
+    }
+    frame();
+}
 
-        requestAnimationFrame(animate);
+/* ============================================
+   PANEL SYSTEM
+   About / Experience / Contact overlays
+   ============================================ */
+function initPanelSystem() {
+    const backdrop = document.getElementById('panel-backdrop');
+    const triggers = document.querySelectorAll('.nav-trigger[data-panel]');
+    const panels   = document.querySelectorAll('.panel-overlay');
+    const closeBtns = document.querySelectorAll('.panel-close');
+
+    function openPanel(id) {
+        closeAll();
+        const panel = document.getElementById(`panel-${id}`);
+        if (!panel) return;
+
+        panel.classList.add('active');
+        panel.setAttribute('aria-hidden', 'false');
+        backdrop.classList.add('active');
+
+        // Mark the triggering button active
+        triggers.forEach(t => t.classList.toggle('active', t.dataset.panel === id));
+
+        // Trap focus inside panel
+        setTimeout(() => {
+            const focusable = panel.querySelector('button, a, input, [tabindex]');
+            if (focusable) focusable.focus();
+        }, 100);
     }
 
-    animate();
-}
-
-/* ============================================
-   SCROLL ANIMATIONS (Terminal Boot Reveal)
-   ============================================ */
-function initScrollAnimations() {
-    const observerOptions = {
-        threshold: 0.15,
-        rootMargin: "0px 0px -50px 0px"
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-
-                // If this is the terminal reveal, trigger text cascade
-                if (entry.target.classList.contains('terminal-reveal')) {
-                    const paragraphs = entry.target.querySelectorAll('p');
-                    paragraphs.forEach((p, index) => {
-                        p.style.opacity = '0';
-                        p.style.transform = 'translateY(10px)';
-                        p.style.transition = `all 0.4s ease ${index * 0.3}s`;
-                        
-                        setTimeout(() => {
-                            p.style.opacity = '1';
-                            p.style.transform = 'translateY(0)';
-                        }, 50);
-                    });
-                    
-                    const dataBlocks = entry.target.querySelectorAll('.data-block');
-                    dataBlocks.forEach((block, index) => {
-                        block.style.opacity = '0';
-                        block.style.transform = 'scale(0.95)';
-                        block.style.transition = `all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) ${(paragraphs.length * 0.3) + (index * 0.2)}s`;
-                        
-                        setTimeout(() => {
-                            block.style.opacity = '1';
-                            block.style.transform = 'scale(1)';
-                        }, 50);
-                    });
-                }
-            }
+    function closeAll() {
+        panels.forEach(p => {
+            p.classList.remove('active');
+            p.setAttribute('aria-hidden', 'true');
         });
-    }, observerOptions);
+        backdrop.classList.remove('active');
+        triggers.forEach(t => t.classList.remove('active'));
+    }
 
-    document.querySelectorAll('.project-card, .hero-content, .fade-in-section, .terminal-reveal, .cs-section').forEach(el => {
-        observer.observe(el);
-    });
-}
-
-/* ============================================
-   COMMAND PALETTE NAVIGATION
-   ============================================ */
-function initCheekyMenu() {
-    const menu = document.getElementById('bookmark-nav');
-    const toggle = document.querySelector('.menu-toggle');
-
-    if (menu && toggle) {
-        toggle.addEventListener('click', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            menu.classList.toggle('expanded');
-            
-            if (menu.classList.contains('expanded')) {
-                toggle.textContent = '[ CLOSE_SYS ]';
+    triggers.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const id = btn.dataset.panel;
+            // Toggle: clicking the same trigger again closes it
+            if (btn.classList.contains('active')) {
+                closeAll();
             } else {
-                toggle.textContent = '< SYS_NAV >';
+                openPanel(id);
             }
         });
+    });
 
-        document.addEventListener('click', function (e) {
-            if (menu.classList.contains('expanded') && !menu.contains(e.target)) {
-                menu.classList.remove('expanded');
-                toggle.textContent = '< SYS_NAV >';
-            }
-        });
+    closeBtns.forEach(btn => btn.addEventListener('click', closeAll));
 
-        menu.addEventListener('click', function (e) {
-            e.stopPropagation();
-        });
-        
-        // Ensure starting text is correct
-        toggle.textContent = '< SYS_NAV >';
+    if (backdrop) {
+        // Close on backdrop click
+        backdrop.addEventListener('click', closeAll);
     }
+
+    // Close on Escape
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closeAll();
+    });
 }
 
 /* ============================================
-   LIGHTBOX 
+   LIGHTBOX
+   For case study images
    ============================================ */
 function initLightbox() {
-    if (!document.querySelector('.lightbox-overlay')) {
-        const overlay = document.createElement('div');
-        overlay.className = 'lightbox-overlay';
-        const img = document.createElement('img');
-        img.className = 'lightbox-img';
-        overlay.appendChild(img);
-        document.body.appendChild(overlay);
+    if (document.querySelector('.lightbox-overlay')) return;
 
-        overlay.addEventListener('click', function () {
-            overlay.classList.remove('active');
-        });
-    }
+    const overlay = document.createElement('div');
+    overlay.className = 'lightbox-overlay';
+    const img = document.createElement('img');
+    img.className = 'lightbox-img';
+    img.alt = '';
+    overlay.appendChild(img);
+    document.body.appendChild(overlay);
 
-    const overlay = document.querySelector('.lightbox-overlay');
-    const lightboxImg = overlay.querySelector('.lightbox-img');
-    const zoomableImages = document.querySelectorAll('.project-img, .comparison-img, img[style*="cursor: zoom-in"]');
+    overlay.addEventListener('click', () => overlay.classList.remove('active'));
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') overlay.classList.remove('active');
+    });
 
-    zoomableImages.forEach(img => {
-        img.style.cursor = 'crosshair'; // Cyberpunk touch instead of zoom-in
-        img.addEventListener('click', function (e) {
+    document.querySelectorAll('.project-img, .comparison-img').forEach(el => {
+        el.style.cursor = 'zoom-in';
+        el.addEventListener('click', e => {
             e.stopPropagation();
-            lightboxImg.src = this.src;
-            lightboxImg.alt = this.alt;
+            img.src = el.src;
             overlay.classList.add('active');
         });
     });
 }
 
 /* ============================================
-   DECRYPTION REVEAL ANIMATION
+   CASE STUDY SCROLL ANIMATIONS
+   Used on celio.html, north-star.html, etc.
    ============================================ */
-function initDecryptionReveal() {
-    const spineElement = document.querySelector('.author-spine');
-    if (!spineElement) return;
-    
-    // Setup for decryption
-    const originalText = 'RAPHEAL MANWELL SUBER';
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*()<>{}[]';
-    let currentIteration = 0;
-    const maxIterations = 20; 
-    
-    // First clear and set a fixed width so it doesn't jump around
-    spineElement.textContent = originalText;
-    
-    const intervalId = setInterval(() => {
-        spineElement.textContent = originalText.split('').map((char, index) => {
-            if (index < currentIteration) {
-                return originalText[index]; // Resolved letter
+function initCaseStudyScrollAnimations() {
+    const sections = document.querySelectorAll('.cs-section');
+    if (!sections.length) return;
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
             }
-            if (originalText[index] === ' ') {
-                return ' '; // Keep spaces
-            }
-            return chars[Math.floor(Math.random() * chars.length)]; // Random cypher
-        }).join('');
-        
-        if (currentIteration >= originalText.length) {
-            clearInterval(intervalId);
-            // Add a completion flash class if desired
-            spineElement.style.textShadow = 'none';
-            setTimeout(() => {
-                spineElement.style.textShadow = ''; // Return to CSS default
-            }, 300);
-        }
-        
-        currentIteration += 1/3; // Speed controller (lower = slower reveal per letter)
-        
-    }, 40); // 40ms per frame
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    sections.forEach(s => observer.observe(s));
 }

@@ -1,194 +1,120 @@
 /* ============================================
-   DESIGN TOKENS — Cyberpunk Terminal System
+   DUNE — Design System Tokens
    ============================================ */
 :root {
-    /* Colors - Monochrome Terminal */
-    --bg-color: #f8f8f6;
-    --bg-surface: rgba(242, 242, 240, 0.85);
-    --text-primary: #111111;
-    --text-secondary: rgba(0, 0, 0, 0.55);
-    --accent-blue: #111111;
-    --accent-orange: #888888;
-    --border-glow: rgba(0, 0, 0, 0.18);
-    --border-glow-orange: rgba(0, 0, 0, 0.12);
-    --glass-border: rgba(0, 0, 0, 0.1);
+    /* Core palette — Arrakis at night */
+    --void:          #060504;
+    --deep:          #0D0B08;
+    --mid:           #161009;
+    --surface:       #1F160A;
+    --surface-high:  #2A1E0E;
+
+    /* Text — warm parchment */
+    --text-primary:  #EDE3C8;
+    --text-muted:    rgba(237, 227, 200, 0.50);
+    --text-dim:      rgba(237, 227, 200, 0.28);
+
+    /* Spice — the melange amber */
+    --spice:         #C4941A;
+    --spice-bright:  #E8B840;
+    --spice-dim:     #7A5C18;
+    --spice-glow:    rgba(196, 148, 26, 0.15);
+
+    /* Caladan — water teal */
+    --teal:          #1E6075;
+    --teal-dim:      rgba(30, 96, 117, 0.25);
+
+    /* Metal — ornithopter alloy */
+    --metal:         #6B7D88;
+    --metal-bright:  #9AADB8;
+
+    /* Glass surfaces */
+    --glass-bg:      rgba(196, 148, 26, 0.04);
+    --glass-bg-high: rgba(196, 148, 26, 0.08);
+    --glass-border:  rgba(196, 148, 26, 0.18);
+    --glass-border-dim: rgba(196, 148, 26, 0.10);
+    --glass-inset:   rgba(196, 148, 26, 0.07);
 
     /* Typography */
-    --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
-    --font-sans: 'Inter', 'Helvetica Neue', 'Arial', sans-serif;
-
-    /* Fluid Font Sizes */
-    --font-size-xs: clamp(0.7rem, 0.15vw + 0.66rem, 0.8rem);
-    --font-size-sm: clamp(0.8rem, 0.17vw + 0.76rem, 0.89rem);
-    --font-size-base: clamp(1.1rem, 0.4vw + 1rem, 1.25rem);
-    --font-size-md: clamp(1.25rem, 0.61vw + 1.1rem, 1.58rem);
-    --font-size-lg: clamp(1.56rem, 1vw + 1.31rem, 2.11rem);
-    --font-size-xl: clamp(1.95rem, 1.56vw + 1.56rem, 2.81rem);
-    --font-size-xxl: clamp(2.44rem, 2.38vw + 1.85rem, 3.75rem);
+    --font-display:  'Cinzel', serif;
+    --font-body:     'Jost', 'Helvetica Neue', sans-serif;
+    --font-mono:     'Space Mono', 'Courier New', monospace;
 
     /* Spacing */
-    --spacing-xs: clamp(0.5rem, 0.5vw + 0.25rem, 0.75rem);
-    --spacing-sm: clamp(1rem, 1vw + 0.5rem, 1.5rem);
-    --spacing-md: clamp(2rem, 2vw + 1rem, 3rem);
-    --spacing-lg: clamp(4rem, 4vw + 2rem, 6rem);
-    --spacing-xl: clamp(6rem, 6vw + 3rem, 9rem);
+    --s-xs:  0.5rem;
+    --s-sm:  1rem;
+    --s-md:  2rem;
+    --s-lg:  4rem;
+    --s-xl:  6rem;
 
-    --container-width: 1200px;
+    /* Transitions */
+    --ease-out:  cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in:   cubic-bezier(0.7, 0, 0.84, 0);
+    --ease-io:   cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 /* ============================================
    RESET
    ============================================ */
-* {
+*, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-html {
-    scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
-    background-color: #f8f8f6;
-    background-color: var(--bg-color);
+    background: var(--deep);
     color: var(--text-primary);
-    font-family: var(--font-sans);
-    font-size: var(--font-size-base);
-    line-height: 1.6;
+    font-family: var(--font-body);
+    font-size: clamp(0.95rem, 0.4vw + 0.85rem, 1.1rem);
+    line-height: 1.65;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    padding: var(--spacing-md);
     overflow-x: hidden;
 }
-
-/* Subtle grid texture overlay */
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image:
-        linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
-    background-size: 60px 60px;
-    pointer-events: none;
-    z-index: 0;
-}
-
-/* Scanline effect */
-body::after {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(0, 0, 0, 0.03) 2px,
-        rgba(0, 0, 0, 0.03) 4px
-    );
-    pointer-events: none;
-    z-index: 1;
-}
-
-/* ============================================
-   TYPOGRAPHY
-   ============================================ */
-h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-mono);
-    font-weight: 700;
-    line-height: 1.1;
-    margin-bottom: var(--spacing-sm);
-    color: var(--text-primary);
-}
-
-h1 { font-size: var(--font-size-xxl); }
-h2 { font-size: var(--font-size-xl); }
-h3 { font-size: var(--font-size-lg); }
-h4 { font-size: var(--font-size-md); }
 
 a {
     color: inherit;
     text-decoration: none;
-    transition: color 0.3s ease, text-shadow 0.3s ease;
+    transition: color 0.25s ease;
 }
 
-a:hover {
-    color: var(--accent-blue);
-    text-shadow: none;
+img { max-width: 100%; display: block; }
+
+button {
+    cursor: pointer;
+    background: none;
+    border: none;
+    font: inherit;
+    color: inherit;
 }
 
 a:focus-visible,
 button:focus-visible {
-    outline: 2px solid var(--accent-blue);
+    outline: 1px solid var(--spice);
     outline-offset: 3px;
     border-radius: 2px;
 }
 
-img {
-    max-width: 100%;
-    display: block;
-}
-
-.container {
-    max-width: var(--container-width);
-    margin: 0 auto;
-    padding: 0 var(--spacing-md);
-    position: relative;
-    z-index: 2;
-}
+/* ============================================
+   UTILITY
+   ============================================ */
+.font-display  { font-family: var(--font-display); }
+.font-body     { font-family: var(--font-body); }
+.font-mono     { font-family: var(--font-mono); }
+.text-spice    { color: var(--spice); }
+.text-muted    { color: var(--text-muted); }
 
 /* ============================================
-   UTILITY CLASSES
+   CANVAS OVERLAY
    ============================================ */
-.mono {
-    font-family: var(--font-mono);
-}
-
-.sans {
-    font-family: var(--font-sans);
-}
-
-.serif {
-    font-family: var(--font-mono);
-}
-
-.text-accent {
-    color: var(--accent-blue);
-}
-
-.border-accent {
-    border: 1px solid var(--border-glow);
-}
-
-/* ============================================
-   GLASSMORPHISM BASE
-   ============================================ */
-.glass-panel {
-    background: var(--bg-surface);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--glass-border);
-    border-radius: 4px;
-}
-
-/* ============================================
-   MOUSE TRAIL CANVAS
-   ============================================ */
-#mouse-trail {
+#sand-canvas {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     pointer-events: none;
-    z-index: 100;
+    z-index: 0;
 }
 
 /* ============================================
@@ -196,18 +122,15 @@ img {
    ============================================ */
 .lightbox-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.95);
+    inset: 0;
+    background: rgba(6, 5, 4, 0.94);
     z-index: 100000;
     display: flex;
     justify-content: center;
     align-items: center;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.4s ease;
     cursor: zoom-out;
 }
 
@@ -219,11 +142,9 @@ img {
 .lightbox-img {
     max-width: 90%;
     max-height: 90vh;
-    box-shadow: 0 0 60px rgba(0, 0, 0, 0.3);
-    transform: scale(0.9);
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    border: 1px solid var(--border-glow);
-    border-radius: 4px;
+    border: 1px solid var(--glass-border);
+    transform: scale(0.92);
+    transition: transform 0.4s var(--ease-out);
 }
 
 .lightbox-overlay.active .lightbox-img {
@@ -231,10 +152,8 @@ img {
 }
 
 /* ============================================
-   RESPONSIVE
+   PRINT RESET (case study pages)
    ============================================ */
 @media (max-width: 768px) {
-    body {
-        padding: var(--spacing-sm);
-    }
+    body { font-size: 0.95rem; }
 }

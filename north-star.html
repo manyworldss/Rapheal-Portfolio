@@ -18,26 +18,27 @@
     <meta name="twitter:description"
         content="Measuring Automation Bias: when professionals change correct answers after confident but wrong AI advice.">
     <meta name="twitter:image" content="https://rapheals.up.railway.app/images/north-star-dashboard.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Jost:ital,wght@0,300;0,400;0,500;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="canonical" href="https://rapheals.up.railway.app/north-star.html">
-    <link rel="stylesheet" href="css/global.css?v=31">
-    <link rel="stylesheet" href="css/case-study.css?v=31">
+    <link rel="stylesheet" href="css/global.css?v=33">
+    <link rel="stylesheet" href="css/case-study.css?v=33">
 </head>
 
 <body>
-    <main class="container book-layout">
+    <!-- Ambient sand particle canvas -->
+    <canvas id="sand-canvas" aria-hidden="true" style="position: fixed; inset: 0; pointer-events: none; z-index: 0;"></canvas>
 
-        <!-- Cheeky Menu (Bookmark) -->
-        <nav class="cheeky-menu" id="bookmark-nav">
-            <div class="bookmark-ribbon">
-                <button class="menu-toggle" aria-label="Toggle Navigation">&lt; SYS_NAV &gt;</button>
-                <div class="menu-items">
-                    <a href="index.html">/Home_Interface</a>
-                    <a href="north-star.html">Module::North_Star</a>
-                    <a href="celio.html">Module::Celio</a>
-                    <a href="illumi.html">Module::Illumi</a>
-                </div>
-            </div>
+    <!-- Top Bar Navigation -->
+    <header class="topbar" style="position: sticky; top: 0; z-index: 9999; display: flex; justify-content: space-between; align-items: center; padding: 0 3vw; height: 80px; border-bottom: 1px solid var(--glass-border-dim); background: rgba(13, 11, 8, 0.95); backdrop-filter: blur(10px);">
+        <a href="index.html" class="identity-sigil" aria-label="Rapheal Suber" style="font-family: var(--font-display); font-size: 1.6rem; font-weight: 600; color: var(--spice); letter-spacing: 0.05em; text-decoration: none; position: relative;">RS</a>
+        <nav class="topbar-nav" aria-label="Site navigation" style="display: flex; align-items: center;">
+            <a href="index.html" class="nav-trigger" style="font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.3s ease;">← Back to Home</a>
         </nav>
+    </header>
+
+    <main class="container book-layout" style="position: relative; z-index: 1;">
 
         <!-- Case Study Header -->
         <header class="cs-header">
@@ -226,18 +227,9 @@
                 </div>
                 <div class="section-body sans">
                     <div class="screenshot-grid">
-                        <div class="screenshot-placeholder">
-                            <span class="placeholder-label sans">[ Evaluation Flow ]</span>
-                        </div>
-                        <div class="screenshot-placeholder">
-                            <span class="placeholder-label sans">[ Results Dashboard ]</span>
-                        </div>
-                        <div class="screenshot-placeholder">
-                            <span class="placeholder-label sans">[ Scenario View ]</span>
-                        </div>
-                        <div class="screenshot-placeholder">
-                            <span class="placeholder-label sans">[ Bias Score Breakdown ]</span>
-                        </div>
+                        <img src="images/north-star-hero.png" alt="North Star Hero" class="comparison-img" loading="lazy">
+                        <img src="images/north-star-scenarios.png" alt="Evaluation Scenarios" class="comparison-img" loading="lazy">
+                        <img src="images/north-star-results.png" alt="Results Dashboard" class="comparison-img" loading="lazy">
                     </div>
                 </div>
             </section>
@@ -270,7 +262,7 @@
             <a href="index.html" class="back-link-clean serif">Back to Home</a>
         </footer>
     </main>
-    <script src="js/main.js?v=31"></script>
+    <script src="js/main.js?v=34"></script>
 </body>
 
 </html>
