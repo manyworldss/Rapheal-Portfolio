@@ -21,6 +21,8 @@ function initSandParticles() {
     const ctx = canvas.getContext('2d');
     let W = window.innerWidth;
     let H = window.innerHeight;
+    let paused = false;
+    let rafId = null;
 
     function resize() {
         W = canvas.width  = window.innerWidth;
@@ -29,7 +31,14 @@ function initSandParticles() {
     resize();
     window.addEventListener('resize', resize);
 
-    const COUNT = 120;
+    // Pause animation when tab is hidden to save GPU resources
+    document.addEventListener('visibilitychange', () => {
+        paused = document.hidden;
+        if (!paused && !rafId) rafId = requestAnimationFrame(frame);
+    });
+
+    const COUNT = 80;
+    const MAX   = COUNT + 60;
     const particles = [];
 
     class Grain {
@@ -42,7 +51,7 @@ function initSandParticles() {
             this.r    = Math.random() * 1.1 + 0.2;
             this.vx   = (Math.random() - 0.5) * 0.25;
             this.vy   = -(Math.random() * 0.35 + 0.08);
-            this.life = Math.random() * 0.11 + 0.03;  // opacity
+            this.life = Math.random() * 0.11 + 0.03;
         }
         update() {
             this.x += this.vx;
@@ -60,36 +69,44 @@ function initSandParticles() {
     }
 
     for (let i = 0; i < COUNT; i++) {
-        particles.push(new Grain(true));  // start scattered across screen
+        particles.push(new Grain(true));
     }
 
-    // Mouse interaction: disturb nearby grains
+    // Throttle mousemove to one spawn per animation frame
+    let mousePending = false;
     const mouse = { x: -1000, y: -1000 };
     window.addEventListener('mousemove', e => {
         mouse.x = e.clientX;
         mouse.y = e.clientY;
-        // Spawn a burst of 2 extra grains at cursor
-        for (let i = 0; i < 2; i++) {
-            const g = new Grain(false);
-            g.x  = mouse.x + (Math.random() - 0.5) * 20;
-            g.y  = mouse.y + (Math.random() - 0.5) * 20;
-            g.vy = -(Math.random() * 0.6 + 0.2);
-            g.vx = (Math.random() - 0.5) * 0.6;
-            g.life = Math.random() * 0.16 + 0.06;
-            particles.push(g);
-            if (particles.length > COUNT + 80) particles.splice(0, 1);
-        }
-    });
+        mousePending = true;
+    }, { passive: true });
+
+    function spawnFromMouse() {
+        if (!mousePending) return;
+        mousePending = false;
+        if (particles.length >= MAX) return;
+        const g = new Grain(false);
+        g.x  = mouse.x + (Math.random() - 0.5) * 20;
+        g.y  = mouse.y + (Math.random() - 0.5) * 20;
+        g.vy = -(Math.random() * 0.6 + 0.2);
+        g.vx = (Math.random() - 0.5) * 0.6;
+        g.life = Math.random() * 0.16 + 0.06;
+        particles.push(g);
+        if (particles.length > MAX) particles.splice(0, 1);
+    }
 
     function frame() {
+        rafId = null;
+        if (paused) return;
+        spawnFromMouse();
         ctx.clearRect(0, 0, W, H);
         for (const g of particles) {
             g.update();
             g.draw();
         }
-        requestAnimationFrame(frame);
+        rafId = requestAnimationFrame(frame);
     }
-    frame();
+    rafId = requestAnimationFrame(frame);
 }
 
 /* ============================================
