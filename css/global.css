@@ -115,7 +115,7 @@ button:focus-visible {
     inset: 0;
     pointer-events: none;
     z-index: 0;
-    will-change: contents;
+    will-change: transform;
 }
 
 /* ============================================
@@ -157,4 +157,14 @@ button:focus-visible {
    ============================================ */
 @media (max-width: 768px) {
     body { font-size: 0.95rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    html { scroll-behavior: auto; }
+    #sand-canvas { display: none; }
 }

@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function initSandParticles() {
     const canvas = document.getElementById('sand-canvas');
     if (!canvas) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const ctx = canvas.getContext('2d');
     let W = window.innerWidth;
@@ -37,8 +38,8 @@ function initSandParticles() {
         if (!paused && !rafId) rafId = requestAnimationFrame(frame);
     });
 
-    const COUNT = 80;
-    const MAX   = COUNT + 60;
+    const COUNT = 55;
+    const MAX   = COUNT + 40;
     const particles = [];
 
     class Grain {
