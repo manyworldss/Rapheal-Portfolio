@@ -137,10 +137,14 @@ function initArcParallax() {
         currentX += (targetX - currentX) * 0.055;
         currentY += (targetY - currentY) * 0.055;
 
+        heroSide.style.setProperty('--arc-far-x',   `${currentX *  7}px`);
+        heroSide.style.setProperty('--arc-far-y',   `${currentY *  4}px`);
         heroSide.style.setProperty('--arc-outer-x', `${currentX * 14}px`);
         heroSide.style.setProperty('--arc-outer-y', `${currentY *  9}px`);
-        heroSide.style.setProperty('--arc-inner-x', `${currentX * 26}px`);
-        heroSide.style.setProperty('--arc-inner-y', `${currentY * 17}px`);
+        heroSide.style.setProperty('--arc-inner-x', `${currentX * 24}px`);
+        heroSide.style.setProperty('--arc-inner-y', `${currentY * 16}px`);
+        heroSide.style.setProperty('--arc-close-x', `${currentX * 36}px`);
+        heroSide.style.setProperty('--arc-close-y', `${currentY * 24}px`);
 
         requestAnimationFrame(tick);
     }

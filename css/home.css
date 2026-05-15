@@ -17,13 +17,23 @@
 /* ── ARC ANIMATIONS ── */
 /* Border-only animation — transform is controlled by JS parallax */
 @keyframes arc-breathe-outer {
-    from { border-color: rgba(196, 148, 26, 0.03); }
-    to   { border-color: rgba(196, 148, 26, 0.14); }
+    from { border-color: rgba(196, 148, 26, 0.06); }
+    to   { border-color: rgba(196, 148, 26, 0.26); }
 }
 
 @keyframes arc-breathe-inner {
-    from { border-color: rgba(196, 148, 26, 0.015); }
-    to   { border-color: rgba(196, 148, 26, 0.09);  }
+    from { border-color: rgba(196, 148, 26, 0.04); }
+    to   { border-color: rgba(196, 148, 26, 0.18); }
+}
+
+@keyframes arc-breathe-far {
+    from { border-color: rgba(196, 148, 26, 0.02); }
+    to   { border-color: rgba(196, 148, 26, 0.10); }
+}
+
+@keyframes arc-breathe-close {
+    from { border-color: rgba(196, 148, 26, 0.07); }
+    to   { border-color: rgba(196, 148, 26, 0.32); }
 }
 
 /* ── VIEWPORT SHELL ── */
@@ -124,10 +134,14 @@
     padding: 0 4rem 0 3rem;
     position: relative;
     /* CSS custom properties for JS-driven arc parallax */
+    --arc-far-x: 0px;
+    --arc-far-y: 0px;
     --arc-outer-x: 0px;
     --arc-outer-y: 0px;
     --arc-inner-x: 0px;
     --arc-inner-y: 0px;
+    --arc-close-x: 0px;
+    --arc-close-y: 0px;
 }
 
 /* Outer dune ridge — deeper in scene, moves less with mouse */
@@ -137,7 +151,7 @@
     width: 700px;
     height: 700px;
     border-radius: 50%;
-    border: 1px solid rgba(196, 148, 26, 0.05);
+    border: 1.5px solid rgba(196, 148, 26, 0.10);
     left: -320px;
     top: 50%;
     transform: translateY(-50%) translate(var(--arc-outer-x), var(--arc-outer-y));
@@ -153,7 +167,7 @@
     width: 480px;
     height: 480px;
     border-radius: 50%;
-    border: 1px solid rgba(196, 148, 26, 0.035);
+    border: 1.5px solid rgba(196, 148, 26, 0.07);
     left: -230px;
     top: 50%;
     transform: translateY(-46%) translate(var(--arc-inner-x), var(--arc-inner-y));
@@ -161,6 +175,38 @@
     z-index: 0;
     animation: arc-breathe-inner 5.5s ease-in-out infinite alternate;
     animation-delay: -2s;
+}
+
+/* Far arc — outermost, very slow breath */
+.arc-ring--far {
+    position: absolute;
+    width: 980px;
+    height: 980px;
+    border-radius: 50%;
+    border: 1px solid rgba(196, 148, 26, 0.04);
+    left: -490px;
+    top: 50%;
+    transform: translateY(-50%) translate(var(--arc-far-x), var(--arc-far-y));
+    pointer-events: none;
+    z-index: 0;
+    animation: arc-breathe-far 11s ease-in-out infinite alternate;
+    animation-delay: -4s;
+}
+
+/* Close arc — innermost, fastest breath, most visible */
+.arc-ring--close {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    border: 2px solid rgba(196, 148, 26, 0.12);
+    left: -110px;
+    top: 50%;
+    transform: translateY(-44%) translate(var(--arc-close-x), var(--arc-close-y));
+    pointer-events: none;
+    z-index: 0;
+    animation: arc-breathe-close 4s ease-in-out infinite alternate;
+    animation-delay: -1s;
 }
 
 .hero-role {
