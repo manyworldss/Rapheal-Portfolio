@@ -125,9 +125,16 @@ function initPanelSystem() {
         const panel = document.getElementById(`panel-${id}`);
         if (!panel) return;
 
+        // Prime the compositing layer only for the slide-in animation
+        panel.style.willChange = 'transform';
         panel.classList.add('active');
         panel.setAttribute('aria-hidden', 'false');
         backdrop.classList.add('active');
+
+        // Release the compositing layer once animation completes so text renders crisply
+        panel.addEventListener('transitionend', () => {
+            panel.style.willChange = 'auto';
+        }, { once: true });
 
         // Mark the triggering button active
         triggers.forEach(t => t.classList.toggle('active', t.dataset.panel === id));
@@ -141,6 +148,13 @@ function initPanelSystem() {
 
     function closeAll() {
         panels.forEach(p => {
+            if (p.classList.contains('active')) {
+                // Re-enable compositing layer for the slide-out animation
+                p.style.willChange = 'transform';
+                p.addEventListener('transitionend', () => {
+                    p.style.willChange = 'auto';
+                }, { once: true });
+            }
             p.classList.remove('active');
             p.setAttribute('aria-hidden', 'true');
         });
