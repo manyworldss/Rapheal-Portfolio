@@ -168,13 +168,22 @@ body {
 .cs-section {
     margin-bottom: var(--s-lg);
     opacity: 0;
-    transform: translateY(16px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    transform: translateY(44px);
+    transition: opacity 0.75s var(--ease-out), transform 0.75s var(--ease-out);
 }
 
 .cs-section.visible {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* Section header arrives slightly ahead of body for a layered reveal */
+.cs-section.visible .section-header {
+    transition-delay: 0s;
+}
+
+.cs-section.visible .section-body {
+    transition: opacity 0.65s var(--ease-out) 0.1s, transform 0.65s var(--ease-out) 0.1s;
 }
 
 .section-header { margin-bottom: var(--s-sm); }

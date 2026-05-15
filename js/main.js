@@ -38,8 +38,8 @@ function initSandParticles() {
         if (!paused && !rafId) rafId = requestAnimationFrame(frame);
     });
 
-    const COUNT = 55;
-    const MAX   = COUNT + 40;
+    const COUNT = 100;
+    const MAX   = COUNT + 70;
     const particles = [];
 
     class Grain {
@@ -49,10 +49,10 @@ function initSandParticles() {
         reset(randomY = false) {
             this.x    = Math.random() * W;
             this.y    = randomY ? Math.random() * H : H + Math.random() * 80;
-            this.r    = Math.random() * 1.1 + 0.2;
-            this.vx   = (Math.random() - 0.5) * 0.25;
-            this.vy   = -(Math.random() * 0.35 + 0.08);
-            this.life = Math.random() * 0.11 + 0.03;
+            this.r    = Math.random() * 1.4 + 0.3;
+            this.vx   = (Math.random() - 0.5) * 0.35;
+            this.vy   = -(Math.random() * 0.45 + 0.10);
+            this.life = Math.random() * 0.15 + 0.05;
         }
         update() {
             this.x += this.vx;
@@ -87,11 +87,12 @@ function initSandParticles() {
         mousePending = false;
         if (particles.length >= MAX) return;
         const g = new Grain(false);
-        g.x  = mouse.x + (Math.random() - 0.5) * 20;
-        g.y  = mouse.y + (Math.random() - 0.5) * 20;
-        g.vy = -(Math.random() * 0.6 + 0.2);
-        g.vx = (Math.random() - 0.5) * 0.6;
-        g.life = Math.random() * 0.16 + 0.06;
+        g.x  = mouse.x + (Math.random() - 0.5) * 28;
+        g.y  = mouse.y + (Math.random() - 0.5) * 28;
+        g.vy = -(Math.random() * 0.8 + 0.3);
+        g.vx = (Math.random() - 0.5) * 0.8;
+        g.r  = Math.random() * 1.6 + 0.4;
+        g.life = Math.random() * 0.22 + 0.08;
         particles.push(g);
         if (particles.length > MAX) particles.splice(0, 1);
     }
@@ -226,13 +227,20 @@ function initCaseStudyScrollAnimations() {
     if (!sections.length) return;
 
     const observer = new IntersectionObserver(entries => {
+        // Stagger sections that enter the viewport in the same callback batch
+        let batchDelay = 0;
         entries.forEach(entry => {
             if (entry.isIntersecting) {
+                entry.target.style.transitionDelay = `${batchDelay}ms`;
                 entry.target.classList.add('visible');
+                // Clear the delay after the animation completes so it doesn't linger
+                const clearDelay = batchDelay + 750;
+                setTimeout(() => { entry.target.style.transitionDelay = ''; }, clearDelay);
+                batchDelay += 110;
                 observer.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
 
     sections.forEach(s => observer.observe(s));
 }
