@@ -14,6 +14,18 @@
     to   { opacity: 1; }
 }
 
+/* ── ARC ANIMATIONS ── */
+/* Border-only animation — transform is controlled by JS parallax */
+@keyframes arc-breathe-outer {
+    from { border-color: rgba(196, 148, 26, 0.03); }
+    to   { border-color: rgba(196, 148, 26, 0.14); }
+}
+
+@keyframes arc-breathe-inner {
+    from { border-color: rgba(196, 148, 26, 0.015); }
+    to   { border-color: rgba(196, 148, 26, 0.09);  }
+}
+
 /* ── VIEWPORT SHELL ── */
 .viewport {
     width: 100vw;
@@ -111,9 +123,14 @@
     justify-content: center;
     padding: 0 4rem 0 3rem;
     position: relative;
+    /* CSS custom properties for JS-driven arc parallax */
+    --arc-outer-x: 0px;
+    --arc-outer-y: 0px;
+    --arc-inner-x: 0px;
+    --arc-inner-y: 0px;
 }
 
-/* Outer dune ridge — large arc, mostly off-screen left */
+/* Outer dune ridge — deeper in scene, moves less with mouse */
 .hero-side::before {
     content: '';
     position: absolute;
@@ -123,12 +140,13 @@
     border: 1px solid rgba(196, 148, 26, 0.05);
     left: -320px;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translateY(-50%) translate(var(--arc-outer-x), var(--arc-outer-y));
     pointer-events: none;
     z-index: 0;
+    animation: arc-breathe-outer 8s ease-in-out infinite alternate;
 }
 
-/* Inner dune ridge — tighter arc, slightly offset for layered depth */
+/* Inner dune ridge — closer, moves more with mouse, different breath phase */
 .hero-side::after {
     content: '';
     position: absolute;
@@ -138,9 +156,11 @@
     border: 1px solid rgba(196, 148, 26, 0.035);
     left: -230px;
     top: 50%;
-    transform: translateY(-46%);
+    transform: translateY(-46%) translate(var(--arc-inner-x), var(--arc-inner-y));
     pointer-events: none;
     z-index: 0;
+    animation: arc-breathe-inner 5.5s ease-in-out infinite alternate;
+    animation-delay: -2s;
 }
 
 .hero-role {
@@ -151,6 +171,8 @@
     color: var(--spice);
     margin-bottom: 1.25rem;
     opacity: 0.85;
+    position: relative;
+    z-index: 1;
     animation: dune-emerge 0.9s var(--ease-out) 0.35s both;
 }
 
@@ -163,6 +185,8 @@
     text-transform: uppercase;
     color: var(--text-primary);
     margin-bottom: 1.75rem;
+    position: relative;
+    z-index: 1;
     animation: dune-emerge 1s var(--ease-out) 0.5s both;
     text-shadow: 0 0 80px rgba(196, 148, 26, 0.12);
 }
@@ -174,6 +198,8 @@
     color: var(--text-muted);
     line-height: 1.65;
     max-width: 400px;
+    position: relative;
+    z-index: 1;
     animation: dune-emerge 0.9s var(--ease-out) 0.7s both;
 }
 
@@ -184,7 +210,7 @@
     justify-content: center;
     border-left: 1px solid var(--glass-border-dim);
     padding: 0 3rem 0 3rem;
-    animation: dune-fade 0.8s ease 0.5s both;
+    /* No parent animation — tiles animate independently to avoid opacity multiplication */
 }
 
 .work-label {
@@ -194,7 +220,7 @@
     text-transform: uppercase;
     color: var(--text-dim);
     margin-bottom: 1.5rem;
-    padding-left: 0.25rem;
+    animation: dune-emerge 0.7s var(--ease-out) 0.55s both;
 }
 
 .work-tiles {

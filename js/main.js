@@ -5,6 +5,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     initSandParticles();
+    initArcParallax();
     initPanelSystem();
     initLightbox();
     initCaseStudyScrollAnimations();
@@ -109,6 +110,41 @@ function initSandParticles() {
         rafId = requestAnimationFrame(frame);
     }
     rafId = requestAnimationFrame(frame);
+}
+
+/* ============================================
+   ARC PARALLAX
+   Dune ridge circles follow the cursor at
+   different depths — outer ring moves less
+   (far dune), inner ring moves more (near dune)
+   ============================================ */
+function initArcParallax() {
+    const heroSide = document.querySelector('.hero-side');
+    if (!heroSide) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    let targetX = 0, targetY = 0;
+    let currentX = 0, currentY = 0;
+
+    window.addEventListener('mousemove', e => {
+        // Normalize to –1 … +1 relative to viewport center
+        targetX = (e.clientX / window.innerWidth  - 0.5) * 2;
+        targetY = (e.clientY / window.innerHeight - 0.5) * 2;
+    }, { passive: true });
+
+    function tick() {
+        // Lerp smoothly toward mouse target (~0.55s settling time)
+        currentX += (targetX - currentX) * 0.055;
+        currentY += (targetY - currentY) * 0.055;
+
+        heroSide.style.setProperty('--arc-outer-x', `${currentX * 14}px`);
+        heroSide.style.setProperty('--arc-outer-y', `${currentY *  9}px`);
+        heroSide.style.setProperty('--arc-inner-x', `${currentX * 26}px`);
+        heroSide.style.setProperty('--arc-inner-y', `${currentY * 17}px`);
+
+        requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
 }
 
 /* ============================================
