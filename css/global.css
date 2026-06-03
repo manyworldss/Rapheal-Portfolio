@@ -1,44 +1,43 @@
 /* ============================================
-   DUNE — Design System Tokens
+   MARATHON — Design System Tokens
+   Tactical Telemetry / Dark Terminal Mode
    ============================================ */
 :root {
-    /* Core palette — Arrakis at night */
-    --void:          #060504;
-    --deep:          #0D0B08;
-    --mid:           #161009;
-    --surface:       #1F160A;
-    --surface-high:  #2A1E0E;
+    /* Core palette — deactivated CRT */
+    --void:          #030303;
+    --deep:          #0A0A0A;
+    --mid:           #111111;
+    --surface:       #181818;
+    --surface-high:  #202020;
 
-    /* Text — warm parchment */
-    --text-primary:  #EDE3C8;
-    --text-muted:    rgba(237, 227, 200, 0.50);
-    --text-dim:      rgba(237, 227, 200, 0.28);
+    /* Text — white phosphor */
+    --text-primary:  #EAEAE4;
+    --text-muted:    rgba(234, 234, 228, 0.52);
+    --text-dim:      rgba(234, 234, 228, 0.26);
 
-    /* Spice — the melange amber */
-    --spice:         #C4941A;
-    --spice-bright:  #E8B840;
-    --spice-dim:     #7A5C18;
-    --spice-glow:    rgba(196, 148, 26, 0.15);
+    /* Red — Marathon blood / aviation hazard */
+    --spice:         #CC1B22;
+    --spice-bright:  #E82A32;
+    --spice-dim:     #801218;
+    --spice-glow:    rgba(204, 27, 34, 0.14);
 
-    /* Caladan — water teal */
-    --teal:          #1E6075;
-    --teal-dim:      rgba(30, 96, 117, 0.25);
-
-    /* Metal — ornithopter alloy */
-    --metal:         #6B7D88;
-    --metal-bright:  #9AADB8;
+    /* Secondary */
+    --teal:          #1C3A4A;
+    --teal-dim:      rgba(28, 58, 74, 0.25);
+    --metal:         #4A5560;
+    --metal-bright:  #7A8890;
 
     /* Glass surfaces */
-    --glass-bg:      rgba(196, 148, 26, 0.04);
-    --glass-bg-high: rgba(196, 148, 26, 0.08);
-    --glass-border:  rgba(196, 148, 26, 0.18);
-    --glass-border-dim: rgba(196, 148, 26, 0.10);
-    --glass-inset:   rgba(196, 148, 26, 0.07);
+    --glass-bg:          rgba(204, 27, 34, 0.04);
+    --glass-bg-high:     rgba(204, 27, 34, 0.08);
+    --glass-border:      rgba(204, 27, 34, 0.22);
+    --glass-border-dim:  rgba(234, 234, 228, 0.08);
+    --glass-inset:       rgba(204, 27, 34, 0.06);
 
     /* Typography */
-    --font-display:  'Cinzel', serif;
-    --font-body:     'Jost', 'Helvetica Neue', sans-serif;
-    --font-mono:     'Space Mono', 'Courier New', monospace;
+    --font-display: 'Bebas Neue', 'Impact', sans-serif;
+    --font-body:    'Jost', 'Helvetica Neue', sans-serif;
+    --font-mono:    'Space Mono', 'Courier New', monospace;
 
     /* Spacing */
     --s-xs:  0.5rem;
@@ -65,7 +64,10 @@
 html { scroll-behavior: smooth; }
 
 body {
-    background: var(--deep);
+    background-color: var(--deep);
+    /* Faint dot grid — terminal phosphor texture */
+    background-image: radial-gradient(circle, rgba(234, 234, 228, 0.045) 1px, transparent 1px);
+    background-size: 28px 28px;
     color: var(--text-primary);
     font-family: var(--font-body);
     font-size: clamp(0.95rem, 0.4vw + 0.85rem, 1.1rem);
@@ -95,7 +97,7 @@ a:focus-visible,
 button:focus-visible {
     outline: 1px solid var(--spice);
     outline-offset: 3px;
-    border-radius: 2px;
+    border-radius: 0;
 }
 
 /* ============================================
@@ -124,7 +126,7 @@ button:focus-visible {
 .lightbox-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(6, 5, 4, 0.94);
+    background: rgba(3, 3, 3, 0.95);
     z-index: 100000;
     display: flex;
     justify-content: center;
@@ -153,7 +155,7 @@ button:focus-visible {
 }
 
 /* ============================================
-   PRINT RESET (case study pages)
+   RESPONSIVE BASE
    ============================================ */
 @media (max-width: 768px) {
     body { font-size: 0.95rem; }

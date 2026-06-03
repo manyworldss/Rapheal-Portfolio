@@ -65,7 +65,7 @@ function initSandParticles() {
         draw() {
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(196, 148, 26, ${this.life})`;
+            ctx.fillStyle = `rgba(234, 234, 228, ${this.life * 0.45})`;
             ctx.fill();
         }
     }
@@ -137,14 +137,14 @@ function initArcParallax() {
         currentX += (targetX - currentX) * 0.055;
         currentY += (targetY - currentY) * 0.055;
 
-        heroSide.style.setProperty('--arc-far-x',   `${currentX *  7}px`);
-        heroSide.style.setProperty('--arc-far-y',   `${currentY *  4}px`);
-        heroSide.style.setProperty('--arc-outer-x', `${currentX * 14}px`);
-        heroSide.style.setProperty('--arc-outer-y', `${currentY *  9}px`);
-        heroSide.style.setProperty('--arc-inner-x', `${currentX * 24}px`);
-        heroSide.style.setProperty('--arc-inner-y', `${currentY * 16}px`);
-        heroSide.style.setProperty('--arc-close-x', `${currentX * 36}px`);
-        heroSide.style.setProperty('--arc-close-y', `${currentY * 24}px`);
+        heroSide.style.setProperty('--arc-far-x',   `${currentX * 3}px`);
+        heroSide.style.setProperty('--arc-far-y',   `${currentY * 2}px`);
+        heroSide.style.setProperty('--arc-outer-x', `${currentX * 5}px`);
+        heroSide.style.setProperty('--arc-outer-y', `${currentY * 3}px`);
+        heroSide.style.setProperty('--arc-inner-x', `${currentX * 7}px`);
+        heroSide.style.setProperty('--arc-inner-y', `${currentY * 5}px`);
+        heroSide.style.setProperty('--arc-close-x', `${currentX * 4}px`);
+        heroSide.style.setProperty('--arc-close-y', `${currentY * 3}px`);
 
         requestAnimationFrame(tick);
     }
