@@ -3,12 +3,12 @@
    Tactical Telemetry / Dark Terminal Mode
    ============================================ */
 :root {
-    /* Core palette — deactivated CRT */
-    --void:          #030303;
-    --deep:          #0A0A0A;
-    --mid:           #111111;
-    --surface:       #181818;
-    --surface-high:  #202020;
+    /* Core palette — deep navy-black */
+    --void:          #040608;
+    --deep:          #070A10;
+    --mid:           #0D1018;
+    --surface:       #141820;
+    --surface-high:  #1B2028;
 
     /* Text — white phosphor */
     --text-primary:  #EAEAE4;
@@ -20,6 +20,13 @@
     --spice-bright:  #E82A32;
     --spice-dim:     #801218;
     --spice-glow:    rgba(204, 27, 34, 0.14);
+
+    /* Cyan / Cerulean — secondary accent, discovery / navigation */
+    --cyan:           #0BAACC;
+    --cyan-bright:    #1FCAE8;
+    --cyan-dim:       rgba(11, 170, 204, 0.16);
+    --cyan-glow:      rgba(11, 170, 204, 0.06);
+    --cyan-border:    rgba(11, 170, 204, 0.22);
 
     /* Secondary */
     --teal:          #1C3A4A;
