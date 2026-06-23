@@ -47,11 +47,11 @@ function Cursor() {
   }, []);
   return (
     <div aria-hidden="true">
-      <div ref={dot} style={{ position:'fixed', top:0, left:0, width:5, height:5, marginLeft:-2.5, marginTop:-2.5, borderRadius:999, background:'var(--clay)', pointerEvents:'none', zIndex:9999, mixBlendMode:'normal' }} />
-      <div ref={ring} className="cursor-ring" style={{ position:'fixed', top:0, left:0, width:34, height:34, marginLeft:-17, marginTop:-17, borderRadius:999, border:'1px solid var(--line-strong)', pointerEvents:'none', zIndex:9998, transition:'width var(--dur-2) var(--ease-soft), height var(--dur-2) var(--ease-soft), border-color var(--dur-2) var(--ease-soft), background var(--dur-2) var(--ease-soft)' }} />
+      <div ref={dot} style={{ position:'fixed', top:0, left:0, width:5, height:5, marginLeft:-2.5, marginTop:-2.5, borderRadius:999, background:'var(--cursor-dot)', pointerEvents:'none', zIndex:9999, mixBlendMode:'normal' }} />
+      <div ref={ring} className="cursor-ring" style={{ position:'fixed', top:0, left:0, width:34, height:34, marginLeft:-17, marginTop:-17, borderRadius:999, border:'1px solid var(--cursor-ring-line)', pointerEvents:'none', zIndex:9998, transition:'width var(--dur-2) var(--ease-soft), height var(--dur-2) var(--ease-soft), border-color var(--dur-2) var(--ease-soft), background var(--dur-2) var(--ease-soft)' }} />
       <style>{`
         @media (pointer:fine){ * { cursor: none !important; } }
-        .cursor-ring[data-hot="1"]{ width:58px; height:58px; margin-left:-29px; margin-top:-29px; border-color:var(--clay-line); background:var(--clay-wash); }
+        .cursor-ring[data-hot="1"]{ width:58px; height:58px; margin-left:-29px; margin-top:-29px; border-color:var(--cursor-hot-line); background:var(--cursor-hot-wash); }
       `}</style>
     </div>
   );

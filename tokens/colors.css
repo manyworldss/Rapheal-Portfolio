@@ -74,6 +74,12 @@
 
   --focus-ring:       var(--clay);
 
+  /* ---- Custom Cursor Colors ---- */
+  --cursor-dot:       var(--accent);
+  --cursor-ring-line: var(--border-strong);
+  --cursor-hot-line:  var(--accent-line);
+  --cursor-hot-wash:  var(--accent-wash);
+
   color-scheme: light;
 }
 
@@ -112,6 +118,12 @@
   --accent-2-line:    rgba(110, 144, 126, 0.34);
 
   --focus-ring:       var(--clay-soft);
+
+  /* ---- Custom Cursor Colors ---- */
+  --cursor-dot:       var(--accent-2);       /* pine green in dark mode */
+  --cursor-ring-line: var(--border-strong);
+  --cursor-hot-line:  var(--accent-2-line);  /* pine green lines/wash */
+  --cursor-hot-wash:  var(--accent-2-wash);
 
   color-scheme: dark;
 }
