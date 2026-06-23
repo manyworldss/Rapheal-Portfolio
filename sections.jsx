@@ -5,7 +5,11 @@ const { useState: useStateS, useRef: useRefS } = React;
 
 /* ---- Floating ghost nav ---- */
 function Nav({ onOpen }) {
-  const items = [{ l: 'About', id: 'about' }, { l: 'Contact', id: 'contact' }];
+  const items = [
+    { l: 'About', id: 'about' },
+    { l: 'Experience', id: 'experience' },
+    { l: 'Contact', id: 'contact' }
+  ];
   const fg = 'var(--text-strong)';
   const muted = 'var(--text-muted)';
   const [scrolled, setScrolled] = useStateS(false);

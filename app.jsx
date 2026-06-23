@@ -91,6 +91,54 @@ function AboutContent() {
   );
 }
 
+function ExperienceContent() {
+  const experiences = [
+    {
+      role: 'UX Designer',
+      company: 'Prox',
+      type: 'Contract',
+      desc: "Sent an unsolicited onboarding redesign to the team. They adopted it as the product's first-time user experience direction and brought me on to see it through. Led the full redesign across 14 screens, focused on reducing mobile friction, improving feature comprehension, and driving first-time activation. Running A/B tests, event tracking, and post-activation surveys to measure how the changes hold up on retention."
+    },
+    {
+      role: 'AI Evaluation Specialist',
+      company: 'Handshake AI',
+      type: 'Contract',
+      desc: "Contracted by a leading AI research lab to evaluate LLM-generated outputs for quality, accuracy, and alignment with UX principles. Reviewed and scored 500+ outputs, returning structured feedback to directly improve model iteration cycles."
+    },
+    {
+      role: 'Software Engineer (UX)',
+      company: 'Wazzle AI',
+      desc: "Led mixed-methods research combining behavioral analytics and support ticket analysis to identify product gaps, driving an 18% increase in conversion. Translated ambiguous feedback into testable hypotheses and shipped iterative UX improvements via A/B testing."
+    },
+    {
+      role: 'Technical Support Engineer',
+      company: 'Greenville County',
+      desc: "Redesigned and automated the employee onboarding experience, cutting device setup time by rewriting legacy workflows. Built documentation systems that reduced cognitive overhead for support staff and standardized procedures across the department."
+    }
+  ];
+
+  return (
+    <div>
+      <PanelTitle index="E">Experience</PanelTitle>
+      <div style={{ display:'flex', flexDirection:'column', gap:'1.75rem' }}>
+        {experiences.map((exp, i) => (
+          <div key={i} style={{ borderBottom: i !== experiences.length - 1 ? 'var(--hair) solid var(--border)' : 'none', paddingBottom: i !== experiences.length - 1 ? '1.5rem' : 0 }}>
+            <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline', flexWrap:'wrap', gap:'0.5rem', marginBottom:'0.5rem' }}>
+              <h3 style={{ fontFamily:'var(--font-display)', fontWeight:'var(--fw-light)', fontSize:'var(--text-h2)', color:'var(--text-strong)', margin:0 }}>{exp.role}</h3>
+              <span style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', textTransform:'uppercase', color:'var(--accent)' }}>
+                {exp.company} {exp.type ? `· ${exp.type}` : ''}
+              </span>
+            </div>
+            <p style={{ fontSize:'var(--text-body)', lineHeight:'var(--leading-body)', color:'var(--text-muted)', margin:0 }}>
+              {exp.desc}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function ContactContent() {
   const links = [
     ['Email', 'raphealsuber@gmail.com', 'mailto:raphealsuber@gmail.com'],
@@ -120,7 +168,7 @@ function App() {
   const [openCase, setOpenCase] = useAppState(null);
   const [panel, setPanel] = useAppState(null);
   const onOpen = (id) => {
-    if (id === 'about' || id === 'contact') setPanel(id);
+    if (id === 'about' || id === 'experience' || id === 'contact') setPanel(id);
     else setOpenCase(WORK.find((w) => w.id === id));
   };
   return (
@@ -136,6 +184,7 @@ function App() {
       </main>
       <CaseOverlay item={openCase} onClose={() => setOpenCase(null)} />
       <Panel open={panel === 'about'} onClose={() => setPanel(null)}><AboutContent /></Panel>
+      <Panel open={panel === 'experience'} onClose={() => setPanel(null)}><ExperienceContent /></Panel>
       <Panel open={panel === 'contact'} onClose={() => setPanel(null)}><ContactContent /></Panel>
       <div className="vignette" aria-hidden="true"></div>
     </React.Fragment>

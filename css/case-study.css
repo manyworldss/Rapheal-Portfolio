@@ -670,9 +670,52 @@ body {
 
 .back-link-clean:hover { color: var(--text-primary); }
 
+/* ── INTRO PHONE MOCKUPS ROW ── */
+.intro-screenshots-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--s-md);
+    margin: var(--s-md) auto var(--s-lg);
+    width: 100%;
+}
+
+.phone-mockup-wrapper {
+    flex: 0 1 180px; /* Constrain to look like a real vertical phone */
+    max-width: 180px;
+    width: 100%;
+    position: relative;
+    border: 6px solid var(--glass-border);
+    background: var(--surface);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+    transition: transform var(--dur-3) var(--ease-out), border-color var(--dur-2) var(--ease-soft);
+}
+
+.phone-mockup-wrapper:hover {
+    transform: translateY(-4px) scale(1.02);
+    border-color: var(--glass-border-high);
+}
+
+.phone-mockup-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+}
+
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
     .cs-title { font-size: 2.2rem; }
+
+    .phone-mockup-wrapper {
+        flex: 0 1 140px;
+        max-width: 140px;
+        border-width: 4px;
+        border-radius: 14px;
+    }
 
     .section-header {
         padding-left: 1rem;

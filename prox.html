@@ -79,20 +79,17 @@
             </div>
         </header>
 
-        <!-- Walkthrough Video -->
-        <div class="hero-image-display">
-            <video
-                src="images/prox/onboarding-walkthrough.mov"
-                autoplay
-                muted
-                loop
-                controls
-                playsinline
-                preload="auto"
-                style="width:100%;max-height:600px;object-fit:contain;background:#0a0a0a;border:1px solid var(--glass-border-dim);display:block;"
-                aria-label="Prox onboarding walkthrough screen recording">
-            </video>
-            <span class="caption">Onboarding walkthrough, full 14-screen flow</span>
+        <!-- Phone Mockups Showcase -->
+        <div class="intro-screenshots-row">
+            <div class="phone-mockup-wrapper">
+                <img src="images/prox/01-choose-stores.png?v=2" alt="Choose Stores screen" class="phone-mockup-img">
+            </div>
+            <div class="phone-mockup-wrapper">
+                <img src="images/prox/02-food-preferences.png?v=2" alt="Food Preferences screen" class="phone-mockup-img">
+            </div>
+            <div class="phone-mockup-wrapper">
+                <img src="images/prox/08-deals-ready.png?v=2" alt="Deals Ready screen" class="phone-mockup-img">
+            </div>
         </div>
 
         <!-- Content Sections -->
@@ -245,12 +242,31 @@
                 </div>
             </section>
 
-            <!-- Section 5: Screen Gallery -->
+            <!-- Section 5: Walkthrough & Screen Gallery -->
             <section class="cs-section">
                 <div class="section-header">
-                    <h2 class="serif">05. Screen Gallery</h2>
+                    <h2 class="serif">05. Walkthrough &amp; Screen Gallery</h2>
                 </div>
                 <div class="section-body sans">
+                    <p>
+                        Below is the full walkthrough video showing the end-to-end 14-screen onboarding flow, followed by the key individual screens designed for the experience.
+                    </p>
+                    
+                    <div class="hero-image-display" style="max-width: 320px; margin: 2rem auto;">
+                        <video
+                            src="images/prox/onboarding-walkthrough.mov"
+                            autoplay
+                            muted
+                            loop
+                            controls
+                            playsinline
+                            preload="auto"
+                            style="width:100%;max-height:560px;object-fit:contain;background:#0a0a0a;border:1px solid var(--glass-border-dim);display:block;border-radius:16px;"
+                            aria-label="Prox onboarding walkthrough screen recording">
+                        </video>
+                        <span class="caption">Onboarding walkthrough, full 14-screen flow</span>
+                    </div>
+
                     <div class="screenshot-grid screenshot-grid--mobile">
                         <div class="visual-block">
                             <img src="images/prox/01-choose-stores.png?v=2"
