@@ -13,14 +13,14 @@
     <meta property="og:title" content="Celio Case Study | Rapheal Suber">
     <meta property="og:description"
         content="Mitigating traveler anxiety for Celiacs through hypothesis-driven design. A Mobile First Web Application case study.">
-    <meta property="og:image" content="https://rapheals.up.railway.app/images/HighResPurpleCard.png">
+    <meta property="og:image" content="https://rapheals.up.railway.app/images/celio_live_hero.png">
     <meta property="og:url" content="https://rapheals.up.railway.app/celio.html">
     <meta property="og:type" content="article">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Celio Case Study | Rapheal Suber">
     <meta name="twitter:description"
         content="Mitigating traveler anxiety for Celiacs through hypothesis-driven design.">
-    <meta name="twitter:image" content="https://rapheals.up.railway.app/images/HighResPurpleCard.png">
+    <meta name="twitter:image" content="https://rapheals.up.railway.app/images/celio_live_hero.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Jost:ital,wght@0,300;0,400;0,500;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -58,18 +58,18 @@
             <span class="cs-category sans text-accent">B2C Mobile First Web Application</span>
             <h1 class="cs-title serif">Celio: A Case Study in Mitigating Cognitive Anxiety and Systemic Risk</h1>
             <p class="cs-subtitle sans">
-                Celio is a live platform tackling the cognitive load of international travel for
-                Celiacs. It combines a robust Translation Card (with audio) and Sage
-                AI, ensuring users are empowered and their safety message is heard.
+                Celio is an offline-first platform tackling the cognitive load of international travel for
+                Celiacs. It combines a 12-language Translation Card (with text-to-speech audio and native Apple/Google Wallet export),
+                an on-device local LLM assistant (Sage AI) for private offline queries, and interactive establishment maps.
             </p>
             <div class="cs-meta sans">
                 <div class="meta-item">
                     <strong>Role</strong>
-                    UX Researcher, Designer, Full Stack Developer
+                    UX Researcher, Designer, Full-Stack Developer
                 </div>
                 <div class="meta-item">
                     <strong>Stack</strong>
-                    Django, Alpine.js, Web Speech API
+                    Django, Alpine.js, WebLLM (Local LLM), Web Speech API, Wallet Passes APIs
                 </div>
                 <div class="meta-item">
                     <strong>Timeline</strong>
@@ -81,6 +81,14 @@
                 <button onclick="window.print()" class="cta-button cta-button--secondary sans" id="download-pdf-btn">Download Research PDF &darr;</button>
             </div>
         </header>
+
+        <!-- Hero Image Banner -->
+        <div class="full-width-image" style="margin: 0 0 var(--s-xl) 0;">
+            <img src="images/celio_live_hero.png" alt="Celio Gluten-Free Passport Landing Page" 
+                style="width: 100%; border: 1px solid var(--glass-border); border-radius: 4px; box-shadow: var(--shadow-sm);"
+                loading="lazy" decoding="async">
+            <span class="caption">Celio live landing page: The unified offline-first travel portal for Celiacs.</span>
+        </div>
 
         <!-- Content Sections -->
         <article class="cs-content">
@@ -116,20 +124,23 @@
                         Celio is more than a tool; it's a survival kit rooted in strategic design. It
                         tackles the problem by focusing on communication reliability and vetted information:
                     </p>
-                    <div class="insight-grid">
+                    <div class="insight-grid-3">
                         <div class="insight-card border-accent">
                             <h3 class="serif">1. The Translation Card</h3>
                             <p>
-                                The Translation Card: The heavy lifter. It translates needs with
-                                urgency and clarity, using the Web Speech API for vocal communication.
+                                The Translation Card translates allergy profiles into 12 languages (including Japanese, French, Portuguese, and Spanish). It features local text-to-speech audio and native Apple & Google Wallet integration.
                             </p>
                         </div>
                         <div class="insight-card border-accent">
-                            <h3 class="serif">2. Sage AI</h3>
+                            <h3 class="serif">2. Sage AI (Local LLM)</h3>
                             <p>
-                                Sage AI: The integrated AI assistant. By consolidating Travel
-                                Guides into the chat, users get vetted, safe recommendations and
-                                information instantly, reducing siloed workflows.
+                                Sage AI is a client-side AI assistant running entirely on-device via WebLLM. By running the LLM in-browser, travelers can query local travel safety guides offline and in airplane mode.
+                            </p>
+                        </div>
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">3. Interactive Local Maps</h3>
+                            <p>
+                                The Local Map offers client-side interactive geolocation filtering. Celiacs can easily toggle between Restaurants, Groceries, or 100% Gluten-Free spots without needing active internet connection.
                             </p>
                         </div>
                     </div>
@@ -144,9 +155,9 @@
                         </div>
                         <div class="visual-block">
                             <div class="comparison-label after-label sans">After</div>
-                            <img src="images/HighResPurpleCard.png" alt="Final E-Card Design" class="comparison-img"
+                            <img src="images/celio_live_card.png" alt="Live E-Card Design" class="comparison-img"
                                 loading="lazy" decoding="async">
-                            <span class="caption">Final E-Card: Bold, clear, with audio support.</span>
+                            <span class="caption">Live E-Card: Bold, clear card rendering Japanese (JA) allergy warning, audio synthesis trigger, and Apple/Google Wallet export links.</span>
                         </div>
                     </div>
 
@@ -160,9 +171,9 @@
                         </div>
                         <div class="visual-block">
                             <div class="comparison-label after-label sans">After</div>
-                            <img src="images/SageAI-DarkMode-Final.png" alt="Final Sage AI Design"
+                            <img src="images/celio_live_sage.png" alt="Live Sage AI Design"
                                 class="comparison-img" loading="lazy" decoding="async">
-                            <span class="caption">Final Sage AI: Clean, conversational, dark mode interface.</span>
+                            <span class="caption">Live Sage AI: Clean, offline conversational interface powered by on-device inference (WebLLM).</span>
                         </div>
                     </div>
                 </div>
@@ -182,12 +193,12 @@
 
                     <div class="insight-grid">
                         <div class="insight-card border-accent">
-                            <h3 class="serif">Insight: The "Audio Mandate"</h3>
+                            <h3 class="serif">Insight: The "Audio Mandate" & Wallets</h3>
                             <p>
                                 10/12 participants feared staff wouldn't read the screen. This mandated
-                                Offline Audio Support, which uses the Web Speech API
-                                to ensure the safety message is verbally heard, literally solving an accessibility
-                                issue.
+                                Offline Audio Support (using the Web Speech API) and native Mobile Wallet passes.
+                                Handing over a phone with a large, spoken safety card in Apple Wallet or Google Wallet
+                                minimizes anxiety and guarantees reliability without cellular signal.
                             </p>
                         </div>
                         <div class="insight-card border-accent">
@@ -210,15 +221,10 @@
                 </div>
                 <div class="section-body sans">
                     <p>
-                        I chose a simple but robust stack. Django anchors the backend for scalability
-                        and handles complex i18n translations. Crucially, Alpine.js
-                        manages the frontend state, providing that necessary "snappy" feel without the bloat of larger
-                        frameworks.
+                        I chose a clean but powerful stack. Django anchors the backend for pass creation, PostgreSQL data, and localized content storage. Alpine.js controls client-side state machine mechanics, providing a snappy experience.
                     </p>
                     <p>
-                        The most critical technical decision was ensuring Offline First persistence.
-                        The Card caches the target language and safety messages locally, guaranteeing communication
-                        ability even when signal is lost in a subway or a remote village.
+                        The most critical technical decision was enabling **Offline First Operations**. Sage AI runs locally in the browser utilizing **WebLLM and WebGPU**, loading models directly to client storage so AI-based food assessments require no cellular signal. The Translation Card caches translations and speaks using browser speech synthesis, while generating `.pkpass` binary files for Apple Wallet and signed JWT links for Google Wallet, allowing users to save their credentials permanently.
                     </p>
                     <div class="full-width-image">
                         <video controls
@@ -341,8 +347,8 @@
                         <div class="finding-item">
                             <div class="finding-number sans">05</div>
                             <div class="finding-content">
-                                <h3 class="serif">Apple Wallet makes complete sense</h3>
-                                <p>The Apple Wallet has essentially replaced the physical wallet for a lot of people. Adding the e-card there is just another layer of safety on a trip. Users already trust it. Having your allergy card one tap away without opening an app is exactly the kind of friction reduction that matters when you're in an unfamiliar place.</p>
+                                <h3 class="serif">Apple & Google Wallet makes complete sense</h3>
+                                <p>Mobile wallets have replaced physical cards for modern travelers. Integrating native Apple Wallet (.pkpass) and Google Wallet passes allows users to bypass network dependencies entirely. Having the translation card accessible in a single tap on the lock screen is the ultimate friction reduction in high-anxiety foreign restaurant encounters.</p>
                             </div>
                         </div>
                     </div>
@@ -363,19 +369,19 @@
                         <div class="tech-stack-grid">
                             <div class="tech-stack-item">
                                 <span class="tech-stack-label">Backend</span>
-                                <span class="tech-stack-value">Django 5.0, PostgreSQL, Django REST Framework, custom translation engine</span>
+                                <span class="tech-stack-value">Django 5.0, PostgreSQL, PassKit Wallet Pass engine (.pkpass & Google Wallet API)</span>
                             </div>
                             <div class="tech-stack-item">
                                 <span class="tech-stack-label">Frontend</span>
-                                <span class="tech-stack-value">Alpine.js, HTMX, Tailwind CSS</span>
+                                <span class="tech-stack-value">Alpine.js, WebLLM (Local On-device LLM runtime), Web Speech API, Leaflet Maps</span>
                             </div>
                             <div class="tech-stack-item">
                                 <span class="tech-stack-label">Infrastructure</span>
-                                <span class="tech-stack-value">Docker, Railway, CI/CD pipeline</span>
+                                <span class="tech-stack-value">Docker, Railway, client-side model caching, Service Worker offline storage</span>
                             </div>
                             <div class="tech-stack-item">
-                                <span class="tech-stack-label">Accessibility</span>
-                                <span class="tech-stack-value">WCAG 2.1 AA compliant, keyboard navigation, screen reader support</span>
+                                <span class="tech-stack-label">Accessibility / Offline</span>
+                                <span class="tech-stack-value">WCAG 2.1 AA compliant, 100% offline functional, lock-screen wallet passes, dark sync</span>
                             </div>
                         </div>
                     </div>

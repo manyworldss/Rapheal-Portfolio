@@ -320,6 +320,13 @@ body {
     margin-top: var(--s-sm);
 }
 
+.insight-grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: var(--s-sm);
+    margin-top: var(--s-sm);
+}
+
 .insight-card {
     padding: var(--s-sm);
     background: var(--glass-bg);
@@ -804,7 +811,8 @@ body {
         grid-template-columns: 1fr;
     }
 
-    .insight-grid {
+    .insight-grid,
+    .insight-grid-3 {
         grid-template-columns: 1fr;
     }
 
