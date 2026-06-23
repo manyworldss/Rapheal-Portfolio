@@ -3,48 +3,48 @@
    Tactical Telemetry / Dark Terminal Mode
    ============================================ */
 :root {
-    /* Core palette — deep navy-black */
-    --void:          #040608;
-    --deep:          #070A10;
-    --mid:           #0D1018;
-    --surface:       #141820;
-    --surface-high:  #1B2028;
+    /* Map to new design system tokens */
+    --void:          var(--bg-inverse);
+    --deep:          var(--bg);
+    --mid:           var(--bg-raised);
+    --surface:       var(--bg-raised);
+    --surface-high:  var(--bg-inset);
 
-    /* Text — white phosphor */
-    --text-primary:  #EAEAE4;
-    --text-muted:    rgba(234, 234, 228, 0.52);
-    --text-dim:      rgba(234, 234, 228, 0.26);
+    /* Text */
+    --text-primary:  var(--text-strong);
+    --text-muted:    var(--text-muted);
+    --text-dim:      var(--text-faint);
 
-    /* Red — Marathon blood / aviation hazard */
-    --spice:         #CC1B22;
-    --spice-bright:  #E82A32;
-    --spice-dim:     #801218;
-    --spice-glow:    rgba(204, 27, 34, 0.14);
+    /* Red -> Accent (Clay) */
+    --spice:         var(--accent);
+    --spice-bright:  var(--accent-hover);
+    --spice-dim:     var(--accent-2);
+    --spice-glow:    var(--accent-wash);
 
-    /* Cyan / Cerulean — secondary accent, discovery / navigation */
-    --cyan:           #0BAACC;
-    --cyan-bright:    #1FCAE8;
-    --cyan-dim:       rgba(11, 170, 204, 0.16);
-    --cyan-glow:      rgba(11, 170, 204, 0.06);
-    --cyan-border:    rgba(11, 170, 204, 0.22);
+    /* Cyan / Cerulean */
+    --cyan:           var(--accent-2);
+    --cyan-bright:    var(--accent-2-hover);
+    --cyan-dim:       var(--accent-2-wash);
+    --cyan-glow:      var(--accent-2-wash);
+    --cyan-border:    var(--accent-2-line);
 
     /* Secondary */
-    --teal:          #1C3A4A;
-    --teal-dim:      rgba(28, 58, 74, 0.25);
-    --metal:         #4A5560;
-    --metal-bright:  #7A8890;
+    --teal:          var(--accent-2-wash);
+    --teal-dim:      var(--accent-2-wash);
+    --metal:         var(--text-muted);
+    --metal-bright:  var(--text);
 
     /* Glass surfaces */
-    --glass-bg:          rgba(204, 27, 34, 0.04);
-    --glass-bg-high:     rgba(204, 27, 34, 0.08);
-    --glass-border:      rgba(204, 27, 34, 0.22);
-    --glass-border-dim:  rgba(234, 234, 228, 0.08);
-    --glass-inset:       rgba(204, 27, 34, 0.06);
+    --glass-bg:          var(--bg-raised);
+    --glass-bg-high:     var(--bg-inset);
+    --glass-border:      var(--border-strong);
+    --glass-border-dim:  var(--border);
+    --glass-inset:       var(--bg-inset);
 
     /* Typography */
-    --font-display: 'Bebas Neue', 'Impact', sans-serif;
-    --font-body:    'Jost', 'Helvetica Neue', sans-serif;
-    --font-mono:    'Space Mono', 'Courier New', monospace;
+    --font-display: var(--font-serif);
+    --font-body:    var(--font-sans);
+    --font-mono:    var(--font-mono);
 
     /* Spacing */
     --s-xs:  0.5rem;

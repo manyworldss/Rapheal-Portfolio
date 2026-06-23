@@ -4,8 +4,9 @@
    ============================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
-    initSandParticles();
-    initArcParallax();
+    // Disabled for new Editorial Archive design direction
+    // initSandParticles();
+    // initArcParallax();
     initPanelSystem();
     initLightbox();
     initCaseStudyScrollAnimations();

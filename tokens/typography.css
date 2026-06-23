@@ -1,0 +1,55 @@
+/* ============================================================
+   TYPOGRAPHY — A three-voice editorial system:
+   • Newsreader — high-contrast editorial serif for the monumental
+     display + name. Whisper-weight (200/300) carries the cinematic
+     gallery/film-title register; optical display sizing.
+   • Hanken Grotesk — clean neo-grotesque for body & interface text.
+   • Geist Mono — the archive's filing voice: indices, codes, labels.
+   The serif/sans contrast IS the identity — restraint with character.
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,200;6..72,300;6..72,400;6..72,500&family=Hanken+Grotesk:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap');
+
+:root {
+  /* ---- Families ---- */
+  --font-sans:    'Hanken Grotesk', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono:    'Geist Mono', ui-monospace, 'SF Mono', 'Roboto Mono', monospace;
+  --font-serif:   'Newsreader', Georgia, 'Times New Roman', serif;
+  --font-display: var(--font-serif);   /* monumental editorial serif, weight 200–300 */
+
+  /* ---- Weights ---- */
+  --fw-light:    300;   /* @kind font */
+  --fw-regular:  400;   /* @kind font */
+  --fw-medium:   500;   /* @kind font */
+  --fw-semibold: 600;   /* @kind font */
+  --fw-bold:     700;   /* @kind font */
+
+  /* ---- Type scale (fluid, monumental top end) ---- */
+  --text-hero:        clamp(4.5rem, 13vw, 13.5rem);  /* index landing statement */
+  --leading-hero:     0.90;
+  --text-display:     clamp(3rem, 7vw, 6rem);        /* section openers */
+  --leading-display:  0.98;
+  --text-h1:          clamp(2.25rem, 4.2vw, 3.75rem);
+  --leading-h1:       1.02;
+  --text-h2:          clamp(1.6rem, 2.6vw, 2.5rem);
+  --leading-h2:       1.08;
+  --text-h3:          clamp(1.25rem, 1.7vw, 1.6rem);
+  --leading-h3:       1.18;
+  --text-body-lg:     1.25rem;   /* lead paragraphs */
+  --leading-body-lg:  1.55;
+  --text-body:        1.0625rem; /* default body — 17px */
+  --leading-body:     1.62;
+  --text-sm:          0.9375rem;
+  --leading-sm:       1.5;
+  --text-label:       0.75rem;   /* mono labels / metadata */
+  --leading-label:    1.4;
+  --text-micro:       0.6875rem; /* index numerals, file codes */
+  --leading-micro:    1.3;
+
+  /* ---- Tracking ---- */
+  --track-hero:    -0.005em;  /* @kind font */
+  --track-display: -0.005em;  /* @kind font */
+  --track-tight:   -0.01em;   /* @kind font */
+  --track-normal:  0;         /* @kind font */
+  --track-label:   0.18em;    /* @kind font */
+  --track-micro:   0.24em;    /* @kind font */
+}

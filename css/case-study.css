@@ -322,6 +322,19 @@ body {
     margin: var(--s-md) 0;
 }
 
+/* Mobile specific visual comparison */
+.visual-comparison--mobile {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--s-md);
+}
+
+.visual-comparison--mobile .visual-block {
+    flex: 0 1 240px; /* Constrain iPhone vertical screens */
+    width: 100%;
+}
+
 .visual-block { text-align: center; }
 
 .comparison-label {
@@ -448,6 +461,14 @@ body {
 .screenshot-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: var(--s-sm);
+    margin: var(--s-md) 0;
+}
+
+/* Mobile specific screenshot gallery grid */
+.screenshot-grid--mobile {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: var(--s-sm);
     margin: var(--s-md) 0;
 }
