@@ -56,6 +56,19 @@ const WORK = [
       { k: 'Year', v: '2025' },
     ],
   },
+  {
+    id: 'reach', code: 'RE-05', title: 'Reach', year: '2025',
+    disciplines: ['Human Factors', 'Clinical UX', 'Full-Stack'],
+    thumb: './assets/work/reach-card.jpg',
+    hero: './assets/work/reach-card.jpg',
+    summary: 'A caseload and outcome-tracking platform for rehab therapists treating upper-extremity motor recovery after stroke, built so a clinician can see in seconds who needs attention and whether a patient is on track.',
+    detail: 'Standardized outcome measures (Fugl-Meyer, ARAT, Box and Blocks) are the gold standard, but they get documented inconsistently because capture is slow and scores live in disconnected systems. Reach connects measured outcomes, the expected recovery arc, and home-program adherence in one clinician-facing interface, with FMA-UE scores automatically routing patients into severity-banded programs. Shaped by direct feedback from three occupational therapists.',
+    meta: [
+      { k: 'Role', v: 'UX Research · Human Factors · Full-Stack' },
+      { k: 'Context', v: 'Stroke rehabilitation · Clinical' },
+      { k: 'Year', v: '2025' },
+    ],
+  },
 ];
 
 function AboutContent() {
@@ -180,6 +193,7 @@ function App() {
         <Hero />
         <Archive items={WORK} />
         <FieldNote />
+        <Collection />
         <Footer onOpen={onOpen} />
       </main>
       <CaseOverlay item={openCase} onClose={() => setOpenCase(null)} />

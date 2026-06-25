@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script>
+      (function(){ try { var t = localStorage.getItem('rs-theme'); document.documentElement.dataset.theme = t === 'light' ? 'light' : 'dark'; } catch(e){} })();
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reach Case Study | Rapheal Suber</title>
+    <meta name="description"
+        content="Reach Case Study: A caseload and outcome-tracking platform for therapists treating upper-extremity motor recovery after stroke, designed with a human-factors-first focus.">
+    <meta property="og:title" content="Reach Case Study | Rapheal Suber">
+    <meta property="og:description"
+        content="A clinician-facing platform that unifies outcome measures, expected recovery, and home-program adherence for stroke rehabilitation.">
+    <meta property="og:image" content="https://rapheals.up.railway.app/images/reach_hero.jpg">
+    <meta property="og:url" content="https://rapheals.up.railway.app/reach.html">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Reach Case Study | Rapheal Suber">
+    <meta name="twitter:description"
+        content="A clinician-facing platform for tracking upper-extremity motor recovery after stroke.">
+    <meta name="twitter:image" content="https://rapheals.up.railway.app/images/reach_hero.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Jost:ital,wght@0,300;0,400;0,500;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="canonical" href="https://rapheals.up.railway.app/reach.html">
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="css/global.css?v=36">
+    <link rel="stylesheet" href="css/case-study.css?v=39">
+    <link rel="stylesheet" href="css/print.css" media="print">
+</head>
+
+<body>
+    <!-- Ambient sand particle canvas -->
+    <canvas id="sand-canvas" aria-hidden="true"></canvas>
+
+    <!-- Cinematic Dossier Navigation -->
+    <header class="topbar">
+        <div class="topbar-brand">
+            <a href="index.html" class="brand-link">RS // EDITORIAL ARCHIVE</a>
+        </div>
+        <nav class="topbar-chapters">
+            <a href="celio.html" class="chapter-link" id="nav-celio">C-01 / CELIO</a>
+            <a href="north-star.html" class="chapter-link" id="nav-north-star">NS-02 / NORTH STAR</a>
+            <a href="illumi.html" class="chapter-link" id="nav-illumi">IL-03 / ILLUMI</a>
+            <a href="prox.html" class="chapter-link" id="nav-prox">PX-04 / PROX</a>
+            <a href="reach.html" class="chapter-link active-chapter" id="nav-reach">RE-05 / REACH</a>
+        </nav>
+        <div class="topbar-actions">
+            <a href="index.html" class="back-trigger">[ ESC &#8629; ]</a>
+        </div>
+    </header>
+
+    <main class="container book-layout">
+
+        <!-- Case Study Header -->
+        <header class="cs-header">
+            <span class="cs-category sans text-accent">Clinical SaaS / Stroke Rehabilitation</span>
+            <h1 class="cs-title serif">Reach: A Case Study in Making Recovery Legible for Rehab Clinicians</h1>
+            <p class="cs-subtitle sans">
+                Reach is a caseload and outcome-tracking platform for therapists treating upper-extremity motor
+                recovery after stroke. It organizes a patient's measured outcomes, expected recovery arc, and
+                home-program adherence in one unified interface, so a clinician can tell in seconds who needs
+                attention first and whether a patient is progressing on track.
+            </p>
+            <div class="cs-meta sans">
+                <div class="meta-item">
+                    <strong>Role</strong>
+                    UX Researcher, Human Factors, Full-Stack Developer
+                </div>
+                <div class="meta-item">
+                    <strong>Stack</strong>
+                    React, TypeScript, Vite, Tailwind CSS, Recharts
+                </div>
+                <div class="meta-item">
+                    <strong>Status</strong>
+                    Live prototype, in active development
+                </div>
+            </div>
+            <div class="header-actions">
+                <a href="https://reach-health.up.railway.app/" target="_blank" class="cta-button sans">View Live App &rarr;</a>
+                <button onclick="window.print()" class="cta-button cta-button--secondary sans" id="download-pdf-btn">Download Research PDF &darr;</button>
+            </div>
+        </header>
+
+        <!-- Hero Image Banner -->
+        <div class="full-width-image" style="margin: 0 0 var(--s-xl) 0;">
+            <img src="images/reach_hero.jpg" alt="Reach clinician view: a stroke patient's recovery trajectory and current standing"
+                style="width: 100%; border: 1px solid var(--glass-border); border-radius: 4px; box-shadow: var(--shadow-sm);"
+                loading="lazy" decoding="async">
+            <span class="caption">The clinician view: a single patient's recovery trajectory plotted against an expected band, with current FMA-UE and ARAT standing.</span>
+        </div>
+
+        <!-- Content Sections -->
+        <article class="cs-content">
+
+            <!-- Section 1: The Challenge -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <h2 class="serif">01. The Challenge: Recovery Data That Lives Everywhere and Nowhere</h2>
+                </div>
+                <div class="section-body sans">
+                    <p>
+                        Standardized outcome measures such as the Fugl-Meyer Assessment, the Action Research Arm Test,
+                        and Box and Blocks are the gold standard for tracking motor recovery after stroke. In practice
+                        clinicians document them inconsistently, because capture is slow and the scores end up scattered
+                        across disconnected systems.
+                    </p>
+                    <p>
+                        Home exercise adherence makes up the other half of recovery, yet it is almost invisible between
+                        visits. A therapist often walks into a session without a clear read on whether the home program
+                        is actually being done. Reach exists to close that gap by connecting both halves into one
+                        clinician-facing interface while preventing the same scores from being typed twice.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Section 2: The Strategy -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <h2 class="serif">02. The Strategy: One Interface, Driven by Outcomes</h2>
+                </div>
+                <div class="section-body sans">
+                    <p>
+                        Rather than another generic charting tool, Reach is built around the way recovery is actually
+                        measured. Assessment scores drive everything downstream, so the clinician logs data once and the
+                        system does the routing.
+                    </p>
+                    <div class="insight-grid-3">
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">1. Outcome-Driven Severity</h3>
+                            <p>
+                                FMA-UE scores automatically segment patients into Mild, Moderate, or Severe baseline
+                                programs. The clinician logs an assessment, and the system assigns the appropriate
+                                program rather than leaving them to build one from scratch.
+                            </p>
+                        </div>
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">2. Broad, Banded Pathways</h3>
+                            <p>
+                                Within each severity band, pathways fit the patient's real life: occupation-based daily
+                                living, fine motor and dexterity, return to work, left neglect, and anti-subluxation
+                                shoulder protection. Retired survivors are served as deliberately as working ones.
+                            </p>
+                        </div>
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">3. Adherence as an Early Warning</h3>
+                            <p>
+                                Reach tracks active reps, mental practice, and assisted daily tasks. When adherence
+                                drops below 60 percent it surfaces the patient as a stalled home program, before a
+                                wasted visit confirms it.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="full-width-image" style="margin-top: var(--s-xl);">
+                        <img src="images/reach_program.jpg" alt="Reach program builder: prescribing a home exercise with sets, reps, and a weekly schedule"
+                            style="width: 100%; border: 1px solid var(--glass-border); border-radius: 4px; box-shadow: var(--shadow-sm);"
+                            loading="lazy" decoding="async">
+                        <span class="caption">The program builder: therapists prescribe exercises with sets, reps, weekly schedule, and movement cues, with version history preserved on every save.</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: Clinical Research -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <h2 class="serif">03. Discovery: Designed Around Three Occupational Therapists</h2>
+                </div>
+                <div class="section-body sans">
+                    <p>
+                        Reach was shaped through direct, iterative feedback from three occupational therapists, so the
+                        product aligns with real clinical workflows and the human factors of a busy session rather than
+                        my assumptions about them.
+                    </p>
+
+                    <div class="insight-grid">
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">OT 1: Workflow and Programs</h3>
+                            <p>
+                                Pushed for reduced interface clutter, embedded education, and severity-banded programs
+                                driven by FMA, ARAT, or Box and Blocks. Asked for prescribed exercises with video
+                                demonstrations, repetition tracking, and copy-and-paste documentation blurbs to simplify
+                                charting.
+                            </p>
+                        </div>
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">OT 2: Outcomes Drive Everything</h3>
+                            <p>
+                                Verified the treatment and education layout and recommended a subjective progress area
+                                for patient self-report. Emphasized that assessment entries should drive pathway
+                                recommendations directly, to save time and prevent double-documentation across systems.
+                            </p>
+                        </div>
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">OT 3: Admin and Family</h3>
+                            <p>
+                                Focused on the difference between typing during a session and documenting afterward.
+                                Proposed a documentation status tracker for in-progress versus completed notes, plus a
+                                simplified caregiver portal to coordinate support at home.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: Human Factors Implementation -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <h2 class="serif">04. Human Factors and What Got Built</h2>
+                </div>
+                <div class="section-body sans">
+                    <p>
+                        Each piece of clinician feedback maps to a concrete decision in the product. The result is an
+                        interface that does the routing and the writing the clinician would otherwise carry in their
+                        head.
+                    </p>
+                    <div class="finding-list">
+                        <div class="finding-item">
+                            <div class="finding-number sans">01</div>
+                            <div class="finding-content">
+                                <h3 class="serif">Outcome-driven severity programs</h3>
+                                <p>FMA-UE scores automatically segment patients. The clinician logs assessments, and the system assigns a Mild, Moderate, or Severe baseline program with no extra step.</p>
+                            </div>
+                        </div>
+                        <div class="finding-item">
+                            <div class="finding-number sans">02</div>
+                            <div class="finding-content">
+                                <h3 class="serif">Pathways that fit the person</h3>
+                                <p>Occupation-based daily living spans every band. Fine motor, dexterity, and return to work serve Mild and Moderate. Left neglect and visual-spatial work cover Moderate and Severe, and anti-subluxation shoulder protection serves Severe.</p>
+                            </div>
+                        </div>
+                        <div class="finding-item">
+                            <div class="finding-number sans">03</div>
+                            <div class="finding-content">
+                                <h3 class="serif">Repetition and adherence auditing</h3>
+                                <p>Compliance metrics are tracked over time, and the system flags when adherence falls below 60 percent as an early signal of a stalled home program.</p>
+                            </div>
+                        </div>
+                        <div class="finding-item">
+                            <div class="finding-number sans">04</div>
+                            <div class="finding-content">
+                                <h3 class="serif">Copy-and-paste documentation</h3>
+                                <p>High-quality progress notes are generated for each selected pathway, ready to paste straight into the clinic's electronic medical record, which removes the most repetitive part of charting.</p>
+                            </div>
+                        </div>
+                        <div class="finding-item">
+                            <div class="finding-number sans">05</div>
+                            <div class="finding-content">
+                                <h3 class="serif">Patient and caregiver loops</h3>
+                                <p>Conceptual designs let patients report daily pain, energy, and perceived arm use, with bidirectional video and messaging for asynchronous movement analysis and caregiver coordination.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 5: Outcomes -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <h2 class="serif">05. Outcomes, Learnings, and Growth</h2>
+                </div>
+                <div class="section-body sans">
+                    <p>
+                        Reach took a clinical focus from the first sketch. Designing it around standardized measures and
+                        the daily occupations of stroke survivors, dressing, writing, eating, and typing, kept the work
+                        grounded in what recovery actually looks like instead of a narrow return-to-work frame. The
+                        clearest lesson was that the people doing the documenting have to design it with you, otherwise
+                        you build a tool that is technically correct and clinically unusable.
+                    </p>
+                    <a href="https://reach-health.up.railway.app/" target="_blank" class="cta-button sans">Try Reach Now &rarr;</a>
+
+                    <div class="tech-stack-block">
+                        <h3 class="sans tech-stack-heading">Tech Stack</h3>
+                        <div class="tech-stack-grid">
+                            <div class="tech-stack-item">
+                                <span class="tech-stack-label">Frontend</span>
+                                <span class="tech-stack-value">React 18, TypeScript, Vite, Tailwind CSS</span>
+                            </div>
+                            <div class="tech-stack-item">
+                                <span class="tech-stack-label">Data Visualization</span>
+                                <span class="tech-stack-value">Recharts (recovery trajectory and expected-band charting), lucide-react iconography</span>
+                            </div>
+                            <div class="tech-stack-item">
+                                <span class="tech-stack-label">Infrastructure</span>
+                                <span class="tech-stack-value">Railway deployment, static build served over Node</span>
+                            </div>
+                            <div class="tech-stack-item">
+                                <span class="tech-stack-label">Clinical Measures</span>
+                                <span class="tech-stack-value">Fugl-Meyer (FMA-UE), ARAT, Box and Blocks, severity-banded program logic</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="window.print()" class="cta-button cta-button--secondary sans" style="margin-top: var(--s-md);">Download Research PDF &darr;</button>
+                </div>
+            </section>
+
+        </article>
+
+        <footer class="cs-footer sans">
+            <a href="index.html" class="back-link-clean serif">Back to Home</a>
+        </footer>
+    </main>
+    <script src="js/main.js?v=40"></script>
+</body>
+
+</html>
