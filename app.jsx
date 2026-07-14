@@ -9,8 +9,9 @@ const WORK = [
     disciplines: ['UX Research', 'Product Design', 'B2C'],
     thumb: './assets/work/celio-card.png',
     hero: './assets/work/celio-landing.png',
+    url: 'https://celioapp.up.railway.app',
     summary: 'A consumer health e-card reimagined around a single question: in the moment that matters, can someone find what they need without thinking?',
-    detail: 'Research surfaced where the existing card created hesitation and ambiguity. The redesign stripped the interface to its load-bearing parts, rebuilt the information hierarchy around real moments of use, and pushed everything non-essential out of the way — clarity as the primary feature.',
+    detail: 'Research surfaced where the existing card created hesitation and ambiguity. The redesign stripped the interface to its load-bearing parts, rebuilt the information hierarchy around real moments of use, and pushed everything non-essential out of the way; clarity as the primary feature.',
     meta: [
       { k: 'Role', v: 'UX Research · Product Design' },
       { k: 'Context', v: 'Consumer health · B2C' },
@@ -48,6 +49,7 @@ const WORK = [
     disciplines: ['Onboarding UX', 'iOS', 'Product Design'],
     thumb: './assets/work/prox-deals.png?v=2',
     hero: './assets/work/prox-deals.png?v=2',
+    url: 'demo/prox-onboarding-demo.html',
     summary: 'An unsolicited onboarding redesign that the team adopted as their first-time user experience direction — then brought me on to see it through.',
     detail: 'Led the full redesign across 14 screens, focused on reducing mobile friction, improving feature comprehension, and driving first-time activation. Now running A/B tests, event tracking, and post-activation surveys to measure how the changes hold up on retention.',
     meta: [
@@ -59,14 +61,29 @@ const WORK = [
   {
     id: 'reach', code: 'RE-05', title: 'Reach', year: '2025',
     disciplines: ['Human Factors', 'Clinical UX', 'Full-Stack'],
-    thumb: './assets/work/reach-card.jpg',
-    hero: './assets/work/reach-card.jpg',
+    thumb: './images/reach_hero.png',
+    hero: './images/reach_hero.png',
+    url: 'https://reach-health.up.railway.app/',
     summary: 'A caseload and outcome-tracking platform for rehab therapists treating upper-extremity motor recovery after stroke, built so a clinician can see in seconds who needs attention and whether a patient is on track.',
     detail: 'Standardized outcome measures (Fugl-Meyer, ARAT, Box and Blocks) are the gold standard, but they get documented inconsistently because capture is slow and scores live in disconnected systems. Reach connects measured outcomes, the expected recovery arc, and home-program adherence in one clinician-facing interface, with FMA-UE scores automatically routing patients into severity-banded programs. Shaped by direct feedback from three occupational therapists.',
     meta: [
       { k: 'Role', v: 'UX Research · Human Factors · Full-Stack' },
       { k: 'Context', v: 'Stroke rehabilitation · Clinical' },
       { k: 'Year', v: '2025' },
+    ],
+  },
+  {
+    id: 'materialsiq', code: 'MQ-06', title: 'MaterialIQ', year: '2026',
+    disciplines: ['Chrome Extension', 'AI Integration', 'Full-Stack'],
+    thumb: './images/materialsIQ/scores.png',
+    hero: './images/materialsIQ/hero.png',
+    url: 'https://github.com/manyworldss/MaterialsQ',
+    summary: 'An AI-powered browser extension that parses product descriptions and specifications in real time, calculating composition quality, durability, and value for money while shopping.',
+    detail: 'Online consumers face constant uncertainty when evaluating fabric blends, construction details, and pricing. MaterialIQ removes this confusion by analyzing product specifications automatically and presenting a simple quality score. The extension injects a clean, non-intrusive sidebar into active shopping tabs, communicating with a lightweight FastAPI backend that runs the scoring logic. By keeping calculations clear and rule-based, shoppers can verify exactly how their score was calculated.',
+    meta: [
+      { k: 'Role', v: 'Chrome Extension · Full-Stack' },
+      { k: 'Context', v: 'E-commerce quality analysis' },
+      { k: 'Year', v: '2026' },
     ],
   },
 ];

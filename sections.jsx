@@ -66,8 +66,8 @@ function NavLink({ label, muted, fg, onClick }) {
         letterSpacing:'var(--track-label)', textTransform:'uppercase', color:h?fg:muted, paddingBottom:'0.3rem',
         transition:'color var(--dur-2) var(--ease-soft)' }}>
       {label}
-      <span style={{ position:'absolute', left:0, bottom:0, height:'var(--hair)', width:h?'100%':'0%',
-        background:'var(--accent)', transition:'width var(--dur-3) var(--ease-out)' }} />
+      <span style={{ position:'absolute', left:0, bottom:0, height:'var(--hair)', width:'100%',
+        background:'var(--accent)', transform: h ? 'scaleX(1)' : 'scaleX(0)', transformOrigin: 'left', transition:'transform var(--dur-3) var(--ease-out)' }} />
     </button>
   );
 }
@@ -117,14 +117,10 @@ function Hero() {
           willChange:'transform', animation:'waveC 38s ease-in-out infinite' }} />
       </div>
 
-      {/* frosted glass orb — refracts the waves, anchored off the corner */}
       <div aria-hidden="true" className="hero-orb" style={{ position:'absolute', bottom:'-17vh', right:'-9vh',
         width:'clamp(26rem, 48vh, 44rem)', height:'clamp(26rem, 48vh, 44rem)', borderRadius:'999px', zIndex:-1,
         pointerEvents:'none', willChange:'transform', animation:'orbDrift 26s ease-in-out infinite',
-        background:'radial-gradient(circle at 36% 30%, rgba(255,255,255,0.55), rgba(247,244,237,0.10) 52%, rgba(231,225,214,0.02) 72%)',
-        WebkitBackdropFilter:'blur(26px) saturate(1.5)', backdropFilter:'blur(26px) saturate(1.5)',
-        border:'1px solid rgba(255,255,255,0.5)',
-        boxShadow:'inset 0 1px 40px rgba(255,255,255,0.45), inset 0 -30px 60px rgba(166,96,60,0.10)' }} />
+        background:'radial-gradient(circle at 36% 30%, rgba(255,255,255,0.25), rgba(247,244,237,0.02) 60%)' }} />
 
       {/* A — catalogue reference */}
       <Reveal as="div" delay={1480} style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline', gap:'1rem',
@@ -197,33 +193,45 @@ function CaseRow({ item, last }) {
   const [h, setH] = useStateS(false);
   return (
     <a data-hot href={`${item.id}.html`} onMouseEnter={()=>setH(true)} onMouseLeave={()=>setH(false)}
-      style={{ position:'relative', width:'100%', textAlign:'left', display:'grid',
-        gridTemplateColumns:'minmax(2.5rem,auto) 1fr auto auto', alignItems:'center', columnGap:'clamp(1rem,3vw,3rem)',
-        padding:'clamp(1.4rem,2.6vw,2.4rem) 0', paddingLeft:h?'clamp(.75rem,1.5vw,1.5rem)':0,
+      style={{ position:'relative', width:'100%', textAlign:'left', display:'block',
+        padding:'clamp(1.4rem,2.6vw,2.4rem) 0',
         borderTop:'var(--hair) solid var(--border)', borderBottom: last?'var(--hair) solid var(--border)':'none',
-        overflow:'hidden', transition:'padding-left var(--dur-3) var(--ease-out)', textDecoration:'none', color:'inherit' }}>
-      <span style={{ position:'absolute', left:0, top:0, width:'var(--hair-2)', height:h?'100%':'0%', background:'var(--accent)', transition:'height var(--dur-3) var(--ease-out)' }} />
-      <span style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)',
-        color:h?'var(--accent)':'var(--text-faint)', alignSelf:'start', paddingTop:'0.5rem', transition:'color var(--dur-2) var(--ease-soft)' }}>{item.code}</span>
-      <span style={{ minWidth:0 }}>
-        <span style={{ display:'block', fontFamily:'var(--font-display)', fontWeight:'var(--fw-light)', fontSize:'var(--text-h1)',
-          lineHeight:0.98, letterSpacing:'var(--track-tight)', color:'var(--text-strong)', transform:h?'translateX(0.4rem)':'none',
-          transition:'transform var(--dur-3) var(--ease-out)' }}>{item.title}</span>
-        <span style={{ display:'block', marginTop:'0.7rem', fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)',
-          letterSpacing:'var(--track-label)', textTransform:'uppercase', color:'var(--text-muted)',
-          transform:h?'translateX(0.4rem)':'none', transition:'transform var(--dur-3) var(--ease-out) 30ms' }}>{item.disciplines.join('  ·  ')}</span>
-      </span>
-      <span aria-hidden="true" style={{ width:h?'clamp(6rem,11vw,11rem)':'0rem', height:'clamp(4.5rem,8vw,8rem)', flexShrink:0,
-        overflow:'hidden', background:'var(--obsidian)', opacity:h?1:0, transition:'width var(--dur-4) var(--ease-out), opacity var(--dur-3) var(--ease-out)' }}>
-        <img src={item.thumb} alt="" style={{ width:'100%', height:'100%', objectFit:'cover', objectPosition:'top',
-          filter:h?'grayscale(8%) brightness(.96)':'grayscale(40%) brightness(.8)', transform:h?'scale(1.04)':'scale(1.12)',
-          transition:'transform var(--dur-5) var(--ease-out), filter var(--dur-4) var(--ease-out)' }} />
-      </span>
-      <span style={{ display:'flex', alignItems:'center', gap:'clamp(1rem,2vw,2rem)', alignSelf:'start', paddingTop:'0.4rem' }}>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', color:'var(--text-faint)' }}>{item.year}</span>
-        <span aria-hidden="true" style={{ fontFamily:'var(--font-mono)', fontSize:'1.2rem', color:h?'var(--accent)':'var(--text-muted)',
-          transform:h?'translateX(6px)':'none', transition:'transform var(--dur-3) var(--ease-out), color var(--dur-2) var(--ease-soft)' }}>→</span>
-      </span>
+        overflow:'hidden', textDecoration:'none', color:'inherit' }}>
+      <span style={{ position:'absolute', left:0, top:0, width:'var(--hair-2)', height:'100%', background:'var(--accent)', transform: h ? 'scaleY(1)' : 'scaleY(0)', transformOrigin: 'top', transition:'transform var(--dur-3) var(--ease-out)' }} />
+      <div style={{
+        display:'grid',
+        gridTemplateColumns:'minmax(2.5rem,auto) 1fr auto auto',
+        alignItems:'center',
+        columnGap:'clamp(1rem,3vw,3rem)',
+        width:'100%',
+        transform: h ? 'translate3d(clamp(.75rem,1.5vw,1.5rem),0,0)' : 'translate3d(0,0,0)',
+        transition: 'transform var(--dur-3) var(--ease-out)',
+        willChange: 'transform'
+      }}>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)',
+          color:h?'var(--accent)':'var(--text-faint)', alignSelf:'start', paddingTop:'0.5rem', transition:'color var(--dur-2) var(--ease-soft)' }}>{item.code}</span>
+        <span style={{ minWidth:0 }}>
+          <span style={{ display:'block', fontFamily:'var(--font-display)', fontWeight:'var(--fw-light)', fontSize:'var(--text-h1)',
+            lineHeight:0.98, letterSpacing:'var(--track-tight)', color:'var(--text-strong)', transform:h?'translateX(0.4rem)':'none',
+            transition:'transform var(--dur-3) var(--ease-out)' }}>{item.title}</span>
+          <span style={{ display:'block', marginTop:'0.7rem', fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)',
+            letterSpacing:'var(--track-label)', textTransform:'uppercase', color:'var(--text-muted)',
+            transform:h?'translateX(0.4rem)':'none', transition:'transform var(--dur-3) var(--ease-out) 30ms' }}>{item.disciplines.join('  ·  ')}</span>
+        </span>
+        <span aria-hidden="true" style={{ width:'clamp(6rem,11vw,11rem)', height:'clamp(4.5rem,8vw,8rem)', flexShrink:0,
+          overflow:'hidden', background:'var(--obsidian)', opacity:h?1:0,
+          transform: h ? 'translate3d(0,0,0)' : 'translate3d(16px,0,0)',
+          transition:'transform var(--dur-4) var(--ease-out), opacity var(--dur-3) var(--ease-out)', willChange:'transform, opacity' }}>
+          <img src={item.thumb} alt="" style={{ width:'100%', height:'100%', objectFit:'cover', objectPosition:'top',
+            filter:h?'grayscale(8%) brightness(.96)':'grayscale(40%) brightness(.8)', transform:h?'scale(1.04)':'scale(1.12)',
+            transition:'transform var(--dur-5) var(--ease-out), filter var(--dur-4) var(--ease-out)' }} />
+        </span>
+        <span style={{ display:'flex', alignItems:'center', gap:'clamp(1rem,2vw,2rem)', alignSelf:'start', paddingTop:'0.4rem' }}>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', color:'var(--text-faint)' }}>{item.year}</span>
+          <span aria-hidden="true" style={{ fontFamily:'var(--font-mono)', fontSize:'1.2rem', color:h?'var(--accent)':'var(--text-muted)',
+            transform:h?'translateX(6px)':'none', transition:'transform var(--dur-3) var(--ease-out), color var(--dur-2) var(--ease-soft)' }}>→</span>
+        </span>
+      </div>
     </a>
   );
 }

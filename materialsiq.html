@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script>
+      (function(){ try { var t = localStorage.getItem('rs-theme'); document.documentElement.dataset.theme = t === 'light' ? 'light' : 'dark'; } catch(e){} })();
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MaterialIQ Case Study | Rapheal Suber</title>
+    <meta name="description"
+        content="MaterialIQ: An AI-powered browser extension and FastAPI backend that analyzes product quality, material composition, and value for money while shopping online.">
+    <meta property="og:title" content="MaterialIQ Case Study | Rapheal Suber">
+    <meta property="og:description"
+        content="An AI-powered browser extension that parses product descriptions and specifications in real time. It calculates composition quality, durability, and value transparency directly in the shopping cart.">
+    <meta property="og:image" content="https://rapheals.up.railway.app/images/materialsIQ/hero.png">
+    <meta property="og:url" content="https://rapheals.up.railway.app/materialsiq.html">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="MaterialIQ Case Study | Rapheal Suber">
+    <meta name="twitter:description"
+        content="An AI-powered Chrome extension designed to evaluate online product quality and price transparency.">
+    <meta name="twitter:image" content="https://rapheals.up.railway.app/images/materialsIQ/hero.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Jost:ital,wght@0,300;0,400;0,500;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="canonical" href="https://rapheals.up.railway.app/materialsiq.html">
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="css/global.css?v=36">
+    <link rel="stylesheet" href="css/case-study.css?v=39">
+    <link rel="stylesheet" href="css/print.css" media="print">
+</head>
+
+<body>
+    <!-- Ambient sand particle canvas -->
+    <canvas id="sand-canvas" aria-hidden="true"></canvas>
+
+    <!-- Cinematic Dossier Navigation -->
+    <header class="topbar">
+        <div class="topbar-brand">
+            <a href="index.html" class="brand-link">RS // EDITORIAL ARCHIVE</a>
+        </div>
+        <nav class="topbar-chapters">
+            <a href="celio.html" class="chapter-link" id="nav-celio">C-01 / CELIO</a>
+            <a href="north-star.html" class="chapter-link" id="nav-north-star">NS-02 / NORTH STAR</a>
+            <a href="illumi.html" class="chapter-link" id="nav-illumi">IL-03 / ILLUMI</a>
+            <a href="prox.html" class="chapter-link" id="nav-prox">PX-04 / PROX</a>
+            <a href="reach.html" class="chapter-link" id="nav-reach">RE-05 / REACH</a>
+            <a href="materialsiq.html" class="chapter-link active-chapter" id="nav-materialsiq">MQ-06 / MATERIALIQ</a>
+        </nav>
+        <div class="topbar-actions">
+            <a href="index.html" class="back-trigger">[ ESC ↵ ]</a>
+        </div>
+    </header>
+
+    <main class="container book-layout">
+
+        <!-- Case Study Header -->
+        <header class="cs-header">
+            <span class="cs-category badge sans text-accent">Chrome Extension / AI Quality Analysis</span>
+            <h1 class="cs-title serif">MaterialIQ: Objective Quality in the Shopping Cart</h1>
+            <p class="cs-subtitle sans">
+                MaterialIQ is an AI-powered browser extension and FastAPI backend that parses product descriptions and specifications in real time. It calculates material scores, estimates product durability, and evaluates value transparency directly within the user's shopping session.
+            </p>
+            <div class="cs-meta sans">
+                <div class="meta-item">
+                    <strong>Role</strong>
+                    Product Designer, Full-Stack Developer
+                </div>
+                <div class="meta-item">
+                    <strong>Stack</strong>
+                    React, FastAPI, Python, Vite, Manifest V3, Tailwind CSS
+                </div>
+                <div class="meta-item">
+                    <strong>Status</strong>
+                    Beta, Open Source
+                </div>
+                <div class="meta-item">
+                    <strong>Year</strong>
+                    2026
+                </div>
+            </div>
+            <div class="header-actions">
+                <a href="https://github.com/manyworldss/MaterialsQ" target="_blank" class="cta-button sans">View Repository &rarr;</a>
+            </div>
+        </header>
+
+        <!-- Hero Image Banner -->
+        <div class="full-width-image" style="margin: 0 0 var(--s-xl) 0;">
+            <img src="images/materialsIQ/hero.png" alt="MaterialIQ Chrome Extension dashboard showing material score details"
+                style="width: 100%; border: 1px solid var(--glass-border); border-radius: 4px; box-shadow: var(--shadow-sm);"
+                loading="lazy" decoding="async">
+            <span class="caption">The browser interface: MaterialIQ parsing active e-commerce details to show material and price scores.</span>
+        </div>
+
+        <!-- Content Sections -->
+        <article class="cs-content">
+
+            <!-- Section 1: The Challenge -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <h2 class="serif">01. Product Integrity in the Shopping Cart</h2>
+                </div>
+                <div class="section-body sans">
+                    <p>
+                        Online consumers face constant uncertainty when evaluating fabric blends, construction details, and pricing. Most buyers assume high quality, but struggle to verify material blends or construction markers before purchasing. MaterialIQ is designed to resolve this confusion by analyzing product specifications automatically and presenting a simple, unified quality score.
+                    </p>
+                    <p>
+                        The extension works silently in the background, reading active tabs on popular retail sites. Rather than relying on simple reviews or marketing copy, it focuses on raw fabric data, fiber ratios, and manufacturing indicators to determine the actual standard of the item.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Section 2: The Scoring Methodology -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <h2 class="serif">02. The Scoring Methodology</h2>
+                </div>
+                <div class="section-body sans">
+                    <p>
+                        Instead of using arbitrary ratings, MaterialIQ calculates its score through a structured, rule-based process. This scoring engine breaks analysis down into three key areas:
+                    </p>
+                    <div class="insight-grid-3">
+                        <div class="insight-card-flat">
+                            <h3 class="serif">1. Material Quality Score</h3>
+                            <p>
+                                Evaluates fiber ratios and composition details (such as the ratio of natural wool to synthetic blends or GSM weight parameters).
+                            </p>
+                        </div>
+                        <div class="insight-card-flat">
+                            <h3 class="serif">2. Durability Estimate</h3>
+                            <p>
+                                Assesses the construction indicators, weave types, and material durability traits to predict product lifespan.
+                            </p>
+                        </div>
+                        <div class="insight-card-flat">
+                            <h3 class="serif">3. Value Score</h3>
+                            <p>
+                                Calculates whether the asking price aligns with the material score, flagging overpriced items or highlighting high-value composition.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: Project Architecture -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <h2 class="serif">03. Project Architecture</h2>
+                </div>
+                <div class="section-body sans">
+                    <p>
+                        The system divides responsibilities between a client-side Chrome extension and a lightweight backend API to maintain performance:
+                    </p>
+                    <ul class="feature-list-simple">
+                        <li><strong>Chrome Extension:</strong> Built using React, Vite, Tailwind CSS, and Manifest V3. It coordinates active tab data, updates the DOM sidebar injected onto retail pages, and manages the user dashboard.</li>
+                        <li><strong>Backend API:</strong> Built using FastAPI and Python. It manages the deterministic scoring algorithms, processes text strings, and returns structured analysis payloads to the extension.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Section 4: Walkthrough & Screen Gallery -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <h2 class="serif">04. Walkthrough &amp; Screen Gallery</h2>
+                </div>
+                <div class="section-body sans">
+                    <p>
+                        Key interfaces showing the extension in action, highlighting calculations and user layout panels.
+                    </p>
+
+                    <div class="screenshot-grid screenshot-grid--mobile">
+                        <div class="visual-block">
+                            <img src="images/materialsIQ/extension.png"
+                                 alt="MaterialIQ Extension Sidebar interface parsing shirt fabrics"
+                                 class="comparison-img" loading="lazy" decoding="async">
+                            <span class="caption">Extension sidebar, presenting composition breakdown and fabric recommendations</span>
+                        </div>
+                        <div class="visual-block">
+                            <img src="images/materialsIQ/analysis.png"
+                                 alt="MaterialIQ detailed score analysis breakdown panel"
+                                 class="comparison-img" loading="lazy" decoding="async">
+                            <span class="caption">Scoring analysis, demonstrating natural versus synthetic fiber performance</span>
+                        </div>
+                        <div class="visual-block">
+                            <img src="images/materialsIQ/scores.png"
+                                 alt="MaterialIQ scoring details and value indicator dashboard"
+                                 class="comparison-img" loading="lazy" decoding="async">
+                            <span class="caption">Value assessment, graphing fabric durability against the asking price</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 5: Reflection -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <h2 class="serif">05. Reflection</h2>
+                </div>
+                <div class="section-body sans">
+                    <p>
+                        Developing a scoring model that operates across highly irregular product data was a challenging exercise in data handling. By keeping the scoring logic structured and deterministic, the tool avoids black-box ambiguity. Shoppers can view exactly how every rating was reached.
+                    </p>
+                    <div class="tech-stack-block">
+                        <h3 class="sans tech-stack-heading">Tech Stack</h3>
+                        <div class="tech-stack-grid">
+                            <div class="tech-stack-item">
+                                <span class="tech-stack-label">Extension</span>
+                                <span class="tech-stack-value">React, Vite, TypeScript, Tailwind CSS, Manifest V3</span>
+                            </div>
+                            <div class="tech-stack-item">
+                                <span class="tech-stack-label">Backend</span>
+                                <span class="tech-stack-value">Python, FastAPI, Uvicorn, regex parser engines</span>
+                            </div>
+                            <div class="tech-stack-item">
+                                <span class="tech-stack-label">Design Focus</span>
+                                <span class="tech-stack-value">Progressive disclosure, direct data plotting, accessibility</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </article>
+
+        <footer class="cs-footer sans">
+            <a href="index.html" class="back-link-clean serif">Back to Home</a>
+        </footer>
+    </main>
+    <script src="js/main.js?v=40"></script>
+</body>
+
+</html>
