@@ -43,7 +43,6 @@
         <nav class="topbar-chapters">
             <a href="celio.html" class="chapter-link" id="nav-celio">C-01 / CELIO</a>
             <a href="north-star.html" class="chapter-link" id="nav-north-star">NS-02 / NORTH STAR</a>
-            <a href="illumi.html" class="chapter-link" id="nav-illumi">IL-03 / ILLUMI</a>
             <a href="prox.html" class="chapter-link" id="nav-prox">PX-04 / PROX</a>
             <a href="reach.html" class="chapter-link active-chapter" id="nav-reach">RE-05 / REACH</a>
             <a href="materialsiq.html" class="chapter-link" id="nav-materialsiq">MQ-06 / MATERIALIQ</a>
@@ -128,6 +127,13 @@
                         measured. Assessment scores drive everything downstream, so the clinician logs data once and the
                         system does the routing.
                     </p>
+                    <div class="full-width-image">
+                        <img src="images/reach_caseload.png" alt="Reach caseload view: six patients with FMA-UE trend, therapy adherence, and needs-review flags at a glance"
+                            style="width: 100%; border: 1px solid var(--glass-border); border-radius: 4px; box-shadow: var(--shadow-sm);"
+                            loading="lazy" decoding="async">
+                        <span class="caption">The caseload view: severity, trend, and adherence surfaced for every patient at once, so a clinician can see who needs attention before opening a single chart.</span>
+                    </div>
+
                     <div class="insight-grid-3">
                         <div class="insight-card border-accent">
                             <h3 class="serif">1. Outcome-Driven Severity</h3>
@@ -156,10 +162,10 @@
                     </div>
 
                     <div class="full-width-image" style="margin-top: var(--s-xl);">
-                        <img src="images/reach_program.png" alt="Reach program builder: prescribing a home exercise with sets, reps, and a weekly schedule"
+                        <img src="images/reach_program.png" alt="Reach program editor: assigning a home exercise with sets, reps, and load percentage"
                             style="width: 100%; border: 1px solid var(--glass-border); border-radius: 4px; box-shadow: var(--shadow-sm);"
                             loading="lazy" decoding="async">
-                        <span class="caption">The program builder: therapists prescribe exercises with sets, reps, weekly schedule, and movement cues, with version history preserved on every save.</span>
+                        <span class="caption">Assigning a home program: sets, reps, and load percentage for each prescribed exercise, tied to the patient's severity band.</span>
                     </div>
                 </div>
             </section>
@@ -250,9 +256,23 @@
                             <div class="finding-number sans">05</div>
                             <div class="finding-content">
                                 <h3 class="serif">Patient and caregiver loops</h3>
-                                <p>Conceptual designs let patients report daily pain, energy, and perceived arm use, with bidirectional video and messaging for asynchronous movement analysis and caregiver coordination.</p>
+                                <p>An interactive patient companion prototype pairs to the clinician view with a one-time code. A daily check-in on pain, energy, and focus unlocks a guided session with movement demo clips and a self-rating. Caregiver messaging and asynchronous video review are the conceptual next layer, not yet built.</p>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="full-width-image" style="margin-top: var(--s-xl);">
+                        <img src="images/reach_outcomes.png" alt="Reach outcomes registry: sortable caseload performance table with FMA-UE, ARAT, and Box and Blocks scores, MCID responders, and documentation compliance"
+                            style="width: 100%; border: 1px solid var(--glass-border); border-radius: 4px; box-shadow: var(--shadow-sm);"
+                            loading="lazy" decoding="async">
+                        <span class="caption">The outcomes registry: every patient's standardized scores in one filterable table, with MCID responders and documentation compliance surfaced as caseload-level stats.</span>
+                    </div>
+
+                    <div class="full-width-image" style="margin-top: var(--s-xl);">
+                        <img src="images/reach_patient_app.png" alt="The patient side of Reach: an interactive companion app prototype showing a daily check-in and guided home exercise session"
+                            style="width: 100%; border: 1px solid var(--glass-border); border-radius: 4px; box-shadow: var(--shadow-sm);"
+                            loading="lazy" decoding="async">
+                        <span class="caption">The patient companion prototype: today's check-in and guided session, built to pair one-to-one with a clinician's caseload.</span>
                     </div>
                 </div>
             </section>

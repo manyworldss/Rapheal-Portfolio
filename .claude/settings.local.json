@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npx impeccable:*)"
+      "Bash(npx impeccable:*)",
+      "Bash(cp \"images/reachimages/reach-health.up.railway.app_\\(hd\\) \\(2\\).png\" \"images/reach_outcomes.png\")",
+      "Bash(cp \"images/reachimages/reach-health.up.railway.app_\\(hd\\) \\(7\\).png\" \"images/reach_patient_app.png\")"
     ]
   },
   "hooks": {

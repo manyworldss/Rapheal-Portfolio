@@ -32,19 +32,6 @@ const WORK = [
     ],
   },
   {
-    id: 'illumi', code: 'IL-03', title: 'Illumi', year: '2024',
-    disciplines: ['Information Architecture', 'B2B'],
-    thumb: './assets/work/illumi-analytics.png',
-    hero: './assets/work/illumi-analytics.png',
-    summary: 'An analytics product whose data was rich and whose interface was overwhelming. The job was structure — turning a wall of numbers into a path.',
-    detail: 'Re-architected the analytics views around the decisions users were actually trying to make. Grouped, sequenced, and de-emphasized until the dashboard read like a sentence instead of a spreadsheet — fewer things on screen, more meaning per glance.',
-    meta: [
-      { k: 'Role', v: 'Information Architecture' },
-      { k: 'Context', v: 'B2B analytics' },
-      { k: 'Year', v: '2024' },
-    ],
-  },
-  {
     id: 'prox', code: 'PX-04', title: 'Prox', year: '2025',
     disciplines: ['Onboarding UX', 'iOS', 'Product Design'],
     thumb: './assets/work/prox-deals.png?v=2',
