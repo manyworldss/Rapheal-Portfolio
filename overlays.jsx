@@ -73,23 +73,42 @@ function CaseBody({ item, onClose }) {
         <div>
           <p style={{ fontSize:'var(--text-body-lg)', lineHeight:'var(--leading-body-lg)', color:'var(--on-dark)', fontWeight:'var(--fw-regular)', margin:'0 0 1.5rem', maxWidth:'56ch' }}>{item.summary}</p>
           <p style={{ fontSize:'var(--text-body)', lineHeight:'var(--leading-body)', color:'var(--on-dark-muted)', margin:0, maxWidth:'58ch' }}>{item.detail}</p>
-          <a data-hot href={`${item.id}.html`} style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '0.65rem',
-            marginTop: '2.4rem',
-            fontFamily: 'var(--font-mono)',
-            fontSize: 'var(--text-micro)',
-            letterSpacing: 'var(--track-label)',
-            textTransform: 'uppercase',
-            color: 'var(--on-dark)',
-            border: 'var(--hair) solid var(--border-inverse)',
-            borderRadius: 'var(--radius-pill)',
-            padding: '0.75rem 1.4rem',
-            transition: 'background var(--dur-2) var(--ease-soft), color var(--dur-2) var(--ease-soft)'
-          }}>
-            Read Full Case Study <span style={{ color: 'var(--accent-on-dark)' }}>→</span>
-          </a>
+          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginTop: '2.4rem' }}>
+            <a data-hot href={`${item.id}.html`} style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.65rem',
+              fontFamily: 'var(--font-mono)',
+              fontSize: 'var(--text-micro)',
+              letterSpacing: 'var(--track-label)',
+              textTransform: 'uppercase',
+              color: 'var(--on-dark)',
+              border: 'var(--hair) solid var(--border-inverse)',
+              borderRadius: 'var(--radius-pill)',
+              padding: '0.75rem 1.4rem',
+              transition: 'background var(--dur-2) var(--ease-soft), color var(--dur-2) var(--ease-soft)'
+            }}>
+              Read Full Case Study <span style={{ color: 'var(--accent-on-dark)' }}>→</span>
+            </a>
+            {item.url && (
+              <a data-hot href={item.url} target="_blank" rel="noopener" style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.65rem',
+                fontFamily: 'var(--font-mono)',
+                fontSize: 'var(--text-micro)',
+                letterSpacing: 'var(--track-label)',
+                textTransform: 'uppercase',
+                color: 'var(--accent-on-dark)',
+                border: 'var(--hair) solid var(--border-inverse)',
+                borderRadius: 'var(--radius-pill)',
+                padding: '0.75rem 1.4rem',
+                transition: 'background var(--dur-2) var(--ease-soft), color var(--dur-2) var(--ease-soft)'
+              }}>
+                View Live App <span style={{ color: 'var(--accent-on-dark)' }}>↗</span>
+              </a>
+            )}
+          </div>
         </div>
         <div style={{ display:'flex', flexDirection:'column', gap:'1.4rem', borderTop:'var(--hair) solid var(--border-inverse)', paddingTop:'1.4rem', alignSelf:'start' }}>
           {item.meta.map((m)=>(

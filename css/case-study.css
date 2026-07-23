@@ -19,9 +19,7 @@ body {
     padding: 0 3vw;
     height: 64px;
     border-bottom: 1px solid var(--border);
-    background: rgba(var(--bg-rgb, 240, 236, 227), 0.92);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: var(--bg);
     font-family: var(--font-mono);
     font-size: 0.68rem;
     letter-spacing: 0.12em;
@@ -101,14 +99,11 @@ body {
 
 .cs-category {
     display: inline-block;
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    text-transform: uppercase;
-    letter-spacing: 0.25em;
-    color: var(--spice);
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    color: var(--accent);
     margin-bottom: var(--s-sm);
-    font-weight: 400;
-    opacity: 0.85;
+    font-weight: 500;
 }
 
 .cs-title {
@@ -120,6 +115,7 @@ body {
     letter-spacing: 0.03em;
     margin-bottom: var(--s-sm);
     text-transform: uppercase;
+    text-wrap: balance;
 }
 
 .cs-subtitle {
@@ -253,6 +249,7 @@ body {
     display: block;
     border-bottom: none;
     padding-bottom: 0;
+    text-wrap: balance;
 }
 
 .section-body p {
@@ -261,6 +258,8 @@ body {
     margin-bottom: var(--s-sm);
     color: var(--text-muted);
     font-weight: 300;
+    max-width: 65ch;
+    text-wrap: pretty;
 }
 
 /* Sub-headers within section body — eliminates inline styles */
@@ -273,6 +272,7 @@ body {
     text-transform: uppercase;
     margin-top: var(--s-md);
     margin-bottom: var(--s-sm);
+    text-wrap: balance;
 }
 
 .section-body h3:first-child {
@@ -303,8 +303,9 @@ body {
 
 /* ── DISCLAIMER BOX ── */
 .disclaimer-box {
-    border-left: 2px solid var(--spice);
-    background: var(--glass-bg);
+    border: 1px solid var(--border);
+    background: var(--bg-raised);
+    border-radius: 4px;
     padding: 1.5rem;
     margin: 2rem 0;
     color: var(--text-muted);
@@ -447,8 +448,9 @@ body {
 
 .feature-list li {
     padding: 0.5rem 1rem;
-    border-left: 2px solid var(--spice-dim);
-    background: var(--glass-bg);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    background: var(--bg-raised);
     color: var(--text-muted);
     font-size: 0.95rem;
     font-weight: 300;
@@ -483,9 +485,10 @@ body {
 
 .component-list li {
     padding: 0.75rem var(--s-sm);
-    border-left: 2px solid var(--glass-border-dim);
+    border: 1px solid var(--border);
+    border-radius: 2px;
     margin-bottom: 0.5rem;
-    background: var(--glass-bg);
+    background: var(--bg-raised);
     color: var(--text-muted);
     font-size: 0.95rem;
     font-weight: 300;
@@ -533,12 +536,10 @@ body {
 
 /* ── USER DEFINITION ── */
 .user-definition {
-    background: var(--glass-bg);
-    border-left: 2px solid var(--spice);
+    background: var(--bg-raised);
     padding: var(--s-sm);
     margin-bottom: var(--s-sm);
-    border: 1px solid var(--glass-border-dim);
-    border-left: 2px solid var(--spice);
+    border: 1px solid var(--border);
     border-radius: 2px;
 }
 
@@ -590,21 +591,20 @@ body {
     margin-top: var(--s-sm);
 }
 
+/*.finding-item*/
 .finding-item {
     display: grid;
     grid-template-columns: 3.5rem 1fr;
     gap: var(--s-sm);
     padding: var(--s-sm) var(--s-md);
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border-dim);
-    border-left: 3px solid var(--spice-dim);
-    transition: border-color 0.25s ease, border-left-color 0.25s ease, background 0.25s ease;
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    transition: border-color 0.25s ease, background 0.25s ease;
 }
 
 .finding-item:hover {
-    border-color: var(--glass-border);
-    border-left-color: var(--spice);
-    background: var(--glass-bg-high);
+    border-color: var(--border-strong);
+    background: var(--bg-inset);
 }
 
 .finding-number {
