@@ -15,3 +15,6 @@ Thumbs.db
 # Local env
 .env
 .env.local
+
+# Raw screenshot source dumps (cropped outputs are committed)
+images/materialsIQ/Screenshot*

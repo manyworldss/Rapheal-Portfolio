@@ -44,9 +44,10 @@ const WORK = [
     ],
   },
   {
-    id: 'materialiq', code: 'MQ-06', title: 'MaterialIQ', year: '2026', wip: true,
+    id: 'materialiq', code: 'MQ-06', title: 'MaterialIQ', year: '2026', beta: true, page: 'materialsiq.html',
     disciplines: ['Chrome Extension', 'Full-Stack'],
-    thumb: null, mediaLabel: 'Chrome Extension · AI Integration',
+    thumb: './assets/work/materialiq-card.jpg',
+    hero: './assets/work/materialiq-card.jpg',
     summary: 'An AI-powered browser extension that parses product descriptions and specifications in real time, calculating composition quality, durability, and value for money while shopping.',
     detail: 'Built to reduce the cognitive load of comparison shopping: the extension reads what the retailer says, scores what the material actually is, and surfaces the verdict inline where the decision happens.',
     meta: [

@@ -214,6 +214,7 @@ function ProjectCard({ item, flip }) {
   const cardRef = useRefS(null);
   const imgRef = useRefS(null);
   const wip = !!item.wip;
+  const beta = !!item.beta;
   const contain = !!item.contain;
   const reduce = () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const onMove = (e) => {
@@ -259,6 +260,14 @@ function ProjectCard({ item, flip }) {
               letterSpacing:'var(--track-micro)' }}>
               <span style={{ width:5, height:5, borderRadius:'999px', background:'var(--accent-2)' }} />
               In progress
+            </span>
+          )}
+          {beta && (
+            <span style={{ display:'inline-flex', alignItems:'center', gap:'0.35rem', color:'var(--accent)',
+              border:'var(--hair) solid var(--accent-line)', borderRadius:'var(--radius-pill)', padding:'0.15rem 0.6rem',
+              letterSpacing:'var(--track-micro)' }}>
+              <span style={{ width:5, height:5, borderRadius:'999px', background:'var(--accent)' }} />
+              Beta
             </span>
           )}
         </span>
@@ -310,7 +319,7 @@ function ProjectCard({ item, flip }) {
     );
   }
   return (
-    <a ref={cardRef} data-hot href={`${item.id}.html`}
+    <a ref={cardRef} data-hot href={item.page || `${item.id}.html`}
       onMouseMove={onMove} onMouseEnter={onEnter} onMouseLeave={onLeave}
       style={gridStyle}>
       {flip ? text : media}
