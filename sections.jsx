@@ -211,15 +211,33 @@ function Projects({ items }) {
 
 function ProjectCard({ item, flip }) {
   const [h, setH] = useStateS(false);
+  const cardRef = useRefS(null);
+  const imgRef = useRefS(null);
   const wip = !!item.wip;
+  const contain = !!item.contain;
+  const reduce = () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const onMove = (e) => {
+    const el = cardRef.current; if (!el || reduce()) return;
+    const r = el.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width - 0.5;
+    const py = (e.clientY - r.top) / r.height - 0.5;
+    el.style.transform = `perspective(1100px) rotateY(${(px * 2.4).toFixed(2)}deg) rotateX(${(py * -2.4).toFixed(2)}deg) translateY(-3px)`;
+    if (imgRef.current) imgRef.current.style.transform = `scale(1.06) translate(${(px * -16).toFixed(1)}px, ${(py * -14).toFixed(1)}px)`;
+  };
+  const onEnter = () => setH(true);
+  const onLeave = () => {
+    setH(false);
+    if (cardRef.current) cardRef.current.style.transform = '';
+    if (imgRef.current) imgRef.current.style.transform = '';
+  };
   const media = (
-    <div style={{ position:'relative', background:'var(--obsidian)', overflow:'hidden', minHeight:'320px' }}>
+    <div style={{ position:'relative', background:'var(--obsidian)', overflow:'hidden', height:'100%' }}>
       {item.thumb ? (
-        <img src={item.thumb} alt={item.title} style={{ position:'absolute', inset:0, width:'100%', height:'100%',
-          objectFit:'cover', objectPosition:'top',
-          filter: h ? 'grayscale(0%) brightness(1)' : 'grayscale(25%) brightness(0.88)',
-          transform: h ? 'scale(1.03)' : 'scale(1)',
-          transition:'transform var(--dur-5) var(--ease-out), filter var(--dur-4) var(--ease-out)' }} />
+        <img ref={imgRef} src={item.thumb} alt={item.title} style={{ position:'absolute', inset:0, width:'100%', height:'100%',
+          boxSizing:'border-box', objectFit: contain ? 'contain' : 'cover', objectPosition: contain ? 'center' : 'top',
+          padding: contain ? 'clamp(1.4rem,3vw,2.6rem)' : 0,
+          filter: h ? 'grayscale(0%) brightness(1)' : 'grayscale(22%) brightness(0.9)',
+          transition:'transform var(--dur-4) var(--ease-out), filter var(--dur-4) var(--ease-out)', willChange:'transform' }} />
       ) : (
         <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'flex-end', padding:'1.2rem',
           background:'radial-gradient(80% 80% at 30% 20%, var(--obsidian-3), var(--obsidian))' }}>
@@ -251,7 +269,8 @@ function ProjectCard({ item, flip }) {
         lineHeight:1.0, letterSpacing:'var(--track-display)', textTransform:'uppercase', color:'var(--text-strong)', margin:'0.4rem 0' }}>
         {item.title}
       </h3>
-      <p style={{ margin:0, maxWidth:'52ch', fontSize:'var(--text-body)', lineHeight:'var(--leading-body)', color:'var(--text)' }}>
+      <p style={{ margin:0, maxWidth:'52ch', fontSize:'var(--text-body)', lineHeight:'var(--leading-body)', color:'var(--text)',
+        display:'-webkit-box', WebkitLineClamp:3, WebkitBoxOrient:'vertical', overflow:'hidden' }}>
         {item.summary}
       </p>
       <hr className="rule" style={{ margin:'0.4rem 0 0' }} />
@@ -277,9 +296,10 @@ function ProjectCard({ item, flip }) {
   );
   const gridStyle = {
     display:'grid', gridTemplateColumns:'minmax(0,1fr) minmax(0,1fr)', width:'100%', textAlign:'left',
+    height:'clamp(340px, 40vw, 500px)',
     border:`var(--hair) solid ${(!wip && h) ? 'var(--border-strong)' : 'var(--border)'}`, background:'var(--bg-raised)',
-    textDecoration:'none', color:'inherit',
-    transition:'border-color var(--dur-2) var(--ease-soft)',
+    textDecoration:'none', color:'inherit', willChange:'transform',
+    transition:'transform 140ms var(--ease-out), border-color var(--dur-2) var(--ease-soft)',
   };
   if (wip) {
     return (
@@ -290,7 +310,8 @@ function ProjectCard({ item, flip }) {
     );
   }
   return (
-    <a data-hot href={`${item.id}.html`} onMouseEnter={()=>setH(true)} onMouseLeave={()=>setH(false)}
+    <a ref={cardRef} data-hot href={`${item.id}.html`}
+      onMouseMove={onMove} onMouseEnter={onEnter} onMouseLeave={onLeave}
       style={gridStyle}>
       {flip ? text : media}
       {flip ? media : text}

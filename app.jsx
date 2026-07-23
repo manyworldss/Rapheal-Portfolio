@@ -31,7 +31,7 @@ const WORK = [
     ],
   },
   {
-    id: 'prox', code: 'PX-04', title: 'Prox', year: '2025',
+    id: 'prox', code: 'PX-04', title: 'Prox', year: '2025', contain: true,
     disciplines: ['UX Designer', 'Contract'],
     thumb: './assets/work/prox-deals.png',
     hero: './assets/work/prox-deals.png',
