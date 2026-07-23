@@ -95,12 +95,10 @@ function Hero({ onOpen }) {
 
       {/* warm glow, right side */}
       <div aria-hidden="true" style={{ position:'absolute', inset:0, zIndex:-1, overflow:'hidden', pointerEvents:'none' }}>
-        <div className="hero-wave" style={{ position:'absolute', top:'12%', right:'-14%', width:'52vw', height:'52vw',
-          background:'radial-gradient(circle, var(--accent-wash), transparent 62%)', borderRadius:'999px',
-          willChange:'transform', animation:'heroWave 30s ease-in-out infinite', opacity:0.9 }} />
-        <div className="hero-wave" style={{ position:'absolute', bottom:'-18%', left:'-10%', width:'40vw', height:'40vw',
-          background:'radial-gradient(circle, var(--accent-2-wash), transparent 64%)', borderRadius:'999px',
-          willChange:'transform', animation:'heroWave 38s ease-in-out infinite reverse' }} />
+        <div style={{ position:'absolute', top:'12%', right:'-14%', width:'52vw', height:'52vw',
+          background:'radial-gradient(circle, var(--accent-wash), transparent 62%)', borderRadius:'999px', opacity:0.9 }} />
+        <div style={{ position:'absolute', bottom:'-18%', left:'-10%', width:'40vw', height:'40vw',
+          background:'radial-gradient(circle, var(--accent-2-wash), transparent 64%)', borderRadius:'999px' }} />
       </div>
 
       {/* corner bracket */}
