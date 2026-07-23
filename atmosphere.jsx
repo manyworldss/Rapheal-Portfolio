@@ -49,13 +49,20 @@ function FieldNote({ image }) {
         @media (prefers-reduced-motion: reduce){.${id}A,.${id}B,.${id}C{animation:none!important}}
       `}</style>
       <div aria-hidden="true" style={{ position:'absolute', inset:0, zIndex:-1, overflow:'hidden', pointerEvents:'none' }}>
-        <div style={{ position:'absolute', top:'-2%', left:'2%', width:'56vw', height:'56vw',
-          background:'radial-gradient(circle, rgba(201,138,99,0.40), transparent 60%)', borderRadius:'999px' }} />
-        <div style={{ position:'absolute', bottom:'-6%', right:'4%', width:'52vw', height:'52vw',
-          background:'radial-gradient(circle, rgba(110,144,126,0.44), transparent 62%)', borderRadius:'999px' }} />
+        <div className={id+'A'} style={{ position:'absolute', top:'-2%', left:'2%', width:'56vw', height:'56vw',
+          background:'radial-gradient(circle, rgba(201,138,99,0.46), transparent 60%)', borderRadius:'999px',
+          willChange:'transform', animation:`${id}A 13s ease-in-out infinite` }} />
+        <div className={id+'B'} style={{ position:'absolute', bottom:'-6%', right:'4%', width:'52vw', height:'52vw',
+          background:'radial-gradient(circle, rgba(110,144,126,0.50), transparent 62%)', borderRadius:'999px',
+          willChange:'transform', animation:`${id}B 16s ease-in-out infinite` }} />
+        <div className={id+'C'} style={{ position:'absolute', top:'26%', left:'46%', width:'40vw', height:'40vw',
+          background:'radial-gradient(circle, rgba(255,196,150,0.16), transparent 64%)', borderRadius:'999px',
+          willChange:'transform', animation:`${id}C 19s ease-in-out infinite` }} />
       </div>
       <div aria-hidden="true" style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none',
         background:'radial-gradient(130% 110% at 50% 0%, transparent 60%, rgba(0,0,0,0.32) 100%)' }} />
+      <div aria-hidden="true" style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', opacity:0.05, mixBlendMode:'overlay',
+        backgroundImage:"url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E\")" }} />
 
       <div style={{ position:'relative', zIndex:1, width:'100%', maxWidth:'var(--page-max)', margin:'0 auto',
         padding:'clamp(4rem,9vw,8rem) var(--gutter)' }}>
