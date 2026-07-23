@@ -1,54 +1,41 @@
 /* ============================================================
-   Editorial Archive — app composition & data.
+   Editorial Archive v2 — data + panel contents + composition.
    ============================================================ */
 const { useState: useAppState } = React;
 
 const WORK = [
   {
     id: 'celio', code: 'C-01', title: 'Celio', year: '2025',
-    disciplines: ['UX Research', 'Product Design', 'B2C'],
-    thumb: './assets/work/celio-card.png',
+    disciplines: ['UX Research', 'Product Design'],
+    thumb: './assets/work/celio-landing.png',
     hero: './assets/work/celio-landing.png',
     summary: 'A consumer health e-card reimagined around a single question: in the moment that matters, can someone find what they need without thinking?',
-    detail: 'Research surfaced where the existing card created hesitation and ambiguity. The redesign stripped the interface to its load-bearing parts, rebuilt the information hierarchy around real moments of use, and pushed everything non-essential out of the way — clarity as the primary feature.',
+    detail: 'Celio is an offline-first platform tackling the cognitive load of international travel for Celiacs. It combines a 12-language Translation Card with text-to-speech audio and native Apple/Google Wallet export, an on-device local LLM assistant (Sage AI) for private offline queries, and interactive establishment maps.',
     meta: [
-      { k: 'Role', v: 'UX Research · Product Design' },
-      { k: 'Context', v: 'Consumer health · B2C' },
-      { k: 'Year', v: '2025' },
+      { k: 'Role', v: 'UX Researcher · Designer · Full-Stack Developer' },
+      { k: 'Stack', v: 'Django, Alpine.js, WebLLM, Web Speech API, Wallet Passes APIs' },
+      { k: 'Timeline', v: '9 months' },
     ],
   },
   {
-    id: 'north-star', code: 'NS-02', title: 'North Star', year: '2025',
-    disciplines: ['AI Evaluation', 'Human Factors'],
-    thumb: './assets/work/north-star-hero.png',
-    hero: './assets/work/north-star-hero.png',
-    summary: 'A human-factors-driven platform for evaluating AI model outputs — built to make judgment legible, consistent, and fast at scale.',
-    detail: 'Designed the evaluation surface so reviewers could score hundreds of outputs without drift or fatigue: structured rubrics, low-friction input, and an information architecture that keeps the relevant context in view. The work sits at the seam between cognitive ergonomics and model iteration.',
+    id: 'reach', code: 'RE-05', title: 'Reach', year: '2025',
+    disciplines: ['UX Research', 'Human Factors', 'Full-Stack'],
+    thumb: './assets/work/reach-card.jpg',
+    hero: './assets/work/reach-card.jpg',
+    summary: 'A caseload and outcome-tracking platform for rehab therapists treating upper-extremity motor recovery after stroke, built so a clinician can see in seconds who needs attention and whether a patient is on track.',
+    detail: 'Designed around the clinician’s glance: recovery trajectories against expected ranges, assigned programs with adherence, and remote monitoring status in one view, so attention lands where it matters first.',
     meta: [
-      { k: 'Role', v: 'Human Factors · Product' },
-      { k: 'Context', v: 'AI model evaluation' },
+      { k: 'Role', v: 'UX Research · Human Factors · Full-Stack' },
+      { k: 'Context', v: 'Clinical rehabilitation · stroke recovery' },
       { k: 'Year', v: '2025' },
-    ],
-  },
-  {
-    id: 'illumi', code: 'IL-03', title: 'Illumi', year: '2024',
-    disciplines: ['Information Architecture', 'B2B'],
-    thumb: './assets/work/illumi-analytics.png',
-    hero: './assets/work/illumi-analytics.png',
-    summary: 'An analytics product whose data was rich and whose interface was overwhelming. The job was structure — turning a wall of numbers into a path.',
-    detail: 'Re-architected the analytics views around the decisions users were actually trying to make. Grouped, sequenced, and de-emphasized until the dashboard read like a sentence instead of a spreadsheet — fewer things on screen, more meaning per glance.',
-    meta: [
-      { k: 'Role', v: 'Information Architecture' },
-      { k: 'Context', v: 'B2B analytics' },
-      { k: 'Year', v: '2024' },
     ],
   },
   {
     id: 'prox', code: 'PX-04', title: 'Prox', year: '2025',
-    disciplines: ['Onboarding UX', 'iOS', 'Product Design'],
-    thumb: './assets/work/prox-deals.png?v=2',
-    hero: './assets/work/prox-deals.png?v=2',
-    summary: 'An unsolicited onboarding redesign that the team adopted as their first-time user experience direction — then brought me on to see it through.',
+    disciplines: ['UX Designer', 'Contract'],
+    thumb: './assets/work/prox-deals.png',
+    hero: './assets/work/prox-deals.png',
+    summary: 'An unsolicited onboarding redesign that the team adopted as their first-time user experience direction. They then brought me on to see it through.',
     detail: 'Led the full redesign across 14 screens, focused on reducing mobile friction, improving feature comprehension, and driving first-time activation. Now running A/B tests, event tracking, and post-activation surveys to measure how the changes hold up on retention.',
     meta: [
       { k: 'Role', v: 'UX Designer · Contract' },
@@ -57,16 +44,15 @@ const WORK = [
     ],
   },
   {
-    id: 'reach', code: 'RE-05', title: 'Reach', year: '2025',
-    disciplines: ['Human Factors', 'Clinical UX', 'Full-Stack'],
-    thumb: './assets/work/reach-card.jpg',
-    hero: './assets/work/reach-card.jpg',
-    summary: 'A caseload and outcome-tracking platform for rehab therapists treating upper-extremity motor recovery after stroke, built so a clinician can see in seconds who needs attention and whether a patient is on track.',
-    detail: 'Standardized outcome measures (Fugl-Meyer, ARAT, Box and Blocks) are the gold standard, but they get documented inconsistently because capture is slow and scores live in disconnected systems. Reach connects measured outcomes, the expected recovery arc, and home-program adherence in one clinician-facing interface, with FMA-UE scores automatically routing patients into severity-banded programs. Shaped by direct feedback from three occupational therapists.',
+    id: 'materialiq', code: 'MQ-06', title: 'MaterialIQ', year: '2026', wip: true,
+    disciplines: ['Chrome Extension', 'Full-Stack'],
+    thumb: null, mediaLabel: 'Chrome Extension · AI Integration',
+    summary: 'An AI-powered browser extension that parses product descriptions and specifications in real time, calculating composition quality, durability, and value for money while shopping.',
+    detail: 'Built to reduce the cognitive load of comparison shopping: the extension reads what the retailer says, scores what the material actually is, and surfaces the verdict inline where the decision happens.',
     meta: [
-      { k: 'Role', v: 'UX Research · Human Factors · Full-Stack' },
-      { k: 'Context', v: 'Stroke rehabilitation · Clinical' },
-      { k: 'Year', v: '2025' },
+      { k: 'Role', v: 'Design · Full-Stack' },
+      { k: 'Context', v: 'Browser extension · AI' },
+      { k: 'Year', v: '2026' },
     ],
   },
 ];
@@ -82,7 +68,7 @@ function AboutContent() {
         </p>
         <p style={{ fontSize:'var(--text-body)', lineHeight:'var(--leading-body)', color:'var(--text)' }}>
           I'm formalizing that intersection through an accelerated B.S./M.S. in Human Factors Psychology at
-          Embry-Riddle — pointed at high-stakes environments: reducing cognitive load, eliminating use-errors,
+          Embry-Riddle, pointed at high-stakes environments: reducing cognitive load, eliminating use-errors,
           and building trust in the systems that define our future.
         </p>
       </div>
@@ -105,46 +91,35 @@ function AboutContent() {
 }
 
 function ExperienceContent() {
-  const experiences = [
+  const roles = [
     {
-      role: 'UX Designer',
-      company: 'Prox',
-      type: 'Contract',
-      desc: "Sent an unsolicited onboarding redesign to the team. They adopted it as the product's first-time user experience direction and brought me on to see it through. Led the full redesign across 14 screens, focused on reducing mobile friction, improving feature comprehension, and driving first-time activation. Running A/B tests, event tracking, and post-activation surveys to measure how the changes hold up on retention."
+      title: 'UX Designer', org: 'Prox · Contract',
+      body: "Sent an unsolicited onboarding redesign to the team. They adopted it as the product's first-time user experience direction and brought me on to see it through. Led the full redesign across 14 screens, focused on reducing mobile friction, improving feature comprehension, and driving first-time activation. Running A/B tests, event tracking, and post-activation surveys to measure how the changes hold up on retention.",
     },
     {
-      role: 'AI Evaluation Specialist',
-      company: 'Handshake AI',
-      type: 'Contract',
-      desc: "Contracted by a leading AI research lab to evaluate LLM-generated outputs for quality, accuracy, and alignment with UX principles. Reviewed and scored 500+ outputs, returning structured feedback to directly improve model iteration cycles."
+      title: 'AI Evaluation Specialist', org: 'Handshake AI · Contract',
+      body: 'Contracted by a leading AI research lab to evaluate LLM-generated outputs for quality, accuracy, and alignment with UX principles. Reviewed and scored 500+ outputs, returning structured feedback to directly improve model iteration cycles.',
     },
     {
-      role: 'Software Engineer (UX)',
-      company: 'Wazzle AI',
-      desc: "Led mixed-methods research combining behavioral analytics and support ticket analysis to identify product gaps, driving an 18% increase in conversion. Translated ambiguous feedback into testable hypotheses and shipped iterative UX improvements via A/B testing."
+      title: 'Software Engineer (UX)', org: 'Wazzle AI',
+      body: 'Led mixed-methods research combining behavioral analytics and support ticket analysis to identify product gaps, driving an 18% increase in conversion. Translated ambiguous feedback into testable hypotheses and shipped iterative UX improvements via A/B testing.',
     },
     {
-      role: 'Technical Support Engineer',
-      company: 'Greenville County',
-      desc: "Redesigned and automated the employee onboarding experience, cutting device setup time by rewriting legacy workflows. Built documentation systems that reduced cognitive overhead for support staff and standardized procedures across the department."
-    }
+      title: 'Technical Support Engineer', org: 'Greenville County',
+      body: 'Redesigned and automated the employee onboarding experience, cutting device setup time by rewriting legacy workflows. Built documentation systems that reduced cognitive overhead for support staff and standardized procedures across the department.',
+    },
   ];
-
   return (
     <div>
       <PanelTitle index="E">Experience</PanelTitle>
-      <div style={{ display:'flex', flexDirection:'column', gap:'1.75rem' }}>
-        {experiences.map((exp, i) => (
-          <div key={i} style={{ borderBottom: i !== experiences.length - 1 ? 'var(--hair) solid var(--border)' : 'none', paddingBottom: i !== experiences.length - 1 ? '1.5rem' : 0 }}>
-            <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline', flexWrap:'wrap', gap:'0.5rem', marginBottom:'0.5rem' }}>
-              <h3 style={{ fontFamily:'var(--font-display)', fontWeight:'var(--fw-light)', fontSize:'var(--text-h2)', color:'var(--text-strong)', margin:0 }}>{exp.role}</h3>
-              <span style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', textTransform:'uppercase', color:'var(--accent)' }}>
-                {exp.company} {exp.type ? `· ${exp.type}` : ''}
-              </span>
+      <div style={{ display:'flex', flexDirection:'column' }}>
+        {roles.map((r, i) => (
+          <div key={r.title} style={{ padding:'1.6rem 0', borderTop: i ? 'var(--hair) solid var(--border)' : 'none' }}>
+            <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline', gap:'1rem', flexWrap:'wrap', marginBottom:'0.8rem' }}>
+              <h3 style={{ fontFamily:'var(--font-display)', fontWeight:'var(--fw-display)', fontSize:'var(--text-h3)', color:'var(--text-strong)', margin:0 }}>{r.title}</h3>
+              <span style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', textTransform:'uppercase', color:'var(--accent)' }}>{r.org}</span>
             </div>
-            <p style={{ fontSize:'var(--text-body)', lineHeight:'var(--leading-body)', color:'var(--text-muted)', margin:0 }}>
-              {exp.desc}
-            </p>
+            <p style={{ margin:0, fontSize:'var(--text-sm)', lineHeight:'var(--leading-sm)', color:'var(--text-muted)' }}>{r.body}</p>
           </div>
         ))}
       </div>
@@ -168,7 +143,7 @@ function ContactContent() {
         {links.map(([l,v,h],i)=>(
           <a key={l} data-hot href={h} target="_blank" rel="noopener" style={{ display:'flex', alignItems:'center', justifyContent:'space-between',
             padding:'1.3rem 0', borderTop:'var(--hair) solid var(--border)', borderBottom: i===links.length-1?'var(--hair) solid var(--border)':'none' }}>
-            <span style={{ fontFamily:'var(--font-display)', fontWeight:'var(--fw-light)', fontSize:'var(--text-h2)', color:'var(--text-strong)' }}>{l}</span>
+            <span style={{ fontFamily:'var(--font-display)', fontWeight:'var(--fw-semibold)', fontSize:'var(--text-h2)', color:'var(--text-strong)' }}>{l}</span>
             <span style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', color:'var(--text-faint)' }}>{v} →</span>
           </a>
         ))}
@@ -178,11 +153,10 @@ function ContactContent() {
 }
 
 function App() {
-  const [openCase, setOpenCase] = useAppState(null);
   const [panel, setPanel] = useAppState(null);
   const onOpen = (id) => {
-    if (id === 'about' || id === 'experience' || id === 'contact') setPanel(id);
-    else setOpenCase(WORK.find((w) => w.id === id));
+    if (id === 'about' || id === 'contact' || id === 'experience') setPanel(id);
+    else if (id === 'work') { const w = document.querySelector('#work'); if (w) scrollTo({ top: w.offsetTop - 20, behavior: 'smooth' }); }
   };
   return (
     <React.Fragment>
@@ -190,13 +164,12 @@ function App() {
       <IntroCurtain />
       <Nav onOpen={onOpen} />
       <main id="top">
-        <Hero />
-        <Archive items={WORK} />
+        <Hero onOpen={onOpen} />
+        <Projects items={WORK} />
         <FieldNote />
         <Collection />
         <Footer onOpen={onOpen} />
       </main>
-      <CaseOverlay item={openCase} onClose={() => setOpenCase(null)} />
       <Panel open={panel === 'about'} onClose={() => setPanel(null)}><AboutContent /></Panel>
       <Panel open={panel === 'experience'} onClose={() => setPanel(null)}><ExperienceContent /></Panel>
       <Panel open={panel === 'contact'} onClose={() => setPanel(null)}><ContactContent /></Panel>

@@ -1,5 +1,5 @@
 /* ============================================================
-   Editorial Archive — atmospheric break, marquee, footer.
+   Editorial Archive v2 — atmospheric break, marquee, footer.
    ============================================================ */
 const { useState: useState2, useEffect: useEffect2, useRef: useRef2 } = React;
 
@@ -21,7 +21,7 @@ function Marquee({ children, speed = 44, onDark = false }) {
         <div className={id+'t'} key={t} aria-hidden={t===1}>
           {Array.from({length:5}).map((_,i)=>(
             <span key={i} style={{ display:'inline-flex', alignItems:'center', fontFamily:'var(--font-display)',
-              fontWeight:'var(--fw-light)', fontSize:'var(--text-display)', letterSpacing:'var(--track-display)', lineHeight:1 }}>
+              fontWeight:'var(--fw-display)', fontSize:'var(--text-display)', letterSpacing:'var(--track-display)', lineHeight:1 }}>
               <span style={{ padding:'0 0.4em' }}>{children}</span>
               <span aria-hidden="true" style={{ padding:'0 0.4em', color:'var(--accent)' }}>—</span>
             </span>
@@ -68,11 +68,11 @@ function FieldNote({ image }) {
         padding:'clamp(4rem,9vw,8rem) var(--gutter)' }}>
         <div style={{ display:'flex', alignItems:'baseline', gap:'0.75rem', marginBottom:'2.2rem',
           opacity: shown?1:0, transform: shown?'none':'translateY(var(--rise))', transition:'opacity var(--dur-4) var(--ease-out), transform var(--dur-4) var(--ease-out)' }}>
-          <span style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-label)', letterSpacing:'var(--track-label)', textTransform:'uppercase', color:'var(--accent-2-on-dark)' }}>05</span>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-label)', letterSpacing:'var(--track-label)', textTransform:'uppercase', color:'var(--accent-2-on-dark)' }}>02</span>
           <span style={{ width: shown?'2rem':'0rem', height:'var(--hair)', background:'var(--accent-2-on-dark)', alignSelf:'center', transition:'width var(--dur-4) var(--ease-out) 120ms' }} />
-          <span style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-label)', letterSpacing:'var(--track-label)', textTransform:'uppercase', color:'var(--on-dark-muted)' }}>Ethos</span>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-label)', letterSpacing:'var(--track-label)', textTransform:'uppercase', color:'var(--on-dark-muted)' }}>Approach</span>
         </div>
-        <h2 style={{ fontFamily:'var(--font-display)', fontWeight:'var(--fw-light)', fontSize:'var(--text-display)',
+        <h2 style={{ fontFamily:'var(--font-display)', fontWeight:'var(--fw-display)', fontSize:'var(--text-display)',
           lineHeight:'var(--leading-display)', letterSpacing:'var(--track-display)', color:'var(--on-dark)', maxWidth:'16ch', margin:0 }}>
           {['The best interface','reduces cognitive load','to almost nothing.'].map((ln, i) => (
             <span key={i} style={{ display:'block', overflow:'hidden', paddingBottom:'0.16em', marginBottom:'-0.06em' }}>
@@ -94,18 +94,22 @@ function FieldNote({ image }) {
 
 /* ---- Footer ---- */
 function Footer({ onOpen }) {
+  const [h, setH] = useState2(false);
   return (
     <footer style={{ background:'var(--bg)', borderTop:'var(--hair) solid var(--border)' }}>
       <div style={{ padding:'clamp(3rem,6vw,5rem) 0 0' }}>
-        <Marquee speed={50}>Let's talk about the work</Marquee>
+        <Marquee speed={50}>Let's work together</Marquee>
       </div>
-      <div style={{ maxWidth:'var(--page-max)', margin:'0 auto', width:'100%', padding:'clamp(2.5rem,5vw,4rem) var(--gutter)',
+      <Reveal y="14px" style={{ maxWidth:'var(--page-max)', margin:'0 auto', width:'100%', padding:'clamp(2.5rem,5vw,4rem) var(--gutter)',
         display:'flex', justifyContent:'space-between', alignItems:'flex-end', gap:'2rem', flexWrap:'wrap' }}>
         <div>
-          <button data-hot onClick={()=>onOpen('contact')} style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-label)',
-            letterSpacing:'var(--track-label)', textTransform:'uppercase', color:'var(--text-strong)', borderRadius:'var(--radius-pill)',
-            border:'var(--hair) solid var(--border-strong)', padding:'0.85rem 1.6rem', display:'inline-flex', alignItems:'center', gap:'0.6em' }}>
-            Get in touch <span style={{ color:'var(--accent)' }}>→</span>
+          <button data-hot onClick={()=>onOpen('contact')} onMouseEnter={()=>setH(true)} onMouseLeave={()=>setH(false)}
+            style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-label)',
+            letterSpacing:'var(--track-label)', textTransform:'uppercase', color:'#F4F0E5',
+            background: h ? 'var(--accent-hover)' : 'var(--accent)', borderRadius:'var(--radius-pill)',
+            border:'none', padding:'1rem 1.9rem', display:'inline-flex', alignItems:'center', gap:'0.6em',
+            transition:'background var(--dur-2) var(--ease-soft)' }}>
+            Get in touch <span aria-hidden="true" style={{ display:'inline-block', transform: h ? 'translateX(4px)' : 'none', transition:'transform var(--dur-2) var(--ease-out)' }}>→</span>
           </button>
         </div>
         <div style={{ display:'flex', flexDirection:'column', gap:'0.4rem', textAlign:'right' }}>
@@ -114,7 +118,7 @@ function Footer({ onOpen }) {
             <span style={{display:'inline-block', width:6, height:6, borderRadius:999, background:'var(--accent-2)'}}></span> Open to UX research &amp; human factors roles
           </span>
         </div>
-      </div>
+      </Reveal>
     </footer>
   );
 }

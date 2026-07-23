@@ -1,49 +1,54 @@
 /* ============================================================
-   COLORS — Warm paper & ink, cinematic obsidian, clay + pine.
-   Editorial Archive system. Achromatic discipline, warmed by a
-   muted clay; deep pine is the quiet second voice (status,
-   secondary index, healthcare/field cues). Light + dark themes.
+   COLORS — Warm cream canvas, warm ink, brick primary accent,
+   pine secondary. Editorial Archive v2 (Moments-inspired).
+   Light + dark themes via [data-theme].
    ============================================================ */
 :root {
   /* ---- Paper (light canvas) ---- */
-  --paper:          #F0ECE3;   /* primary canvas — warm oat */
-  --paper-raised:   #F7F4ED;   /* lifted surface / card field */
-  --paper-sunk:     #E7E1D6;   /* recessed / inset wells, hairline fills */
+  --paper:          #EDE8DB;   /* primary canvas — warm cream */
+  --paper-raised:   #F4F0E5;   /* lifted surface / card field */
+  --paper-sunk:     #E3DCCB;   /* recessed / inset wells */
 
   /* ---- Ink (text on paper) ---- */
-  --ink:            #17140F;   /* primary text — warm near-black */
-  --ink-2:          #2A251E;   /* carbon — secondary headings */
-  --ash:            #6B6457;   /* muted body / metadata */
-  --smoke:          #9C9587;   /* tertiary / disabled / placeholder */
-  --line:           rgba(23, 20, 15, 0.12);  /* hairline border on paper */
-  --line-strong:    rgba(23, 20, 15, 0.24);  /* emphasized hairline */
+  --ink:            #1B1713;   /* primary text — warm near-black */
+  --ink-2:          #2E2822;   /* secondary headings */
+  --ash:            #6E675C;   /* muted body / metadata */
+  --smoke:          #9A9283;   /* tertiary / disabled */
+  --line:           rgba(27, 23, 19, 0.14);
+  --line-strong:    rgba(27, 23, 19, 0.28);
 
   /* ---- Obsidian (cinematic dark frames) ---- */
-  --obsidian:       #100D0A;   /* full-bleed dark surface — warm black */
-  --obsidian-2:     #18140F;   /* layered dark / footer zones */
-  --obsidian-3:     #221C16;   /* dark card field */
-  --on-dark:        #F0ECE3;   /* text on dark = paper */
-  --on-dark-muted:  rgba(240, 236, 227, 0.68);
-  --on-dark-dim:    rgba(240, 236, 227, 0.44);
-  --line-dark:      rgba(240, 236, 227, 0.16);
+  --obsidian:       #0F0C09;
+  --obsidian-2:     #171310;
+  --obsidian-3:     #211B15;
+  --on-dark:        #EDE8DB;
+  --on-dark-muted:  rgba(237, 232, 219, 0.68);
+  --on-dark-dim:    rgba(237, 232, 219, 0.44);
+  --line-dark:      rgba(237, 232, 219, 0.16);
 
-  /* ---- Clay (primary accent) ---- */
-  --clay:           #A6603C;   /* muted terracotta — links, active index, primary CTA */
-  --clay-soft:      #C98A63;   /* tint — on dark surfaces, hover lift */
-  --clay-deep:      #7E472A;   /* pressed / dense */
-  --clay-wash:      rgba(166, 96, 60, 0.10);  /* faint field behind active */
-  --clay-line:      rgba(166, 96, 60, 0.34);  /* accent hairline */
+  /* ---- Brick (primary accent) ---- */
+  --brick:          #C8421F;   /* headline accents, links, primary CTA */
+  --brick-soft:     #E06A45;   /* tint — on dark surfaces */
+  --brick-deep:     #9E3115;   /* pressed / dense */
+  --brick-wash:     rgba(200, 66, 31, 0.10);
+  --brick-line:     rgba(200, 66, 31, 0.34);
 
-  /* ---- Pine (secondary accent — the second voice) ---- */
-  --pine:           #3C5A4A;   /* deep muted evergreen — status, secondary cues */
-  --pine-soft:      #6E907E;   /* tint — on dark surfaces, legible on obsidian */
-  --pine-deep:      #2A4034;   /* pressed / dense */
-  --pine-wash:      rgba(60, 90, 74, 0.10);   /* faint field */
-  --pine-line:      rgba(60, 90, 74, 0.32);   /* secondary hairline */
+  /* ---- Clay (legacy alias → brick) ---- */
+  --clay:           var(--brick);
+  --clay-soft:      var(--brick-soft);
+  --clay-deep:      var(--brick-deep);
+  --clay-wash:      var(--brick-wash);
+  --clay-line:      var(--brick-line);
+
+  /* ---- Pine (secondary accent — status, availability) ---- */
+  --pine:           #3C5A4A;
+  --pine-soft:      #6E907E;
+  --pine-deep:      #2A4034;
+  --pine-wash:      rgba(60, 90, 74, 0.10);
+  --pine-line:      rgba(60, 90, 74, 0.32);
 
   /* ============================================================
-     SEMANTIC ALIASES — reference these in components.
-     Light theme (default).
+     SEMANTIC ALIASES — light theme (default).
      ============================================================ */
   --bg:               var(--paper);
   --bg-raised:        var(--paper-raised);
@@ -60,21 +65,21 @@
   --border-strong:    var(--line-strong);
   --border-inverse:   var(--line-dark);
 
-  --accent:           var(--clay);
-  --accent-hover:     var(--clay-deep);
-  --accent-on-dark:   var(--clay-soft);
-  --accent-wash:      var(--clay-wash);
-  --accent-line:      var(--clay-line);
+  --accent:           var(--brick);
+  --accent-hover:     var(--brick-deep);
+  --accent-on-dark:   var(--brick-soft);
+  --accent-wash:      var(--brick-wash);
+  --accent-line:      var(--brick-line);
 
-  --accent-2:         var(--pine);        /* secondary accent */
+  --accent-2:         var(--pine);
   --accent-2-hover:   var(--pine-deep);
   --accent-2-on-dark: var(--pine-soft);
   --accent-2-wash:    var(--pine-wash);
   --accent-2-line:    var(--pine-line);
 
-  --focus-ring:       var(--clay);
+  --focus-ring:       var(--brick);
 
-  /* ---- Custom Cursor Colors ---- */
+  /* ---- Custom Cursor Colors (preserved from local) ---- */
   --cursor-dot:       var(--accent);
   --cursor-ring-line: var(--border-strong);
   --cursor-hot-line:  var(--accent-line);
@@ -84,9 +89,7 @@
 }
 
 /* ============================================================
-   DARK THEME — the cinematic obsidian mode. The dark frames
-   were always part of the system; this makes the whole canvas
-   one. Set <html data-theme="dark"> (or via the toggle).
+   DARK THEME — the whole canvas goes obsidian.
    ============================================================ */
 [data-theme="dark"] {
   --bg:               var(--obsidian);
@@ -95,21 +98,20 @@
   --bg-inverse:       var(--paper);
 
   --text-strong:      var(--on-dark);
-  --text:             rgba(240, 236, 227, 0.84);
-  --text-muted:       rgba(240, 236, 227, 0.66);
-  --text-faint:       rgba(240, 236, 227, 0.48);
+  --text:             rgba(237, 232, 219, 0.84);
+  --text-muted:       rgba(237, 232, 219, 0.66);
+  --text-faint:       rgba(237, 232, 219, 0.48);
   --text-on-inverse:  var(--ink);
 
-  --border:           rgba(240, 236, 227, 0.20);
-  --border-strong:    rgba(240, 236, 227, 0.32);
+  --border:           rgba(237, 232, 219, 0.20);
+  --border-strong:    rgba(237, 232, 219, 0.32);
   --border-inverse:   var(--line);
 
-  /* accents shift to their on-dark tints so they stay legible */
-  --accent:           var(--clay-soft);
-  --accent-hover:     var(--clay);
-  --accent-on-dark:   var(--clay-soft);
-  --accent-wash:      rgba(201, 138, 99, 0.12);
-  --accent-line:      rgba(201, 138, 99, 0.34);
+  --accent:           var(--brick-soft);
+  --accent-hover:     var(--brick);
+  --accent-on-dark:   var(--brick-soft);
+  --accent-wash:      rgba(224, 106, 69, 0.12);
+  --accent-line:      rgba(224, 106, 69, 0.34);
 
   --accent-2:         var(--pine-soft);
   --accent-2-hover:   var(--pine);
@@ -117,12 +119,12 @@
   --accent-2-wash:    rgba(110, 144, 126, 0.12);
   --accent-2-line:    rgba(110, 144, 126, 0.34);
 
-  --focus-ring:       var(--clay-soft);
+  --focus-ring:       var(--brick-soft);
 
-  /* ---- Custom Cursor Colors ---- */
-  --cursor-dot:       var(--accent-2);       /* pine green in dark mode */
+  /* ---- Custom Cursor Colors — pine green in dark mode (preserved) ---- */
+  --cursor-dot:       var(--accent-2);
   --cursor-ring-line: var(--border-strong);
-  --cursor-hot-line:  var(--accent-2-line);  /* pine green lines/wash */
+  --cursor-hot-line:  var(--accent-2-line);
   --cursor-hot-wash:  var(--accent-2-wash);
 
   color-scheme: dark;

@@ -126,11 +126,11 @@ function Collection() {
       <Reveal style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-end', gap:'1.5rem', flexWrap:'wrap', marginBottom:'clamp(2rem,4vw,3.5rem)' }}>
         <div>
           <div style={{ display:'flex', alignItems:'baseline', gap:'0.75rem', marginBottom:'1.4rem' }}>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-label)', letterSpacing:'var(--track-label)', textTransform:'uppercase', color:'var(--accent-2)' }}>06</span>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-label)', letterSpacing:'var(--track-label)', textTransform:'uppercase', color:'var(--accent-2)' }}>03</span>
             <span style={{ width:'2rem', height:'var(--hair)', background:'var(--border-strong)', alignSelf:'center' }} />
             <span style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-label)', letterSpacing:'var(--track-label)', textTransform:'uppercase', color:'var(--text-muted)' }}>Currently / Lately</span>
           </div>
-          <h2 style={{ fontFamily:'var(--font-display)', fontWeight:'var(--fw-light)', fontSize:'var(--text-h1)', letterSpacing:'var(--track-tight)', color:'var(--text-strong)', margin:0, maxWidth:'18ch' }}>
+          <h2 style={{ fontFamily:'var(--font-display)', fontWeight:'var(--fw-display)', fontSize:'var(--text-h1)', letterSpacing:'var(--track-tight)', color:'var(--text-strong)', margin:0, maxWidth:'18ch' }}>
             This is my kind of art.
           </h2>
           <p style={{ marginTop:'1.1rem', maxWidth:'48ch', fontSize:'var(--text-body)', lineHeight:'var(--leading-body)', color:'var(--text-muted)' }}>
@@ -139,8 +139,8 @@ function Collection() {
         </div>
         <button data-hot onClick={() => setSeed(manual ? todaySeed() : Date.now() % 2147483647)}
           style={{ display:'inline-flex', alignItems:'center', gap:'0.55rem', fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)',
-            letterSpacing:'var(--track-micro)', textTransform:'uppercase', color:'var(--text-muted)',
-            border:'var(--hair) solid var(--border-strong)', borderRadius:'var(--radius-pill)', padding:'0.65rem 1.1rem', whiteSpace:'nowrap' }}>
+            letterSpacing:'var(--track-micro)', textTransform:'uppercase', color:'var(--text-strong)',
+            border:'var(--hair-2) solid var(--text-strong)', borderRadius:'var(--radius-pill)', padding:'0.75rem 1.3rem', whiteSpace:'nowrap' }}>
           <span aria-hidden="true" style={{ color:'var(--accent)' }}>↻</span> {manual ? 'Back to today' : 'Shuffle'}
         </button>
       </Reveal>
@@ -154,7 +154,7 @@ function Collection() {
             <span style={{ width:6, height:6, borderRadius:'999px', background:KINDS[featured.kind].accent }} />
             {KINDS[featured.kind].label} · Today's pick
           </span>
-          <h3 style={{ fontFamily:'var(--font-display)', fontWeight:'var(--fw-light)', fontSize:'clamp(2.5rem,4.5vw,4.25rem)', lineHeight:1.0,
+          <h3 style={{ fontFamily:'var(--font-display)', fontWeight:'var(--fw-display)', fontSize:'clamp(2.5rem,4.5vw,4.25rem)', lineHeight:1.0,
             letterSpacing:'var(--track-display)', color:'var(--text-strong)', margin:'1.1rem 0 0.8rem', overflowWrap:'break-word' }}>{featured.title}</h3>
           <div style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-label)', textTransform:'uppercase', color:'var(--text-faint)', marginBottom:'1.4rem' }}>
             {featured.by}{featured.year !== '—' ? `  ·  ${featured.year}` : ''}
@@ -172,7 +172,11 @@ function Collection() {
 
         {/* index */}
         <Reveal delay={80}>
-          {list.map((it, i) => <CollectionRow key={featured.title + i} item={it} last={i === list.length - 1} />)}
+          {list.map((it, i) => (
+            <Reveal key={featured.title + i} delay={120 + i * 70} y="12px">
+              <CollectionRow item={it} last={i === list.length - 1} />
+            </Reveal>
+          ))}
         </Reveal>
       </div>
     </section>
@@ -192,7 +196,7 @@ function CollectionRow({ item, last }) {
       <span style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', textTransform:'uppercase',
         color: h ? accent : 'var(--text-faint)', whiteSpace:'nowrap', transition:'color var(--dur-2) var(--ease-soft)' }}>{KINDS[item.kind].label}</span>
       <span style={{ minWidth:0 }}>
-        <span style={{ fontFamily:'var(--font-display)', fontWeight:'var(--fw-regular)', fontSize:'var(--text-h3)', color:'var(--text-strong)', display:'block', lineHeight:1.15, overflowWrap:'break-word' }}>{item.title}</span>
+        <span style={{ fontFamily:'var(--font-display)', fontWeight:'var(--fw-semibold)', fontSize:'var(--text-h3)', color:'var(--text-strong)', display:'block', lineHeight:1.15, overflowWrap:'break-word' }}>{item.title}</span>
         <span style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', textTransform:'uppercase', color:'var(--text-faint)', display:'block', marginTop:'0.3rem' }}>{item.by}{item.year !== '—' ? `  ·  ${item.year}` : ''}</span>
       </span>
       <span aria-hidden="true" style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', color: h ? accent : 'transparent',
@@ -201,4 +205,4 @@ function CollectionRow({ item, last }) {
   );
 }
 
-Object.assign(window, { Collection });
+Object.assign(window, { Collection, COLLECTION, KINDS, seededOrder, todaySeed });
