@@ -507,8 +507,8 @@ body {
 /* ── SCREENSHOT GRID ── */
 .screenshot-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--s-sm);
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: var(--s-md);
     margin: var(--s-md) 0;
 }
 

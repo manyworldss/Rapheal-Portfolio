@@ -57,7 +57,7 @@
             <span class="cs-category badge sans text-accent">Chrome Extension / AI Quality Analysis</span>
             <h1 class="cs-title serif">MaterialIQ: Objective Quality in the Shopping Cart</h1>
             <p class="cs-subtitle sans">
-                MaterialIQ is an AI-powered browser extension and FastAPI backend that parses product descriptions and specifications in real time. It calculates material scores, estimates product durability, and evaluates value transparency directly within the user's shopping session.
+                I built MaterialIQ to solve a problem I kept running into while shopping online: figuring out whether a piece of clothing is actually well-made or if you're just paying for the brand label. It's a Chrome extension backed by FastAPI that parses raw fabric specs in real time, calculating material quality, estimating lifespan, and showing price transparency right inside your shopping cart.
             </p>
             <div class="cs-meta sans">
                 <div class="meta-item">
@@ -101,10 +101,10 @@
                 </div>
                 <div class="section-body sans">
                     <p>
-                        Online consumers face constant uncertainty when evaluating fabric blends, construction details, and pricing. Most buyers assume high quality, but struggle to verify material blends or construction markers before purchasing. MaterialIQ is designed to resolve this confusion by analyzing product specifications automatically and presenting a simple, unified quality score.
+                        When shopping online, it's surprisingly hard to verify what a garment is actually made of before buying it. High prices don't always mean high quality, and most of us don't have the time to research fabric weights or fiber blends on every product page. I designed MaterialIQ to strip away that ambiguity by automatically scanning active retail tabs and presenting an honest, unified quality rating.
                     </p>
                     <p>
-                        The extension works silently in the background, reading active tabs on popular retail sites. Rather than relying on simple reviews or marketing copy, it focuses on raw fabric data, fiber ratios, and manufacturing indicators to determine the actual standard of the item.
+                        Instead of relying on sponsored reviews or marketing copy, I built the engine to focus strictly on raw fabric data, fiber ratios, and construction indicators so you know the real standard of what you're buying.
                     </p>
                 </div>
             </section>
@@ -167,24 +167,24 @@
                         Key interfaces showing the extension in action, highlighting calculations and user layout panels.
                     </p>
 
-                    <div class="screenshot-grid screenshot-grid--mobile">
+                    <div class="screenshot-grid">
                         <div class="visual-block">
                             <img src="images/materialsIQ/extension.png"
                                  alt="MaterialIQ scorecard popup on a live product page showing a worth-it verdict"
                                  class="comparison-img" loading="lazy" decoding="async">
-                            <span class="caption">The full scorecard on a live product page — a clear buy-or-skip verdict up top.</span>
+                            <span class="caption">The full scorecard on a live product page with a clear buy-or-skip verdict up top.</span>
                         </div>
                         <div class="visual-block">
                             <img src="images/materialsIQ/analysis.png"
                                  alt="MaterialIQ price breakdown showing brand premium versus material substance"
                                  class="comparison-img" loading="lazy" decoding="async">
-                            <span class="caption">How the verdict is reached — cost-per-wear and how much of the price is brand versus substance.</span>
+                            <span class="caption">How the verdict is reached: cost-per-wear and how much of the price is brand versus substance.</span>
                         </div>
                         <div class="visual-block">
                             <img src="images/materialsIQ/scores.png"
                                  alt="MaterialIQ rule-based sub-scores for materials, construction, and value"
                                  class="comparison-img" loading="lazy" decoding="async">
-                            <span class="caption">Rule-based sub-scores for materials, construction, and value — with a cheaper equal-quality pick when one exists.</span>
+                            <span class="caption">Rule-based sub-scores for materials, construction, and value, with a cheaper equal-quality pick when one exists.</span>
                         </div>
                     </div>
                 </div>
@@ -197,7 +197,7 @@
                 </div>
                 <div class="section-body sans">
                     <p>
-                        Developing a scoring model that operates across highly irregular product data was a challenging exercise in data handling. By keeping the scoring logic structured and deterministic, the tool avoids black-box ambiguity. Shoppers can view exactly how every rating was reached.
+                        Building a scoring engine that handles messy, inconsistent retail product data was one of the most interesting parts of this project. I chose to keep the scoring logic completely deterministic and rule-based so there's no black-box mystery, letting anyone see exactly how every single rating was calculated.
                     </p>
                     <div class="tech-stack-block">
                         <h3 class="sans tech-stack-heading">Tech Stack</h3>

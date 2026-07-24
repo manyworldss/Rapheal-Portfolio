@@ -38,12 +38,26 @@ function Cursor() {
   const dot = useRef(null), ring = useRef(null);
   useEffect(() => {
     if (window.matchMedia('(pointer: coarse)').matches) return;
-    let rx = innerWidth / 2, ry = innerHeight / 2, x = rx, y = ry, raf;
-    const move = (e) => { x = e.clientX; y = e.clientY; if (dot.current) dot.current.style.transform = `translate(${x}px,${y}px)`; };
-    const loop = () => { rx += (x - rx) * 0.16; ry += (y - ry) * 0.16; if (ring.current) ring.current.style.transform = `translate(${rx}px,${ry}px)`; raf = requestAnimationFrame(loop); };
+    let rx = innerWidth / 2, ry = innerHeight / 2, x = rx, y = ry, raf = null, running = false;
+    const startLoop = () => { if (!running) { running = true; loop(); } };
+    const move = (e) => {
+      x = e.clientX; y = e.clientY;
+      if (dot.current) dot.current.style.transform = `translate3d(${x}px,${y}px,0)`;
+      startLoop();
+    };
+    const loop = () => {
+      const dx = x - rx, dy = y - ry;
+      rx += dx * 0.18; ry += dy * 0.18;
+      if (ring.current) ring.current.style.transform = `translate3d(${rx}px,${ry}px,0)`;
+      if (Math.abs(dx) > 0.08 || Math.abs(dy) > 0.08) {
+        raf = requestAnimationFrame(loop);
+      } else {
+        running = false;
+      }
+    };
     const over = (e) => { const t = e.target.closest('a,button,[data-hot]'); if (ring.current) ring.current.dataset.hot = t ? '1' : ''; };
-    addEventListener('mousemove', move); addEventListener('mouseover', over); loop();
-    return () => { cancelAnimationFrame(raf); removeEventListener('mousemove', move); removeEventListener('mouseover', over); };
+    addEventListener('mousemove', move, { passive: true }); addEventListener('mouseover', over, { passive: true }); startLoop();
+    return () => { if (raf) cancelAnimationFrame(raf); removeEventListener('mousemove', move); removeEventListener('mouseover', over); };
   }, []);
   return (
     <div aria-hidden="true">

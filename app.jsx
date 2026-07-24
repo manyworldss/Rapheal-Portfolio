@@ -48,8 +48,8 @@ const WORK = [
     disciplines: ['Chrome Extension', 'Full-Stack'],
     thumb: './assets/work/materialiq-card.jpg',
     hero: './assets/work/materialiq-card.jpg',
-    summary: 'An AI-powered browser extension that parses product descriptions and specifications in real time, calculating composition quality, durability, and value for money while shopping.',
-    detail: 'Built to reduce the cognitive load of comparison shopping: the extension reads what the retailer says, scores what the material actually is, and surfaces the verdict inline where the decision happens.',
+    summary: 'I built an AI browser extension to break down retail product specs in real time, scoring material quality, estimated durability, and actual value right inside the shopping cart.',
+    detail: 'I designed it to cut through marketing fluff while shopping: it parses fabric blends directly from the page, evaluates real material substance versus brand markup, and surfaces a clear verdict right where you decide.',
     meta: [
       { k: 'Role', v: 'Design · Full-Stack' },
       { k: 'Context', v: 'Browser extension · AI' },
