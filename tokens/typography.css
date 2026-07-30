@@ -1,50 +1,43 @@
 /* ============================================================
-   TYPOGRAPHY — the human bold system:
-   • Bricolage Grotesque — display voice. Keeps the monumental
-     blocky presence but the letterforms have quirk and warmth;
-     weight 800 for headlines.
-   • Instrument Serif (italic) — the accent voice. Key words
-     inside a headline switch to it: a handwritten aside inside
-     the statement. The contrast IS the personality.
-   • Space Mono — the archive's filing voice: labels, indices,
-     nav, buttons. Uppercase, tracked.
-   • Hanken Grotesk — body & interface text.
+   TYPOGRAPHY — Clean, professional technical typography:
+   • Geist — modern crisp engineering sans-serif
+   • Geist Mono — technical metadata, indices, navigation specs
    ============================================================ */
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Instrument+Serif:ital@0;1&family=Space+Mono:wght@400;700&family=Hanken+Grotesk:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap');
 
 :root {
   /* ---- Families ---- */
-  --font-display: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
-  --font-accent:  'Instrument Serif', Georgia, serif;
-  --font-mono:    'Space Mono', ui-monospace, 'SF Mono', monospace;
-  --font-sans:    'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
-  --font-serif:   var(--font-accent);
-  --font-body:    var(--font-sans);   /* legacy alias — used by case-study CSS */
+  --font-display: 'Geist', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-accent:  'Geist', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono:    'Geist Mono', ui-monospace, 'SF Mono', Menlo, Monaco, monospace;
+  --font-sans:    'Geist', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-serif:   var(--font-sans);
+  --font-body:    var(--font-sans);
 
   /* ---- Weights ---- */
-  --fw-light:    400;   /* @kind font */
-  --fw-regular:  400;   /* @kind font */
-  --fw-medium:   500;   /* @kind font */
-  --fw-semibold: 600;   /* @kind font */
-  --fw-bold:     800;   /* @kind font */
-  --fw-display:  800;   /* @kind font */
+  --fw-light:    400;
+  --fw-regular:  400;
+  --fw-medium:   500;
+  --fw-semibold: 600;
+  --fw-bold:     700;
+  --fw-display:  700;
 
-  /* ---- Type scale ---- */
-  --text-hero:        clamp(3.5rem, 9.5vw, 9.5rem);   /* stacked hero statement */
-  --leading-hero:     0.95;
-  --text-display:     clamp(2.75rem, 6vw, 5.25rem);   /* section openers */
-  --leading-display:  0.98;
-  --text-h1:          clamp(2.25rem, 4.2vw, 3.75rem);
-  --leading-h1:       1.0;
-  --text-h2:          clamp(1.6rem, 2.6vw, 2.5rem);
-  --leading-h2:       1.05;
-  --text-h3:          clamp(1.25rem, 1.7vw, 1.6rem);
-  --leading-h3:       1.15;
-  --text-body-lg:     1.25rem;
-  --leading-body-lg:  1.55;
-  --text-body:        1.0625rem;
-  --leading-body:     1.62;
-  --text-sm:          0.9375rem;
+  /* ---- Type scale (Understated, measured) ---- */
+  --text-hero:        clamp(2.5rem, 5.5vw, 4.75rem);   /* clean hero statement */
+  --leading-hero:     1.1;
+  --text-display:     clamp(2rem, 4vw, 3.25rem);       /* section openers */
+  --leading-display:  1.15;
+  --text-h1:          clamp(1.75rem, 3vw, 2.5rem);
+  --leading-h1:       1.2;
+  --text-h2:          clamp(1.4rem, 2.2vw, 1.85rem);
+  --leading-h2:       1.25;
+  --text-h3:          clamp(1.1rem, 1.5vw, 1.35rem);
+  --leading-h3:       1.3;
+  --text-body-lg:     1.125rem;
+  --leading-body-lg:  1.6;
+  --text-body:        1.0rem;
+  --leading-body:     1.65;
+  --text-sm:          0.875rem;
   --leading-sm:       1.5;
   --text-label:       0.75rem;
   --leading-label:    1.4;
@@ -52,10 +45,10 @@
   --leading-micro:    1.3;
 
   /* ---- Tracking ---- */
-  --track-hero:    -0.015em;  /* @kind font */
-  --track-display: -0.01em;   /* @kind font */
-  --track-tight:   -0.005em;  /* @kind font */
-  --track-normal:  0;         /* @kind font */
-  --track-label:   0.16em;    /* @kind font */
-  --track-micro:   0.2em;     /* @kind font */
+  --track-hero:    -0.02em;
+  --track-display: -0.015em;
+  --track-tight:   -0.01em;
+  --track-normal:  0;
+  --track-label:   0.08em;
+  --track-micro:   0.1em;
 }

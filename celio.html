@@ -3,396 +3,289 @@
 
 <head>
     <script>
-      (function(){ try { var t = localStorage.getItem('rs-theme'); document.documentElement.dataset.theme = t === 'light' ? 'light' : 'dark'; } catch(e){} })();
+      (function(){ try { var t = localStorage.getItem('rs-theme'); document.documentElement.dataset.theme = t === 'dark' ? 'dark' : 'light'; } catch(e){} })();
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Celio Case Study | Rapheal Suber</title>
-    <meta name="description"
-        content="Celio Case Study: Mitigating traveler anxiety for Celiacs through hypothesis-driven design and technical persistence.">
-    <meta property="og:title" content="Celio Case Study | Rapheal Suber">
-    <meta property="og:description"
-        content="Mitigating traveler anxiety for Celiacs through hypothesis-driven design. A Mobile First Web Application case study.">
-    <meta property="og:image" content="https://rapheals.up.railway.app/images/celio_live_hero.png">
-    <meta property="og:url" content="https://rapheals.up.railway.app/celio.html">
-    <meta property="og:type" content="article">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Celio Case Study | Rapheal Suber">
-    <meta name="twitter:description"
-        content="Mitigating traveler anxiety for Celiacs through hypothesis-driven design.">
-    <meta name="twitter:image" content="https://rapheals.up.railway.app/images/celio_live_hero.png">
+    <meta name="description" content="Celio Case Study: Mitigating traveler anxiety for Celiacs through hypothesis-driven design, on-device local LLM assistant, and offline wallet passes.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Jost:ital,wght@0,300;0,400;0,500;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="canonical" href="https://rapheals.up.railway.app/celio.html">
+    <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./styles.css">
-    <link rel="stylesheet" href="css/global.css?v=36">
-    <link rel="stylesheet" href="css/case-study.css?v=39">
-    <link rel="stylesheet" href="css/print.css" media="print">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/case-study.css">
+    <style>
+      body { font-family: var(--font-sans); background: var(--bg); color: var(--text-strong); margin: 0; padding: 0; line-height: 1.6; }
+      .topbar { position: fixed; top: 0; left: 0; right: 0; height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(1.25rem, 4vw, 3rem); background: rgba(var(--bg-rgb, 250, 250, 250), 0.92); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); z-index: 800; }
+      .book-layout { max-width: 900px; margin: 90px auto 80px; padding: 0 clamp(1.25rem, 4vw, 2.5rem); }
+      
+      .cs-category { font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: var(--track-label); display: block; margin-bottom: 0.75rem; }
+      .cs-title { font-family: var(--font-display); font-weight: 700; font-size: var(--text-h1); line-height: var(--leading-h1); letter-spacing: var(--track-display); margin: 0 0 1.25rem 0; color: var(--text-strong); }
+      .cs-subtitle { font-size: var(--text-body-lg); line-height: var(--leading-body-lg); color: var(--text-muted); margin-bottom: 2rem; }
+      
+      .cs-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; padding: 1.25rem; background: var(--bg-raised); border: 1px solid var(--border); border-radius: var(--radius-md); margin-bottom: 2.5rem; }
+      .meta-item strong { display: block; font-family: var(--font-mono); font-size: 0.6875rem; color: var(--accent); text-transform: uppercase; margin-bottom: 0.25rem; letter-spacing: var(--track-label); }
+      .meta-item span { font-size: 0.875rem; color: var(--text-strong); font-weight: 500; }
+      
+      .header-actions { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin-bottom: 3rem; }
+      .cta-button { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: var(--track-label); text-transform: uppercase; padding: 0.75rem 1.4rem; border-radius: var(--radius-md); text-decoration: none; cursor: pointer; transition: all 0.2s ease; }
+      .cta-primary { background-color: var(--text-strong); color: #FFFFFF; border: none; }
+      .cta-primary:hover { opacity: 0.9; }
+      .cta-secondary { background-color: transparent; color: var(--text-strong); border: 1px solid var(--border-strong); }
+      .cta-secondary:hover { background-color: var(--bg-inset); }
+
+      .full-width-image { width: 100%; border-radius: var(--radius-md); border: 1px solid var(--border); margin: 2rem 0 0.5rem 0; overflow: hidden; background: var(--bg-inset); }
+      .full-width-image img { width: 100%; height: auto; display: block; }
+      .caption { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); margin-bottom: 2.5rem; display: block; line-height: 1.5; padding: 0.6rem 0; border-bottom: 1px solid var(--border); }
+
+      .comparison-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0 0.5rem 0; }
+      .comparison-card { background: var(--bg-raised); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.25rem; overflow: hidden; }
+      .comparison-card img { width: 100%; height: auto; border-radius: var(--radius-sm); border: 1px solid var(--border); margin-top: 0.75rem; }
+
+      .cs-section { border-top: 1px solid var(--border); padding-top: 2.5rem; margin-top: 3.5rem; }
+      .section-header h2 { font-family: var(--font-display); font-weight: 700; font-size: var(--text-h2); color: var(--text-strong); margin: 0 0 1.5rem 0; }
+      .section-body { font-size: var(--text-body); line-height: var(--leading-body); color: var(--text-muted); }
+      .section-body p { margin-bottom: 1.25rem; }
+
+      .insight-grid, .insight-grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; margin: 1.75rem 0; }
+      .insight-card { background: var(--bg-raised); border: 1px solid var(--border); padding: 1.5rem; border-radius: var(--radius-md); }
+      .insight-card h3 { font-family: var(--font-mono); font-size: 0.8125rem; color: var(--accent); margin: 0 0 0.6rem 0; text-transform: uppercase; letter-spacing: var(--track-label); }
+      .insight-card p { margin: 0; font-size: 0.875rem; line-height: 1.65; color: var(--text-muted); }
+
+      .finding-list { display: flex; flexDirection: column; gap: 1.25rem; margin: 1.75rem 0; }
+      .finding-item { display: flex; gap: 1.25rem; padding: 1.25rem; background: var(--bg-raised); border: 1px solid var(--border); border-radius: var(--radius-md); align-items: flex-start; }
+      .finding-number { font-family: var(--font-mono); font-size: 1rem; fontWeight: 700; color: var(--accent); min-width: 2rem; }
+      .finding-content h3 { font-family: var(--font-display); font-size: 1.05rem; fontWeight: 600; color: var(--text-strong); margin: 0 0 0.4rem 0; }
+      .finding-content p { margin: 0; font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; }
+
+      .tech-stack-block { background: var(--bg-raised); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.5rem; margin-top: 2.5rem; }
+      .tech-stack-heading { font-family: var(--font-mono); font-size: 0.8125rem; text-transform: uppercase; color: var(--accent); margin: 0 0 1rem 0; letter-spacing: var(--track-label); }
+      .tech-stack-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; }
+      .tech-stack-item .tech-stack-label { display: block; font-family: var(--font-mono); font-size: 0.6875rem; color: var(--text-faint); text-transform: uppercase; margin-bottom: 0.25rem; }
+      .tech-stack-item .tech-stack-value { font-size: 0.875rem; color: var(--text-strong); }
+
+      .cs-footer { margin-top: 5rem; padding-top: 2.5rem; border-top: 1px solid var(--border); display: flex; justify: space-between; align-items: center; flex-wrap: wrap; gap: 1.25rem; }
+    </style>
 </head>
 
 <body>
-    <!-- Ambient sand particle canvas -->
-    <canvas id="sand-canvas" aria-hidden="true"></canvas>
-
-    <!-- Cinematic Dossier Navigation -->
     <header class="topbar">
         <div class="topbar-brand">
-            <a href="index.html" class="brand-link">RS // EDITORIAL ARCHIVE</a>
+            <a href="index.html" class="brand-link">RAPHEAL SUBER // HUMAN FACTORS &amp; SYSTEMS</a>
         </div>
-        <nav class="topbar-chapters">
-            <a href="celio.html" class="chapter-link active-chapter" id="nav-celio">C-01 / CELIO</a>            <a href="prox.html" class="chapter-link" id="nav-prox">PX-04 / PROX</a>
-            <a href="reach.html" class="chapter-link" id="nav-reach">RE-05 / REACH</a>
-            <a href="materialsiq.html" class="chapter-link" id="nav-materialsiq">MQ-06 / MATERIALIQ</a>
+        <nav class="topbar-chapters" style="display: flex; gap: 1.25rem; align-items: center;">
+            <a href="reach.html" class="chapter-link">← RE-01 / REACH</a>
+            <span style="color: var(--border);">|</span>
+            <a href="materialsiq.html" class="chapter-link">MQ-03 / MATERIALIQ →</a>
         </nav>
         <div class="topbar-actions">
-            <a href="index.html" class="back-trigger">[ ESC ↵ ]</a>
+            <a href="index.html" class="back-trigger">← BACK TO HOME [ESC]</a>
         </div>
     </header>
 
     <main class="container book-layout">
-
-        <!-- Case Study Header -->
         <header class="cs-header">
-            <span class="cs-category sans text-accent">B2C Mobile First Web Application</span>
-            <h1 class="cs-title serif">Celio: A Case Study in Mitigating Cognitive Anxiety and Systemic Risk</h1>
-            <p class="cs-subtitle sans">
+            <span class="cs-category">Cognitive Ergonomics &amp; Offline Medical Systems</span>
+            <h1 class="cs-title">Celio: A Case Study in Mitigating Cognitive Anxiety and Systemic Risk</h1>
+            <p class="cs-subtitle">
                 I built Celio as an offline-first platform to tackle the cognitive load of international travel for Celiacs, bringing together a 12-language Translation Card (with text-to-speech audio and native Apple/Google Wallet export), an on-device local LLM assistant (Sage AI) for private offline queries, and interactive establishment maps.
             </p>
-            <div class="cs-meta sans">
+            <div class="cs-meta">
                 <div class="meta-item">
                     <strong>Role</strong>
-                    UX Researcher, Designer, Full-Stack Developer
+                    <span>Systems Researcher · Full-Stack Developer</span>
                 </div>
                 <div class="meta-item">
                     <strong>Stack</strong>
-                    Django, Alpine.js, WebLLM (Local LLM), Web Speech API, Wallet Passes APIs
+                    <span>Django · Alpine.js · WebLLM · Web Speech API · PassKit</span>
                 </div>
                 <div class="meta-item">
                     <strong>Timeline</strong>
-                    9 Months
+                    <span>9 Months Development &amp; Testing</span>
                 </div>
             </div>
             <div class="header-actions">
-                <a href="https://celioapp.up.railway.app" target="_blank" class="cta-button sans">View Live App &rarr;</a>
-                <button onclick="window.print()" class="cta-button cta-button--secondary sans" id="download-pdf-btn">Download Research PDF &darr;</button>
+                <a href="https://celioapp.up.railway.app" target="_blank" class="cta-button cta-primary">View Live App ↗</a>
+                <button onclick="window.print()" class="cta-button cta-secondary" id="download-pdf-btn">Download Research PDF ↓</button>
             </div>
         </header>
 
-        <!-- Hero Image Banner -->
-        <div class="full-width-image" style="margin: 0 0 var(--s-xl) 0;">
-            <img src="images/celio_live_hero.png" alt="Celio Gluten-Free Passport Landing Page" 
-                style="width: 100%; border: 1px solid var(--glass-border); border-radius: 4px; box-shadow: var(--shadow-sm);"
-                loading="lazy" decoding="async">
-            <span class="caption">Celio live landing page: The unified offline-first travel portal for Celiacs.</span>
+        <!-- Main Hero Image -->
+        <div class="full-width-image">
+            <img src="images/celio_live_hero.png" alt="Celio Gluten-Free Passport Landing Page">
         </div>
+        <span class="caption">Celio live landing page: The unified offline-first travel portal for Celiacs.</span>
 
-        <!-- Content Sections -->
         <article class="cs-content">
-
-            <!-- Section 1: The Reality -->
+            <!-- Section 1: Problem -->
             <section class="cs-section">
                 <div class="section-header">
-                    <h2 class="serif">01. The Challenge: Closing the Trust Gap</h2>
+                    <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: var(--track-label);">01. Problem</span>
+                    <h2>The Challenge: Closing the Trust Gap</h2>
                 </div>
-                <div class="section-body sans">
+                <div class="section-body">
                     <p>
-                        "I don't trust the translation app to understand my severety. I don't trust the waiter's
-                        preference". It's a medical necessity where a single crumb ruins the trip. The primary source of
-                        friction lies in the overwhelming cognitive burden of constantly evaluating risks, coupled with
-                        the apprehension of miscommunication in high-stress, foreign settings.
+                        "I don't trust the translation app to understand my severity. I don't trust the waiter's preference." It's a medical necessity where a single crumb ruins a trip. The primary source of friction lies in the overwhelming cognitive burden of constantly evaluating risks, coupled with the apprehension of miscommunication in high-stress, foreign settings.
                     </p>
                     <p>
-                        I built Celio because I live this. The goal was to close the Trust
-                        Gap that exists when you hand over a translated note and just <em>hope</em> it
-                        works. Existing solutions are often clinical, require server dependence, and increase
-                        anxiety. These are luxuries you don't have when you're hungry in a remote Italian village.
+                        I built Celio because I live this. The goal was to close the Trust Gap that exists when you hand over a translated note and just <em>hope</em> it works. Existing solutions are often clinical, require server dependence, and increase anxiety. These are luxuries you don't have when you're hungry in a remote village with zero cell coverage.
                     </p>
                 </div>
             </section>
 
-            <!-- Section 2: What Celio Does -->
+            <!-- Section 2: Constraints & Strategy -->
             <section class="cs-section">
                 <div class="section-header">
-                    <h2 class="serif">02. The Strategy: A Survival Kit Approach</h2>
+                    <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: var(--track-label);">02. Constraints &amp; Evolution</span>
+                    <h2>The Strategy: A Survival Kit Approach</h2>
                 </div>
-                <div class="section-body sans">
+                <div class="section-body">
                     <p>
-                        Celio is more than a tool; it's a survival kit rooted in strategic design. It
-                        tackles the problem by focusing on communication reliability and vetted information:
+                        Celio is more than a tool; it's a survival kit rooted in strategic design. It tackles the problem by focusing on communication reliability and vetted information:
                     </p>
                     <div class="insight-grid-3">
-                        <div class="insight-card border-accent">
-                            <h3 class="serif">1. The Translation Card</h3>
-                            <p>
-                                The Translation Card translates allergy profiles into 12 languages (including Japanese, French, Portuguese, and Spanish). It features local text-to-speech audio and native Apple & Google Wallet integration.
-                            </p>
+                        <div class="insight-card">
+                            <h3>1. The Translation Card</h3>
+                            <p>Translates allergy profiles into 12 languages with local text-to-speech audio and native Apple &amp; Google Wallet integration.</p>
                         </div>
-                        <div class="insight-card border-accent">
-                            <h3 class="serif">2. Sage AI (Local LLM)</h3>
-                            <p>
-                                Sage AI is a client-side AI assistant running entirely on-device via WebLLM. By running the LLM in-browser, travelers can query local travel safety guides offline and in airplane mode.
-                            </p>
+                        <div class="insight-card">
+                            <h3>2. Sage AI (Local LLM)</h3>
+                            <p>An on-device AI assistant running entirely in-browser via WebLLM, allowing travelers to query local safety guides offline with 0% server latency.</p>
                         </div>
-                        <div class="insight-card border-accent">
-                            <h3 class="serif">3. Interactive Local Maps</h3>
-                            <p>
-                                The Local Map offers client-side interactive geolocation filtering. Celiacs can easily toggle between Restaurants, Groceries, or 100% Gluten-Free spots without needing active internet connection.
-                            </p>
+                        <div class="insight-card">
+                            <h3>3. Interactive Local Maps</h3>
+                            <p>Offers client-side geolocation filtering for 100% Gluten-Free spots, groceries, and vetted restaurants without requiring active cell connection.</p>
                         </div>
                     </div>
 
-                    <!-- Before/After Comparison: E-Card -->
-                    <div class="visual-comparison">
-                        <div class="visual-block">
-                            <div class="comparison-label before-label sans">Before</div>
-                            <img src="images/Before E Card Prototype.png" alt="Early E-Card Prototype"
-                                class="comparison-img" loading="lazy" decoding="async">
-                            <span class="caption">Early E-Card: Functional but lacked visual urgency.</span>
+                    <!-- Before/After Comparison Grid -->
+                    <div class="comparison-grid">
+                        <div class="comparison-card">
+                            <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase;">Before: Legacy E-Card Prototype</div>
+                            <img src="images/Before E Card Prototype.png" alt="Early E-Card Prototype">
                         </div>
-                        <div class="visual-block">
-                            <div class="comparison-label after-label sans">After</div>
-                            <img src="images/celio_live_card.png" alt="Live E-Card Design" class="comparison-img"
-                                loading="lazy" decoding="async">
-                            <span class="caption">Live E-Card: Bold, clear card rendering Japanese (JA) allergy warning, audio synthesis trigger, and Apple/Google Wallet export links.</span>
+                        <div class="comparison-card">
+                            <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase;">After: High-Contrast Wallet Pass</div>
+                            <img src="images/E-Card After Blue.png" alt="Redesigned High Contrast Translation Card">
                         </div>
                     </div>
-
-                    <!-- Before/After Comparison: Sage AI -->
-                    <div class="visual-comparison" style="margin-top: var(--s-xl);">
-                        <div class="visual-block">
-                            <div class="comparison-label before-label sans">Before</div>
-                            <img src="images/Before Sage UI.png" alt="Early Sage AI Interface" class="comparison-img"
-                                loading="lazy" decoding="async">
-                            <span class="caption">Early Sage AI: Cluttered, text-heavy interface.</span>
-                        </div>
-                        <div class="visual-block">
-                            <div class="comparison-label after-label sans">After</div>
-                            <img src="images/celio_live_sage.png" alt="Live Sage AI Design"
-                                class="comparison-img" loading="lazy" decoding="async">
-                            <span class="caption">Live Sage AI: Clean, offline conversational interface powered by on-device inference (WebLLM).</span>
-                        </div>
-                    </div>
+                    <span class="caption">Interface evolution: moving from early cluttered prototypes to a high-contrast, multi-language pass exported directly to mobile wallets.</span>
                 </div>
             </section>
 
-            <!-- Section 3: Research and Insights -->
+            <!-- Section 3: On-Device Local LLM (Sage AI) -->
             <section class="cs-section">
                 <div class="section-header">
-                    <h2 class="serif">03. Discovery: Hypothesis Driven Research</h2>
+                    <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: var(--track-label);">03. Approach &amp; Technical Execution</span>
+                    <h2>Sage AI: On-Device Privacy &amp; Offline Inference</h2>
                 </div>
-                <div class="section-body sans">
+                <div class="section-body">
                     <p>
-                        I didn't guess; I initiated a qualitative research phase (N=12) with severe
-                        allergy travelers to establish design hypotheses. The consensus was clear: anxiety directly
-                        stems from a lack of control and communication integrity.
+                        To ensure travelers can ask complex dietary questions in airplane mode or subterranean dining venues, I integrated WebLLM to run small language models directly in WebGPU memory.
                     </p>
 
-                    <div class="insight-grid">
-                        <div class="insight-card border-accent">
-                            <h3 class="serif">Insight: The "Audio Mandate" & Wallets</h3>
-                            <p>
-                                10/12 participants feared staff wouldn't read the screen. This mandated
-                                Offline Audio Support (using the Web Speech API) and native Mobile Wallet passes.
-                                Handing over a phone with a large, spoken safety card in Apple Wallet or Google Wallet
-                                minimizes anxiety and guarantees reliability without cellular signal.
-                            </p>
-                        </div>
-                        <div class="insight-card border-accent">
-                            <h3 class="serif">Insight: Lag Creates Doubt</h3>
-                            <p>
-                                Users equated UI lag with system unreliability. This drove a technical pivot to
-                                Alpine.js for client side state management,
-                                eliminating server reloads. The result is an instant, native feel that builds
-                                crucial trust through performance.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Section 4: Under the Hood -->
-            <section class="cs-section">
-                <div class="section-header">
-                    <h2 class="serif">04. Technical Feasibility and The Code</h2>
-                </div>
-                <div class="section-body sans">
-                    <p>
-                        I chose a clean but powerful stack. Django anchors the backend for pass creation, PostgreSQL data, and localized content storage. Alpine.js controls client-side state machine mechanics, providing a snappy experience.
-                    </p>
-                    <p>
-                        The most critical technical decision was enabling **Offline First Operations**. Sage AI runs locally in the browser utilizing **WebLLM and WebGPU**, loading models directly to client storage so AI-based food assessments require no cellular signal. The Translation Card caches translations and speaks using browser speech synthesis, while generating `.pkpass` binary files for Apple Wallet and signed JWT links for Google Wallet, allowing users to save their credentials permanently.
-                    </p>
                     <div class="full-width-image">
-                        <video controls
-                            style="width: 100%; max-height: 600px; border: 2px solid var(--glass-border); border-radius: 4px; background: #000;">
-                            <source src="images/e%20card%20demo%20final.mov" type="video/quicktime">
-                            <source src="images/e%20card%20demo%20final.mov" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                        <span class="caption">The Card in action: Simple, bold, and fully persistent. Designed to reduce
-                            cognitive load.</span>
+                        <img src="images/celio_live_sage.png" alt="Sage AI Local Client-Side LLM Interface">
                     </div>
+                    <span class="caption">Sage AI running locally in-browser via WebGPU—zero cloud API calls, zero server latency, 100% offline query capability.</span>
                 </div>
             </section>
 
-            <!-- Section 5: The Impact -->
+            <!-- Section 4: User Research & Findings -->
             <section class="cs-section">
                 <div class="section-header">
-                    <h2 class="serif">05. Outcomes, Learnings, and Growth</h2>
+                    <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: var(--track-label);">04. Outcome &amp; Research Discoveries</span>
+                    <h2>Five Key Findings From User Testing</h2>
                 </div>
-                <div class="section-body sans">
-                    <p>
-                        Celio confirms that our focus must be on trust, not data display. By rigorously
-                        testing the human emotion surrounding the product, I created a tool that
-                        empowers users to confidently say "Yes" to that dinner invitation. The project taught me that
-                        hypothesis driven research is mandatory to ship a truly accessible and robust
-                        solution.
-                    </p>
-                    <a href="https://celioapp.up.railway.app" target="_blank" class="cta-button sans">Try Celio Now
-                        &rarr;</a>
-                </div>
-            </section>
-
-            <!-- ── EXTENDED RESEARCH DOCUMENT ── -->
-            <div class="research-divider sans" id="extended-research">
-                <span class="research-divider__label">Extended Research Document</span>
-            </div>
-
-            <!-- Section 6: Origin -->
-            <section class="cs-section">
-                <div class="section-header">
-                    <h2 class="serif">06. Why I Built This</h2>
-                </div>
-                <div class="section-body sans">
-                    <p>
-                        I started building Celio shortly after a trip to Mexico. Communicating my allergy needs to resort staff was genuinely difficult, and it got worse at airports where I was trying to order food quickly with no shared language. Celio came out of that frustration. At its core it reduces the anxiety that comes with eating safely when you have a food allergy abroad.
-                    </p>
-                    <p>
-                        One of the most difficult things about having celiac disease is communicating it while traveling. That gets even harder when there's a language barrier. You're not just explaining a preference — you're explaining something that makes you sick. Celio exists to make that easier.
-                    </p>
-                </div>
-            </section>
-
-            <!-- Section 7: Research Process -->
-            <section class="cs-section">
-                <div class="section-header">
-                    <h2 class="serif">07. Research Process</h2>
-                </div>
-                <div class="section-body sans">
-                    <p>
-                        Before I wrote a single line of code I spent two months talking to people.
-                    </p>
-                    <p>
-                        I found participants on Reddit, Facebook, and Discord. Some were reluctant at first but most opened up once they understood what I was building. I also recruited friends, family, and classmates. At one point I had over 50 people actively using the app and giving feedback. That level of engagement told me the problem was real and the solution was resonating.
-                    </p>
-                    <div class="insight-grid">
-                        <div class="insight-card border-accent">
-                            <h3 class="serif">Research Question 1</h3>
-                            <p>What does communicating a dietary need abroad actually feel like in the moment?</p>
-                        </div>
-                        <div class="insight-card border-accent">
-                            <h3 class="serif">Research Question 2</h3>
-                            <p>Where does the fear live — before the meal, at the table, or after?</p>
-                        </div>
-                        <div class="insight-card border-accent">
-                            <h3 class="serif">Research Question 3</h3>
-                            <p>What would genuinely make someone feel safe?</p>
-                        </div>
-                    </div>
-                    <p>
-                        The feedback that surprised me most led to the audio feature. I hadn't planned it — users brought it up on their own. They also asked about Apple Wallet integration and flagged that the interface felt laggy, which I ended up fixing by switching to Alpine.js. Those three things came entirely from listening.
-                    </p>
-                </div>
-            </section>
-
-            <!-- Section 8: Five Findings -->
-            <section class="cs-section">
-                <div class="section-header">
-                    <h2 class="serif">08. What Changed Because of Research</h2>
-                </div>
-                <div class="section-body sans">
+                <div class="section-body">
                     <div class="finding-list">
                         <div class="finding-item">
-                            <div class="finding-number sans">01</div>
+                            <div class="finding-number">01</div>
                             <div class="finding-content">
-                                <h3 class="serif">The card felt sluggish</h3>
-                                <p>Participants described the e-card as laggy and slow to update. It wasn't smooth. I traced the issue back to HTMX and switched to Alpine.js which made interactions instant. A tool people use in stressful real-world situations can't feel hesitant.</p>
+                                <h3>Eliminated UI Sluggishness</h3>
+                                <p>Participants described early prototypes as laggy. I traced the bottleneck to server round-trips and switched to Alpine.js for client-side rendering, rendering interactions instantaneous.</p>
                             </div>
                         </div>
                         <div class="finding-item">
-                            <div class="finding-number sans">02</div>
+                            <div class="finding-number">02</div>
                             <div class="finding-content">
-                                <h3 class="serif">Text alone wasn't enough</h3>
-                                <p>Staff at restaurants were used to translation apps having audio. Without it there was tension — showing a silent screen only worked about half the time. Users felt noticeably more confident once audio was added and so did the staff they were communicating with. Safety goes both ways.</p>
+                                <h3>Text Alone Wasn't Enough</h3>
+                                <p>Restaurant staff in busy environments preferred audio confirmation. Adding native Web Speech API local audio playback increased waiter confidence and reduced communication friction.</p>
                             </div>
                         </div>
                         <div class="finding-item">
-                            <div class="finding-number sans">03</div>
+                            <div class="finding-number">03</div>
                             <div class="finding-content">
-                                <h3 class="serif">It needed to work under pressure</h3>
-                                <p>When I heard people describing real struggles using the card in live situations I went straight into problem solving mode. I wanted it to be intuitive enough that someone could use it while stressed, standing up, handing their phone across a table. That meant rebuilding the UI with simplicity and responsiveness as the priority, not just functionality.</p>
+                                <h3>Built to Work Under Extreme Stress</h3>
+                                <p>Users need an interface intuitive enough to operate while standing up, stressed, and handing a phone across a noisy restaurant table. The UI was redesigned around 2-tap simplicity.</p>
                             </div>
                         </div>
                         <div class="finding-item">
-                            <div class="finding-number sans">04</div>
+                            <div class="finding-number">04</div>
                             <div class="finding-content">
-                                <h3 class="serif">People were using it in ways I didn't expect</h3>
-                                <p>A few users told me they'd used Celio at weddings and catered events — they just sent a PDF of their e-card when asked about dietary preferences. That felt great to hear. I built it for restaurants abroad and people were extending it into their everyday lives at home.</p>
+                                <h3>Native Wallet Pass Integration</h3>
+                                <p>Integrating Apple Wallet (.pkpass) and Google Wallet passes allows users to bypass network dependencies entirely, opening translated allergy passes directly from the lock screen.</p>
                             </div>
                         </div>
                         <div class="finding-item">
-                            <div class="finding-number sans">05</div>
+                            <div class="finding-number">05</div>
                             <div class="finding-content">
-                                <h3 class="serif">Apple & Google Wallet makes complete sense</h3>
-                                <p>Mobile wallets have replaced physical cards for modern travelers. Integrating native Apple Wallet (.pkpass) and Google Wallet passes allows users to bypass network dependencies entirely. Having the translation card accessible in a single tap on the lock screen is the ultimate friction reduction in high-anxiety foreign restaurant encounters.</p>
+                                <h3>Offline Establishment Geolocation</h3>
+                                <p>Pre-indexed establishment datasets allow travelers to filter 100% gluten-free restaurants and bakeries without loading live map tiles over cellular networks.</p>
                             </div>
                         </div>
                     </div>
+
+                    <div class="full-width-image">
+                        <img src="images/HighResCelioFeatures.png" alt="Celio System Features & Establishment Mapping">
+                    </div>
+                    <span class="caption">Celio core features: multi-language pass generation, native wallet export, and offline establishment geolocation filtering.</span>
                 </div>
             </section>
 
-            <!-- Section 9: Reflection -->
+            <!-- Section 5: Lessons Learned & Reflection -->
             <section class="cs-section">
                 <div class="section-header">
-                    <h2 class="serif">09. What I Learned</h2>
+                    <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: var(--track-label);">05. Lessons Learned</span>
+                    <h2>Reflection &amp; Systems Takeaways</h2>
                 </div>
-                <div class="section-body sans">
+                <div class="section-body">
                     <p>
-                        Building Celio taught me that research isn't optional when you're building something real. You can have a great idea and still get the product wrong if you don't understand what people actually need. The audio feature, the Apple Wallet request, the interface feedback — none of that came from me sitting alone thinking about the product. It came from listening. That's the part I'll take into every project going forward.
+                        Building Celio taught me that research isn't optional when you're building something real. The audio feature, the Apple Wallet request, and the Alpine.js architecture shift all came from observing real human behavior under pressure. When building safety-critical tools, offline-first execution and deterministic performance are mandatory.
                     </p>
+
                     <div class="tech-stack-block">
-                        <h3 class="sans tech-stack-heading">Tech Stack</h3>
+                        <h3 class="tech-stack-heading">Tech Stack</h3>
                         <div class="tech-stack-grid">
                             <div class="tech-stack-item">
                                 <span class="tech-stack-label">Backend</span>
-                                <span class="tech-stack-value">Django 5.0, PostgreSQL, PassKit Wallet Pass engine (.pkpass & Google Wallet API)</span>
+                                <span class="tech-stack-value">Django 5.0, PostgreSQL, PassKit Wallet Engine (.pkpass &amp; Google Wallet API)</span>
                             </div>
                             <div class="tech-stack-item">
-                                <span class="tech-stack-label">Frontend</span>
-                                <span class="tech-stack-value">Alpine.js, WebLLM (Local On-device LLM runtime), Web Speech API, Leaflet Maps</span>
+                                <span class="tech-stack-label">Frontend &amp; Audio</span>
+                                <span class="tech-stack-value">Alpine.js, WebLLM (Local On-device LLM via WebGPU), Web Speech API</span>
                             </div>
                             <div class="tech-stack-item">
                                 <span class="tech-stack-label">Infrastructure</span>
-                                <span class="tech-stack-value">Docker, Railway, client-side model caching, Service Worker offline storage</span>
+                                <span class="tech-stack-value">Docker, Railway, Service Worker PWA offline caching</span>
                             </div>
                             <div class="tech-stack-item">
-                                <span class="tech-stack-label">Accessibility / Offline</span>
-                                <span class="tech-stack-value">WCAG 2.1 AA compliant, 100% offline functional, lock-screen wallet passes, dark sync</span>
+                                <span class="tech-stack-label">Accessibility &amp; Safety</span>
+                                <span class="tech-stack-value">WCAG 2.1 AA compliant, 100% offline functional, lock-screen pass export</span>
                             </div>
                         </div>
                     </div>
-                    <button onclick="window.print()" class="cta-button cta-button--secondary sans" style="margin-top: var(--s-md);">Download Research PDF &darr;</button>
                 </div>
             </section>
-
         </article>
 
-        <footer class="cs-footer sans">
-            <a href="index.html" class="back-link-clean serif">Back to Home</a>
+        <footer class="cs-footer">
+            <a href="reach.html" class="cta-button cta-secondary">← Previous: Reach Case Study</a>
+            <a href="materialsiq.html" class="cta-button cta-primary">Next: MaterialIQ Case Study →</a>
         </footer>
     </main>
-    <script src="js/main.js?v=40"></script>
+    <script src="js/main.js"></script>
 </body>
 
 </html>

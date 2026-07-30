@@ -1,7 +1,6 @@
 /* ============================================================
-   Editorial Archive — portfolio building blocks (kit-scoped).
-   Mirrors the design-system components; self-contained so the
-   page runs standalone. Exposed on window for app.jsx.
+   HELPERS — Micro-interactions, Cursor Ring & Ambient Background.
+   Linear / Apple Minimal Aesthetic.
    ============================================================ */
 const { useState, useEffect, useRef } = React;
 
@@ -13,131 +12,176 @@ function useReveal() {
     const el = ref.current; if (!el) return;
     const io = new IntersectionObserver((es) => {
       es.forEach((e) => { if (e.isIntersecting) { setShown(true); io.disconnect(); } });
-    }, { threshold: 0.18 });
+    }, { threshold: 0.1 });
     io.observe(el);
     return () => io.disconnect();
   }, []);
   return [ref, shown];
 }
 
-function Reveal({ children, delay = 0, y = 'var(--rise)', as = 'div', style = {}, ...rest }) {
+function Reveal({ children, delay = 0, y = '14px', as = 'div', style = {}, ...rest }) {
   const [ref, shown] = useReveal();
   const Tag = as;
   return (
     <Tag ref={ref} style={{
       opacity: shown ? 1 : 0,
       transform: shown ? 'none' : `translateY(${y})`,
-      transition: `opacity var(--dur-4) var(--ease-out) ${delay}ms, transform var(--dur-4) var(--ease-out) ${delay}ms`,
+      transition: `opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms`,
       ...style,
     }} {...rest}>{children}</Tag>
   );
 }
 
-/* ---- custom cursor: a quiet ring that swells over interactive things ---- */
+/* ---- Precision Cursor ---- */
 function Cursor() {
-  const dot = useRef(null), ring = useRef(null);
+  const dotRef = useRef(null);
+  const ringRef = useRef(null);
+
   useEffect(() => {
     if (window.matchMedia('(pointer: coarse)').matches) return;
-    let rx = innerWidth / 2, ry = innerHeight / 2, x = rx, y = ry, raf = null, running = false;
-    const startLoop = () => { if (!running) { running = true; loop(); } };
-    const move = (e) => {
-      x = e.clientX; y = e.clientY;
-      if (dot.current) dot.current.style.transform = `translate3d(${x}px,${y}px,0)`;
-      startLoop();
+
+    let x = window.innerWidth / 2, y = window.innerHeight / 2;
+    let rx = x, ry = y;
+    let running = false;
+    let raf = null;
+
+    const onMouseMove = (e) => {
+      x = e.clientX;
+      y = e.clientY;
+      if (dotRef.current) {
+        dotRef.current.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+      }
+      if (!running) {
+        running = true;
+        animate();
+      }
     };
-    const loop = () => {
-      const dx = x - rx, dy = y - ry;
-      rx += dx * 0.18; ry += dy * 0.18;
-      if (ring.current) ring.current.style.transform = `translate3d(${rx}px,${ry}px,0)`;
-      if (Math.abs(dx) > 0.08 || Math.abs(dy) > 0.08) {
-        raf = requestAnimationFrame(loop);
+
+    const animate = () => {
+      const dx = x - rx;
+      const dy = y - ry;
+      rx += dx * 0.22;
+      ry += dy * 0.22;
+
+      if (ringRef.current) {
+        ringRef.current.style.transform = `translate3d(${rx}px, ${ry}px, 0)`;
+      }
+
+      if (Math.abs(dx) > 0.05 || Math.abs(dy) > 0.05) {
+        raf = requestAnimationFrame(animate);
       } else {
         running = false;
       }
     };
-    const over = (e) => { const t = e.target.closest('a,button,[data-hot]'); if (ring.current) ring.current.dataset.hot = t ? '1' : ''; };
-    addEventListener('mousemove', move, { passive: true }); addEventListener('mouseover', over, { passive: true }); startLoop();
-    return () => { if (raf) cancelAnimationFrame(raf); removeEventListener('mousemove', move); removeEventListener('mouseover', over); };
+
+    const onMouseOver = (e) => {
+      const isHot = !!e.target.closest('a, button, [data-hot], .case-study-card');
+      if (ringRef.current) {
+        ringRef.current.setAttribute('data-hot', isHot ? 'true' : 'false');
+      }
+    };
+
+    window.addEventListener('mousemove', onMouseMove, { passive: true });
+    window.addEventListener('mouseover', onMouseOver, { passive: true });
+
+    return () => {
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('mouseover', onMouseOver);
+      if (raf) cancelAnimationFrame(raf);
+    };
   }, []);
+
   return (
     <div aria-hidden="true">
-      <div ref={dot} style={{ position: 'fixed', top: 0, left: 0, width: 5, height: 5, marginLeft: -2.5, marginTop: -2.5, borderRadius: 999, background: 'var(--cursor-dot)', pointerEvents: 'none', zIndex: 9999, mixBlendMode: 'normal' }} />
-      <div ref={ring} className="cursor-ring" style={{ position: 'fixed', top: 0, left: 0, width: 34, height: 34, marginLeft: -17, marginTop: -17, borderRadius: 999, border: '1px solid var(--cursor-ring-line)', pointerEvents: 'none', zIndex: 9998, transition: 'width var(--dur-2) var(--ease-soft), height var(--dur-2) var(--ease-soft), border-color var(--dur-2) var(--ease-soft), background var(--dur-2) var(--ease-soft)' }} />
       <style>{`
-        @media (pointer:fine){ * { cursor: none !important; } }
-        .cursor-ring[data-hot="1"]{ width:58px; height:58px; margin-left:-29px; margin-top:-29px; border-color:var(--cursor-hot-line); background:var(--cursor-hot-wash); }
+        @media (pointer: fine) {
+          body, a, button { cursor: default; }
+        }
+        .cursor-ring-elem {
+          position: fixed; top: 0; left: 0;
+          width: 26px; height: 26px;
+          margin-left: -13px; margin-top: -13px;
+          border-radius: 999px;
+          border: 1px solid var(--border-strong);
+          pointer-events: none; z-index: 9998;
+          transition: width 0.25s ease, height 0.25s ease, margin 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+        }
+        .cursor-ring-elem[data-hot="true"] {
+          width: 44px; height: 44px;
+          margin-left: -22px; margin-top: -22px;
+          border-color: var(--accent);
+          background-color: var(--accent-wash);
+        }
+        .cursor-dot-elem {
+          position: fixed; top: 0; left: 0;
+          width: 4px; height: 4px;
+          margin-left: -2px; margin-top: -2px;
+          border-radius: 999px;
+          background-color: var(--accent);
+          pointer-events: none; z-index: 9999;
+        }
       `}</style>
+      <div ref={dotRef} className="cursor-dot-elem" />
+      <div ref={ringRef} className="cursor-ring-elem" />
     </div>
   );
 }
 
-/* ---- opening curtain: a cinematic title card that counts in, then
-   splits and lifts to reveal the page. ---- */
-const isInitialLanding = !sessionStorage.getItem('rs-has-landed');
-if (isInitialLanding) {
-  try {
-    sessionStorage.setItem('rs-has-landed', 'true');
-  } catch (e) { }
-}
+/* ---- Subtle Ambient Background Spotlight & Grid ---- */
+function AmbientBackground() {
+  const bgRef = useRef(null);
 
-function IntroCurtain() {
-  const [done, setDone] = useState(!isInitialLanding);
-  const [pct, setPct] = useState(isInitialLanding ? 0 : 100);
   useEffect(() => {
-    if (!isInitialLanding) return;
-    let raf, start;
-    const dur = 1250;
-    const tick = (t) => {
-      if (!start) start = t;
-      const p = Math.min(1, (t - start) / dur);
-      const eased = 1 - Math.pow(1 - p, 3);
-      setPct(Math.round(eased * 100));
-      if (p < 1) raf = requestAnimationFrame(tick);
-      else setTimeout(() => setDone(true), 380);
+    const handleMove = (e) => {
+      if (!bgRef.current) return;
+      const { clientX, clientY } = e;
+      bgRef.current.style.setProperty('--mouse-x', `${clientX}px`);
+      bgRef.current.style.setProperty('--mouse-y', `${clientY}px`);
     };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
+    window.addEventListener('mousemove', handleMove, { passive: true });
+    return () => window.removeEventListener('mousemove', handleMove);
   }, []);
 
-  const panel = (side) => ({
-    position: 'absolute', top: 0, [side]: 0, width: '50.5%', height: '100%',
-    background: 'var(--obsidian)',
-    transform: done ? 'translateY(-100%)' : 'none',
-    transition: `transform var(--dur-5) var(--ease-io) ${side === 'right' ? '90ms' : '0ms'}`,
-  });
-
   return (
-    <div aria-hidden="true" style={{
-      position: 'fixed', inset: 0, zIndex: 9000,
-      pointerEvents: done ? 'none' : 'auto'
+    <div ref={bgRef} aria-hidden="true" style={{
+      position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: -1, overflow: 'hidden'
     }}>
-      <div style={panel('left')} />
-      <div style={panel('right')} />
-      {/* content rides above the split panels and fades as they lift */}
-      <div style={{
-        position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column',
-        alignItems: 'center', justifyContent: 'center', gap: '1.5rem',
-        opacity: done ? 0 : 1, transition: 'opacity var(--dur-2) var(--ease-out)'
-      }}>
-        <span style={{
-          fontFamily: 'var(--font-mono)', fontSize: 'var(--text-label)', letterSpacing: 'var(--track-micro)',
-          textTransform: 'uppercase', color: 'var(--on-dark-muted)', whiteSpace: 'nowrap',
-          transform: `translateY(${(1 - pct / 100) * 12}px)`, opacity: 0.4 + pct / 100 * 0.6
-        }}>
-          Rapheal Suber — Archive
-        </span>
-        <span style={{ width: 'min(46vw, 420px)', height: 'var(--hair)', background: 'var(--border-inverse)', position: 'relative', overflow: 'hidden' }}>
-          <span style={{ position: 'absolute', inset: 0, transformOrigin: 'left', transform: `scaleX(${pct / 100})`, background: 'var(--accent)' }} />
-        </span>
-        <span style={{
-          fontFamily: 'var(--font-mono)', fontSize: 'var(--text-micro)', letterSpacing: 'var(--track-micro)',
-          color: 'var(--accent-on-dark)', fontVariantNumeric: 'tabular-nums'
-        }}>
-          {String(pct).padStart(3, '0')}
-        </span>
-      </div>
+      <style>{`
+        .ambient-grid {
+          position: absolute; inset: 0;
+          background-image: radial-gradient(var(--border) 1px, transparent 1px);
+          background-size: 32px 32px;
+          opacity: 0.35;
+          mask-image: radial-gradient(circle 600px at var(--mouse-x, 50vw) var(--mouse-y, 30vh), #000 0%, transparent 80%);
+          -webkit-mask-image: radial-gradient(circle 600px at var(--mouse-x, 50vw) var(--mouse-y, 30vh), #000 0%, transparent 80%);
+          transition: opacity 0.3s ease;
+        }
+        .ambient-glow-1 {
+          position: absolute; top: -10vw; right: -10vw;
+          width: 50vw; height: 50vw;
+          border-radius: 999px;
+          background: radial-gradient(circle, var(--accent-wash), transparent 70%);
+          opacity: 0.6; filter: blur(60px);
+          animation: floatSlow 20s ease-in-out infinite alternate;
+        }
+        .ambient-glow-2 {
+          position: absolute; bottom: -10vw; left: -10vw;
+          width: 45vw; height: 45vw;
+          border-radius: 999px;
+          background: radial-gradient(circle, rgba(113, 113, 122, 0.06), transparent 70%);
+          opacity: 0.5; filter: blur(80px);
+          animation: floatSlow 25s ease-in-out infinite alternate-reverse;
+        }
+        @keyframes floatSlow {
+          0% { transform: translate(0, 0) scale(1); }
+          100% { transform: translate(3vw, 4vw) scale(1.08); }
+        }
+      `}</style>
+      <div className="ambient-grid" />
+      <div className="ambient-glow-1" />
+      <div className="ambient-glow-2" />
     </div>
   );
 }
 
-Object.assign(window, { useReveal, Reveal, Cursor, IntroCurtain, isInitialLanding });
+Object.assign(window, { useReveal, Reveal, Cursor, AmbientBackground });

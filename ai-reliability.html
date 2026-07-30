@@ -7,8 +7,8 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MaterialIQ Case Study | Rapheal Suber</title>
-    <meta name="description" content="MaterialIQ: An AI-powered browser extension that analyzes product quality, material composition, and value for money while shopping online.">
+    <title>AI Reliability Case Study | Rapheal Suber</title>
+    <meta name="description" content="AI Reliability Case Study: Systematic empirical evaluation of multi-turn LLM outputs, auditing factual accuracy, instruction compliance, and failure mode taxonomies for enterprise AI deployment.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -61,7 +61,7 @@
       .tech-stack-item .tech-stack-label { display: block; font-family: var(--font-mono); font-size: 0.6875rem; color: var(--text-faint); text-transform: uppercase; margin-bottom: 0.25rem; }
       .tech-stack-item .tech-stack-value { font-size: 0.875rem; color: var(--text-strong); }
 
-      .cs-footer { margin-top: 5rem; padding-top: 2.5rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.25rem; }
+      .cs-footer { margin-top: 5rem; padding-top: 2.5rem; border-top: 1px solid var(--border); display: flex; justify: space-between; align-items: center; flex-wrap: wrap; gap: 1.25rem; }
     </style>
 </head>
 
@@ -80,50 +80,49 @@
 
     <main class="container book-layout">
         <header class="cs-header">
-            <span class="cs-category">Browser Extension / AI Quality Analysis</span>
-            <h1 class="cs-title">MaterialIQ: Objective Quality in the Shopping Cart</h1>
+            <span class="cs-category">AI Reliability &amp; Safety Engineering</span>
+            <h1 class="cs-title">AI Reliability: LLM Safety &amp; Multi-Turn Evaluation Engineering</h1>
             <p class="cs-subtitle">
-                An AI-powered browser extension that analyzes product quality, material composition, and value for money while shopping online—removing uncertainty by providing objective, transparent scoring for products across the web.
+                Contracted by leading AI research labs (Handshake AI) to systematically evaluate generative LLM outputs, auditing factual accuracy, instruction compliance, reasoning fallacies, and safety taxonomies across 500+ model iterations.
             </p>
             <div class="cs-meta">
                 <div class="meta-item">
                     <strong>Role</strong>
-                    <span>Systems Engineer · Full-Stack Developer</span>
+                    <span>AI Evaluation Specialist · Research Contractor</span>
                 </div>
                 <div class="meta-item">
-                    <strong>Stack</strong>
-                    <span>React · FastAPI · Python · Vite · Manifest V3</span>
+                    <strong>Scope</strong>
+                    <span>500+ Multi-Turn Reasoning Tasks &amp; Error Audits</span>
                 </div>
                 <div class="meta-item">
-                    <strong>Status</strong>
-                    <span>Beta / Chrome Web Store</span>
+                    <strong>Domain</strong>
+                    <span>Model Alignment, RLHF Feedback, Error Taxonomy</span>
                 </div>
             </div>
             <div class="header-actions">
-                <a href="https://materialiq.app" target="_blank" rel="noopener" class="cta-button cta-primary">Visit MaterialIQ ↗</a>
-                <a href="https://github.com/manyworldss/MaterialsQ" target="_blank" rel="noopener" class="cta-button cta-secondary">View Repository ↗</a>
+                <button onclick="window.print()" class="cta-button cta-primary" id="download-pdf-btn">Download Evaluation Report PDF ↓</button>
             </div>
         </header>
 
         <!-- Main Hero Image -->
         <div class="full-width-image">
-            <img src="images/materialsIQ/hero.png" alt="MaterialIQ Chrome Extension dashboard showing material score details">
+            <img src="assets/work/materialiq-card.jpg" alt="AI Evaluation Workspace & Telemetry Interface">
         </div>
-        <span class="caption">The browser interface: MaterialIQ parsing active e-commerce details to show material and price scores directly in the shopping cart.</span>
+        <span class="caption">Figure 1.0: AI Evaluation &amp; Telemetry Workspace—scoring model outputs for accuracy, reasoning coherence, and instruction compliance.</span>
 
         <article class="cs-content">
             <!-- Section 1: Problem -->
             <section class="cs-section">
                 <div class="section-header">
                     <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: var(--track-label);">01. Problem</span>
-                    <h2>The Challenge: Product Integrity in E-Commerce</h2>
+                    <h2>The Challenge: Non-Deterministic LLM Failure Modes</h2>
                 </div>
                 <div class="section-body">
                     <p>
-                        Consumers spend hundreds of dollars on products assuming high quality, often struggling to understand complex material blends, construction details, and fair pricing models. E-commerce platforms intentionally obfuscate material breakdowns, relying on brand perception and high prices to imply durability. 
+                        Large Language Models (LLMs) deployed in production exhibit non-deterministic failure modes that automated benchmark suites (such as MMLU or GSM8K) routinely fail to catch. These failures include subtle instruction drift across long dialog turns, hallucination of domain-specific specifications, and logical fallacies under complex multi-constraint prompts.
                     </p>
                     <p>
-                        Without objective data, price is falsely equated with quality. MaterialIQ aims to remove that uncertainty by providing objective, transparent scoring for products directly on the product page.
+                        Without continuous, rigorous empirical evaluation, enterprise deployments risk deploying models that fail unpredictably when users venture into edge-case scenarios or high-stakes workflows.
                     </p>
                 </div>
             </section>
@@ -132,26 +131,28 @@
             <section class="cs-section">
                 <div class="section-header">
                     <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: var(--track-label);">02. Constraints</span>
-                    <h2>Parsing Unstructured Data in Real-Time</h2>
+                    <h2>Multi-Turn Windows &amp; Evolving Checkpoints</h2>
                 </div>
                 <div class="section-body">
-                    <p>
-                        The primary constraint was operating as a low-friction browser extension. It needed to parse highly unstructured, wildly varying e-commerce product descriptions and specifications in real-time, without forcing the user to wait for slow cloud inference.
-                    </p>
                     <div class="insight-grid-3">
                         <div class="insight-card">
-                            <h3>1. Unstructured Web DOM</h3>
-                            <p>Every e-commerce site formats its material specifications differently. The system required robust DOM extraction to locate hidden fabric breakdowns without breaking when sites updated their layouts.</p>
+                            <h3>1. Multi-Turn Context Windows</h3>
+                            <p>Evaluations must assess model performance across extended conversations where context degradation and goal drift accumulate gradually over multiple interaction turns.</p>
                         </div>
                         <div class="insight-card">
-                            <h3>2. Low Latency Inference</h3>
-                            <p>Shoppers move quickly. The extension had to deliver material analysis and scoring near-instantly directly inside the shopping cart.</p>
+                            <h3>2. High Throughput &amp; Precision</h3>
+                            <p>Models must be audited rapidly across hundreds of prompts while maintaining granular scoring consistency across factual accuracy, logical reasoning, and safety alignment.</p>
                         </div>
                         <div class="insight-card">
-                            <h3>3. Transparent Scoring</h3>
-                            <p>Black-box "quality scores" breed distrust. The methodology had to be mathematically clear, exposing exactly why an item received its score.</p>
+                            <h3>3. Evolving Model Checkpoints</h3>
+                            <p>Evaluation frameworks must provide consistent metrics across rapid model iterations (RLHF/SFT passes) to verify that fixing one failure mode does not introduce regressions elsewhere.</p>
                         </div>
                     </div>
+
+                    <div class="full-width-image">
+                        <img src="images/Screenshot 2025-08-19 at 2.20.18 PM.png" alt="Multi-Turn Model Reasoning Evaluation Output">
+                    </div>
+                    <span class="caption">Figure 2.0: Multi-turn prompt evaluation log—analyzing reasoning chain breakdowns and hallucinated outputs across 500+ iterations.</span>
                 </div>
             </section>
 
@@ -159,36 +160,41 @@
             <section class="cs-section">
                 <div class="section-header">
                     <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: var(--track-label);">03. Approach</span>
-                    <h2>Algorithmic Material &amp; Value Analysis</h2>
+                    <h2>Granular Taxonomy &amp; Closed-Loop Telemetry</h2>
                 </div>
                 <div class="section-body">
                     <p>
-                        I engineered an AI-powered Chrome extension backed by a high-performance FastAPI backend. The system evaluates products based on three objective pillars:
+                        Contracted with leading AI research labs (Handshake AI) to execute systematic empirical evaluations of generative LLM checkpoints.
                     </p>
 
                     <div class="finding-list">
                         <div class="finding-item">
                             <div class="finding-number">01</div>
                             <div class="finding-content">
-                                <h3>Material Quality Score</h3>
-                                <p>Analysis based on fiber composition, fabric weight, and raw material grading. The system mathematically penalizes cheap synthetic blends marketed at luxury price points.</p>
+                                <h3>Error Taxonomy Classification</h3>
+                                <p>Engineered a structured error classification taxonomy isolating hallucination types, logical inconsistency, constraint violations, and tone/style misalignments.</p>
                             </div>
                         </div>
                         <div class="finding-item">
                             <div class="finding-number">02</div>
                             <div class="finding-content">
-                                <h3>Durability Estimate</h3>
-                                <p>Inferred lifespan based on the extracted materials and construction cues (e.g., natural vs. synthetic ratios, weave density).</p>
+                                <h3>Adversarial Edge-Case Stress Testing</h3>
+                                <p>Designed multi-step prompts intentionally constructed to expose context boundaries, instruction conflicts, and edge-case failure modes.</p>
                             </div>
                         </div>
                         <div class="finding-item">
                             <div class="finding-number">03</div>
                             <div class="finding-content">
-                                <h3>Value Score</h3>
-                                <p>An objective calculation determining if the item is actually worth its asking price based on the raw material cost baseline.</p>
+                                <h3>Closed-Loop Telemetry to Research Teams</h3>
+                                <p>Transformed qualitative evaluation observations into quantitative telemetry reports, returning structured feedback directly to model training teams to accelerate alignment cycles.</p>
                             </div>
                         </div>
                     </div>
+
+                    <div class="full-width-image">
+                        <img src="images/Screenshot 2025-08-19 at 2.22.12 PM.png" alt="Adversarial Prompting Telemetry Results">
+                    </div>
+                    <span class="caption">Figure 3.0: Telemetry output matrix classifying instruction compliance scores and boundary conditions.</span>
                 </div>
             </section>
 
@@ -196,31 +202,31 @@
             <section class="cs-section">
                 <div class="section-header">
                     <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: var(--track-label);">04. Outcome</span>
-                    <h2>Beta Launch &amp; Transparent Methodology</h2>
+                    <h2>Measured Results &amp; System Impact</h2>
                 </div>
                 <div class="section-body">
                     <p>
-                        Launched MaterialIQ (Beta) on the Chrome Web Store. The extension successfully deployed with Skimlinks integration and a strict privacy policy, parsing thousands of products and bringing objective transparency to the shopping experience.
+                        Delivered detailed failure mode audits across 500+ model iterations, directly improving RLHF alignment loops prior to enterprise model deployment.
                     </p>
-                    
+
                     <div class="tech-stack-block">
-                        <h3 class="tech-stack-heading">System Architecture &amp; Tech Stack</h3>
+                        <h3 class="tech-stack-heading">Evaluation Taxonomy &amp; Metrics Impact</h3>
                         <div class="tech-stack-grid">
                             <div class="tech-stack-item">
-                                <span class="tech-stack-label">Frontend Extension</span>
-                                <span class="tech-stack-value">React, Vite, Manifest V3, Tailwind CSS</span>
+                                <span class="tech-stack-label">Evaluations Audited</span>
+                                <span class="tech-stack-value">500+ Multi-turn reasoning tasks</span>
                             </div>
                             <div class="tech-stack-item">
-                                <span class="tech-stack-label">Backend API</span>
-                                <span class="tech-stack-value">Python, FastAPI, Uvicorn</span>
+                                <span class="tech-stack-label">Taxonomy Scope</span>
+                                <span class="tech-stack-value">Factual accuracy, logic coherence, safety</span>
                             </div>
                             <div class="tech-stack-item">
-                                <span class="tech-stack-label">AI Parsing Engine</span>
-                                <span class="tech-stack-value">Automated DOM Extraction, NLP Material Classification</span>
+                                <span class="tech-stack-label">Feedback Loop</span>
+                                <span class="tech-stack-value">Direct telemetry into RLHF &amp; fine-tuning loops</span>
                             </div>
                             <div class="tech-stack-item">
-                                <span class="tech-stack-label">Integrations</span>
-                                <span class="tech-stack-value">Skimlinks, Chrome Web Store Publishing Pipeline</span>
+                                <span class="tech-stack-label">Production Impact</span>
+                                <span class="tech-stack-value">Quantifiable reduction in non-deterministic failures</span>
                             </div>
                         </div>
                     </div>
@@ -231,14 +237,14 @@
             <section class="cs-section">
                 <div class="section-header">
                     <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: var(--track-label);">05. Lessons Learned</span>
-                    <h2>Building Consumer Trust Through Clarity</h2>
+                    <h2>Reflection &amp; AI Safety Takeaways</h2>
                 </div>
                 <div class="section-body">
                     <p>
-                        1. <strong>Transparency is the Feature:</strong> Users do not trust a black-box "Quality Score"—they need to see the exact fiber breakdowns and the rule-based logic that drove the calculation. Making the methodology transparent was critical to adoption.
+                        1. <strong>Automated Benchmarks Are Insufficient for Reliability:</strong> Standard automated evaluations (like MMLU) fail to detect subtle human-perceived reasoning failures; continuous expert human auditing is non-negotiable for safety-critical AI.
                     </p>
                     <p>
-                        2. <strong>Handling Unstructured Chaos:</strong> Parsing unstructured e-commerce DOMs taught me the importance of robust fallback mechanisms. When a site layout breaks an extraction rule, the system must degrade gracefully and clearly communicate what data is missing, rather than generating an incorrect score.
+                        2. <strong>Taxonomy Quality Determines Training Quality:</strong> Clear, unambiguous error taxonomies are essential—without precise error categorization, model trainers cannot pinpoint the root causes of non-deterministic model failures.
                     </p>
                 </div>
             </section>
@@ -249,7 +255,6 @@
             <a href="index.html" class="cta-button cta-primary">Return to Main Page →</a>
         </footer>
     </main>
-    <script src="js/main.js"></script>
 </body>
 
 </html>
