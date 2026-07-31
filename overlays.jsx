@@ -151,13 +151,12 @@ function AboutContent() {
 function ExperienceContent() {
   const roles = [
     {
-      title: 'Technical Support Specialist', org: 'Stride · Current Position',
+      title: 'UX Designer', org: 'Prox · Contract · Apr 2024 - Jul 2024',
       bullets: [
-        'Supported enterprise SaaS implementations, customer onboarding, and technical operations.',
-        'Helped develop an AI-assisted migration agent that automated record transfers from HubSpot to Salesforce, reducing manual effort and improving migration accuracy.',
-        'Led migration of more than 200,000 customer records into a new SaaS platform while maintaining data integrity.',
-        'Partnered with engineering teams to improve implementation workflows and operational efficiency.',
-        'Authored SOPs and technical documentation to streamline support and onboarding processes.'
+        'Led the end-to-end redesign of the onboarding experience for an iOS grocery-savings application, focusing on user retention and engagement.',
+        'Collaborated directly with the founder and engineering team to design and implement strategies mitigating a 3-5 minute initial data-loading constraint.',
+        'Developed comprehensive user flows, interactive prototypes, and production-ready designs tailored for a Capacitor-based iOS environment.',
+        'Created high-fidelity UI components, animations, and deferred permission prompts to build trust and increase activation rates.'
       ]
     },
     {

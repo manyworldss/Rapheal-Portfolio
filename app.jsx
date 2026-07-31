@@ -49,6 +49,21 @@ const WORK = [
     approach: 'Developed an AI-powered Chrome extension backed by FastAPI. The system extracts fiber composition and fabric weight to calculate a Material Quality Score, infers a Durability Estimate from construction cues, and computes an objective Value Score to determine if the item is worth its asking price.',
     outcome: 'Launched MaterialIQ (Beta) on the Chrome Web Store with Skimlinks integration, providing shoppers with instant, transparent scoring directly in their shopping carts to remove purchasing uncertainty.',
     lessonsLearned: 'Building consumer trust requires extreme transparency in algorithmic scoring. Users do not trust a black-box "Quality Score"—they need to see the exact fiber breakdowns and rule-based logic that drove the calculation.'
+  },
+  {
+    id: 'prox',
+    code: 'PX-04',
+    title: 'Prox: Onboarding UX Redesign',
+    domain: 'Onboarding UX · Mobile App',
+    tags: ['Onboarding', 'iOS', 'Capacitor', 'Product Design'],
+    thumb: './images/prox/08-deals-ready.png',
+    page: 'prox.html',
+    summary: 'A complete redesign of the first-time user experience for an iOS grocery-savings app, addressing a strict technical constraint that caused severe user drop-off.',
+    problem: 'On first sign-up, the app must gather real-time price data for local stores, which takes 3 to 5 minutes. The original flow threw a static loading spinner, appearing broken to new users and resulting in high drop-off rates before they could see value.',
+    constraints: 'The 3-5 minute data pull is unavoidable and must happen in real time. The app runs on Capacitor for iOS, requiring designs that account for cross-platform quirks while still feeling native, polished, and responsive.',
+    approach: 'Shifted the psychological framing of the wait. Instead of a forced pause, I designed an upfront preferences flow (store selection, dietary needs) that masks the initial loading time and makes the wait feel personalized and productive. Introduced an "honest" transparent setup framework that gave users permission to leave while data loaded.',
+    outcome: 'Delivered an end-to-end 14-screen onboarding redesign. Implemented interactive features like a potential savings slider, deferred location permissions to build trust incrementally, and a tangible payoff screen when deals are ready.',
+    lessonsLearned: 'You cannot always engineer away friction, but you can design how users perceive it. Giving users context, progress indicators, and an explanation for the wait turns frustration into anticipation.'
   }
 ];
 
