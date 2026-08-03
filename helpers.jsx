@@ -1,5 +1,5 @@
 /* ============================================================
-   HELPERS — Micro-interactions, Cursor Ring & Ambient Background.
+   HELPERS - Micro-interactions, Cursor Ring & Ambient Background.
    Linear / Apple Minimal Aesthetic.
    ============================================================ */
 const { useState, useEffect, useRef } = React;

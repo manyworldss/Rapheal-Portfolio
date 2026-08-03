@@ -1,5 +1,5 @@
 /* ============================================================
-   Currently / Lately — a curated shelf of films, series, books,
+   Currently / Lately - a curated shelf of films, series, books,
    and records Rapheal would hand to anyone who joins. The set
    shuffles deterministically each day (everyone sees the same
    "today" pick; it changes tomorrow), with a manual reshuffle.
@@ -57,22 +57,22 @@ const COLLECTION = [
   // ---- Series ----
   { kind:'series', title:'Mindhunter', by:'Fincher', year:'2017', why:"Watching them invent behavioral science in real time is basically my dream job, dramatized." },
   { kind:'series', title:'The Wire', by:'David Simon', year:'2002', why:"The closest TV's come to a systems-level view of a city. Nothing in it is wasted." },
-  { kind:'series', title:'Chernobyl', by:'Mazin', year:'2019', why:"The cost of lies told with unbearable precision — the human-factors disaster I think about most." },
+  { kind:'series', title:'Chernobyl', by:'Mazin', year:'2019', why:"The cost of lies told with unbearable precision - the human-factors disaster I think about most." },
   { kind:'series', title:'The Sopranos', by:'David Chase', year:'1999', why:"A character study that never flinches; therapy and violence in the same hour." },
-  { kind:'series', title:'Breaking Bad', by:'Gilligan', year:'2008', why:"The cleanest arc on television — a chemistry teacher and a slow-motion tragedy." },
+  { kind:'series', title:'Breaking Bad', by:'Gilligan', year:'2008', why:"The cleanest arc on television - a chemistry teacher and a slow-motion tragedy." },
   { kind:'series', title:'Silicon Valley', by:'Mike Judge', year:'2014', why:"Tech satire that lands because it's true. I've sat in versions of these meetings." },
   { kind:'series', title:'Shrinking', by:'Lawrence/Goldstein', year:'2023', why:"Grief comedy that earns its laughs and its tears; Harrison Ford is a revelation." },
   { kind:'series', title:'Platonic', by:'Stoller', year:'2023', why:"Rogen and Byrne making the chaos of adult friendship feel completely real." },
-  { kind:'series', title:'Game of Thrones', by:'HBO', year:'2011', why:"For the highs — when it was must-watch, nothing on earth felt bigger." },
+  { kind:'series', title:'Game of Thrones', by:'HBO', year:'2011', why:"For the highs - when it was must-watch, nothing on earth felt bigger." },
   { kind:'series', title:'The Chair Company', by:'HBO', year:'2025', why:"New, strange, and exactly the kind of swing I want more shows to take." },
 
   // ---- Books ----
   { kind:'book', title:'Dune', by:'Frank Herbert', year:'1965', why:"The world that taught me how ecology, power, and systems all interlock." },
   { kind:'book', title:'The Brothers Karamazov', by:'Dostoevsky', year:'1880', why:"Faith, doubt, and family pushed to the absolute limit. It rearranged me." },
   { kind:'book', title:'Crime and Punishment', by:'Dostoevsky', year:'1866', why:"The original mind-under-pressure; guilt rendered better here than anywhere." },
-  { kind:'book', title:'Meditations', by:'Marcus Aurelius', year:'180', why:"The notebook I keep closest — an emperor reminding me to get out of my own head." },
+  { kind:'book', title:'Meditations', by:'Marcus Aurelius', year:'180', why:"The notebook I keep closest - an emperor reminding me to get out of my own head." },
   { kind:'book', title:'Hyperion', by:'Dan Simmons', year:'1989', why:"Six pilgrims, six stories. Science fiction operating as literature." },
-  { kind:'book', title:'Children of Blood and Bone', by:'Adeyemi', year:'2018', why:"Magic, rage, and heritage — I tore right through it." },
+  { kind:'book', title:'Children of Blood and Bone', by:'Adeyemi', year:'2018', why:"Magic, rage, and heritage - I tore right through it." },
   { kind:'book', title:'The Prince', by:'Machiavelli', year:'1532', why:"Cold, clear, and useful. Understanding power isn't the same as worshipping it." },
   { kind:'book', title:'The Alchemist', by:'Paulo Coelho', year:'1988', why:"A simple parable I return to whenever I need to remember why I started." },
 
@@ -81,13 +81,13 @@ const COLLECTION = [
   { kind:'music', title:'The Miseducation of Lauryn Hill', by:'Lauryn Hill', year:'1998', why:"Perfect, full stop. Warmth and wisdom in every single track." },
   { kind:'music', title:'My Beautiful Dark Twisted Fantasy', by:'Kanye West', year:'2010', why:"Maximalism done right; the production still floors me." },
   { kind:'music', title:'The College Dropout', by:'Kanye West', year:'2004', why:"The record that made me believe in taking big swings." },
-  { kind:'music', title:'The Fugees', by:'Anything', year:'—', why:"The harmonies I'll put on for anyone who'll sit still long enough to listen." },
-  { kind:'music', title:'The Roots', by:'Anything', year:'—', why:"Live hip-hop — proof that musicianship and rap have always belonged together." },
-  { kind:'music', title:'Tame Impala', by:'Anything', year:'—', why:"For the days I just want to float. Headphones, eyes closed." },
-  { kind:'music', title:'Anderson .Paak', by:'Anything', year:'—', why:"Pure groove. Genuinely impossible to sit still to." },
-  { kind:'music', title:'KAYTRANADA', by:'Anything', year:'—', why:"The producer I reach for the second a room needs to move." },
-  { kind:'music', title:'Steve Lacy', by:'Anything', year:'—', why:"Bedroom funk that sounds like absolutely no one else." },
-  { kind:'music', title:'Daft Punk', by:'Anything', year:'—', why:"Robots who somehow made me feel the most human on a dance floor." },
+  { kind:'music', title:'The Fugees', by:'Anything', year:' - ', why:"The harmonies I'll put on for anyone who'll sit still long enough to listen." },
+  { kind:'music', title:'The Roots', by:'Anything', year:' - ', why:"Live hip-hop - proof that musicianship and rap have always belonged together." },
+  { kind:'music', title:'Tame Impala', by:'Anything', year:' - ', why:"For the days I just want to float. Headphones, eyes closed." },
+  { kind:'music', title:'Anderson .Paak', by:'Anything', year:' - ', why:"Pure groove. Genuinely impossible to sit still to." },
+  { kind:'music', title:'KAYTRANADA', by:'Anything', year:' - ', why:"The producer I reach for the second a room needs to move." },
+  { kind:'music', title:'Steve Lacy', by:'Anything', year:' - ', why:"Bedroom funk that sounds like absolutely no one else." },
+  { kind:'music', title:'Daft Punk', by:'Anything', year:' - ', why:"Robots who somehow made me feel the most human on a dance floor." },
 ];
 
 /* ---- deterministic daily shuffle ---- */
@@ -157,7 +157,7 @@ function Collection() {
           <h3 style={{ fontFamily:'var(--font-display)', fontWeight:'var(--fw-display)', fontSize:'clamp(2.5rem,4.5vw,4.25rem)', lineHeight:1.0,
             letterSpacing:'var(--track-display)', color:'var(--text-strong)', margin:'1.1rem 0 0.8rem', overflowWrap:'break-word' }}>{featured.title}</h3>
           <div style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-label)', textTransform:'uppercase', color:'var(--text-faint)', marginBottom:'1.4rem' }}>
-            {featured.by}{featured.year !== '—' ? `  ·  ${featured.year}` : ''}
+            {featured.by}{featured.year !== ' - ' ? `  ·  ${featured.year}` : ''}
           </div>
           <p style={{ fontSize:'var(--text-body-lg)', lineHeight:'var(--leading-body-lg)', color:'var(--text)', maxWidth:'40ch', margin:'0 0 1.6rem' }}>
             “{featured.why}”
@@ -197,7 +197,7 @@ function CollectionRow({ item, last }) {
         color: h ? accent : 'var(--text-faint)', whiteSpace:'nowrap', transition:'color var(--dur-2) var(--ease-soft)' }}>{KINDS[item.kind].label}</span>
       <span style={{ minWidth:0 }}>
         <span style={{ fontFamily:'var(--font-display)', fontWeight:'var(--fw-semibold)', fontSize:'var(--text-h3)', color:'var(--text-strong)', display:'block', lineHeight:1.15, overflowWrap:'break-word' }}>{item.title}</span>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', textTransform:'uppercase', color:'var(--text-faint)', display:'block', marginTop:'0.3rem' }}>{item.by}{item.year !== '—' ? `  ·  ${item.year}` : ''}</span>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', textTransform:'uppercase', color:'var(--text-faint)', display:'block', marginTop:'0.3rem' }}>{item.by}{item.year !== ' - ' ? `  ·  ${item.year}` : ''}</span>
       </span>
       <span aria-hidden="true" style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', color: h ? accent : 'transparent',
         alignSelf:'center', transition:'color var(--dur-2) var(--ease-soft)' }}>↗</span>

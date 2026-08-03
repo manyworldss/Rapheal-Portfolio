@@ -1,5 +1,5 @@
 /* ============================================================
-   Editorial Archive v2 — atmospheric break, marquee, footer.
+   Editorial Archive v2 - atmospheric break, marquee, footer.
    ============================================================ */
 const { useState: useState2, useEffect: useEffect2, useRef: useRef2 } = React;
 
@@ -23,7 +23,7 @@ function Marquee({ children, speed = 44, onDark = false }) {
             <span key={i} style={{ display:'inline-flex', alignItems:'center', fontFamily:'var(--font-display)',
               fontWeight:'var(--fw-display)', fontSize:'var(--text-display)', letterSpacing:'var(--track-display)', lineHeight:1 }}>
               <span style={{ padding:'0 0.4em' }}>{children}</span>
-              <span aria-hidden="true" style={{ padding:'0 0.4em', color:'var(--accent)' }}>—</span>
+              <span aria-hidden="true" style={{ padding:'0 0.4em', color:'var(--accent)' }}> - </span>
             </span>
           ))}
         </div>

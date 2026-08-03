@@ -1,5 +1,5 @@
 /* ============================================================
-   Marginalia — the final atmospheric layer. Typographic and
+   Marginalia - the final atmospheric layer. Typographic and
    linear only (no imagery): topographic contours in clay/pine,
    outlined ghost titles from the collection, a daily exhibit
    marker, and scroll-revealed margin notes between sections.
@@ -130,7 +130,7 @@ function MarginNote({ pickIndex = 4, align = 'left' }) {
           fontSize:'clamp(1.3rem,2vw,1.8rem)', color:'transparent', WebkitTextStroke:'1px var(--border-strong)',
           textTransform:'uppercase', letterSpacing:'0.04em', whiteSpace:'nowrap' }}>{it.title}</span>
         <span style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)',
-          textTransform:'uppercase', color:'var(--text-faint)', whiteSpace:'nowrap' }}>{k.label}{it.year !== '—' ? ` · ${it.year}` : ''}</span>
+          textTransform:'uppercase', color:'var(--text-faint)', whiteSpace:'nowrap' }}>{k.label}{it.year !== ' - ' ? ` · ${it.year}` : ''}</span>
       </div>
     </div>
   );
