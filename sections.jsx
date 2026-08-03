@@ -1,5 +1,5 @@
 /* ============================================================
-   SECTIONS — Nav, Minimal Hero, Case Studies List, Footer.
+   SECTIONS - Nav, Minimal Hero, Case Studies List, Footer.
    Apple/Linear Minimal Engineering Aesthetic.
    ============================================================ */
 const { useState: useStateS, useRef: useRefS } = React;
@@ -9,7 +9,6 @@ function Nav({ activeTab, onOpen }) {
   const navItems = [
     { label: 'Home', id: 'home' },
     { label: 'About', id: 'about' },
-    { label: 'Experience', id: 'experience' },
     { label: 'Case Studies', id: 'work' },
     { label: 'Resume', id: 'resume' },
     { label: 'Contact', id: 'contact' },

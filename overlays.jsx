@@ -1,5 +1,5 @@
 /* ============================================================
-   OVERLAYS — Panels for About, Experience, Resume, Contact & Case Studies.
+   OVERLAYS - Panels for About, Experience, Resume, Contact & Case Studies.
    Geist & Monochrome Engineering Aesthetics.
    ============================================================ */
 const { useState: useStateO, useEffect: useEffectO } = React;
@@ -96,7 +96,7 @@ function AboutContent() {
           I study human performance, cognition, and systems error prevention to make technical tools and complex workflows safe and reliable.
         </p>
         <p style={{ fontSize: 'var(--text-body)', lineHeight: 'var(--leading-body)', color: 'var(--text-muted)' }}>
-          I am pursuing an accelerated B.S./M.S. degree in Human Factors Psychology at Embry-Riddle Aeronautical University. My focus lies at the intersection of human cognitive ergonomics, AI reliability auditing, and technical operations—designing workflows that fail gracefully when humans are under stress or high workload.
+          I am pursuing an accelerated B.S./M.S. degree in Human Factors Psychology at Embry-Riddle Aeronautical University. My focus lies at the intersection of human cognitive ergonomics, AI reliability auditing, and technical operations-designing workflows that fail gracefully when humans are under stress or high workload.
         </p>
         <p style={{ fontSize: 'var(--text-body)', lineHeight: 'var(--leading-body)', color: 'var(--text-muted)' }}>
           Having engineered full-stack applications and performed empirical evaluations on LLM models, I bridge engineering teams and human factors principles to turn complex system requirements into predictable human-system performance.
@@ -147,65 +147,6 @@ function AboutContent() {
   );
 }
 
-/* ---- Experience Content ---- */
-function ExperienceContent() {
-  const roles = [
-    {
-      title: 'UX Designer', org: 'Prox · Contract · Apr 2024 - Jul 2024',
-      bullets: [
-        'Led the end-to-end redesign of the onboarding experience for an iOS grocery-savings application, focusing on user retention and engagement.',
-        'Collaborated directly with the founder and engineering team to design and implement strategies mitigating a 3-5 minute initial data-loading constraint.',
-        'Developed comprehensive user flows, interactive prototypes, and production-ready designs tailored for a Capacitor-based iOS environment.',
-        'Created high-fidelity UI components, animations, and deferred permission prompts to build trust and increase activation rates.'
-      ]
-    },
-    {
-      title: 'AI Evaluation Specialist', org: 'Handshake AI · Contract',
-      bullets: [
-        'Evaluated multi-turn LLM-generated outputs for factual accuracy, reasoning logic, and instruction compliance.',
-        'Reviewed and scored 500+ model iterations, returning structured error taxonomies to directly inform model fine-tuning and safety alignment loops.'
-      ]
-    },
-    {
-      title: 'Technical Support Engineer', org: 'Greenville County',
-      bullets: [
-        'Automated legacy enterprise device provisioning workflows, cutting device setup time by rewriting legacy workflows.',
-        'Built documentation systems that reduced cognitive overhead for support staff and standardized procedures across the department.'
-      ]
-    }
-  ];
-
-  return (
-    <div>
-      <PanelTitle index="02 / Career">Experience</PanelTitle>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-        {roles.map((r, i) => (
-          <div key={r.title + r.org} style={{ paddingBottom: '1.5rem', borderBottom: i < roles.length - 1 ? '1px solid var(--border)' : 'none' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.25rem' }}>
-              <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 'var(--text-h3)', color: 'var(--text-strong)', margin: 0 }}>
-                {r.title}
-              </h3>
-            </div>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '0.8rem' }}>
-              {r.org}
-            </div>
-            {Array.isArray(r.bullets) ? (
-              <ul style={{ margin: 0, paddingLeft: '1.2rem', fontSize: 'var(--text-sm)', lineHeight: '1.6', color: 'var(--text-muted)' }}>
-                {r.bullets.map((b, idx) => (
-                  <li key={idx} style={{ marginBottom: '0.35rem' }}>{b}</li>
-                ))}
-              </ul>
-            ) : (
-              <p style={{ fontSize: 'var(--text-sm)', lineHeight: 'var(--leading-sm)', color: 'var(--text-muted)', margin: 0 }}>
-                {r.body}
-              </p>
-            )}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 /* ---- Resume Content ---- */
 function ResumeContent() {
@@ -214,7 +155,7 @@ function ResumeContent() {
       <PanelTitle index="03 / Credentials">Resume</PanelTitle>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', padding: '1rem 1.25rem', backgroundColor: 'var(--bg-inset)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}>
         <div>
-          <div style={{ fontWeight: 600, fontSize: '0.9375rem', color: 'var(--text-strong)' }}>Rapheal Suber — Curriculum Vitae</div>
+          <div style={{ fontWeight: 600, fontSize: '0.9375rem', color: 'var(--text-strong)' }}>Rapheal Suber - Curriculum Vitae</div>
           <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-muted)' }}>Human Factors &amp; AI Reliability Focus</div>
         </div>
         <a
@@ -350,4 +291,4 @@ function CaseStudyOverlay({ caseStudy, onClose }) {
   );
 }
 
-Object.assign(window, { Panel, AboutContent, ExperienceContent, ResumeContent, ContactContent, CaseStudyOverlay });
+Object.assign(window, { Panel, AboutContent, ResumeContent, ContactContent, CaseStudyOverlay });
