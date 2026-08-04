@@ -1,0 +1,53 @@
+/* ============================================================
+   TYPOGRAPHY — Geist, the engineering-grade grotesque (Vercel).
+   Understated, professional, crisp. Geist Mono carries technical
+   labels, indices, and metadata. Nothing monumental — clarity.
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap');
+
+:root {
+  /* ---- Families ---- */
+  --font-sans:    'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono:    'Geist Mono', ui-monospace, 'SF Mono', 'Roboto Mono', monospace;
+  --font-display: var(--font-sans);
+  --font-serif:   var(--font-sans);
+  --font-accent:  var(--font-sans);
+
+  /* ---- Weights ---- */
+  --fw-light:    400;   /* @kind font */
+  --fw-regular:  400;   /* @kind font */
+  --fw-medium:   500;   /* @kind font */
+  --fw-semibold: 600;   /* @kind font */
+  --fw-bold:     700;   /* @kind font */
+  --fw-display:  600;   /* @kind font */
+
+  /* ---- Type scale (measured, not monumental) ---- */
+  --text-hero:        clamp(2.5rem, 5.2vw, 4.5rem);   /* hero statement */
+  --leading-hero:     1.04;
+  --text-display:     clamp(2rem, 3.6vw, 3.25rem);    /* section openers */
+  --leading-display:  1.06;
+  --text-h1:          clamp(1.75rem, 3vw, 2.75rem);
+  --leading-h1:       1.1;
+  --text-h2:          clamp(1.4rem, 2.2vw, 2rem);
+  --leading-h2:       1.15;
+  --text-h3:          clamp(1.15rem, 1.5vw, 1.4rem);
+  --leading-h3:       1.25;
+  --text-body-lg:     1.1875rem;
+  --leading-body-lg:  1.6;
+  --text-body:        1.0625rem;
+  --leading-body:     1.65;
+  --text-sm:          0.9375rem;
+  --leading-sm:       1.55;
+  --text-label:       0.75rem;
+  --leading-label:    1.4;
+  --text-micro:       0.6875rem;
+  --leading-micro:    1.35;
+
+  /* ---- Tracking ---- */
+  --track-hero:    -0.025em;  /* @kind font */
+  --track-display: -0.02em;   /* @kind font */
+  --track-tight:   -0.015em;  /* @kind font */
+  --track-normal:  0;         /* @kind font */
+  --track-label:   0.1em;     /* @kind font */
+  --track-micro:   0.14em;    /* @kind font */
+}
