@@ -42,16 +42,20 @@ function Reveal({ children, delay = 0, y = '18px', as = 'div', style = {}, ...re
 /* ---- Blueprint backdrop: faint engineering grid + slow signal glow + cursor spotlight ---- */
 function BlueprintBg() {
   const spot = useRef(null);
+  const halo = useRef(null);
   useEffect(() => {
     if (window.matchMedia('(pointer: coarse)').matches) return;
     let raf = 0, tx = -999, ty = -999, x = -999, y = -999;
     const move = (e) => { tx = e.clientX; ty = e.clientY; };
     const loop = () => {
-      x += (tx - x) * 0.12; y += (ty - y) * 0.12;
+      x += (tx - x) * 0.14; y += (ty - y) * 0.14;
       if (spot.current) {
-        const m = `radial-gradient(300px circle at ${x.toFixed(0)}px ${y.toFixed(0)}px, #000 0%, transparent 62%)`;
+        const m = `radial-gradient(340px circle at ${x.toFixed(0)}px ${y.toFixed(0)}px, #000 0%, transparent 66%)`;
         spot.current.style.webkitMaskImage = m;
         spot.current.style.maskImage = m;
+      }
+      if (halo.current) {
+        halo.current.style.transform = `translate3d(${(x - 260).toFixed(0)}px, ${(y - 260).toFixed(0)}px, 0)`;
       }
       raf = requestAnimationFrame(loop);
     };
@@ -64,17 +68,22 @@ function BlueprintBg() {
       {/* grid, revealed under the cursor spotlight */}
       <div className="rs-grid rs-grid-base" />
       <div ref={spot} className="rs-grid rs-grid-spot" />
+      <div ref={halo} className="rs-cursor" />
       <style>{`
         .rs-grid{ position:absolute; inset:-1px; background-size: 72px 72px;
           background-image:
             linear-gradient(to right, var(--rs-grid-color) 1px, transparent 1px),
             linear-gradient(to bottom, var(--rs-grid-color) 1px, transparent 1px); }
-        .rs-grid-base{ --rs-grid-color: color-mix(in srgb, var(--text-strong) 4%, transparent);
-          -webkit-mask-image: radial-gradient(130% 100% at 50% -10%, #000 0%, transparent 68%);
-          mask-image: radial-gradient(130% 100% at 50% -10%, #000 0%, transparent 68%); }
-        .rs-grid-spot{ --rs-grid-color: color-mix(in srgb, var(--signal) 60%, transparent);
-          -webkit-mask-image: radial-gradient(300px circle at -999px -999px, #000 0%, transparent 62%);
-          mask-image: radial-gradient(300px circle at -999px -999px, #000 0%, transparent 62%); }
+        .rs-grid-base{ --rs-grid-color: color-mix(in srgb, var(--text-strong) 7%, transparent);
+          -webkit-mask-image: radial-gradient(140% 120% at 50% -8%, #000 0%, #000 42%, transparent 92%);
+          mask-image: radial-gradient(140% 120% at 50% -8%, #000 0%, #000 42%, transparent 92%); }
+        .rs-grid-spot{ --rs-grid-color: color-mix(in srgb, var(--signal) 85%, transparent);
+          -webkit-mask-image: radial-gradient(340px circle at -999px -999px, #000 0%, transparent 66%);
+          mask-image: radial-gradient(340px circle at -999px -999px, #000 0%, transparent 66%); }
+        .rs-cursor{ position:absolute; top:0; left:0; width:520px; height:520px; border-radius:999px;
+          background: radial-gradient(closest-side, color-mix(in srgb, var(--signal) 16%, transparent), transparent 70%);
+          transform: translate3d(-9999px,-9999px,0); will-change: transform; pointer-events:none; }
+        @media (prefers-reduced-motion: reduce){ .rs-cursor{ display:none; } }
         .rs-glow{ position:absolute; top:-34vh; left:50%; width:min(1100px,92vw); height:80vh;
           background: radial-gradient(closest-side, color-mix(in srgb, var(--signal) 16%, transparent), transparent 72%);
           filter: blur(36px); animation: rsGlow 20s var(--ease-linear) infinite; will-change: transform; }
