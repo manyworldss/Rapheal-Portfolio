@@ -1,6 +1,8 @@
 /* ============================================================
    Portfolio, data + panel content + composition.
    Technical Support · Systems · AI Quality Assurance.
+   Apple / Linear / Stripe register: 5 engineering headings
+   Problem · Constraints · Approach · Outcome · Lessons Learned
    ============================================================ */
 const { useState: useAppState } = React;
 
@@ -8,7 +10,8 @@ const WORK = [
   {
     id: 'reach', code: 'CS-01', title: 'Reach', year: '2025',
     disciplines: ['Human Factors', 'Clinical Systems', 'Full-Stack'],
-    thumb: null,
+    thumb: '../../assets/work/reach-card.jpg',
+    hero: '../../assets/work/reach-card.jpg',
     blurb: 'A clinician-facing platform for stroke motor recovery that unifies standardized outcome measures with home-program adherence tracking, built so a therapist can see who is off-track and who needs attention in seconds.',
     sections: {
       'Problem': 'Rehab therapists carry large caseloads and monitor recovery across many patients at once. Existing tools bury the signal, trajectories, adherence, and remote-monitoring status live in separate views, so deciding who needs attention first means reconstructing each patient by hand under time pressure.',
@@ -39,7 +42,7 @@ const WORK = [
       'Problem': 'For someone with Celiac disease, communicating dietary needs abroad is a safety decision made across a language barrier, often under social pressure. Getting it wrong has real medical consequences, and generic translation tools are not trusted in the moment that matters.',
       'Constraints': [
         'The critical interaction happens in seconds, in person, across a language barrier.',
-        'Medical trust: the message has to be unambiguous and complete.',
+        'Medical trust; the message has to be unambiguous and complete.',
         'Accessibility-first, it has to work for the widest range of users and contexts.',
         'It lives on the phone the traveler already carries, nothing to install in the moment.',
       ],
@@ -76,6 +79,78 @@ const WORK = [
       { k: 'Context', v: 'Leading AI research lab · via Handshake AI' },
       { k: 'Scope', v: '3,000+ frontend components evaluated · 12-person team' },
       { k: 'Year', v: '2025–2026' },
+    ],
+  },
+  {
+    id: 'materialsiq', code: 'CS-04', title: 'MaterialIQ', year: '2025',
+    disciplines: ['AI Quality Analysis', 'Browser Extension', 'FastAPI'],
+    thumb: '../../assets/work/materialiq-card.jpg',
+    hero: '../../assets/work/materialiq-card.jpg',
+    blurb: 'An AI-powered browser extension that analyzes product quality, material composition, and value for money in real time while shopping online.',
+    sections: {
+      'Problem': 'Consumers spend hundreds of dollars on products assuming high quality, often struggling to understand material blends, construction details, and fair pricing. Without objective data, price is often falsely equated with durability.',
+      'Constraints': [
+        'Must parse unstructured e-commerce product descriptions in real time directly within the browser.',
+        'Low-latency inference and clear rule-based scoring engines so users understand score derivation.',
+        'Must degrade gracefully when site layouts break extraction rules.',
+      ],
+      'Approach': 'Developed an AI-powered Chrome extension backed by FastAPI. The system extracts fiber composition and fabric weight to calculate a Material Quality Score, infers a Durability Estimate from construction cues, and computes an objective Value Score to determine if an item is worth its asking price.',
+      'Outcome': 'Launched MaterialIQ (Beta) on the Chrome Web Store with Skimlinks integration, providing shoppers with instant, transparent scoring directly in their shopping carts to remove purchasing uncertainty.',
+      'Lessons Learned': 'Building consumer trust requires extreme transparency in algorithmic scoring. Users do not trust a black-box "Quality Score"; they need to see the exact fiber breakdowns and rule-based logic that drove the calculation.',
+    },
+    meta: [
+      { k: 'Role', v: 'AI Quality Analysis · Chrome Extension · Full-Stack' },
+      { k: 'Domain', v: 'E-commerce quality scoring · Natural language parsing' },
+      { k: 'Tech', v: 'Chrome Extension API · FastAPI · Skimlinks' },
+      { k: 'Status', v: 'Beta on Chrome Web Store' },
+    ],
+  },
+  {
+    id: 'prox', code: 'CS-05', title: 'Prox', year: '2025',
+    disciplines: ['Onboarding UX', 'iOS', 'Capacitor'],
+    thumb: '../../assets/work/prox-deals.png',
+    hero: '../../assets/work/prox-deals.png',
+    blurb: 'A complete redesign of the first-time user experience for an iOS grocery-savings app, addressing a strict 3–5 minute data-loading constraint.',
+    sections: {
+      'Problem': 'On first sign-up, the app must gather real-time price data for local stores, which takes 3 to 5 minutes. The original flow threw a static loading spinner, appearing broken to new users and resulting in high drop-off rates before seeing value.',
+      'Constraints': [
+        'The 3–5 minute data pull is unavoidable and must happen in real time.',
+        'Runs on Capacitor for iOS, requiring designs that account for cross-platform quirks while feeling native.',
+        'Permission prompts must be deferred until value is established.',
+      ],
+      'Approach': 'Shifted the psychological framing of the wait. Instead of a forced pause, designed an upfront preferences flow (store selection, dietary needs) that masks the initial loading time and makes the wait feel personalized and productive. Introduced an "honest" transparent setup framework that gave users permission to leave while data loaded.',
+      'Outcome': 'Delivered an end-to-end 14-screen onboarding redesign. Implemented interactive features like a potential savings slider, deferred location permissions to build trust incrementally, and a tangible payoff screen when deals are ready.',
+      'Lessons Learned': 'You cannot always engineer away friction, but you can design how users perceive it. Giving users context, progress indicators, and an explanation for the wait turns frustration into anticipation.',
+    },
+    meta: [
+      { k: 'Role', v: 'UX Designer · Contract' },
+      { k: 'Context', v: 'Prox · iOS Grocery Savings Application' },
+      { k: 'Deliverables', v: '14-screen onboarding flow · Interactive prototypes · Capacitor iOS' },
+      { k: 'Period', v: 'Apr 2024 – Jul 2024' },
+    ],
+  },
+  {
+    id: 'illumi', code: 'CS-06', title: 'iLLumi', year: '2024',
+    disciplines: ['Enterprise SaaS', 'Contract Analytics', 'Information Architecture'],
+    thumb: '../../assets/work/illumi-analytics.png',
+    hero: '../../assets/work/illumi-analytics.png',
+    blurb: 'An analytics product whose data was rich and whose interface was overwhelming, re-architected around key user decision paths to transform complex contract data into actionable clarity.',
+    sections: {
+      'Problem': 'Enterprise contract management platforms generate deep telemetry, but presenting raw data tables causes high cognitive fatigue for compliance officers tracking renewal deadlines and liability risks across thousands of vendor agreements.',
+      'Constraints': [
+        'High-density information must remain scannable without hiding critical contract clauses.',
+        'Compliance workflows require immediate visibility into expiring terms and liability thresholds.',
+        'Design must integrate into legacy enterprise dashboards.',
+      ],
+      'Approach': 'Re-architected analytics views around the decisions users were actually trying to make. Grouped, sequenced, and de-emphasized until the dashboard read like a sentence instead of a spreadsheet — fewer things on screen, more meaning per glance.',
+      'Outcome': 'Reduced user task completion time and compliance oversight anxiety, establishing a clear visual hierarchy for contract lifecycle management.',
+      'Lessons Learned': 'Information density is not the problem, un-sequenced density is. When complex data is ordered by decision priority, users process complex states effortlessly.',
+    },
+    meta: [
+      { k: 'Role', v: 'Information Architecture · Systems Design' },
+      { k: 'Domain', v: 'Enterprise SaaS · Contract Analytics & Compliance' },
+      { k: 'Scope', v: 'Contract lifecycle tracking · Risk dashboards' },
+      { k: 'Year', v: '2024' },
     ],
   },
 ];

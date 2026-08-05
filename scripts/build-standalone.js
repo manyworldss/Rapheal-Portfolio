@@ -15,12 +15,14 @@ const root = path.resolve(__dirname, '..');
 const R = f => fs.readFileSync(path.join(root, f), 'utf8');
 const B64 = f => fs.readFileSync(path.join(root, f)).toString('base64');
 
-// ---- CSS: combine tokens + base, hoist @import(font) lines to the top ----
+// ---- CSS: combine tokens + base ----
 let css = ['tokens/colors.css','tokens/typography.css','tokens/spacing.css','tokens/motion.css','tokens/base.css']
   .map(R).join('\n\n');
-const imports = [];
-css = css.replace(/@import[^;]+;/g, m => { imports.push(m.trim()); return ''; });
-css = imports.join('\n') + '\n\n' + css;
+
+// Clean up any loose @import statements in tokens and place the single Google Font import cleanly at the top
+css = css.replace(/@import\s+url\([^)]+\);/g, '');
+const fontImport = `@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap');`;
+css = fontImport + '\n\n' + css;
 
 // ---- JSX source (the canonical ui_kits/portfolio copies) ----
 let helpers  = R('ui_kits/portfolio/helpers.jsx');
@@ -28,11 +30,18 @@ let sections = R('ui_kits/portfolio/sections.jsx');
 let overlays = R('ui_kits/portfolio/overlays.jsx');
 let app      = R('ui_kits/portfolio/app.jsx');
 
-// inline the two case images as data URIs so the file is fully portable
-const celio = 'data:image/png;base64,' + B64('assets/work/celio-landing.png');
-const north = 'data:image/png;base64,' + B64('assets/work/north-star-hero.png');
-app = app.split('../../assets/work/celio-landing.png').join(celio)
-         .split('../../assets/work/north-star-hero.png').join(north);
+// Dynamically inline all case study images as base64 data URIs
+app = app.replace(/['"](\.\.\/\.\.\/assets\/work\/[^'"]+)['"]/g, (match, imgPath) => {
+  const cleanPath = imgPath.replace('../../', '');
+  const absPath = path.join(root, cleanPath);
+  if (fs.existsSync(absPath)) {
+    const ext = path.extname(cleanPath).slice(1);
+    const mime = ext === 'jpg' ? 'jpeg' : ext;
+    const b64 = fs.readFileSync(absPath).toString('base64');
+    return `'data:image/${mime};base64,${b64}'`;
+  }
+  return match;
+});
 
 // guard: nothing inlined may contain a script-closing sequence
 for (const [n, s] of [['helpers',helpers],['sections',sections],['overlays',overlays],['app',app],['css',css]]) {
