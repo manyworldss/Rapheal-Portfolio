@@ -21,21 +21,23 @@ let css = ['tokens/colors.css','tokens/typography.css','tokens/spacing.css','tok
 
 // Clean up any loose @import statements in tokens and place the single Google Font import cleanly at the top
 css = css.replace(/@import\s+url\([^)]+\);/g, '');
-const fontImport = `@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap');`;
+const fontImport = `@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Hanken+Grotesk:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap');`;
 css = fontImport + '\n\n' + css;
 
 // ---- JSX source (the canonical ui_kits/portfolio copies) ----
-let helpers  = R('ui_kits/portfolio/helpers.jsx');
-let sections = R('ui_kits/portfolio/sections.jsx');
-let overlays = R('ui_kits/portfolio/overlays.jsx');
-let app      = R('ui_kits/portfolio/app.jsx');
+let helpers   = R('ui_kits/portfolio/helpers.jsx');
+let sections  = R('ui_kits/portfolio/sections.jsx');
+let overlays  = R('ui_kits/portfolio/overlays.jsx');
+let currently = R('ui_kits/portfolio/currently.jsx');
+let work      = R('ui_kits/portfolio/work.jsx');
+let app       = R('ui_kits/portfolio/app.jsx');
 
 // Dynamically inline all case study images as base64 data URIs
-app = app.replace(/['"](\.\.\/\.\.\/assets\/work\/[^'"]+)['"]/g, (match, imgPath) => {
+work = work.replace(/['"](\.\.\/\.\.\/(?:assets\/work|Rapheal-Portfolio\/images)\/[^'"]+\.(?:png|jpg|jpeg|webp))['"]/g, (match, imgPath) => {
   const cleanPath = imgPath.replace('../../', '');
   const absPath = path.join(root, cleanPath);
   if (fs.existsSync(absPath)) {
-    const ext = path.extname(cleanPath).slice(1);
+    const ext = path.extname(cleanPath).slice(1).toLowerCase();
     const mime = ext === 'jpg' ? 'jpeg' : ext;
     const b64 = fs.readFileSync(absPath).toString('base64');
     return `'data:image/${mime};base64,${b64}'`;
@@ -43,8 +45,12 @@ app = app.replace(/['"](\.\.\/\.\.\/assets\/work\/[^'"]+)['"]/g, (match, imgPath
   return match;
 });
 
+// For video files, convert the path to a relative URL from export/portfolio
+work = work.replace(/['"]\.\.\/\.\.\/Rapheal-Portfolio\/images\/prox\/onboarding-walkthrough\.mp4['"]/g, `'../../Rapheal-Portfolio/images/prox/onboarding-walkthrough.mp4'`);
+
+
 // guard: nothing inlined may contain a script-closing sequence
-for (const [n, s] of [['helpers',helpers],['sections',sections],['overlays',overlays],['app',app],['css',css]]) {
+for (const [n, s] of [['helpers',helpers],['sections',sections],['overlays',overlays],['currently',currently],['work',work],['app',app],['css',css]]) {
   if (/<\/script/i.test(s)) throw new Error('closing-script sequence found in ' + n);
 }
 
@@ -56,7 +62,7 @@ const CDN = [
   '<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"><\/script>',
 ].join('\n');
 
-const html = `<!-- @dsCard group="Portfolio" viewport="1440x900" name="Portfolio — Home" subtitle="Technical Support · Systems · AI Quality Assurance — self-contained, opens with no server" -->
+const html = `<!-- @dsCard group="Portfolio" viewport="1440x900" name="Portfolio — Home" subtitle="Technical Support · Systems — self-contained, opens with no server" -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -64,7 +70,8 @@ const html = `<!-- @dsCard group="Portfolio" viewport="1440x900" name="Portfolio
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rapheal Suber — Technical Support & Systems</title>
 <script>
-  (function(){ try { var t = localStorage.getItem('rs-theme'); if (t) document.documentElement.dataset.theme = t; } catch(e){} })();
+  (function(){ var t; try { t = localStorage.getItem('rs-theme'); } catch(e){}
+    document.documentElement.dataset.theme = (t === 'light') ? 'light' : 'dark'; })();
 <\/script>
 <style>
 ${css}
@@ -78,6 +85,8 @@ ${CDN}
 ${S(helpers)}
 ${S(sections)}
 ${S(overlays)}
+${S(currently)}
+${S(work)}
 ${S(app)}
 </body>
 </html>
