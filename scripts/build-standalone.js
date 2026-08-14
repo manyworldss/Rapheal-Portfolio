@@ -94,4 +94,7 @@ ${S(app)}
 
 fs.mkdirSync(path.join(root, 'export/portfolio'), { recursive: true });
 fs.writeFileSync(path.join(root, 'export/portfolio/index.html'), html);
-console.log('wrote export/portfolio/index.html — ' + (html.length/1024).toFixed(0) + ' KB');
+fs.writeFileSync(path.join(root, 'index.html'), html);
+fs.writeFileSync(path.join(root, 'Rapheal-Portfolio/index.html'), html);
+console.log('wrote index.html, Rapheal-Portfolio/index.html, export/portfolio/index.html — ' + (html.length/1024).toFixed(0) + ' KB');
+
