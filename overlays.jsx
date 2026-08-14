@@ -1,5 +1,5 @@
 /* ============================================================
-   OVERLAYS - Panels for About, Experience, Resume, Contact & Case Studies.
+   OVERLAYS - Panels for About, Resume, Contact & Case Studies.
    Geist & Monochrome Engineering Aesthetics.
    ============================================================ */
 const { useState: useStateO, useEffect: useEffectO } = React;
