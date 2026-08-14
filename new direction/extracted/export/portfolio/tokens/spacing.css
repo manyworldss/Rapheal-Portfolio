@@ -1,0 +1,44 @@
+/* ============================================================
+   SPACING, SHAPE & LAYOUT — 4px base, spacious editorial rhythm.
+   Sharp corners by default; pill only for buttons & tags.
+   ============================================================ */
+:root {
+  /* ---- Spacing scale (4px base) ---- */
+  --space-1:   0.25rem;   /*  4 */
+  --space-2:   0.5rem;    /*  8 */
+  --space-3:   0.75rem;   /* 12 */
+  --space-4:   1rem;      /* 16 */
+  --space-5:   1.5rem;    /* 24 */
+  --space-6:   2rem;      /* 32 */
+  --space-7:   2.5rem;    /* 40 */
+  --space-8:   3rem;      /* 48 */
+  --space-9:   4rem;      /* 64 */
+  --space-10:  5rem;      /* 80 */
+  --space-11:  7rem;      /* 112 */
+  --space-12:  9.5rem;    /* 152 */
+
+  /* ---- Semantic spacing ---- */
+  --section-gap:    clamp(5rem, 9vw, 9.5rem);  /* between editorial bands */
+  --card-pad:       clamp(1.5rem, 2.5vw, 2.5rem);
+  --element-gap:    1.25rem;
+  --inline-gap:     0.875rem;
+
+  /* ---- Radius — sharp or fully pill, nothing between ---- */
+  --radius-none:  0px;     /* cards, inputs, frames, imagery */
+  --radius-pill:  999px;   /* buttons, tags, status dots */
+
+  /* ---- Layout ---- */
+  --page-max:      1440px;     /* content max width */
+  --reading-max:   62ch;       /* prose measure */
+  --gutter:        clamp(1.5rem, 5vw, 5rem);   /* @kind spacing */
+  --topbar-h:      clamp(56px, 6vw, 76px);     /* @kind spacing */
+
+  /* ---- Hairlines ---- */
+  --hair:   1px;
+  --hair-2: 1.5px;
+
+  /* ---- Elevation: there is none. Depth = tonal contrast. ---- */
+  --shadow-none: none;
+  /* The only permitted shadow: a faint focus/lift on dark imagery */
+  --shadow-frame: 0 40px 120px -40px rgba(0, 0, 0, 0.55);
+}
