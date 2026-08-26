@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script>
+      (function(){ try { var t = localStorage.getItem('rs-theme'); document.documentElement.dataset.theme = t === 'light' ? 'light' : 'dark'; } catch(e){} })();
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prox Onboarding Case Study | Rapheal Suber</title>
+    <meta name="description"
+        content="Prox: Onboarding UX contractor work on an iOS grocery-savings app. Designing two strategies for a 3 to 5 minute first-run wait, working directly with the founder and dev team.">
+    <meta property="og:title" content="Prox Onboarding Case Study | Rapheal Suber">
+    <meta property="og:description"
+        content="Onboarding UX contractor. Designed two ways to handle a forced 3 to 5 minute data wait. The company shipped the honest approach.">
+    <meta property="og:image" content="https://rapheals.up.railway.app/images/prox/08-deals-ready.png">
+    <meta property="og:url" content="https://rapheals.up.railway.app/prox.html">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Prox Onboarding Case Study | Rapheal Suber">
+    <meta name="twitter:description"
+        content="Turning a forced first-run price-scrape into trust or desire. Two interchangeable onboarding strategies built for A/B testing.">
+    <meta name="twitter:image" content="https://rapheals.up.railway.app/images/prox/08-deals-ready.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Jost:ital,wght@0,300;0,400;0,500;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="canonical" href="https://rapheals.up.railway.app/prox.html">
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="css/global.css?v=36">
+    <link rel="stylesheet" href="css/case-study.css?v=39">
+</head>
+
+<body>
+    <!-- Ambient sand particle canvas -->
+    <canvas id="sand-canvas" aria-hidden="true"></canvas>
+
+    <!-- Cinematic Dossier Navigation -->
+    <header class="topbar">
+        <div class="topbar-brand">
+            <a href="index.html" class="brand-link">RAPHEAL SUBER // HUMAN FACTORS &amp; SYSTEMS</a>
+        </div>
+        <nav class="topbar-chapters">
+            <a href="reach.html" class="chapter-link">CS-01 / REACH</a>
+            <a href="celio.html" class="chapter-link">CS-02 / CELIO</a>
+            <a href="materialsiq.html" class="chapter-link">CS-03 / MATERIALIQ</a>
+            <a href="prox.html" class="chapter-link active-chapter">PX-04 / PROX</a>
+        </nav>
+        <div class="topbar-actions">
+            <a href="index.html" class="back-trigger">← BACK TO HOME [ESC]</a>
+        </div>
+    </header>
+
+    <main class="container book-layout">
+
+        <!-- Case Study Header -->
+        <header class="cs-header">
+            <span class="cs-category sans text-accent">Onboarding UX &amp; UI Design | iOS</span>
+            <h1 class="cs-title serif">Prox: Onboarding UX Redesign</h1>
+            <p class="cs-subtitle sans">
+                Brought on as an onboarding UX contractor to redesign the new-user experience for a
+                grocery-savings iOS app. The core challenge: the app takes 3 to 5 minutes to gather local
+                price data on first launch. I designed two distinct strategies for making that wait work
+                for the user instead of against them. The company shipped the honest approach.
+            </p>
+            <div class="cs-meta sans">
+                <div class="meta-item">
+                    <strong>Role</strong>
+                    Onboarding UX &amp; UI Design
+                </div>
+                <div class="meta-item">
+                    <strong>Platform</strong>
+                    iOS
+                </div>
+                <div class="meta-item">
+                    <strong>Scope</strong>
+                    14 Screens, End-to-End
+                </div>
+                <div class="meta-item">
+                    <strong>Year</strong>
+                    2026
+                </div>
+            </div>
+        </header>
+
+
+
+        <!-- Content Sections -->
+        <article class="cs-content">
+
+            <!-- Section 1: What I was brought in to do -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <h2 class="serif">01. What I Was Brought In To Do</h2>
+                </div>
+                <div class="section-body sans">
+                    <p>
+                        Prox is an iOS grocery-savings app. It pulls live local prices from multiple
+                        retailers and surfaces the best deals for a household. I came on as an onboarding
+                        UX contractor with a pretty clear brief: make the new-user experience better,
+                        and specifically get users to account creation without dropping off.
+                    </p>
+                    <p>
+                        I worked directly with the founder throughout this. We'd go back and forth on
+                        ideas, I'd iterate and bring things back, and we'd keep refining. It wasn't a
+                        handoff situation. It was a real collaborative loop. I also worked closely
+                        with the dev team to make sure what I was designing actually made sense for
+                        the setup. The app runs on Capacitor for iOS, so there were real constraints
+                        I had to design around rather than just hand over a Figma file and hope for the best.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Section 2: The Hard Part -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <h2 class="serif">02. The Hard Part</h2>
+                </div>
+                <div class="section-body sans">
+                    <p>
+                        There is a constraint built into how Prox works that ended up shaping everything
+                        else on this project. On first sign-up, the app has to gather real-time price data
+                        for stores in the user's area. That takes 3 to 5 minutes. There is no shortcut
+                        around it. The data has to be pulled live, and it has to be local to the user.
+                    </p>
+                    <p>
+                        The original flow just threw a spinner at people and made them sit there. For a
+                        brand new user who has no reason yet to trust the app, that is a pretty rough ask.
+                        So the question I kept coming back to was: what do you do with that wait? You
+                        cannot make it shorter. So how do you make it feel like something other than friction?
+                    </p>
+                    <div class="insight-grid">
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">The constraint</h3>
+                            <p>
+                                3 to 5 minutes of first-run data gathering. Real prices, real stores,
+                                real location. It cannot be skipped or faked.
+                            </p>
+                        </div>
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">The real problem</h3>
+                            <p>
+                                A new user has no loyalty yet. A vague spinner with no context looks
+                                broken. Most people will leave and not come back.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: Two Approaches -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <h2 class="serif">03. Two Ways to Frame the Wait</h2>
+                </div>
+                <div class="section-body sans">
+                    <p>
+                        I came up with two completely different approaches to this problem. They both
+                        work with the same engineering reality. Same wait, same data pull. But they
+                        tell totally different stories to the user. We built both so the team could
+                        make an informed decision and eventually test them against each other.
+                    </p>
+
+                    <div class="visual-comparison visual-comparison--mobile">
+                        <div class="visual-block">
+                            <span class="comparison-label after-label">Honest (Chosen)</span>
+                            <img src="images/prox/05-building-prox-honest.png?v=2"
+                                 alt="Building Prox, honest approach, transparent one-time setup framing"
+                                 class="comparison-img" loading="lazy" decoding="async">
+                        </div>
+                        <div class="visual-block">
+                            <span class="comparison-label after-label">Exclusivity</span>
+                            <img src="images/prox/06-early-access.png?v=2"
+                                 alt="Early Access, exclusivity approach, invite-only framing with founding spots"
+                                 class="comparison-img" loading="lazy" decoding="async">
+                        </div>
+                    </div>
+
+                    <h3>The honest approach</h3>
+                    <p>
+                        This one is straightforward: just tell people what's happening. Show them which
+                        stores are being searched, show real progress, and be upfront about the time.
+                        The key insight here was giving users permission to leave. We tell them we'll
+                        send a notification when their data is ready, so they don't have to sit and watch
+                        it. That changes the whole psychological frame. It is no longer a forced wait.
+                        It is the app doing real work for you while you go about your day. The founder
+                        liked this approach a lot, and it is the one the company shipped with.
+                    </p>
+
+                    <h3>The exclusivity approach</h3>
+                    <p>
+                        This one takes a completely different angle. Instead of explaining the wait,
+                        it reframes it as being part of something exclusive. The user gets placed in
+                        a queue. They see their position, a countdown, even a prompt to refer a friend
+                        to move up faster. When they clear the queue, they're welcomed as a founding
+                        member with a membership card and a congratulations moment. The whole idea
+                        is to make them feel like they got in on something, not like they were stuck
+                        waiting. It also opens up a referral mechanic naturally, which was appealing
+                        from a growth perspective.
+                    </p>
+                    <ul class="feature-list">
+                        <li><strong>Early Access screen:</strong> a reserved-area card showing founding spots remaining and shoppers nearby, creating a sense of scarcity and social proof</li>
+                        <li><strong>Queue position:</strong> a live counter counting down toward their spot, with an ETA and a referral hook to skip ahead</li>
+                        <li><strong>Founding Member welcome:</strong> a personalized membership card with a member number, locked-in perks, and a confetti moment when they get in</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Section 4: Everything Else I Redesigned -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <h2 class="serif">04. Everything Else I Redesigned</h2>
+                </div>
+                <div class="section-body sans">
+                    <p>
+                        The wait problem was the centerpiece but it wasn't the whole job. The full
+                        onboarding needed a proper overhaul. Here's what I changed and why.
+                    </p>
+                    <ul class="feature-list">
+                        <li><strong>Store selection:</strong> went from 6 plain text rows to a full screen with 16 branded retailers, each with their own color mark, plus search and a "Your stores" grouping. People shop at 3 or 4 places. It needed to feel like a real selection, not a checklist.</li>
+                        <li><strong>Food preferences (new screen):</strong> this didn't exist before. I added a step for dietary filters and category preferences, things like gluten free, dairy free, and vegan. If the app is supposed to surface deals on what you actually buy, it needs to know what you actually buy.</li>
+                        <li><strong>Feature introduction:</strong> the old approach was a flat list of bullet points. I replaced it with swipeable cards, each one showing a real screenshot of that feature in action. Way more tangible, and it sets expectations accurately.</li>
+                        <li><strong>Savings preview:</strong> made it interactive. You adjust a slider for your weekly grocery spend and it counts up to a savings estimate. Framed as "potential" so it's honest, but it still hits differently than a static number.</li>
+                        <li><strong>Location permission:</strong> this was being asked too early in the original flow, before users had any reason to give it up. I moved it to after account creation with a native iOS prompt at the moment its value is clear. That sequencing matters.</li>
+                        <li><strong>Deals Ready reveal:</strong> the final screen when the data is loaded. The deal count ticks up from zero, the basket cards cascade in, confetti fires. The payoff finally feels like a payoff instead of just landing on a list.</li>
+                    </ul>
+                    <p>
+                        I also did a full UI refresh across the flow. Updated animations, tightened
+                        spacing, made the whole thing feel more polished and intentional. A lot of this
+                        was iterative with the founder: I'd bring screens back, we'd talk through what
+                        was working and what wasn't, and I'd go refine. The dev team was in the loop
+                        the whole time too, especially on anything involving animation or native iOS
+                        behavior where Capacitor has its own quirks.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Section 5: Walkthrough & Screen Gallery -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <h2 class="serif">05. Walkthrough &amp; Screen Gallery</h2>
+                </div>
+                <div class="section-body sans">
+                    <p>
+                        Below is the full walkthrough video showing the end-to-end 14-screen onboarding flow, followed by the key individual screens designed for the experience.
+                    </p>
+                    
+                    <style>
+                        .prox-stage{ position:relative; display:flex; justify-content:center; padding:clamp(1.5rem,4vw,3.25rem) 0; }
+                        .prox-stage::before{ content:''; position:absolute; top:50%; left:50%; width:min(72%,540px); aspect-ratio:1/1;
+                            transform:translate(-50%,-50%); background:radial-gradient(circle, rgba(201,138,99,0.18), transparent 62%);
+                            filter:blur(22px); pointer-events:none; z-index:0; }
+                        .prox-phone{ position:relative; z-index:1; width:300px; max-width:78vw; padding:14px;
+                            background:linear-gradient(155deg,#242426,#0a0a0b); border-radius:54px;
+                            box-shadow:0 45px 90px -35px rgba(0,0,0,0.75), inset 0 0 0 1.5px rgba(255,255,255,0.06); }
+                        .prox-phone__island{ position:absolute; top:26px; left:50%; transform:translateX(-50%);
+                            width:86px; height:26px; background:#000; border-radius:16px; z-index:3; }
+                        .prox-phone__screen{ display:block; width:100%; aspect-ratio:544/1084; object-fit:cover;
+                            background:#000; border-radius:42px; }
+                    </style>
+                    <div class="prox-stage">
+                        <div class="prox-phone">
+                            <span class="prox-phone__island" aria-hidden="true"></span>
+                            <video class="prox-phone__screen"
+                                autoplay muted loop playsinline preload="auto"
+                                aria-label="Prox onboarding walkthrough screen recording">
+                                <source src="images/prox/onboarding-walkthrough.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
+                    <span class="caption" style="display:block;text-align:center;margin-top:1.25rem;">Onboarding walkthrough - the full 14-screen flow, autoplaying silently.</span>
+
+                    <div class="screenshot-grid screenshot-grid--mobile">
+                        <div class="visual-block">
+                            <img src="images/prox/01-choose-stores.png?v=2"
+                                 alt="Choose Stores, 16 retailers with branded color marks and search"
+                                 class="comparison-img" loading="lazy" decoding="async">
+                            <span class="caption">Store selection, 16 branded retailers with search and grouping</span>
+                        </div>
+                        <div class="visual-block">
+                            <img src="images/prox/02-food-preferences.png?v=2"
+                                 alt="Food Preferences, dietary filters and category selection"
+                                 class="comparison-img" loading="lazy" decoding="async">
+                            <span class="caption">Food preferences, new screen that personalizes deal prioritization</span>
+                        </div>
+                        <div class="visual-block">
+                            <img src="images/prox/03-feature-reveal.png?v=2"
+                                 alt="Feature Reveal, swipeable cards with real in-app screenshots"
+                                 class="comparison-img" loading="lazy" decoding="async">
+                            <span class="caption">Feature cards, swipeable with each card showing the real product screen</span>
+                        </div>
+                        <div class="visual-block">
+                            <img src="images/prox/04-savings-preview.png?v=2"
+                                 alt="Savings Preview, interactive slider with count-up animation"
+                                 class="comparison-img" loading="lazy" decoding="async">
+                            <span class="caption">Savings preview, interactive slider tied to your actual spend</span>
+                        </div>
+                        <div class="visual-block">
+                            <img src="images/prox/09-location.png?v=2"
+                                 alt="Location, re-sequenced after sign-up with native iOS permission prompt"
+                                 class="comparison-img" loading="lazy" decoding="async">
+                            <span class="caption">Location permission, moved to after sign-up and asked when the value is clear</span>
+                        </div>
+                        <div class="visual-block">
+                            <img src="images/prox/07-founding-member.png?v=2"
+                                 alt="Founding Member, membership card for the exclusivity path"
+                                 class="comparison-img" loading="lazy" decoding="async">
+                            <span class="caption">Founding Member, the payoff screen for the exclusivity path</span>
+                        </div>
+                        <div class="visual-block">
+                            <img src="images/prox/08-deals-ready.png?v=2"
+                                 alt="Deals Ready, count-up animation, cascading cards, confetti"
+                                 class="comparison-img" loading="lazy" decoding="async">
+                            <span class="caption">Deals Ready, the reveal moment the whole flow was building toward</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 6: Reflection -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <h2 class="serif">06. Reflection</h2>
+                </div>
+                <div class="section-body sans">
+                    <p>
+                        This project pushed me to think about onboarding differently. The usual advice
+                        is to reduce friction, shorten the flow, get people to value as fast as possible.
+                        But what do you do when you genuinely can't do any of that? The wait is fixed.
+                        You can't skip it. So you have to get creative about what the experience of that
+                        wait actually means to the person going through it.
+                    </p>
+                    <p>
+                        Working closely with the founder was one of the better parts of this engagement.
+                        When you're iterating that tightly with someone who knows the product and the
+                        users, you get to a better answer faster than you would on your own. A lot of
+                        the decisions that shaped the honest approach came out of those conversations.
+                        Things I wouldn't have landed on just sitting in Figma by myself.
+                    </p>
+                    <p>
+                        The company went with the honest approach, which I think was the right call for
+                        where they are right now. It builds trust from the first interaction, and trust
+                        is what an app like this needs to earn. The exclusivity version is still there
+                        if they ever want to test it. Nothing was thrown away.
+                    </p>
+                </div>
+            </section>
+
+        </article>
+
+        <footer class="cs-footer sans">
+            <a href="index.html" class="back-link-clean serif">Back to Home</a>
+        </footer>
+    </main>
+    <script src="js/main.js?v=40"></script>
+</body>
+
+</html>

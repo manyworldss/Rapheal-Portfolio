@@ -10,23 +10,17 @@ function AboutContent() {
     <div>
       <div style={{ display:'flex', flexDirection:'column', gap:'1.2rem', maxWidth:'60ch' }}>
         <p style={{ fontFamily:'var(--font-body)', fontSize:'var(--text-body-lg)', lineHeight:'var(--leading-body-lg)', color:'var(--text)' }}>
-          I'm a technical support and systems professional. I troubleshoot enterprise SaaS platforms,
-          partner with engineering to run down complex defects, and document the fix so the next
-          person doesn't have to ask. The dev background, Python, SQL, AWS, Salesforce, lets me go a
-          layer deeper than the ticket.
+          I am a Human Factors Psychology student with experience across human-AI interaction, evaluation methodology, user research, and technical systems. I am focused on designing and evaluating technology and workflow systems where human capability and system complexity meet.
         </p>
         <p style={{ fontFamily:'var(--font-body)', fontSize:'var(--text-body-lg)', lineHeight:'var(--leading-body-lg)', color:'var(--text)' }}>
-          I'm finishing an accelerated B.S./M.S. in Human Factors Psychology at Embry-Riddle. It's the
-          lens I'll move fully into once the degree is done, reducing cognitive load, eliminating
-          use-error, and making high-stakes systems safer to operate, and it already shapes how I
-          approach support and QA today.
+          Currently finishing an accelerated B.S./M.S. in Human Factors Psychology at Embry-Riddle Aeronautical University. My background in full-stack engineering, Python, SQL, and data analysis allows me to run deep technical evaluations, build rigorous prototypes, and design intuitive, error-resistant systems for high-stakes environments.
         </p>
       </div>
       <div style={{ marginTop:'clamp(2.5rem,5vw,3.5rem)', display:'grid', gridTemplateColumns:'1fr', gap:'1.1rem', maxWidth:'60ch' }}>
         {[
           ['Education', 'Accelerated B.S./M.S. Human Factors Psychology, Embry-Riddle Aeronautical University'],
-          ['Focus', 'Technical support · enterprise SaaS · technical operations · human factors'],
-          ['Toolkit', 'Python · SQL · AWS · Salesforce · full-stack development · structured QA'],
+          ['Focus', 'Human-AI interaction · evaluation methodology · user research · technical systems'],
+          ['Toolkit', 'Cognitive task analysis · usability testing · Python · SQL · React · Figma · structured evaluation'],
         ].map(([k,v])=>(
           <div key={k} style={{ borderTop:'var(--hair) solid var(--border)', paddingTop:'0.9rem' }}>
             <div style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', textTransform:'uppercase', color:'var(--accent)', marginBottom:'0.4rem' }}>{k}</div>
@@ -47,7 +41,7 @@ function ContactContent() {
   return (
     <div>
       <p style={{ fontFamily:'var(--font-body)', fontSize:'var(--text-body-lg)', lineHeight:'var(--leading-body-lg)', color:'var(--text-muted)', marginBottom:'2.5rem', maxWidth:'46ch' }}>
-        Open to roles in technical support, technical operations, and enterprise SaaS support.
+        Open to roles in Human Factors Engineering, UX Research, Product Design, and Human-Systems Integration.
       </p>
       <div style={{ display:'flex', flexDirection:'column' }}>
         {links.map(([l,v,h],i)=>(
@@ -140,7 +134,7 @@ function App() {
           </SectionView>
         )}
         {view === 'about' && (
-          <SectionView eyebrow="CH 03 / About" title="Support, systems, and the people who use them." onBack={()=>goTo('home')}>
+          <SectionView eyebrow="CH 03 / About" title="Human factors, systems, and the people who use them." onBack={()=>goTo('home')}>
             <AboutContent />
           </SectionView>
         )}

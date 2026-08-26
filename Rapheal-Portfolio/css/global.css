@@ -1,0 +1,179 @@
+/* ============================================
+   MARATHON — Design System Tokens
+   Tactical Telemetry / Dark Terminal Mode
+   ============================================ */
+:root {
+    /* Map to new design system tokens */
+    --void:          var(--bg-inverse);
+    --deep:          var(--bg);
+    --mid:           var(--bg-raised);
+    --surface:       var(--bg-raised);
+    --surface-high:  var(--bg-inset);
+
+    /* Text */
+    --text-primary:  var(--text-strong);
+    --text-muted:    var(--text-muted);
+    --text-dim:      var(--text-faint);
+
+    /* Red -> Accent (Clay) */
+    --spice:         var(--accent);
+    --spice-bright:  var(--accent-hover);
+    --spice-dim:     var(--accent-2);
+    --spice-glow:    var(--accent-wash);
+
+    /* Cyan / Cerulean */
+    --cyan:           var(--accent-2);
+    --cyan-bright:    var(--accent-2-hover);
+    --cyan-dim:       var(--accent-2-wash);
+    --cyan-glow:      var(--accent-2-wash);
+    --cyan-border:    var(--accent-2-line);
+
+    /* Secondary */
+    --teal:          var(--accent-2-wash);
+    --teal-dim:      var(--accent-2-wash);
+    --metal:         var(--text-muted);
+    --metal-bright:  var(--text);
+
+    /* Glass surfaces */
+    --glass-bg:          var(--bg-raised);
+    --glass-bg-high:     var(--bg-inset);
+    --glass-border:      var(--border-strong);
+    --glass-border-dim:  var(--border);
+    --glass-inset:       var(--bg-inset);
+
+    /* Typography */
+    --font-display: var(--font-serif);
+    --font-body:    var(--font-sans);
+    --font-mono:    var(--font-mono);
+
+    /* Spacing */
+    --s-xs:  0.5rem;
+    --s-sm:  1rem;
+    --s-md:  2rem;
+    --s-lg:  4rem;
+    --s-xl:  6rem;
+
+    /* Transitions */
+    --ease-out:  cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in:   cubic-bezier(0.7, 0, 0.84, 0);
+    --ease-io:   cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+/* ============================================
+   RESET
+   ============================================ */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+    background-color: var(--deep);
+    /* Faint dot grid — terminal phosphor texture */
+    background-image: radial-gradient(circle, rgba(234, 234, 228, 0.045) 1px, transparent 1px);
+    background-size: 28px 28px;
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: clamp(0.95rem, 0.4vw + 0.85rem, 1.1rem);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.25s ease;
+}
+
+img { max-width: 100%; display: block; }
+
+button {
+    cursor: pointer;
+    background: none;
+    border: none;
+    font: inherit;
+    color: inherit;
+}
+
+a:focus-visible,
+button:focus-visible {
+    outline: 1px solid var(--spice);
+    outline-offset: 3px;
+    border-radius: 0;
+}
+
+/* ============================================
+   UTILITY
+   ============================================ */
+.font-display  { font-family: var(--font-display); }
+.font-body     { font-family: var(--font-body); }
+.font-mono     { font-family: var(--font-mono); }
+.text-spice    { color: var(--spice); }
+.text-muted    { color: var(--text-muted); }
+
+/* ============================================
+   CANVAS OVERLAY
+   ============================================ */
+#sand-canvas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    will-change: transform;
+}
+
+/* ============================================
+   LIGHTBOX
+   ============================================ */
+.lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(3, 3, 3, 0.95);
+    z-index: 100000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    cursor: zoom-out;
+}
+
+.lightbox-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.lightbox-img {
+    max-width: 90%;
+    max-height: 90vh;
+    border: 1px solid var(--glass-border);
+    transform: scale(0.92);
+    transition: transform 0.4s var(--ease-out);
+}
+
+.lightbox-overlay.active .lightbox-img {
+    transform: scale(1);
+}
+
+/* ============================================
+   RESPONSIVE BASE
+   ============================================ */
+@media (max-width: 768px) {
+    body { font-size: 0.95rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    html { scroll-behavior: auto; }
+    #sand-canvas { display: none; }
+}

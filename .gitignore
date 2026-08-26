@@ -1,3 +1,9 @@
 .DS_Store
 .claude/
-
+.gemini/
+node_modules/
+**/node_modules/
+scratch/
+**/scratch/
+package-lock.json
+*.log

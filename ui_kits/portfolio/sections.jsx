@@ -223,10 +223,10 @@ function KioskHero({ onOpen }) {
           </h1>
         </Reveal>
         <Reveal as="p" delay={220} style={{ marginTop:'26px', fontFamily:'var(--font-mono)', fontSize:'var(--text-label)', letterSpacing:'0.2em', textTransform:'uppercase', color:'var(--k-dim)', lineHeight:1.9 }}>
-          Technical Support · Systems
+          Human Factors · Human-AI Interaction · UX Research
         </Reveal>
-        <Reveal as="p" delay={320} style={{ marginTop:'22px', maxWidth:'38ch', fontFamily:'var(--font-body)', fontSize:'var(--text-body)', lineHeight:1.6, color:'var(--k-dim)' }}>
-          Keeping complex systems reliable, and the people who run them unblocked.
+        <Reveal as="p" delay={320} style={{ marginTop:'22px', maxWidth:'44ch', fontFamily:'var(--font-body)', fontSize:'var(--text-body)', lineHeight:1.6, color:'var(--k-dim)' }}>
+          Human Factors Psychology student with experience across human-AI interaction, evaluation methodology, user research, and technical systems. Designing and evaluating technology where human capability and system complexity meet.
         </Reveal>
 
         {/* mobile channel list — the constellation field is desktop-only */}

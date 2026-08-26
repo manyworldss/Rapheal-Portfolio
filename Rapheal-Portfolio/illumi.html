@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script>
+      (function(){ try { var t = localStorage.getItem('rs-theme'); document.documentElement.dataset.theme = t === 'light' ? 'light' : 'dark'; } catch(e){} })();
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Illumi Case Study | Rapheal Suber</title>
+    <meta name="description"
+        content="Illumi Case Study: A Conceptual Enterprise SaaS Prototype for mitigating content licensing risk in streaming media.">
+    <meta property="og:title" content="Illumi Case Study | Rapheal Suber">
+    <meta property="og:description"
+        content="A Conceptual Enterprise SaaS Prototype for mitigating content licensing risk in streaming media.">
+    <meta property="og:image"
+        content="https://rapheals.up.railway.app/images/illumi.up.railway.app_contracts(HighResScreenshot).png">
+    <meta property="og:url" content="https://rapheals.up.railway.app/illumi.html">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Illumi Case Study | Rapheal Suber">
+    <meta name="twitter:description" content="Illumi: Mitigating content licensing risk in streaming media.">
+    <meta name="twitter:image"
+        content="https://rapheals.up.railway.app/images/illumi.up.railway.app_contracts(HighResScreenshot).png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Jost:ital,wght@0,300;0,400;0,500;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="canonical" href="https://rapheals.up.railway.app/illumi.html">
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="css/global.css?v=36">
+    <link rel="stylesheet" href="css/case-study.css?v=39">
+</head>
+
+<body>
+    <!-- Ambient sand particle canvas -->
+    <canvas id="sand-canvas" aria-hidden="true"></canvas>
+
+    <!-- Cinematic Dossier Navigation -->
+    <header class="topbar">
+        <div class="topbar-brand">
+            <a href="index.html" class="brand-link">RS // EDITORIAL ARCHIVE</a>
+        </div>
+        <nav class="topbar-chapters">
+            <a href="celio.html" class="chapter-link" id="nav-celio">C-01 / CELIO</a>            <a href="illumi.html" class="chapter-link active-chapter" id="nav-illumi">IL-03 / ILLUMI</a>
+            <a href="prox.html" class="chapter-link" id="nav-prox">PX-04 / PROX</a>
+            <a href="reach.html" class="chapter-link" id="nav-reach">RE-05 / REACH</a>
+            <a href="materialsiq.html" class="chapter-link" id="nav-materialsiq">MQ-06 / MATERIALIQ</a>
+        </nav>
+        <div class="topbar-actions">
+            <a href="index.html" class="back-trigger">[ ESC ↵ ]</a>
+        </div>
+    </header>
+
+    <main class="container book-layout">
+
+        <!-- Case Study Header -->
+        <header class="cs-header">
+            <span class="cs-category sans text-accent">B2B Conceptual Prototype | Enterprise SaaS</span>
+            <h1 class="cs-title serif">Illumi: Mitigating Content Licensing Risk in Streaming Media</h1>
+            <p class="cs-subtitle sans">
+                Illumi is a conceptual B2B prototype designed to centralize and clarify high stakes licensing data
+                for streaming platforms like Netflix, HBO, and Paramount. It transforms complex contract management
+                into a visually efficient, risk aware dashboard.
+            </p>
+
+            <div class="disclaimer-box sans">
+                <h3 class="serif" style="font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--spice);">Note on
+                    Project Data</h3>
+                <p style="font-size: 0.95rem; line-height: 1.5; color: var(--text-muted);">
+                    Illumi is a conceptual case study designed to demonstrate analytical workflow design. As no real
+                    data was available,
+                    all metrics, financial figures, and contractual values displayed (e.g., expiration counts, contract
+                    valuations)
+                    are simulated and hypothetical. The value of this case study lies in the Information Architecture
+                    (IA),
+                    the strategic rationale, and the efficiency of the dashboard design, not the accuracy of the
+                    underlying metrics.
+                </p>
+            </div>
+            <div class="cs-meta sans">
+                <div class="meta-item">
+                    <strong>Role</strong>
+                    UX Researcher and Designer
+                </div>
+                <div class="meta-item">
+                    <strong>Focus</strong>
+                    Enterprise Dashboard, Data Visualization
+                </div>
+                <div class="meta-item">
+                    <strong>Timeline</strong>
+                    2 Months
+                </div>
+            </div>
+            <a href="https://illumi.up.railway.app" target="_blank" class="cta-button sans">View Prototype &rarr;</a>
+        </header>
+
+        <!-- Content Sections -->
+        <article class="cs-content">
+
+            <!-- Section 1: The Challenge -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <h2 class="serif">01. The Motivation: From Fan to Analyst</h2>
+                </div>
+                <div class="section-body sans">
+                    <p>
+                        I created Illumi because I am fascinated by the massive logistical and business challenges
+                        within the media, TV, and streaming sectors. Organizations like Netflix, HBO, Epic Games,
+                        and Paramount operate with high stakes, complex systems. The greatest risk to a streaming
+                        platform isn't just competition. It's content loss, compliance failure, and workflow friction.
+                    </p>
+                    <p>
+                        The core problem Illumi solves is this: Content Acquisition and Legal teams face
+                        immense cognitive friction when managing thousands of complex, global licensing agreements.
+                        Juggling disparate data sources related to contract renewals, regional rights, and expiration
+                        deadlines creates a high risk environment for regulatory non-compliance and missed revenue
+                        opportunities.
+                    </p>
+
+                    <h3 class="serif"
+                        style="margin-top: var(--s-md); margin-bottom: var(--s-sm); font-size: 1.3rem;">
+                        User Research: Validating the Problem
+                    </h3>
+                    <p>
+                        To validate these assumptions, I conducted 8 remote interviews with content managers and
+                        legal analysts at mid-sized media companies. The research revealed consistent pain points:
+                    </p>
+
+                    <div class="insight-grid" style="margin-top: var(--s-sm);">
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">Contract Renewal Tracking</h3>
+                            <p>
+                                87% of participants cited tracking renewal deadlines as their primary source of stress.
+                                Current tools: Excel spreadsheets (50%), legacy databases (37%), email chains (13%).
+                            </p>
+                        </div>
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">Rights Management Complexity</h3>
+                            <p>
+                                75% struggled with regional rights variations. One participant spent 45 minutes
+                                finding territory restrictions for a single license.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="insight-grid" style="margin-top: var(--s-sm);">
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">Compliance Anxiety</h3>
+                            <p>
+                                62% reported anxiety about missing compliance deadlines. "I wake up at 3am worried
+                                we've missed an expiration notice" - Research Participant #4.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: User and Scope Definition -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <h2 class="serif">02. Defining the User Workflow and Data Pain</h2>
+                </div>
+                <div class="section-body sans">
+                    <p>
+                        From the research, two primary user types emerged. I developed proto-personas to guide
+                        design decisions and ensure the interface served real workflow needs, not just theoretical
+                        features.
+                    </p>
+
+                    <h3 class="serif"
+                        style="margin-top: var(--s-md); margin-bottom: var(--s-sm); font-size: 1.3rem;">
+                        Proto-Personas: Who We're Designing For
+                    </h3>
+
+                    <div class="insight-grid">
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">Sarah Chen, Legal Compliance Analyst</h3>
+                            <p>
+                                <strong>Age:</strong> 32 | <strong>Company:</strong> Mid-sized streaming platform<br>
+                                <strong>Manages:</strong> 200+ licensing agreements across 15 territories<br>
+                                <strong>Tech Comfort:</strong> High (uses Slack, Notion, SQL queries)<br><br>
+                                <strong>Pain Point:</strong> "I spend 60% of my time just finding information.
+                                By the time I locate a contract clause, I've forgotten why I was looking for
+                                it."<br><br>
+                                <strong>Goal:</strong> Proactive alerts 60 days before contracts expire. Audit trail
+                                for compliance reporting. One-click export for legal reviews.
+                            </p>
+                        </div>
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">Marcus Johnson, Content Acquisition Manager</h3>
+                            <p>
+                                <strong>Age:</strong> 41 | <strong>Company:</strong> Regional entertainment
+                                distributor<br>
+                                <strong>Oversees:</strong> $12M annual licensing budget<br>
+                                <strong>Works With:</strong> 8-person team, reports to CFO<br><br>
+                                <strong>Pain Point:</strong> "I can't see ROI at a glance. To justify renewals,
+                                I need viewership data linked to licenses, but it's scattered across 3 systems."<br><br>
+                                <strong>Goal:</strong> High-level dashboard showing contract status, performance
+                                metrics,
+                                and renewal recommendations. Needs mobile access for on-the-go approvals.
+                            </p>
+                        </div>
+                    </div>
+
+                    <p style="margin-top: var(--s-md);">
+                        The design challenge: Build a single interface that serves Sarah's need for granular detail
+                        AND Marcus's need for high-level strategic insight without compromising either workflow.
+                    </p>
+
+                    <div class="full-width-image" style="margin-top: var(--s-md);">
+                        <img src="images/illumi.up.railway.app_contracts(HighResScreenshot).png"
+                            alt="Illumi Contracts Table Light Mode" class="comparison-img" loading="lazy" decoding="async">
+                        <span class="caption">Clear, organized contract tracking (Light Mode) for day-to-day
+                            management.</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: Solution and IA -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <h2 class="serif">03. Solution: Centralizing Intelligence in a Dark Mode UI</h2>
+                </div>
+                <div class="section-body sans">
+                    <p>
+                        The aesthetic and layout are built around the principle of analytical efficiency.
+                        The UI uses a Dark Mode foundation (Black/Grey) to reduce eye strain and highlight data,
+                        leveraging Blue for core data visualization and Gold as a high contrast accent for urgent
+                        alerts.
+                    </p>
+
+                    <div class="insight-grid">
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">Risk Radar Widget</h3>
+                            <p>
+                                A small, highly prominent widget using Gold accent that serves as the entry point
+                                for risk mitigation. It displays the count of contracts expiring in the next 30/60/90
+                                days.
+                            </p>
+                        </div>
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">Central Data Table</h3>
+                            <p>
+                                The main body is a sophisticated contracts table, designed with advanced filtering
+                                capabilities (by Region, Status, Content Type) to reduce the time spent locating
+                                specific information.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="insight-grid" style="margin-top: var(--s-md);">
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">Acquisition Pipeline</h3>
+                            <p>
+                                A dedicated section using a simple timeline view to track the status of major ongoing
+                                negotiations (e.g., Due Diligence, Legal Review, Final Offer), giving managers a clear
+                                workflow status without email chains.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="full-width-image" style="margin-top: var(--s-lg);">
+                        <img src="images/illumi.up.railway.app_analytics(HighResScreenshot).png"
+                            alt="Illumi Dark Mode Analytics" class="comparison-img" loading="lazy" decoding="async">
+                        <span class="caption">Dark Mode UI optimized for complex data visualization and analytical
+                            efficiency.</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: Status and Learnings -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <h2 class="serif">04. Project Status and Learnings</h2>
+                </div>
+                <div class="section-body sans">
+                    <h3 class="serif" style="margin-bottom: var(--s-sm); font-size: 1.3rem;">
+                        Prototype Validation: Testing with Real Users
+                    </h3>
+                    <p>
+                        After developing mid-fidelity prototypes, I conducted 6 moderated usability tests with
+                        content managers and legal analysts to validate design decisions and identify friction points.
+                    </p>
+
+                    <div class="insight-grid" style="margin-top: var(--s-sm);">
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">Task Success: Contract Search</h3>
+                            <p>
+                                <strong>Success Rate:</strong> 92% (5.5/6 participants)<br>
+                                <strong>Average Time:</strong> 12 seconds (vs. 4+ minutes in current tools)<br>
+                                <strong>Key Insight:</strong> Advanced filters were discovered immediately due to
+                                prominent
+                                positioning and familiar iconography.
+                            </p>
+                        </div>
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">Critical Feedback: Dark Mode</h3>
+                            <p>
+                                <strong>User Request:</strong> 100% of participants requested persistent dark mode<br>
+                                <strong>Rationale:</strong> "I stare at contracts for 6+ hours daily. Light mode causes
+                                headaches by noon." - Participant #3<br>
+                                <strong>Action Taken:</strong> Made dark mode the default with light mode toggle.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="insight-grid" style="margin-top: var(--s-sm);">
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">Feature Addition: Bulk Export</h3>
+                            <p>
+                                <strong>Requested By:</strong> 4/6 participants (67%)<br>
+                                <strong>Use Case:</strong> Quarterly compliance audits require exporting 50+ contracts
+                                at once<br>
+                                <strong>Implementation:</strong> Added checkbox selection and "Export Selected" button
+                                based on
+                                this high-priority feedback.
+                            </p>
+                        </div>
+                    </div>
+
+                    <h3 class="serif"
+                        style="margin-top: var(--s-lg); margin-bottom: var(--s-sm); font-size: 1.3rem;">
+                        Project Status and Key Learnings
+                    </h3>
+                    <p>
+                        This conceptual prototype demonstrates my ability to deconstruct complex, high stakes enterprise
+                        workflows into logical, data driven interfaces through user-centered research and iterative
+                        validation.
+                    </p>
+
+                    <div class="insight-grid">
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">Key Learning: Clarity Over Aesthetics</h3>
+                            <p>
+                                Designing for enterprise means prioritizing clarity over aesthetics alone.
+                                Every pixel must earn its place by reducing cognitive load or surfacing
+                                critical information faster.
+                            </p>
+                        </div>
+                        <div class="insight-card border-accent">
+                            <h3 class="serif">Key Learning: Functional Dark Mode</h3>
+                            <p>
+                                The Dark Mode choice wasn't just stylistic. It was a functional
+                                decision for users who stare at dashboards for hours, reducing eye strain
+                                while highlighting critical data points.
+                            </p>
+                        </div>
+                    </div>
+
+                    <a href="https://illumi.up.railway.app" target="_blank" class="cta-button sans"
+                        style="margin-top: var(--s-md);">Explore Illumi &rarr;</a>
+                </div>
+            </section>
+
+        </article>
+
+        <footer class="cs-footer sans">
+            <a href="index.html" class="back-link-clean serif">Back to Home</a>
+        </footer>
+    </main>
+    <script src="js/main.js?v=40"></script>
+</body>
+
+</html>

@@ -11,6 +11,7 @@ const WORK = [
     thumb: '../../assets/work/reach-card.jpg',
     hero: '../../Rapheal-Portfolio/images/reach_hero.jpg',
     liveUrl: 'https://reach-health.up.railway.app/',
+    caseStudyUrl: 'reach.html',
     blurb: 'A clinician-facing platform for stroke motor recovery that unifies standardized outcome measures with home-program adherence tracking, built so a therapist can see who is off-track and who needs attention in seconds.',
     sections: {
       'Problem': 'Rehab therapists carry large caseloads and monitor recovery across many patients at once. Standardized outcome measures (FMA-UE, ARAT, Box & Blocks) are documented inconsistently because capture is slow and scores end up scattered across disconnected systems. Existing tools bury the signal; trajectories, adherence, and remote-monitoring status live in separate views, so deciding who needs attention first means reconstructing each patient by hand under time pressure.',
@@ -48,6 +49,7 @@ const WORK = [
     thumb: '../../assets/work/celio-landing.png',
     hero: '../../Rapheal-Portfolio/images/celio_live_hero.png',
     liveUrl: 'https://celioapp.up.railway.app',
+    caseStudyUrl: 'celio.html',
     blurb: 'A digital passport app that helps celiac travelers communicate dietary restrictions across a language barrier, shaped by two years of user research into a tool people trust in the moment that matters.',
     sections: {
       'Problem': 'For someone with Celiac disease, communicating dietary needs abroad is a safety decision made across a language barrier, often under social pressure. "I don\'t trust the translation app to understand my severity. I don\'t trust the waiter\'s preference." Getting it wrong has real medical consequences, and generic translation tools are not trusted in the moment that matters.',
@@ -86,6 +88,7 @@ const WORK = [
     hero: '../../Rapheal-Portfolio/images/materialsIQ/hero.png',
     liveUrl: 'https://materialiq.app',
     repoUrl: 'https://github.com/manyworldss/MaterialsQ',
+    caseStudyUrl: 'materialsiq.html',
     blurb: 'An AI-powered browser extension that analyzes product quality, material composition, and value for money in real time while shopping online.',
     sections: {
       'Problem': 'Consumers spend hundreds of dollars on products assuming high quality, often struggling to understand material blends, construction details, and fair pricing. E-commerce sites obfuscate material breakdowns, relying on brand perception and high prices to imply durability. Without objective data, price is falsely equated with quality.',
@@ -110,6 +113,9 @@ const WORK = [
       { title: '2. Low Latency Inference', desc: 'Delivers fiber analysis, durability scoring, and price evaluation instantly within the user cart.' },
       { title: '3. Transparent Scoring', desc: 'Replaces black-box quality numbers with transparent, rule-based fiber logic.' }
     ],
+    gallery: [
+      { src: '../../Rapheal-Portfolio/images/materialsIQ/hero.png', caption: 'MaterialIQ: Real-time fabric analysis & durability scoring in Chrome' }
+    ],
   },
   {
     id: 'prox', code: 'PX-04', title: 'Prox', year: '2025',
@@ -117,6 +123,8 @@ const WORK = [
     thumb: '../../assets/work/prox-deals.png',
     hero: '../../Rapheal-Portfolio/images/prox/08-deals-ready.png',
     video: '../../Rapheal-Portfolio/images/prox/onboarding-walkthrough.mp4',
+    demoUrl: 'demo/prox-onboarding-demo.html',
+    caseStudyUrl: 'prox.html',
     blurb: 'A complete redesign of the first-time user experience for an iOS grocery-savings app, addressing a strict 3–5 minute data-loading constraint.',
     sections: {
       'Problem': 'On first sign-up, Prox must gather real-time price data for local stores in the user\'s area, which takes 3 to 5 minutes. The original flow threw a static loading spinner, appearing broken to new users and resulting in high drop-off rates before seeing value.',

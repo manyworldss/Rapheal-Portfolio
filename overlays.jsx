@@ -123,7 +123,7 @@ function AboutContent() {
           {[
             ['Human Factors', 'Cognitive Task Analysis', 'Usability Testing', 'Error Classification'],
             ['AI Reliability', 'LLM Evaluation', 'Safety Auditing', 'Edge-Case Analysis'],
-            ['Systems Ops', 'Workflow Automation', 'Technical Support', 'Documentation']
+            ['UX & Systems', 'Workflow Automation', 'Systems Architecture', 'Design Documentation']
           ].map((col, idx) => (
             <div key={idx} style={{ backgroundColor: 'var(--bg-inset)', padding: '1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-strong)', marginBottom: '0.5rem' }}>{col[0]}</div>

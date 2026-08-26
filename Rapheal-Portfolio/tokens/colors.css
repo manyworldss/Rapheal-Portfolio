@@ -1,0 +1,170 @@
+/* ============================================================
+   COLORS — Editorial film palette. Warm paper & ink, one muted
+   clay accent, a deep forest-green (pine) second accent, and
+   cinematic obsidian for the dark/film frames.
+   Light + dark via [data-theme]; the dark theme IS the film mode.
+   ============================================================ */
+:root {
+  /* ---- Paper (warm light canvas) ---- */
+  --paper:          #F0ECE3;   /* primary canvas — warm oat */
+  --paper-raised:   #F7F4ED;   /* lifted surface / card field */
+  --paper-sunk:     #E7E1D6;   /* recessed / inset wells */
+  --white:          #FCFAF5;
+
+  /* ---- Ink (text on paper) ---- */
+  --ink:            #17140F;   /* primary text — warm near-black */
+  --ink-2:          #2A251E;   /* carbon — secondary headings */
+  --ash:            #6B6457;   /* muted body / metadata */
+  --smoke:          #9C9587;   /* tertiary / disabled / placeholder */
+  --line:           rgba(23, 20, 15, 0.12);   /* hairline on paper */
+  --line-2:         rgba(23, 20, 15, 0.24);
+
+  /* ---- Obsidian (cinematic dark frames / film mode) ---- */
+  --obsidian:       #100D0A;   /* full-bleed warm black */
+  --obsidian-2:     #18140F;   /* layered dark / footer */
+  --obsidian-3:     #221C16;   /* dark card field */
+  --on-dark:        #F0ECE3;   /* text on dark = paper */
+  --on-dark-muted:  rgba(240, 236, 227, 0.60);
+  --on-dark-dim:    rgba(240, 236, 227, 0.32);
+  --line-dark:      rgba(240, 236, 227, 0.14);
+  --line-dark-2:    rgba(240, 236, 227, 0.24);
+
+  /* ---- Clay (primary accent) ---- */
+  --clay:           #A6603C;   /* muted terracotta */
+  --clay-soft:      #C98A63;   /* tint — on dark / hover */
+  --clay-deep:      #7E472A;   /* pressed / dense */
+  --clay-wash:      rgba(166, 96, 60, 0.10);
+  --clay-line:      rgba(166, 96, 60, 0.34);
+
+  /* ---- Pine (second accent — forest green, adds depth) ---- */
+  --pine:           #33513F;   /* deep forest */
+  --pine-soft:      #6E8C7A;   /* tint — on dark / secondary */
+  --pine-deep:      #22362A;
+  --pine-wash:      rgba(51, 81, 63, 0.10);
+  --pine-line:      rgba(51, 81, 63, 0.30);
+
+  /* ============================================================
+     SEMANTIC ALIASES — light (paper) theme.
+     ============================================================ */
+  --bg:               var(--paper);
+  --bg-raised:        var(--paper-raised);
+  --bg-inset:         var(--paper-sunk);
+  --bg-inverse:       var(--obsidian);
+
+  --text-strong:      var(--ink);
+  --text:             var(--ink-2);
+  --text-muted:       var(--ash);
+  --text-faint:       var(--smoke);
+  --text-on-inverse:  var(--on-dark);
+
+  --border:           var(--line);
+  --border-strong:    var(--line-2);
+  --border-inverse:   var(--line-dark);
+
+  --accent:           var(--clay);
+  --accent-hover:     var(--clay-deep);
+  --accent-on-dark:   var(--clay-soft);
+  --accent-wash:      var(--clay-wash);
+  --accent-line:      var(--clay-line);
+
+  --accent-2:         var(--pine);
+  --accent-2-on-dark: var(--pine-soft);
+  --accent-2-wash:    var(--pine-wash);
+  --accent-2-line:    var(--pine-line);
+
+  --focus-ring:       var(--clay);
+
+  /* ---- Back-compat: engineering-register names → editorial ---- */
+  --signal:      var(--clay);
+  --signal-2:    var(--clay-soft);
+  --signal-deep: var(--clay-deep);
+  --signal-wash: var(--clay-wash);
+  --signal-line: var(--clay-line);
+  --paper-2:     var(--paper-sunk);
+  --paper-3:     var(--paper-sunk);
+  --gray:        var(--ash);
+  --gray-2:      var(--smoke);
+  --black:       var(--obsidian);
+  --black-2:     var(--obsidian-2);
+  --black-3:     var(--obsidian-3);
+  --on-black:    var(--on-dark);
+  --on-black-2:  var(--on-dark-muted);
+  --on-black-3:  var(--on-dark-dim);
+
+  --hair:   1px;
+  --hair-2: 1.5px;
+  --radius-buttons: var(--radius-pill);
+  --radius-cards:   var(--radius-none);
+  color-scheme: light;
+}
+
+/* ============================================================
+   LIGHT THEME as an explicit scope. The aliases above live on
+   :root so unthemed documents get paper by default; this block
+   lets any *nested* element opt back into paper inside a dark
+   document (the case-study reading mode does exactly that).
+   ============================================================ */
+[data-theme="light"] {
+  --bg:               var(--paper);
+  --bg-raised:        var(--paper-raised);
+  --bg-inset:         var(--paper-sunk);
+  --bg-inverse:       var(--obsidian);
+
+  --text-strong:      var(--ink);
+  --text:             var(--ink-2);
+  --text-muted:       var(--ash);
+  --text-faint:       var(--smoke);
+  --text-on-inverse:  var(--on-dark);
+
+  --border:           var(--line);
+  --border-strong:    var(--line-2);
+  --border-inverse:   var(--line-dark);
+
+  --accent:           var(--clay);
+  --accent-hover:     var(--clay-deep);
+  --accent-on-dark:   var(--clay-soft);
+  --accent-wash:      var(--clay-wash);
+  --accent-line:      var(--clay-line);
+
+  --accent-2:         var(--pine);
+  --accent-2-on-dark: var(--pine-soft);
+  --accent-2-wash:    var(--pine-wash);
+  --accent-2-line:    var(--pine-line);
+
+  --focus-ring:       var(--clay);
+  color-scheme: light;
+}
+
+/* ============================================================
+   DARK THEME — the film mode: warm obsidian canvas, paper text.
+   ============================================================ */
+[data-theme="dark"] {
+  --bg:               var(--obsidian);
+  --bg-raised:        var(--obsidian-2);
+  --bg-inset:         var(--obsidian-3);
+  --bg-inverse:       var(--paper);
+
+  --text-strong:      var(--on-dark);
+  --text:             rgba(240, 236, 227, 0.88);
+  --text-muted:       var(--on-dark-muted);
+  --text-faint:       var(--on-dark-dim);
+  --text-on-inverse:  var(--ink);
+
+  --border:           var(--line-dark);
+  --border-strong:    var(--line-dark-2);
+  --border-inverse:   var(--line);
+
+  --accent:           var(--clay-soft);
+  --accent-hover:     var(--clay);
+  --accent-on-dark:   var(--clay-soft);
+  --accent-wash:      rgba(201, 138, 99, 0.12);
+  --accent-line:      rgba(201, 138, 99, 0.32);
+
+  --accent-2:         var(--pine-soft);
+  --accent-2-on-dark: var(--pine-soft);
+  --accent-2-wash:    rgba(110, 140, 122, 0.12);
+  --accent-2-line:    rgba(110, 140, 122, 0.30);
+
+  --focus-ring:       var(--clay-soft);
+  color-scheme: dark;
+}

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script>
+      (function(){ try { var t = localStorage.getItem('rs-theme'); document.documentElement.dataset.theme = t === 'dark' ? 'dark' : 'light'; } catch(e){} })();
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MaterialIQ Case Study | Rapheal Suber</title>
+    <meta name="description" content="MaterialIQ: An AI-powered browser extension that analyzes product quality, material composition, and value for money while shopping online.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/case-study.css">
+    <style>
+      body { font-family: var(--font-sans); background: var(--bg); color: var(--text-strong); margin: 0; padding: 0; line-height: 1.6; }
+      .topbar { position: fixed; top: 0; left: 0; right: 0; height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(1.25rem, 4vw, 3rem); background: rgba(var(--bg-rgb, 250, 250, 250), 0.92); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); z-index: 800; }
+      .book-layout { max-width: 900px; margin: 90px auto 80px; padding: 0 clamp(1.25rem, 4vw, 2.5rem); }
+      
+      .cs-category { font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: var(--track-label); display: block; margin-bottom: 0.75rem; }
+      .cs-title { font-family: var(--font-display); font-weight: 700; font-size: var(--text-h1); line-height: var(--leading-h1); letter-spacing: var(--track-display); margin: 0 0 1.25rem 0; color: var(--text-strong); }
+      .cs-subtitle { font-size: var(--text-body-lg); line-height: var(--leading-body-lg); color: var(--text-muted); margin-bottom: 2rem; }
+      
+      .cs-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; padding: 1.25rem; background: var(--bg-raised); border: 1px solid var(--border); border-radius: var(--radius-md); margin-bottom: 2.5rem; }
+      .meta-item strong { display: block; font-family: var(--font-mono); font-size: 0.6875rem; color: var(--accent); text-transform: uppercase; margin-bottom: 0.25rem; letter-spacing: var(--track-label); }
+      .meta-item span { font-size: 0.875rem; color: var(--text-strong); font-weight: 500; }
+      
+      .header-actions { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin-bottom: 3rem; }
+      .cta-button { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: var(--track-label); text-transform: uppercase; padding: 0.75rem 1.4rem; border-radius: var(--radius-md); text-decoration: none; cursor: pointer; transition: all 0.2s ease; }
+      .cta-primary { background-color: var(--text-strong); color: #FFFFFF; border: none; }
+      .cta-primary:hover { opacity: 0.9; }
+      .cta-secondary { background-color: transparent; color: var(--text-strong); border: 1px solid var(--border-strong); }
+      .cta-secondary:hover { background-color: var(--bg-inset); }
+
+      .full-width-image { width: 100%; border-radius: var(--radius-md); border: 1px solid var(--border); margin: 2rem 0 0.5rem 0; overflow: hidden; background: var(--bg-inset); }
+      .full-width-image img { width: 100%; height: auto; display: block; }
+      .caption { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); margin-bottom: 2.5rem; display: block; line-height: 1.5; padding: 0.6rem 0; border-bottom: 1px solid var(--border); }
+
+      .cs-section { border-top: 1px solid var(--border); padding-top: 2.5rem; margin-top: 3.5rem; }
+      .section-header h2 { font-family: var(--font-display); font-weight: 700; font-size: var(--text-h2); color: var(--text-strong); margin: 0 0 1.5rem 0; }
+      .section-body { font-size: var(--text-body); line-height: var(--leading-body); color: var(--text-muted); }
+      .section-body p { margin-bottom: 1.25rem; }
+
+      .insight-grid, .insight-grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; margin: 1.75rem 0; }
+      .insight-card { background: var(--bg-raised); border: 1px solid var(--border); padding: 1.5rem; border-radius: var(--radius-md); }
+      .insight-card h3 { font-family: var(--font-mono); font-size: 0.8125rem; color: var(--accent); margin: 0 0 0.6rem 0; text-transform: uppercase; letter-spacing: var(--track-label); }
+      .insight-card p { margin: 0; font-size: 0.875rem; line-height: 1.65; color: var(--text-muted); }
+
+      .finding-list { display: flex; flexDirection: column; gap: 1.25rem; margin: 1.75rem 0; }
+      .finding-item { display: flex; gap: 1.25rem; padding: 1.25rem; background: var(--bg-raised); border: 1px solid var(--border); border-radius: var(--radius-md); align-items: flex-start; }
+      .finding-number { font-family: var(--font-mono); font-size: 1rem; fontWeight: 700; color: var(--accent); min-width: 2rem; }
+      .finding-content h3 { font-family: var(--font-display); font-size: 1.05rem; fontWeight: 600; color: var(--text-strong); margin: 0 0 0.4rem 0; }
+      .finding-content p { margin: 0; font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; }
+
+      .tech-stack-block { background: var(--bg-raised); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.5rem; margin-top: 2.5rem; }
+      .tech-stack-heading { font-family: var(--font-mono); font-size: 0.8125rem; text-transform: uppercase; color: var(--accent); margin: 0 0 1rem 0; letter-spacing: var(--track-label); }
+      .tech-stack-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; }
+      .tech-stack-item .tech-stack-label { display: block; font-family: var(--font-mono); font-size: 0.6875rem; color: var(--text-faint); text-transform: uppercase; margin-bottom: 0.25rem; }
+      .tech-stack-item .tech-stack-value { font-size: 0.875rem; color: var(--text-strong); }
+
+      .cs-footer { margin-top: 5rem; padding-top: 2.5rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.25rem; }
+    </style>
+</head>
+
+<body>
+    <header class="topbar">
+        <div class="topbar-brand">
+            <a href="index.html" class="brand-link">RAPHEAL SUBER // HUMAN FACTORS &amp; SYSTEMS</a>
+        </div>
+        <nav class="topbar-chapters">
+            <a href="reach.html" class="chapter-link">CS-01 / REACH</a>
+            <a href="celio.html" class="chapter-link">CS-02 / CELIO</a>
+            <a href="materialsiq.html" class="chapter-link active-chapter">CS-03 / MATERIALIQ</a>
+            <a href="prox.html" class="chapter-link">PX-04 / PROX</a>
+        </nav>
+        <div class="topbar-actions">
+            <a href="index.html" class="back-trigger">← BACK TO HOME [ESC]</a>
+        </div>
+    </header>
+
+    <main class="container book-layout">
+        <header class="cs-header">
+            <span class="cs-category">Browser Extension / AI Quality Analysis</span>
+            <h1 class="cs-title">MaterialIQ: Objective Quality in the Shopping Cart</h1>
+            <p class="cs-subtitle">
+                An AI-powered browser extension that analyzes product quality, material composition, and value for money while shopping online - removing uncertainty by providing objective, transparent scoring for products across the web.
+            </p>
+            <div class="cs-meta">
+                <div class="meta-item">
+                    <strong>Role</strong>
+                    <span>Systems Engineer · Full-Stack Developer</span>
+                </div>
+                <div class="meta-item">
+                    <strong>Stack</strong>
+                    <span>React · FastAPI · Python · Vite · Manifest V3</span>
+                </div>
+                <div class="meta-item">
+                    <strong>Status</strong>
+                    <span>Beta / Chrome Web Store</span>
+                </div>
+            </div>
+            <div class="header-actions">
+                <a href="https://materialiq.app" target="_blank" rel="noopener" class="cta-button cta-primary">Visit MaterialIQ ↗</a>
+                <a href="https://github.com/manyworldss/MaterialsQ" target="_blank" rel="noopener" class="cta-button cta-secondary">View Repository ↗</a>
+            </div>
+        </header>
+
+        <!-- Main Hero Image -->
+        <div class="full-width-image">
+            <img src="images/materialsIQ/hero.png" alt="MaterialIQ Chrome Extension dashboard showing material score details">
+        </div>
+        <span class="caption">The browser interface: MaterialIQ parsing active e-commerce details to show material and price scores directly in the shopping cart.</span>
+
+        <article class="cs-content">
+            <!-- Section 1: Problem -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: var(--track-label);">01. Problem</span>
+                    <h2>The Challenge: Product Integrity in E-Commerce</h2>
+                </div>
+                <div class="section-body">
+                    <p>
+                        Consumers spend hundreds of dollars on products assuming high quality, often struggling to understand complex material blends, construction details, and fair pricing models. E-commerce platforms intentionally obfuscate material breakdowns, relying on brand perception and high prices to imply durability. 
+                    </p>
+                    <p>
+                        Without objective data, price is falsely equated with quality. MaterialIQ aims to remove that uncertainty by providing objective, transparent scoring for products directly on the product page.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Section 2: Constraints -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: var(--track-label);">02. Constraints</span>
+                    <h2>Parsing Unstructured Data in Real-Time</h2>
+                </div>
+                <div class="section-body">
+                    <p>
+                        The primary constraint was operating as a low-friction browser extension. It needed to parse highly unstructured, wildly varying e-commerce product descriptions and specifications in real-time, without forcing the user to wait for slow cloud inference.
+                    </p>
+                    <div class="insight-grid-3">
+                        <div class="insight-card">
+                            <h3>1. Unstructured Web DOM</h3>
+                            <p>Every e-commerce site formats its material specifications differently. The system required robust DOM extraction to locate hidden fabric breakdowns without breaking when sites updated their layouts.</p>
+                        </div>
+                        <div class="insight-card">
+                            <h3>2. Low Latency Inference</h3>
+                            <p>Shoppers move quickly. The extension had to deliver material analysis and scoring near-instantly directly inside the shopping cart.</p>
+                        </div>
+                        <div class="insight-card">
+                            <h3>3. Transparent Scoring</h3>
+                            <p>Black-box "quality scores" breed distrust. The methodology had to be mathematically clear, exposing exactly why an item received its score.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: Approach -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: var(--track-label);">03. Approach</span>
+                    <h2>Algorithmic Material &amp; Value Analysis</h2>
+                </div>
+                <div class="section-body">
+                    <p>
+                        I engineered an AI-powered Chrome extension backed by a high-performance FastAPI backend. The system evaluates products based on three objective pillars:
+                    </p>
+
+                    <div class="finding-list">
+                        <div class="finding-item">
+                            <div class="finding-number">01</div>
+                            <div class="finding-content">
+                                <h3>Material Quality Score</h3>
+                                <p>Analysis based on fiber composition, fabric weight, and raw material grading. The system mathematically penalizes cheap synthetic blends marketed at luxury price points.</p>
+                            </div>
+                        </div>
+                        <div class="finding-item">
+                            <div class="finding-number">02</div>
+                            <div class="finding-content">
+                                <h3>Durability Estimate</h3>
+                                <p>Inferred lifespan based on the extracted materials and construction cues (e.g., natural vs. synthetic ratios, weave density).</p>
+                            </div>
+                        </div>
+                        <div class="finding-item">
+                            <div class="finding-number">03</div>
+                            <div class="finding-content">
+                                <h3>Value Score</h3>
+                                <p>An objective calculation determining if the item is actually worth its asking price based on the raw material cost baseline.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: Outcome -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: var(--track-label);">04. Outcome</span>
+                    <h2>Beta Launch &amp; Transparent Methodology</h2>
+                </div>
+                <div class="section-body">
+                    <p>
+                        Launched MaterialIQ (Beta) on the Chrome Web Store. The extension successfully deployed with Skimlinks integration and a strict privacy policy, parsing thousands of products and bringing objective transparency to the shopping experience.
+                    </p>
+                    
+                    <div class="tech-stack-block">
+                        <h3 class="tech-stack-heading">System Architecture &amp; Tech Stack</h3>
+                        <div class="tech-stack-grid">
+                            <div class="tech-stack-item">
+                                <span class="tech-stack-label">Frontend Extension</span>
+                                <span class="tech-stack-value">React, Vite, Manifest V3, Tailwind CSS</span>
+                            </div>
+                            <div class="tech-stack-item">
+                                <span class="tech-stack-label">Backend API</span>
+                                <span class="tech-stack-value">Python, FastAPI, Uvicorn</span>
+                            </div>
+                            <div class="tech-stack-item">
+                                <span class="tech-stack-label">AI Parsing Engine</span>
+                                <span class="tech-stack-value">Automated DOM Extraction, NLP Material Classification</span>
+                            </div>
+                            <div class="tech-stack-item">
+                                <span class="tech-stack-label">Integrations</span>
+                                <span class="tech-stack-value">Skimlinks, Chrome Web Store Publishing Pipeline</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 5: Lessons Learned -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: var(--track-label);">05. Lessons Learned</span>
+                    <h2>Building Consumer Trust Through Clarity</h2>
+                </div>
+                <div class="section-body">
+                    <p>
+                        1. <strong>Transparency is the Feature:</strong> Users do not trust a black-box "Quality Score" - they need to see the exact fiber breakdowns and the rule-based logic that drove the calculation. Making the methodology transparent was critical to adoption.
+                    </p>
+                    <p>
+                        2. <strong>Handling Unstructured Chaos:</strong> Parsing unstructured e-commerce DOMs taught me the importance of robust fallback mechanisms. When a site layout breaks an extraction rule, the system must degrade gracefully and clearly communicate what data is missing, rather than generating an incorrect score.
+                    </p>
+                </div>
+            </section>
+        </article>
+
+        <footer class="cs-footer">
+            <a href="celio.html" class="cta-button cta-secondary">← Previous: Celio Case Study</a>
+            <a href="index.html" class="cta-button cta-primary">Return to Main Page →</a>
+        </footer>
+    </main>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

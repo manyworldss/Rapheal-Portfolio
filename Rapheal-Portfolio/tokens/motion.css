@@ -1,0 +1,42 @@
+/* ============================================================
+   MOTION — Cinematic, high-craft. Long slow eases, deliberate
+   reveals, no bounce. Motion is the signature; restraint is
+   the discipline.
+   ============================================================ */
+:root {
+  /* ---- Easing ---- */
+  --ease-out:   cubic-bezier(0.16, 1, 0.30, 1);    /* @kind other */
+  --ease-io:    cubic-bezier(0.77, 0, 0.175, 1);   /* @kind other */
+  --ease-in:    cubic-bezier(0.70, 0, 0.84, 0);    /* @kind other */
+  --ease-soft:  cubic-bezier(0.33, 1, 0.68, 1);    /* @kind other */
+  --ease-linear: linear;                           /* @kind other */
+
+  /* ---- Duration ---- */
+  --dur-1:  120ms;    /* @kind other */
+  --dur-2:  240ms;    /* @kind other */
+  --dur-3:  420ms;    /* @kind other */
+  --dur-4:  680ms;    /* @kind other */
+  --dur-5:  1100ms;   /* @kind other */
+
+  /* ---- Reveal distances ---- */
+  --rise:   24px;     /* @kind spacing */
+  --rise-lg: 48px;    /* @kind spacing */
+
+  /* ---- Hover/press conventions (documented, used by components) ---- */
+  --hover-fade:   0.62;   /* @kind other */
+  --press-scale:  0.98;   /* @kind other */
+  --hover-lift:   -2px;   /* @kind spacing */
+}
+
+/* ---- Reduced motion: honor it everywhere ---- */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-1: 0.01ms; /* @kind other */
+    --dur-2: 0.01ms; /* @kind other */
+    --dur-3: 0.01ms; /* @kind other */
+    --dur-4: 0.01ms; /* @kind other */
+    --dur-5: 0.01ms; /* @kind other */
+    --rise: 0px; /* @kind spacing */
+    --rise-lg: 0px; /* @kind spacing */
+  }
+}

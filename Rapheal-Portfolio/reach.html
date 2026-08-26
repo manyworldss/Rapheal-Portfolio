@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script>
+      (function(){ try { var t = localStorage.getItem('rs-theme'); document.documentElement.dataset.theme = t === 'dark' ? 'dark' : 'light'; } catch(e){} })();
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reach Case Study | Rapheal Suber</title>
+    <meta name="description" content="Reach Case Study: A caseload and outcome-tracking platform for therapists treating upper-extremity motor recovery after stroke, built with a human-factors-first focus.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/case-study.css">
+    <style>
+      body { font-family: var(--font-sans); background: var(--bg); color: var(--text-strong); margin: 0; padding: 0; line-height: 1.6; }
+      .topbar { position: fixed; top: 0; left: 0; right: 0; height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(1.25rem, 4vw, 3rem); background: rgba(var(--bg-rgb, 250, 250, 250), 0.92); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); z-index: 800; }
+      .book-layout { max-width: 900px; margin: 90px auto 80px; padding: 0 clamp(1.25rem, 4vw, 2.5rem); }
+      
+      .cs-category { font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: var(--track-label); display: block; margin-bottom: 0.75rem; }
+      .cs-title { font-family: var(--font-display); font-weight: 700; font-size: var(--text-h1); line-height: var(--leading-h1); letter-spacing: var(--track-display); margin: 0 0 1.25rem 0; color: var(--text-strong); }
+      .cs-subtitle { font-size: var(--text-body-lg); line-height: var(--leading-body-lg); color: var(--text-muted); margin-bottom: 2rem; }
+      
+      .cs-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; padding: 1.25rem; background: var(--bg-raised); border: 1px solid var(--border); border-radius: var(--radius-md); margin-bottom: 2.5rem; }
+      .meta-item strong { display: block; font-family: var(--font-mono); font-size: 0.6875rem; color: var(--accent); text-transform: uppercase; margin-bottom: 0.25rem; letter-spacing: var(--track-label); }
+      .meta-item span { font-size: 0.875rem; color: var(--text-strong); font-weight: 500; }
+      
+      .header-actions { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin-bottom: 3rem; }
+      .cta-button { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: var(--track-label); text-transform: uppercase; padding: 0.75rem 1.4rem; border-radius: var(--radius-md); text-decoration: none; cursor: pointer; transition: all 0.2s ease; }
+      .cta-primary { background-color: var(--text-strong); color: #FFFFFF; border: none; }
+      .cta-primary:hover { opacity: 0.9; }
+      .cta-secondary { background-color: transparent; color: var(--text-strong); border: 1px solid var(--border-strong); }
+      .cta-secondary:hover { background-color: var(--bg-inset); }
+
+      .full-width-image { width: 100%; border-radius: var(--radius-md); border: 1px solid var(--border); margin: 2rem 0 0.5rem 0; overflow: hidden; background: var(--bg-inset); }
+      .full-width-image img { width: 100%; height: auto; display: block; }
+      .caption { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); margin-bottom: 2.5rem; display: block; line-height: 1.5; padding: 0.6rem 0; border-bottom: 1px solid var(--border); }
+
+      .cs-section { border-top: 1px solid var(--border); padding-top: 2.5rem; margin-top: 3.5rem; }
+      .section-header h2 { font-family: var(--font-display); font-weight: 700; font-size: var(--text-h2); color: var(--text-strong); margin: 0 0 1.5rem 0; }
+      .section-body { font-size: var(--text-body); line-height: var(--leading-body); color: var(--text-muted); }
+      .section-body p { margin-bottom: 1.25rem; }
+
+      .insight-grid, .insight-grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; margin: 1.75rem 0; }
+      .insight-card { background: var(--bg-raised); border: 1px solid var(--border); padding: 1.5rem; border-radius: var(--radius-md); }
+      .insight-card h3 { font-family: var(--font-mono); font-size: 0.8125rem; color: var(--accent); margin: 0 0 0.6rem 0; text-transform: uppercase; letter-spacing: var(--track-label); }
+      .insight-card p { margin: 0; font-size: 0.875rem; line-height: 1.65; color: var(--text-muted); }
+
+      .finding-list { display: flex; flexDirection: column; gap: 1.25rem; margin: 1.75rem 0; }
+      .finding-item { display: flex; gap: 1.25rem; padding: 1.25rem; background: var(--bg-raised); border: 1px solid var(--border); border-radius: var(--radius-md); align-items: flex-start; }
+      .finding-number { font-family: var(--font-mono); font-size: 1rem; fontWeight: 700; color: var(--accent); min-width: 2rem; }
+      .finding-content h3 { font-family: var(--font-display); font-size: 1.05rem; fontWeight: 600; color: var(--text-strong); margin: 0 0 0.4rem 0; }
+      .finding-content p { margin: 0; font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; }
+
+      .tech-stack-block { background: var(--bg-raised); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.5rem; margin-top: 2.5rem; }
+      .tech-stack-heading { font-family: var(--font-mono); font-size: 0.8125rem; text-transform: uppercase; color: var(--accent); margin: 0 0 1rem 0; letter-spacing: var(--track-label); }
+      .tech-stack-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; }
+      .tech-stack-item .tech-stack-label { display: block; font-family: var(--font-mono); font-size: 0.6875rem; color: var(--text-faint); text-transform: uppercase; margin-bottom: 0.25rem; }
+      .tech-stack-item .tech-stack-value { font-size: 0.875rem; color: var(--text-strong); }
+
+      .cs-footer { margin-top: 5rem; padding-top: 2.5rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.25rem; }
+    </style>
+</head>
+
+<body>
+    <header class="topbar">
+        <div class="topbar-brand">
+            <a href="index.html" class="brand-link">RAPHEAL SUBER // HUMAN FACTORS &amp; SYSTEMS</a>
+        </div>
+        <nav class="topbar-chapters">
+            <a href="reach.html" class="chapter-link active-chapter">CS-01 / REACH</a>
+            <a href="celio.html" class="chapter-link">CS-02 / CELIO</a>
+            <a href="materialsiq.html" class="chapter-link">CS-03 / MATERIALIQ</a>
+            <a href="prox.html" class="chapter-link">PX-04 / PROX</a>
+        </nav>
+        <div class="topbar-actions">
+            <a href="index.html" class="back-trigger">← BACK TO HOME [ESC]</a>
+        </div>
+    </header>
+
+    <main class="container book-layout">
+        <header class="cs-header">
+            <span class="cs-category">Clinical SaaS / Stroke Rehabilitation &amp; Human Factors</span>
+            <h1 class="cs-title">Reach: Making Recovery Legible for Rehab Clinicians</h1>
+            <p class="cs-subtitle">
+                I built Reach to make upper-extremity stroke recovery legible and actionable for rehab therapists, bringing a patient's measured outcomes, expected recovery arc, and home-program adherence into one clear view so clinicians can see in seconds who needs attention first and whether recovery is on track.
+            </p>
+            <div class="cs-meta">
+                <div class="meta-item">
+                    <strong>Role</strong>
+                    <span>UX Research · Human Factors · Full-Stack Development</span>
+                </div>
+                <div class="meta-item">
+                    <strong>Stack</strong>
+                    <span>React 18 · TypeScript · Vite · Tailwind CSS · Recharts</span>
+                </div>
+                <div class="meta-item">
+                    <strong>Status</strong>
+                    <span>Live Prototype &amp; Active Clinical Testing</span>
+                </div>
+            </div>
+            <div class="header-actions">
+                <a href="https://reach-health.up.railway.app/" target="_blank" class="cta-button cta-primary">View Live App ↗</a>
+                <button onclick="window.print()" class="cta-button cta-secondary" id="download-pdf-btn">Download Research PDF ↓</button>
+            </div>
+        </header>
+
+        <!-- Main Hero Image -->
+        <div class="full-width-image">
+            <img src="images/reach_hero.jpg" alt="Reach clinician view: a stroke patient's recovery trajectory and current standing">
+        </div>
+        <span class="caption">The clinician view: a single patient's recovery trajectory plotted against an expected band, with current FMA-UE and ARAT standing.</span>
+
+        <article class="cs-content">
+            <!-- Section 1: Problem -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: var(--track-label);">01. Problem</span>
+                    <h2>The Challenge: Recovery Data That Lives Everywhere and Nowhere</h2>
+                </div>
+                <div class="section-body">
+                    <p>
+                        Standardized outcome measures such as the Fugl-Meyer Assessment (FMA-UE), the Action Research Arm Test (ARAT), and Box and Blocks are the gold standard for tracking motor recovery after stroke. In practice, clinicians document them inconsistently because capture is slow and the scores end up scattered across disconnected systems.
+                    </p>
+                    <p>
+                        Home exercise adherence makes up the other half of recovery, yet it is almost invisible between visits. A therapist often walks into a session without a clear read on whether the home program is actually being done. Reach exists to close that gap by connecting both halves into one clinician-facing interface while preventing the same scores from being typed twice.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Section 2: Constraints & Strategy -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: var(--track-label);">02. Constraints &amp; Systems Strategy</span>
+                    <h2>One Interface, Driven by Outcomes</h2>
+                </div>
+                <div class="section-body">
+                    <p>
+                        Rather than another generic charting tool, Reach is built around the way recovery is actually measured. Assessment scores drive everything downstream, so the clinician logs data once and the system does the routing.
+                    </p>
+                    <div class="insight-grid-3">
+                        <div class="insight-card">
+                            <h3>1. Outcome-Driven Severity</h3>
+                            <p>FMA-UE scores automatically segment patients into Mild, Moderate, or Severe baseline programs. The clinician logs an assessment, and the system assigns the appropriate program rather than leaving them to build one from scratch.</p>
+                        </div>
+                        <div class="insight-card">
+                            <h3>2. Broad, Banded Pathways</h3>
+                            <p>Within each severity band, pathways fit the patient's real life: occupation-based daily living, fine motor and dexterity, return to work, left neglect, and anti-subluxation shoulder protection.</p>
+                        </div>
+                        <div class="insight-card">
+                            <h3>3. Adherence as an Early Warning</h3>
+                            <p>Reach tracks active reps, mental practice, and assisted daily tasks. When adherence drops below 60 percent, it surfaces the patient as a stalled home program before a wasted visit confirms it.</p>
+                        </div>
+                    </div>
+
+                    <div class="full-width-image">
+                        <img src="images/reach_program.jpg" alt="Reach Programs and Pathways: FMA-UE scores route patients into severity-banded programs">
+                    </div>
+                    <span class="caption">Programs and Pathways: an FMA-UE score routes each patient into a Mild, Moderate, or Severe band, then a tailored pathway matches the goal to the person in front of you.</span>
+                </div>
+            </section>
+
+            <!-- Section 3: Discovery & Clinical Research -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: var(--track-label);">03. Approach &amp; Human Factors Discovery</span>
+                    <h2>Designed Around Three Occupational Therapists</h2>
+                </div>
+                <div class="section-body">
+                    <p>
+                        Reach was shaped through direct, iterative feedback from three occupational therapists, so the product aligns with real clinical workflows and the human factors of a busy session rather than my assumptions about them.
+                    </p>
+
+                    <div class="insight-grid">
+                        <div class="insight-card">
+                            <h3>OT 1: Workflow and Programs</h3>
+                            <p>Pushed for reduced interface clutter, embedded education, and severity-banded programs driven by FMA, ARAT, or Box and Blocks. Asked for prescribed exercises with video demonstrations, repetition tracking, and copy-and-paste documentation blurbs to simplify charting.</p>
+                        </div>
+                        <div class="insight-card">
+                            <h3>OT 2: Outcomes Drive Everything</h3>
+                            <p>Verified the treatment and education layout and recommended a subjective progress area for patient self-report. Emphasized that assessment entries should drive pathway recommendations directly, to save time and prevent double-documentation across systems.</p>
+                        </div>
+                        <div class="insight-card">
+                            <h3>OT 3: Admin and Family</h3>
+                            <p>Focused on the difference between typing during a session and documenting afterward. Proposed a documentation status tracker for in-progress versus completed notes, plus a simplified caregiver portal to coordinate support at home.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: Human Factors Implementation -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: var(--track-label);">04. Outcome &amp; What Got Built</span>
+                    <h2>Human Factors &amp; Product Implementation</h2>
+                </div>
+                <div class="section-body">
+                    <p>
+                        Each piece of clinician feedback maps to a concrete decision in the product. The result is an interface that does the routing and the writing the clinician would otherwise carry in their head.
+                    </p>
+                    <div class="finding-list">
+                        <div class="finding-item">
+                            <div class="finding-number">01</div>
+                            <div class="finding-content">
+                                <h3>Outcome-driven severity programs</h3>
+                                <p>FMA-UE scores automatically segment patients. The clinician logs assessments, and the system assigns a Mild, Moderate, or Severe baseline program with no extra step.</p>
+                            </div>
+                        </div>
+                        <div class="finding-item">
+                            <div class="finding-number">02</div>
+                            <div class="finding-content">
+                                <h3>Pathways that fit the person</h3>
+                                <p>Occupation-based daily living spans every band. Fine motor, dexterity, and return to work serve Mild and Moderate. Left neglect and visual-spatial work cover Moderate and Severe, and anti-subluxation shoulder protection serves Severe.</p>
+                            </div>
+                        </div>
+                        <div class="finding-item">
+                            <div class="finding-number">03</div>
+                            <div class="finding-content">
+                                <h3>Repetition and adherence auditing</h3>
+                                <p>Compliance metrics are tracked over time, and the system flags when adherence falls below 60 percent as an early signal of a stalled home program.</p>
+                            </div>
+                        </div>
+                        <div class="finding-item">
+                            <div class="finding-number">04</div>
+                            <div class="finding-content">
+                                <h3>Copy-and-paste documentation</h3>
+                                <p>High-quality progress notes are generated for each selected pathway, ready to paste straight into the clinic's electronic medical record, which removes the most repetitive part of charting.</p>
+                            </div>
+                        </div>
+                        <div class="finding-item">
+                            <div class="finding-number">05</div>
+                            <div class="finding-content">
+                                <h3>Patient and caregiver loops</h3>
+                                <p>A companion mobile app (currently an interactive demo) lets patients report daily pain, energy, and perceived arm use, with a guided daily session and streak-based encouragement, plus messaging for asynchronous movement analysis and caregiver coordination.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="full-width-image">
+                        <img src="images/reach_patient.jpg" alt="Reach patient companion app interface showing daily plan and check-in">
+                    </div>
+                    <span class="caption">The patient companion app: a plain-language daily plan with a quick check-in, a guided session one movement at a time, and streak-based encouragement built to make home practice easy to show up for.</span>
+                </div>
+            </section>
+
+            <!-- Section 5: Lessons Learned -->
+            <section class="cs-section">
+                <div class="section-header">
+                    <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: var(--track-label);">05. Lessons Learned</span>
+                    <h2>Outcomes, Learnings, and Growth</h2>
+                </div>
+                <div class="section-body">
+                    <p>
+                        Reach took a clinical focus from the first sketch. Designing it around standardized measures and the daily occupations of stroke survivors - dressing, writing, eating, and typing - kept the work grounded in what recovery actually looks like instead of a narrow return-to-work frame. The clearest lesson was that the people doing the documenting have to design it with you, otherwise you build a tool that is technically correct and clinically unusable.
+                    </p>
+                    <div style="margin: 1.5rem 0;">
+                        <a href="https://reach-health.up.railway.app/" target="_blank" class="cta-button cta-primary">Try Reach Live App ↗</a>
+                    </div>
+
+                    <div class="tech-stack-block">
+                        <h3 class="tech-stack-heading">Tech Stack</h3>
+                        <div class="tech-stack-grid">
+                            <div class="tech-stack-item">
+                                <span class="tech-stack-label">Frontend Framework</span>
+                                <span class="tech-stack-value">React 18, TypeScript, Vite, Tailwind CSS</span>
+                            </div>
+                            <div class="tech-stack-item">
+                                <span class="tech-stack-label">Data Visualization</span>
+                                <span class="tech-stack-value">Recharts trajectory charting, lucide-react iconography</span>
+                            </div>
+                            <div class="tech-stack-item">
+                                <span class="tech-stack-label">Infrastructure</span>
+                                <span class="tech-stack-value">Railway deployment, static build served over Node</span>
+                            </div>
+                            <div class="tech-stack-item">
+                                <span class="tech-stack-label">Clinical Measures</span>
+                                <span class="tech-stack-value">Fugl-Meyer (FMA-UE), ARAT, Box and Blocks severity logic</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </article>
+
+        <footer class="cs-footer">
+            <a href="index.html" class="cta-button cta-secondary">← Return to Main Page</a>
+            <a href="celio.html" class="cta-button cta-primary">Next: Celio Case Study →</a>
+        </footer>
+    </main>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

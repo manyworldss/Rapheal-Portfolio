@@ -113,7 +113,7 @@ function CaseBody({ item, onClose }) {
         .rs-case-grid{ display:grid; grid-template-columns:minmax(0,16rem) minmax(0,1fr); gap:clamp(2rem,5vw,5rem); align-items:start; }
         .rs-case-rail{ position:sticky; top:calc(var(--topbar-h) + 2rem); }
         .rs-insight-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:1.2rem; margin:1.5rem 0; }
-        .rs-insight-card{ background:var(--bg-raised); border:var(--hair) solid var(--border); padding:1.25rem; borderRadius:var(--radius-md); }
+        .rs-insight-card{ background:var(--bg-raised); border:var(--hair) solid var(--border); padding:1.25rem; border-radius:var(--radius-md); }
         .rs-comp-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:1.5rem; margin:1.8rem 0; }
         .rs-comp-card{ background:var(--bg-raised); border:var(--hair) solid var(--border); border-radius:var(--radius-md); padding:1.2rem; overflow:hidden; position:relative; cursor:pointer; transition:border-color 0.2s ease, transform 0.2s ease; }
         .rs-comp-card:hover{ border-color:var(--accent); transform:translateY(-2px); }
@@ -126,11 +126,11 @@ function CaseBody({ item, onClose }) {
         .rs-gallery-card{ background:var(--bg-raised); border:var(--hair) solid var(--border); border-radius:var(--radius-md); overflow:hidden; display:flex; flex-direction:column; cursor:pointer; transition:border-color 0.2s ease, transform 0.2s ease; position:relative; }
         .rs-gallery-card:hover{ border-color:var(--accent); transform:translateY(-2px); }
         .rs-gallery-img{ width:100%; height:auto; display:block; border-bottom:var(--hair) solid var(--border); object-fit:contain; }
-        .rs-gallery-caption{ padding:0.8rem 1rem; fontFamily:'var(--font-mono)'; fontSize:'var(--text-micro)'; color:'var(--text-muted)'; lineHeight:1.45; }
+        .rs-gallery-caption{ padding:0.8rem 1rem; font-family:var(--font-mono); font-size:var(--text-micro); color:var(--text-muted); line-height:1.45; }
         
         .prox-stage{ position:relative; display:flex; justify-content:center; padding:clamp(1.5rem,4vw,3rem) 0; }
         .prox-stage::before{ content:''; position:absolute; top:50%; left:50%; width:min(72%,500px); aspect-ratio:1/1;
-            transform:translate(-50%,-50%); background:radial-gradient(circle, rgba(201,138,99,0.22), transparent 64%);
+            transform:translate(-50%,-50%); background:radial-gradient(circle, rgba(23,92,67,0.28), transparent 64%);
             filter:blur(24px); pointer-events:none; z-index:0; }
         .prox-phone{ position:relative; z-index:1; width:290px; max-width:82vw; padding:12px;
             background:linear-gradient(155deg,#242426,#0a0a0b); border-radius:48px;
@@ -158,6 +158,13 @@ function CaseBody({ item, onClose }) {
         backdropFilter:'blur(12px)', borderBottom:'var(--hair) solid var(--border)' }}>
         <span style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', textTransform:'uppercase', color:'var(--accent)' }}>{item.code} · {item.year}</span>
         <div style={{ display:'flex', alignItems:'center', gap:'0.8rem' }}>
+          {item.demoUrl && (
+            <a data-hot href={item.demoUrl} target="_blank" rel="noopener" style={{ display:'inline-flex', alignItems:'center', gap:'0.4rem',
+              fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', textTransform:'uppercase',
+              color:'#FCFAF5', background:'var(--clay, #A6603C)', borderRadius:'var(--radius-sm)', padding:'0.4rem 0.8rem', textDecoration:'none' }}>
+              Prototype ↗
+            </a>
+          )}
           {item.liveUrl && (
             <a data-hot href={item.liveUrl} target="_blank" rel="noopener" style={{ display:'inline-flex', alignItems:'center', gap:'0.4rem',
               fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', textTransform:'uppercase',
@@ -173,7 +180,7 @@ function CaseBody({ item, onClose }) {
             </a>
           )}
           <button data-hot onClick={onClose} style={{ fontFamily:'var(--font-sans)', fontSize:'var(--text-sm)', fontWeight:'var(--fw-medium)',
-            color:'var(--text-strong)', border:'var(--hair) solid var(--border-strong)', borderRadius:'var(--radius-sm)', padding:'0.4rem 0.9rem' }}>Close</button>
+            color:'var(--text-strong)', border:'var(--hair) solid var(--border-strong)', borderRadius:'var(--radius-sm)', padding:'0.4rem 0.9rem', cursor:'pointer' }}>Close</button>
         </div>
       </div>
 
@@ -190,25 +197,39 @@ function CaseBody({ item, onClose }) {
         <p style={{ fontFamily:'var(--font-body)', fontSize:'var(--text-body-lg)', lineHeight:'var(--leading-body-lg)', color:'var(--text-muted)', maxWidth:'64ch', margin:0 }}>{item.blurb}</p>
 
         {/* Action CTAs in masthead */}
-        {(item.liveUrl || item.repoUrl) && (
-          <div style={{ display:'flex', gap:'1rem', flexWrap:'wrap', marginTop:'1.8rem' }}>
+        {(item.demoUrl || item.liveUrl || item.caseStudyUrl || item.repoUrl) && (
+          <div style={{ display:'flex', gap:'0.8rem', flexWrap:'wrap', marginTop:'1.8rem' }}>
+            {item.demoUrl && (
+              <a data-hot href={item.demoUrl} target="_blank" rel="noopener" style={{ display:'inline-flex', alignItems:'center', gap:'0.5rem',
+                fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', textTransform:'uppercase',
+                color:'#FCFAF5', background:'var(--clay, #A6603C)', borderRadius:'var(--radius-sm)', padding:'0.7rem 1.3rem', fontWeight:600, textDecoration:'none' }}>
+                Launch Interactive Demo ↗
+              </a>
+            )}
             {item.liveUrl && (
               <a data-hot href={item.liveUrl} target="_blank" rel="noopener" style={{ display:'inline-flex', alignItems:'center', gap:'0.5rem',
                 fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', textTransform:'uppercase',
-                color:'var(--text-on-inverse)', background:'var(--text-strong)', borderRadius:'var(--radius-sm)', padding:'0.7rem 1.3rem' }}>
+                color:'var(--text-on-inverse)', background:'var(--text-strong)', borderRadius:'var(--radius-sm)', padding:'0.7rem 1.3rem', textDecoration:'none' }}>
                 View Live App ↗
+              </a>
+            )}
+            {item.caseStudyUrl && (
+              <a data-hot href={item.caseStudyUrl} style={{ display:'inline-flex', alignItems:'center', gap:'0.5rem',
+                fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', textTransform:'uppercase',
+                color:'var(--text-strong)', border:'var(--hair-2) solid var(--border-strong)', borderRadius:'var(--radius-sm)', padding:'0.7rem 1.3rem', textDecoration:'none' }}>
+                Full Article / Study ↗
               </a>
             )}
             {item.repoUrl && (
               <a data-hot href={item.repoUrl} target="_blank" rel="noopener" style={{ display:'inline-flex', alignItems:'center', gap:'0.5rem',
                 fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', textTransform:'uppercase',
-                color:'var(--text-strong)', border:'var(--hair-2) solid var(--border-strong)', borderRadius:'var(--radius-sm)', padding:'0.7rem 1.3rem' }}>
+                color:'var(--text-strong)', border:'var(--hair-2) solid var(--border-strong)', borderRadius:'var(--radius-sm)', padding:'0.7rem 1.3rem', textDecoration:'none' }}>
                 View Repository ↗
               </a>
             )}
             <button onClick={()=>window.print()} style={{ display:'inline-flex', alignItems:'center', gap:'0.5rem',
               fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', textTransform:'uppercase',
-              color:'var(--text-muted)', border:'var(--hair) solid var(--border)', borderRadius:'var(--radius-sm)', padding:'0.7rem 1.3rem' }}>
+              color:'var(--text-muted)', border:'var(--hair) solid var(--border)', borderRadius:'var(--radius-sm)', padding:'0.7rem 1.3rem', background:'transparent', cursor:'pointer' }}>
               Download PDF ↓
             </button>
           </div>
@@ -226,9 +247,21 @@ function CaseBody({ item, onClose }) {
               </video>
             </div>
           </div>
-          <span style={{ display:'block', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', color:'var(--text-muted)', marginTop:'0.5rem' }}>
-            Prox Onboarding Walkthrough — 14-screen flow recording
-          </span>
+          <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:'0.6rem', marginTop:'0.6rem' }}>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', color:'var(--text-muted)' }}>
+              Prox Onboarding Walkthrough — 14-screen flow recording
+            </span>
+            {item.demoUrl && (
+              <a href={item.demoUrl} target="_blank" rel="noopener" style={{
+                display:'inline-flex', alignItems:'center', gap:'0.5rem',
+                fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', textTransform:'uppercase',
+                color:'#FCFAF5', background:'var(--clay, #A6603C)', borderRadius:'var(--radius-pill)',
+                padding:'0.5rem 1.2rem', textDecoration:'none', boxShadow:'0 4px 14px rgba(166,96,60,0.35)', transition:'transform 0.15s ease'
+              }}>
+                ▶ Open Interactive iPhone Prototype ↗
+              </a>
+            )}
+          </div>
         </div>
       ) : ((item.hero || item.thumb) && (
         <div className="rs-case-2" style={{ maxWidth:'var(--page-max)', margin:'0 auto', width:'100%', padding:'0 var(--gutter)' }}>
@@ -336,4 +369,3 @@ function CaseBody({ item, onClose }) {
 }
 
 Object.assign(window, { CaseOverlay });
-
