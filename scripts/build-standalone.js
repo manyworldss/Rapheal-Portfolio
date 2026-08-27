@@ -57,9 +57,9 @@ for (const [n, s] of [['helpers',helpers],['sections',sections],['overlays',over
 const S = code => '<script type="text/babel">\n' + code + '\n</script>';
 
 const CDN = [
-  '<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" integrity="sha384-HZw6LDCfqm1kLhpk1sxwhsmTtScBqaPtqS6ZsE5v8sDELeisP1ndJy5pLlrUASqQ" crossorigin="anonymous"></script>',
-  '<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" integrity="sha384-NszZhnswEBEUFrnkKPUSQCOort850hnpyqwim5c8SknMT5whd8UbtpnipStsTeNL" crossorigin="anonymous"></script>',
-  '<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>',
+  '<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>',
+  '<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>',
+  '<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script>',
 ].join('\n');
 
 const makeHtml = (workCode, isStandalone = false) => `<!-- @dsCard group="Portfolio" viewport="1440x900" name="Portfolio — Home" subtitle="Human Factors · UX Systems & Research" -->
