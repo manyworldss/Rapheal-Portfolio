@@ -4,69 +4,6 @@
    ============================================================ */
 const { useState: useStateS, useEffect: useEffectS } = React;
 
-/* ---- Nav ---- */
-function Nav({ onOpen, onHome, view }) {
-  const COLORS = { work:'rgba(201,138,99,0.55)', currently:'rgba(127,161,137,0.5)', about:'rgba(217,201,180,0.42)', contact:'rgba(201,138,99,0.42)' };
-  const links = [
-    { l: 'Case Studies', id: 'work' },
-    { l: 'Currently', id: 'currently' },
-    { l: 'About', id: 'about' },
-    { l: 'Contact', id: 'contact' },
-  ];
-  const [scrolled, setScrolled] = useStateS(false);
-  useEffectS(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    addEventListener('scroll', onScroll, { passive: true }); onScroll();
-    return () => removeEventListener('scroll', onScroll);
-  }, []);
-  return (
-    <header style={{ position:'fixed', top:0, left:0, right:0, zIndex:800,
-      display:'flex', alignItems:'center', justifyContent:'space-between',
-      height:'var(--topbar-h)', padding:'0 var(--gutter)',
-      background: scrolled ? 'color-mix(in srgb, var(--bg) 82%, transparent)' : 'transparent',
-      backdropFilter: scrolled ? 'blur(12px)' : 'none',
-      borderBottom: `var(--hair) solid ${scrolled ? 'var(--border)' : 'transparent'}`,
-      transition:'background var(--dur-3) var(--ease-soft), border-color var(--dur-3) var(--ease-soft)' }}>
-      <a href="#top" onClick={(e)=>{e.preventDefault(); onHome ? onHome() : scrollTo({top:0,behavior:'smooth'});}}
-        style={{ display:'flex', alignItems:'center', gap:'0.6rem', fontFamily:'var(--font-mono)', fontWeight:'var(--fw-medium)',
-        fontSize:'var(--text-sm)', letterSpacing:'var(--track-tight)', color:'var(--text-strong)' }}>
-        Rapheal Suber
-      </a>
-      <nav style={{ display:'flex', alignItems:'center', gap:'clamp(1rem,2.2vw,2rem)' }}>
-        {links.map((it) => <NavLink key={it.id} label={it.l} active={view===it.id} onClick={()=>onOpen(it.id, COLORS[it.id])} />)}
-        <ThemeToggle />
-      </nav>
-    </header>
-  );
-}
-function NavLink({ label, onClick, active }) {
-  const [h, setH] = useStateS(false);
-  return (
-    <button onClick={onClick} onMouseEnter={()=>setH(true)} onMouseLeave={()=>setH(false)}
-      style={{ fontFamily:'var(--font-sans)', fontSize:'var(--text-sm)', fontWeight:'var(--fw-medium)',
-        color: (h||active) ? 'var(--text-strong)' : 'var(--text-muted)', transition:'color var(--dur-2) var(--ease-soft)' }}>
-      {label}
-    </button>
-  );
-}
-function ThemeToggle() {
-  const [dark, setDark] = useStateS(() => (document.documentElement.dataset.theme || 'dark') !== 'light');
-  const toggle = () => {
-    const next = !dark;
-    setDark(next);
-    document.documentElement.dataset.theme = next ? 'dark' : 'light';
-    try { localStorage.setItem('rs-theme', next ? 'dark' : 'light'); } catch (e) {}
-  };
-  return (
-    <button onClick={toggle} aria-label="Toggle light mode" title={dark ? 'Switch to light' : 'Switch to dark'}
-      style={{ width:32, height:32, display:'flex', alignItems:'center', justifyContent:'center',
-        border:'var(--hair) solid var(--border-strong)', borderRadius:'var(--radius-sm)',
-        color:'var(--text-muted)', fontSize:'0.9rem', background:'transparent' }}>
-      {dark ? '○' : '●'}
-    </button>
-  );
-}
-
 /* ---- Hero ---- */
 function Hero({ onOpen }) {
   return <KioskHero onOpen={onOpen} />;
@@ -188,7 +125,7 @@ function KioskHero({ onOpen }) {
         @media (max-width:920px){
           .k-field{ display:none !important; }
           .k-id{ position:relative !important; top:auto !important; transform:none !important; max-width:none !important;
-            padding:calc(var(--topbar-h) + 5rem) var(--gutter) 4rem; }
+            padding:clamp(3rem,8vh,5rem) var(--gutter) 4rem; }
           .k-mob{ display:block; margin-top:2.4rem; }
         }
       `}</style>
@@ -204,10 +141,10 @@ function KioskHero({ onOpen }) {
       <div aria-hidden="true" style={{ position:'absolute', inset:0, zIndex:5, pointerEvents:'none', background:'repeating-linear-gradient(0deg, transparent 0 3px, var(--k-scan) 3px 4px)' }} />
 
       {/* corner telemetry */}
-      <div style={{ position:'absolute', top:'calc(var(--topbar-h) + 0.75rem)', left:'var(--gutter)', zIndex:6, fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'0.22em', textTransform:'uppercase', color:'var(--k-faint)', lineHeight:1.8 }}>
+      <div style={{ position:'absolute', top:'clamp(1.5rem,3.5vh,2.5rem)', left:'var(--gutter)', zIndex:6, fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'0.22em', textTransform:'uppercase', color:'var(--k-faint)', lineHeight:1.8 }}>
         RS · SELECT PATH<br/>CH {active ? active.n : '00'} / {active ? active.label.toUpperCase() : 'STANDBY'}
       </div>
-      <div style={{ position:'absolute', top:'calc(var(--topbar-h) + 0.75rem)', right:'var(--gutter)', zIndex:6, textAlign:'right', fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'0.22em', textTransform:'uppercase', color:'var(--k-faint)', lineHeight:1.8 }}>
+      <div style={{ position:'absolute', top:'clamp(1.5rem,3.5vh,2.5rem)', right:'var(--gutter)', zIndex:6, textAlign:'right', fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'0.22em', textTransform:'uppercase', color:'var(--k-faint)', lineHeight:1.8 }}>
         EST. 2026
       </div>
       <div style={{ position:'absolute', bottom:'clamp(1.6rem,4vh,2rem)', right:'var(--gutter)', zIndex:6, fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'0.22em', color:'var(--k-ghost)' }}>{clock}</div>
@@ -362,4 +299,4 @@ function Footer({ onOpen }) {
   );
 }
 
-Object.assign(window, { Nav, Hero, CaseStudies, Footer, PrimaryBtn });
+Object.assign(window, { Hero, CaseStudies, Footer, PrimaryBtn });

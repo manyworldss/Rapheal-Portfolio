@@ -120,12 +120,7 @@ const WORK = [
   {
     id: 'prox', code: 'PX-04', title: 'Prox', year: '2025',
     disciplines: ['Onboarding UX', 'iOS', 'Capacitor'],
-    thumb: '../../assets/work/prox-deals.png',
-    hero: '../../Rapheal-Portfolio/images/prox/08-deals-ready.png',
-    video: '../../Rapheal-Portfolio/images/prox/onboarding-walkthrough.mp4',
-    demoUrl: 'demo/prox-onboarding-demo.html',
-    caseStudyUrl: 'prox.html',
-    blurb: 'A complete redesign of the first-time user experience for an iOS grocery-savings app, addressing a strict 3–5 minute data-loading constraint.',
+
     sections: {
       'Problem': 'On first sign-up, Prox must gather real-time price data for local stores in the user\'s area, which takes 3 to 5 minutes. The original flow threw a static loading spinner, appearing broken to new users and resulting in high drop-off rates before seeing value.',
       'Constraints': [

@@ -59,7 +59,7 @@ function ContactContent() {
 function SectionView({ eyebrow, title, onBack, children }) {
   return (
     <div className="rs-viewin" style={{ position:'relative', minHeight:'100vh', width:'100%',
-      maxWidth:'var(--page-max)', margin:'0 auto', padding:'calc(var(--topbar-h) + clamp(1.5rem,4vh,2.5rem)) var(--gutter) clamp(3rem,7vh,6rem)' }}>
+      maxWidth:'var(--page-max)', margin:'0 auto', padding:'clamp(2.5rem,5vh,4rem) var(--gutter) clamp(3rem,7vh,6rem)' }}>
       <div className="rs-viewin-1" style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:'1rem', marginBottom:'clamp(2rem,5vw,3.5rem)' }}>
         <button data-hot onClick={onBack} className="rs-back" style={{ display:'inline-flex', alignItems:'center', gap:'0.6rem',
           fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', textTransform:'uppercase',
@@ -119,7 +119,6 @@ function App() {
       {view !== 'home' && <BlueprintBg />}
       <ScrollProgress />
       <IntroCurtain />
-      <Nav onOpen={onOpen} onHome={()=>goTo('home')} view={view} />
       <main id="top" style={{ position:'relative', zIndex:1 }}>
         {view === 'home' && <Hero onOpen={onOpen} />}
         {view === 'work' && (
