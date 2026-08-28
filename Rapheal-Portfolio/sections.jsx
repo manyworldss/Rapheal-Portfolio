@@ -39,7 +39,7 @@ function Nav({ onOpen, reading, onToggleReading, onHome, view }) {
           Rapheal Suber
         </a>
       )}
-      <nav style={{ display:'flex', alignItems:'center', gap:'clamp(1rem,2.2vw,2rem)' }}>
+      <nav style={{ display:'flex', alignItems:'center', gap:'clamp(0.6rem,2vw,1.6rem)', overflowX:'auto', maxWidth:'100%', WebkitOverflowScrolling:'touch', scrollbarWidth:'none' }}>
         {!isHome && links.map((it) => <NavLink key={it.id} label={it.l} active={view===it.id} onClick={()=>onOpen(it.id, COLORS[it.id])} />)}
         <ThemeToggle />
       </nav>
@@ -51,7 +51,7 @@ function NavLink({ label, onClick, active }) {
   return (
     <button onClick={onClick} onMouseEnter={()=>setH(true)} onMouseLeave={()=>setH(false)}
       style={{ fontFamily:'var(--font-sans)', fontSize:'var(--text-sm)', fontWeight:'var(--fw-medium)',
-        color: (h||active) ? 'var(--text-strong)' : 'var(--text-muted)', transition:'color var(--dur-2) var(--ease-soft)' }}>
+        whiteSpace:'nowrap', color: (h||active) ? 'var(--text-strong)' : 'var(--text-muted)', transition:'color var(--dur-2) var(--ease-soft)' }}>
       {label}
     </button>
   );
@@ -67,7 +67,7 @@ function ThemeToggle() {
   return (
     <button onClick={toggle} aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
       title={dark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-      style={{ display:'inline-flex', alignItems:'center', gap:'0.45rem',
+      style={{ display:'inline-flex', alignItems:'center', gap:'0.45rem', flexShrink:0,
         fontFamily:'var(--font-mono)', fontSize:'0.72rem', fontWeight:500, letterSpacing:'0.06em', textTransform:'uppercase',
         padding:'0.4rem 0.85rem', borderRadius:'var(--radius-pill)',
         border:'1px solid var(--border-strong)', background:'var(--bg-raised)',
@@ -145,8 +145,13 @@ function KioskHero({ onOpen }) {
         .k-node:hover .k-orb{ transform:scale(1.18); filter:saturate(1.2) brightness(1.08); }
         .k-node:hover .k-orb .halo{ opacity:1; }
         .k-node:hover .k-lab{ color:var(--accent) !important; }
+        .k-mob-card:hover { transform:translateY(-2px); border-color:var(--accent-line) !important; background:var(--bg-raised) !important; }
         @media (prefers-reduced-motion: reduce){ .k-orb .ball::before,.k-orb .ball::after,.k-orb .glint,.k-orb .halo{ animation:none !important; } }
-        @media (max-width:820px){ .k-field{ display:none !important; } .k-id{ position:relative !important; max-width:none !important; } }
+        @media (max-width:820px){
+          .k-field{ display:none !important; }
+          .k-id{ position:relative !important; top:auto !important; transform:none !important; padding-top:calc(var(--topbar-h) + 1.5rem) !important; padding-bottom:3rem !important; max-width:none !important; }
+          .k-mobile-menu{ display:flex !important; }
+        }
       `}</style>
 
       <div ref={ambientRef} aria-hidden="true" style={{ position:'absolute', inset:0, zIndex:1, pointerEvents:'none' }} />
@@ -158,15 +163,36 @@ function KioskHero({ onOpen }) {
       </div>
 
       {/* identity */}
-      <div className="k-id" style={{ position:'absolute', zIndex:4, left:'var(--gutter)', top:'50%', transform:'translateY(-50%)', maxWidth:'min(46vw,520px)' }}>
+      <div className="k-id" style={{ position:'absolute', zIndex:4, left:'var(--gutter)', right:'var(--gutter)', top:'50%', transform:'translateY(-50%)', maxWidth:'min(46vw,520px)' }}>
         <Reveal delay={120}>
           <h1 style={{ fontFamily:'var(--font-display)', fontWeight:300, fontSize:'clamp(2.6rem,6.4vw,5rem)', lineHeight:0.92, letterSpacing:'-0.025em', textTransform:'uppercase', margin:0 }}>
             Rapheal<br/><b style={{ fontWeight:600 }}>Suber</b>
           </h1>
         </Reveal>
-        <Reveal as="p" delay={220} style={{ marginTop:'26px', fontFamily:'var(--font-mono)', fontSize:'var(--text-label)', letterSpacing:'0.2em', textTransform:'uppercase', color:'var(--text-muted)', lineHeight:1.9 }}>
+        <Reveal as="p" delay={220} style={{ marginTop:'22px', fontFamily:'var(--font-mono)', fontSize:'var(--text-label)', letterSpacing:'0.2em', textTransform:'uppercase', color:'var(--text-muted)', lineHeight:1.9 }}>
           Human Factors Psychology<br/>AI Reliability · Systems Thinking
         </Reveal>
+
+        {/* Mobile Channels Grid */}
+        <div className="k-mobile-menu" style={{ display:'none', marginTop:'28px', width:'100%', flexDirection:'column', gap:'10px' }}>
+          {KIOSK_NODES.map((d) => (
+            <button key={d.id} data-hot onClick={(e)=>{ e.preventDefault(); onOpen(d.id, d.glow); }}
+              className="k-mob-card"
+              style={{ display:'flex', alignItems:'center', gap:'14px', width:'100%', padding:'12px 16px',
+                borderRadius:'var(--radius-md, 12px)', border:'1px solid var(--border-strong)',
+                background:'var(--bg-raised)', color:'var(--text-strong)', textAlign:'left',
+                cursor:'pointer', transition:'all 0.25s ease' }}>
+              <div className="k-orb" style={{ width:38, height:38, flexShrink:0, '--g1':d.g[0], '--g2':d.g[1], '--g3':d.g[2], '--glow':d.glow }}>
+                <div className="ball"></div><div className="shell"></div><div className="glint"></div>
+              </div>
+              <div style={{ flex:1, minWidth:0 }}>
+                <div style={{ fontFamily:'var(--font-mono)', fontSize:'10px', letterSpacing:'0.14em', color:'var(--accent)', textTransform:'uppercase' }}>CH {d.n}</div>
+                <div style={{ fontFamily:'var(--font-display)', fontWeight:600, fontSize:'1.05rem', color:'var(--text-strong)' }}>{d.label}</div>
+              </div>
+              <span style={{ fontFamily:'var(--font-mono)', fontSize:'14px', color:'var(--text-faint)' }}>→</span>
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* constellation field */}

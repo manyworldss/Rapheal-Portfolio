@@ -793,33 +793,59 @@ body {
     object-fit: contain;
 }
 
-/* ── RESPONSIVE ── */
+/* ── RESPONSIVE MOBILE OPTIMIZATIONS ── */
 @media (max-width: 768px) {
-    .cs-title { font-size: 2.2rem; }
+    .cs-container {
+        padding: 0 clamp(1rem, 4vw, 1.5rem);
+    }
+
+    .cs-title { 
+        font-size: clamp(2rem, 7vw, 2.6rem); 
+        line-height: 1.1;
+    }
 
     .topbar {
         height: auto;
-        padding: 0.75rem 1rem;
+        padding: 0.65rem 1rem;
         flex-direction: column;
-        gap: 0.6rem;
+        gap: 0.5rem;
         align-items: stretch;
     }
+    
+    .topbar > div:first-child {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+
     .topbar-chapters {
-        justify-content: center;
-        flex-wrap: wrap;
+        display: flex;
+        justify-content: flex-start;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding-bottom: 2px;
         gap: 0.4rem;
+        width: 100%;
     }
+    .topbar-chapters::-webkit-scrollbar { display: none; }
+
     .chapter-link {
-        font-size: 0.58rem;
-        padding: 0.2rem 0.35rem;
-        letter-spacing: 0.05em;
-    }
-    .topbar-brand {
-        text-align: center;
         font-size: 0.62rem;
+        padding: 0.35rem 0.6rem;
+        letter-spacing: 0.06em;
+        white-space: nowrap;
+        flex-shrink: 0;
     }
+
+    .topbar-brand {
+        font-size: 0.68rem;
+    }
+
     .topbar-actions {
-        display: none; /* Hide Esc button on mobile topbar to save space */
+        display: flex;
+        align-items: center;
     }
 
     .phone-mockup-wrapper {
@@ -830,38 +856,82 @@ body {
     }
 
     .section-header {
-        padding-left: 1rem;
+        padding-left: 0.85rem;
         border-left-width: 2px;
     }
 
     .cs-meta {
-        flex-direction: column;
-        gap: var(--s-sm);
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
     }
 
     .meta-item {
         border-right: none;
         margin-right: 0;
         padding-right: 0;
-        border-bottom: 1px solid var(--glass-border-dim);
-        padding-bottom: var(--s-sm);
-        margin-bottom: var(--s-xs);
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 0.5rem;
     }
 
     .meta-item:last-child { border-bottom: none; }
 
     .visual-comparison {
         grid-template-columns: 1fr;
+        gap: 1.25rem;
     }
 
     .insight-grid,
     .insight-grid-3 {
         grid-template-columns: 1fr;
+        gap: 1rem;
     }
 
-    .finding-item { grid-template-columns: 2.5rem 1fr; }
+    .finding-item { grid-template-columns: 2.2rem 1fr; }
 
-    .tech-stack-item { grid-template-columns: 1fr; gap: 0.2rem; }
+    .tech-stack-block {
+        padding: 1.25rem;
+        margin: 1.5rem 0;
+    }
 
-    .header-actions { flex-direction: column; align-items: flex-start; }
+    .tech-stack-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .tech-stack-item {
+        padding: 0.85rem 1rem;
+    }
+
+    .header-actions { 
+        flex-direction: column; 
+        align-items: stretch;
+        gap: 0.75rem;
+        width: 100%;
+    }
+
+    .header-actions .cta-button {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+        padding: 0.9rem 1.4rem;
+        font-size: 0.82rem;
+    }
+
+    .prox-phone {
+        width: 100%;
+        max-width: 300px;
+        border-radius: 40px;
+        padding: 10px;
+    }
+
+    .prox-phone__island {
+        top: 18px;
+        width: 72px;
+        height: 20px;
+    }
+
+    .prox-phone__screen {
+        border-radius: 32px;
+    }
 }
