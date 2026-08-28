@@ -106,8 +106,9 @@
                     <strong>Year</strong>
                     2026
                 </div>
+            </div>
             <div class="header-actions">
-                <a href="#interactive-demo" class="cta-button cta-primary">📱 Test Interactive Demo ↓</a>
+                <a href="#mobile-walkthrough" class="cta-button cta-primary">📱 Watch Mobile Walkthrough ↓</a>
                 <button onclick="window.print()" class="cta-button cta-secondary" id="download-pdf-btn">Download UX Report ↓</button>
             </div>
         </header>
@@ -264,34 +265,83 @@
                 </div>
             </section>
 
-            <!-- Section 5: Interactive Mobile Demo & Screen Gallery -->
-            <section class="cs-section" id="interactive-demo">
+            <!-- Section 5: Mobile Walkthrough & Screen Gallery -->
+            <section class="cs-section" id="mobile-walkthrough">
                 <div class="section-header">
-                    <h2 class="serif">05. Interactive Mobile Demo &amp; Screen Gallery</h2>
+                    <h2 class="serif">05. Mobile Walkthrough &amp; Screen Gallery</h2>
                 </div>
                 <div class="section-body sans">
                     <p>
-                        Below is a functioning interactive mobile demo of the full 14-screen onboarding flow. You can interact directly with the prototype by selecting stores, setting dietary preferences, testing the savings slider, and experiencing both onboarding paths.
+                        Below is the full mobile walkthrough video showing the end-to-end 14-screen onboarding flow, followed by key individual screens from the system.
                     </p>
                     
                     <style>
-                        .prox-stage{ position:relative; display:flex; flex-direction:column; align-items:center; padding:clamp(1.5rem,4vw,3.25rem) 0; }
-                        .prox-stage::before{ content:''; position:absolute; top:50%; left:50%; width:min(72%,540px); aspect-ratio:1/1;
-                            transform:translate(-50%,-50%); background:radial-gradient(circle, rgba(201,138,99,0.18), transparent 62%);
-                            filter:blur(22px); pointer-events:none; z-index:0; }
-                        .prox-phone-interactive{ position:relative; z-index:1; width:414px; max-width:92vw; height:870px;
-                            background:linear-gradient(155deg,#242426,#0a0a0b); border-radius:54px; padding:10px;
-                            box-shadow:0 45px 90px -35px rgba(0,0,0,0.75), inset 0 0 0 1.5px rgba(255,255,255,0.08); overflow:hidden; }
-                        .prox-phone-interactive iframe{ width:100%; height:100%; border:none; border-radius:44px; display:block; background:#0c2014; }
+                        .prox-stage {
+                            position: relative;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            padding: clamp(2rem, 5vw, 3.5rem) 0;
+                            width: 100%;
+                        }
+                        .prox-stage::before {
+                            content: '';
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            width: min(72%, 480px);
+                            aspect-ratio: 1/1;
+                            transform: translate(-50%, -50%);
+                            background: radial-gradient(circle, rgba(201, 138, 99, 0.22), transparent 65%);
+                            filter: blur(28px);
+                            pointer-events: none;
+                            z-index: 0;
+                        }
+                        .prox-phone {
+                            position: relative;
+                            z-index: 1;
+                            width: 320px;
+                            max-width: 82vw;
+                            margin: 0 auto;
+                            background: linear-gradient(155deg, #242426, #0a0a0b);
+                            border-radius: 50px;
+                            padding: 12px;
+                            box-shadow: 0 35px 80px -25px rgba(0, 0, 0, 0.8), inset 0 0 0 1.5px rgba(255, 255, 255, 0.1);
+                        }
+                        .prox-phone__island {
+                            position: absolute;
+                            top: 24px;
+                            left: 50%;
+                            transform: translateX(-50%);
+                            width: 84px;
+                            height: 24px;
+                            background: #000;
+                            border-radius: 14px;
+                            z-index: 3;
+                            pointer-events: none;
+                        }
+                        .prox-phone__screen {
+                            display: block;
+                            width: 100%;
+                            aspect-ratio: 544 / 1084;
+                            object-fit: cover;
+                            background: #000;
+                            border-radius: 40px;
+                        }
                     </style>
                     <div class="prox-stage">
-                        <div class="prox-phone-interactive">
-                            <iframe src="demo/prox-onboarding-demo.html"
-                                    title="Prox Interactive Onboarding Mobile Demo"
-                                    loading="lazy"></iframe>
+                        <div class="prox-phone">
+                            <span class="prox-phone__island" aria-hidden="true"></span>
+                            <video class="prox-phone__screen"
+                                   autoplay muted loop playsinline controls preload="auto"
+                                   aria-label="Prox onboarding mobile walkthrough screen recording">
+                                <source src="images/prox/onboarding-walkthrough.mp4" type="video/mp4">
+                            </video>
                         </div>
                     </div>
-                    <span class="caption" style="display:block;text-align:center;margin-top:0.75rem;">Interactive Mobile Onboarding Demo — Tap and scroll through the live prototype directly on the device.</span>
+                    <span class="caption" style="display:block; text-align:center; margin-top:0.75rem;">
+                        Onboarding Mobile Walkthrough — The complete 14-screen setup experience.
+                    </span>
 
                     <div class="screenshot-grid screenshot-grid--mobile">
                         <div class="visual-block">
