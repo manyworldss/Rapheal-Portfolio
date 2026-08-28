@@ -3,8 +3,7 @@
    Tactical Telemetry / Dark Terminal Mode
    ============================================ */
 :root {
-    /* Map to new design system tokens */
-    --void:          var(--bg-inverse);
+    /* Map to design system tokens cleanly */
     --deep:          var(--bg);
     --mid:           var(--bg-raised);
     --surface:       var(--bg-raised);

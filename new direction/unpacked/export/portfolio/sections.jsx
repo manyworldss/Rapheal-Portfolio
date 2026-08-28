@@ -21,26 +21,21 @@ function Nav({ onOpen, reading, onToggleReading, onHome, view }) {
     addEventListener('scroll', onScroll, { passive: true }); onScroll();
     return () => removeEventListener('scroll', onScroll);
   }, []);
-
-  const isHome = view === 'home';
-
   return (
     <header style={{ position:'fixed', top:0, left:0, right:0, zIndex:800,
-      display:'flex', alignItems:'center', justifyContent: isHome ? 'flex-end' : 'space-between',
+      display:'flex', alignItems:'center', justifyContent:'space-between',
       height:'var(--topbar-h)', padding:'0 var(--gutter)',
       background: scrolled ? 'color-mix(in srgb, var(--bg) 82%, transparent)' : 'transparent',
       backdropFilter: scrolled ? 'blur(12px)' : 'none',
       borderBottom: `var(--hair) solid ${scrolled ? 'var(--border)' : 'transparent'}`,
       transition:'background var(--dur-3) var(--ease-soft), border-color var(--dur-3) var(--ease-soft)' }}>
-      {!isHome && (
-        <a href="#top" onClick={(e)=>{e.preventDefault(); onHome ? onHome() : scrollTo({top:0,behavior:'smooth'});}}
-          style={{ display:'flex', alignItems:'center', gap:'0.6rem', fontFamily:'var(--font-mono)', fontWeight:'var(--fw-medium)',
-          fontSize:'var(--text-sm)', letterSpacing:'var(--track-tight)', color:'var(--text-strong)' }}>
-          Rapheal Suber
-        </a>
-      )}
+      <a href="#top" onClick={(e)=>{e.preventDefault(); onHome ? onHome() : scrollTo({top:0,behavior:'smooth'});}}
+        style={{ display:'flex', alignItems:'center', gap:'0.6rem', fontFamily:'var(--font-mono)', fontWeight:'var(--fw-medium)',
+        fontSize:'var(--text-sm)', letterSpacing:'var(--track-tight)', color:'var(--text-strong)' }}>
+        Rapheal Suber
+      </a>
       <nav style={{ display:'flex', alignItems:'center', gap:'clamp(1rem,2.2vw,2rem)' }}>
-        {!isHome && links.map((it) => <NavLink key={it.id} label={it.l} active={view===it.id} onClick={()=>onOpen(it.id, COLORS[it.id])} />)}
+        {links.map((it) => <NavLink key={it.id} label={it.l} active={view===it.id} onClick={()=>onOpen(it.id, COLORS[it.id])} />)}
         <ThemeToggle />
       </nav>
     </header>
@@ -66,15 +61,11 @@ function ThemeToggle() {
   };
   return (
     <button onClick={toggle} aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
-      title={dark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-      style={{ display:'inline-flex', alignItems:'center', gap:'0.45rem',
-        fontFamily:'var(--font-mono)', fontSize:'0.72rem', fontWeight:500, letterSpacing:'0.06em', textTransform:'uppercase',
-        padding:'0.4rem 0.85rem', borderRadius:'var(--radius-pill)',
-        border:'1px solid var(--border-strong)', background:'var(--bg-raised)',
-        color:'var(--text-strong)', cursor:'pointer', transition:'all 0.2s ease',
-        boxShadow:'0 2px 8px rgba(0,0,0,0.08)' }}>
-      <span style={{ color:'var(--accent)', fontSize:'0.85rem' }}>{dark ? '☀️' : '🌙'}</span>
-      <span>{dark ? 'Light Mode' : 'Dark Mode'}</span>
+      title={dark ? 'Light mode' : 'Dark mode'}
+      style={{ width:32, height:32, display:'flex', alignItems:'center', justifyContent:'center',
+        border:'var(--hair) solid var(--border-strong)', borderRadius:'var(--radius-sm)',
+        color:'var(--text-muted)', fontSize:'0.9rem' }}>
+      {dark ? '○' : '●'}
     </button>
   );
 }
@@ -98,6 +89,15 @@ function KioskHero({ onOpen }) {
   const wiresRef = React.useRef(null);
   const ambientRef = React.useRef(null);
   const [active, setActive] = useStateS(null);
+  const [clock, setClock] = useStateS('--:--:--');
+
+  useEffectS(() => {
+    const id = setInterval(() => {
+      const t = new Date();
+      setClock([t.getHours(), t.getMinutes(), t.getSeconds()].map((x)=>String(x).padStart(2,'0')).join(':'));
+    }, 1000);
+    return () => clearInterval(id);
+  }, []);
 
   useEffectS(() => {
     const field = fieldRef.current, wires = wiresRef.current;
@@ -135,6 +135,9 @@ function KioskHero({ onOpen }) {
         @keyframes kSpin{ to{ transform:rotate(360deg); } }
         @keyframes kPulse{ 0%,100%{ transform:scale(1);} 50%{ transform:scale(1.12);} }
         @keyframes kBlink{ 0%,100%{opacity:0.3;} 50%{opacity:1;} }
+        @keyframes kDrift1{ 0%,100%{ transform:translate(0,0) scale(1);} 50%{ transform:translate(-12%,10%) scale(1.25);} }
+        @keyframes kDrift2{ 0%,100%{ transform:translate(0,0) scale(1.1);} 50%{ transform:translate(14%,-12%) scale(0.85);} }
+        @keyframes kDrift3{ 0%,100%{ transform:translate(0,0) scale(0.9);} 50%{ transform:translate(10%,14%) scale(1.3);} }
         .k-orb{ position:relative; border-radius:50%; display:grid; place-items:center; transition:transform .5s cubic-bezier(0.16,1,0.3,1), filter .4s ease; }
         .k-orb .ball{ position:absolute; inset:0; border-radius:50%; overflow:hidden; isolation:isolate; }
         .k-orb .ball::before{ content:''; position:absolute; inset:-55%; background:conic-gradient(from 0deg, var(--g1), var(--g2), var(--g3), var(--g2), var(--g1)); filter:blur(9px) contrast(1.3); animation:kSpin 11s linear infinite; }
@@ -145,20 +148,28 @@ function KioskHero({ onOpen }) {
         .k-node:hover .k-orb{ transform:scale(1.18); filter:saturate(1.2) brightness(1.08); }
         .k-node:hover .k-orb .halo{ opacity:1; }
         .k-node:hover .k-lab{ color:var(--accent) !important; }
-        @media (prefers-reduced-motion: reduce){ .k-orb .ball::before,.k-orb .ball::after,.k-orb .glint,.k-orb .halo{ animation:none !important; } }
+        @media (prefers-reduced-motion: reduce){ .k-orb .ball::before,.k-orb .ball::after,.k-orb .glint,.k-orb .halo,.k-aur span{ animation:none !important; } }
         @media (max-width:820px){ .k-field{ display:none !important; } .k-id{ position:relative !important; max-width:none !important; } }
       `}</style>
 
       <div ref={ambientRef} aria-hidden="true" style={{ position:'absolute', inset:0, zIndex:1, pointerEvents:'none' }} />
       <div aria-hidden="true" style={{ position:'absolute', inset:0, zIndex:1, pointerEvents:'none', background:'radial-gradient(140% 120% at 60% 45%, transparent 46%, var(--hero-vig) 100%)' }} />
+      <div aria-hidden="true" style={{ position:'absolute', inset:0, zIndex:5, pointerEvents:'none', opacity:0.28, mixBlendMode:'multiply', background:'repeating-linear-gradient(0deg, transparent 0 3px, var(--hero-scan) 3px 4px)' }} />
 
-      {/* top telemetry readout */}
+      {/* corner telemetry */}
       <div style={{ position:'absolute', top:'calc(var(--topbar-h) + 0.75rem)', left:'var(--gutter)', zIndex:6, fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'0.22em', textTransform:'uppercase', color:'var(--text-faint)', lineHeight:1.8 }}>
-        SELECT PATH · CH {active ? active.n : '00'} / {active ? active.label.toUpperCase() : 'STANDBY'}
+        RS · SELECT PATH<br/>CH {active ? active.n : '00'} / {active ? active.label.toUpperCase() : 'STANDBY'}
       </div>
+      <div style={{ position:'absolute', top:'calc(var(--topbar-h) + 0.75rem)', right:'var(--gutter)', zIndex:6, textAlign:'right', fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'0.22em', textTransform:'uppercase', color:'var(--text-faint)', lineHeight:1.8 }}>
+        EST. 2026<br/>MELBOURNE FL
+      </div>
+      <div style={{ position:'absolute', bottom:'clamp(1.6rem,4vh,2rem)', right:'var(--gutter)', zIndex:6, fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'0.22em', color:'var(--text-faint)' }}>{clock}</div>
 
       {/* identity */}
       <div className="k-id" style={{ position:'absolute', zIndex:4, left:'var(--gutter)', top:'50%', transform:'translateY(-50%)', maxWidth:'min(46vw,520px)' }}>
+        <Reveal as="div" delay={40} style={{ display:'flex', alignItems:'center', gap:'10px', fontFamily:'var(--font-mono)', fontSize:'var(--text-label)', letterSpacing:'0.32em', textTransform:'uppercase', color:'#7EC8F0', marginBottom:'22px' }}>
+          <span style={{ width:24, height:1, background:'var(--accent)' }} /> Portfolio — Select a channel
+        </Reveal>
         <Reveal delay={120}>
           <h1 style={{ fontFamily:'var(--font-display)', fontWeight:300, fontSize:'clamp(2.6rem,6.4vw,5rem)', lineHeight:0.92, letterSpacing:'-0.025em', textTransform:'uppercase', margin:0 }}>
             Rapheal<br/><b style={{ fontWeight:600 }}>Suber</b>
@@ -166,6 +177,9 @@ function KioskHero({ onOpen }) {
         </Reveal>
         <Reveal as="p" delay={220} style={{ marginTop:'26px', fontFamily:'var(--font-mono)', fontSize:'var(--text-label)', letterSpacing:'0.2em', textTransform:'uppercase', color:'var(--text-muted)', lineHeight:1.9 }}>
           Human Factors Psychology<br/>AI Reliability · Systems Thinking
+        </Reveal>
+        <Reveal as="div" delay={320} style={{ marginTop:'30px', display:'flex', alignItems:'center', gap:'9px', fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'0.26em', textTransform:'uppercase', color:'var(--text-faint)' }}>
+          <span style={{ width:5, height:5, borderRadius:'50%', background:'var(--accent)', animation:'kBlink 2.4s ease-in-out infinite' }} /> 05 channels
         </Reveal>
       </div>
 
@@ -192,6 +206,45 @@ function KioskHero({ onOpen }) {
   );
 }
 
+/* ---- Live telemetry readout: instrument-panel corner detail ---- */
+function Telemetry() {
+  const [t, setT] = useStateS(() => new Date());
+  const [up, setUp] = useStateS(0);
+  useEffectS(() => {
+    const id = setInterval(() => { setT(new Date()); setUp((u) => u + 1); }, 1000);
+    return () => clearInterval(id);
+  }, []);
+  const hh = String(t.getHours()).padStart(2, '0');
+  const mm = String(t.getMinutes()).padStart(2, '0');
+  const ss = String(t.getSeconds()).padStart(2, '0');
+  const rows = [
+    ['LOCAL', `${hh}:${mm}:${ss}`, false],
+    ['SESSION', `${String(Math.floor(up/60)).padStart(2,'0')}:${String(up%60).padStart(2,'0')}`, false],
+  ];
+  return (
+    <Reveal delay={460} className="rs-telemetry" style={{ position:'absolute', right:'var(--gutter)', bottom:'clamp(2rem,7vh,4.5rem)',
+      display:'flex', flexDirection:'column', gap:'0.55rem', textAlign:'right', pointerEvents:'none' }}>
+      {rows.map(([k, v, live]) => (
+        <div key={k} style={{ display:'flex', alignItems:'center', justifyContent:'flex-end', gap:'0.7rem',
+          fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', textTransform:'uppercase' }}>
+          <span style={{ color:'var(--text-faint)' }}>{k}</span>
+          <span style={{ color: live ? 'var(--accent)' : 'var(--text-muted)', minWidth:'7ch', display:'inline-flex', alignItems:'center', justifyContent:'flex-end', gap:'0.4rem' }}>
+            {live && <span className="rs-pulse" style={{ width:6, height:6, borderRadius:'999px', background:'var(--accent)', display:'inline-block' }} />}
+            {v}
+          </span>
+        </div>
+      ))}
+      <span style={{ marginTop:'0.15rem', width:64, height:1, background:'var(--border)', alignSelf:'flex-end' }} />
+      <style>{`
+        @keyframes rsPulse{ 0%,100%{ opacity:0.35; transform:scale(1); } 50%{ opacity:1; transform:scale(1.35); } }
+        .rs-pulse{ animation: rsPulse 2.4s var(--ease-soft) infinite; }
+        @media (prefers-reduced-motion: reduce){ .rs-pulse{ animation:none; } }
+        @media (max-width: 640px){ .rs-telemetry{ display:none !important; } }
+      `}</style>
+    </Reveal>
+  );
+}
+
 function PrimaryBtn({ children, onClick }) {
   const [h, setH] = useStateS(false);
   const ref = useMagnetic(0.26);
@@ -199,7 +252,7 @@ function PrimaryBtn({ children, onClick }) {
     <button ref={ref} data-hot onClick={onClick} onMouseEnter={()=>setH(true)} onMouseLeave={()=>setH(false)}
       style={{ fontFamily:'var(--font-sans)', fontSize:'var(--text-sm)', fontWeight:'var(--fw-medium)',
         color:'var(--text-on-inverse)', background: h ? 'var(--text)' : 'var(--text-strong)',
-        borderRadius:'var(--radius-pill)', padding:'0.75rem 1.4rem',
+        borderRadius:'var(--radius-sm)', padding:'0.75rem 1.4rem',
         transition:'background var(--dur-2) var(--ease-soft), transform var(--dur-3) var(--ease-out)' }}>
       {children}
     </button>
@@ -212,7 +265,7 @@ function SecondaryBtn({ children, onClick }) {
     <button ref={ref} data-hot onClick={onClick} onMouseEnter={()=>setH(true)} onMouseLeave={()=>setH(false)}
       style={{ fontFamily:'var(--font-sans)', fontSize:'var(--text-sm)', fontWeight:'var(--fw-medium)',
         color:'var(--text-strong)', background: h ? 'var(--bg-inset)' : 'transparent',
-        border:'var(--hair) solid var(--border-strong)', borderRadius:'var(--radius-pill)', padding:'0.75rem 1.4rem',
+        border:'var(--hair) solid var(--border-strong)', borderRadius:'var(--radius-sm)', padding:'0.75rem 1.4rem',
         transition:'background var(--dur-2) var(--ease-soft), transform var(--dur-3) var(--ease-out)' }}>
       {children}
     </button>
@@ -221,10 +274,11 @@ function SecondaryBtn({ children, onClick }) {
 
 /* ---- Case Studies: mission-patch dossier grid ---- */
 const MISSION_G = {
-  reach:      ['#C8CBF2','#8E93D8','#1B2340'],
   celio:      ['#A8DCF7','#7EC8F0','#2E6C97'],
-  materialsiq:['#9BDCD6','#63C6BE','#12333A'],
+  'north-star':['#9BDCD6','#63C6BE','#12333A'],
+  reach:      ['#C8CBF2','#8E93D8','#1B2340'],
   prox:       ['#DDF1FC','#A8DCF7','#5A8FB0'],
+  illumi:     ['#A8DCF7','#63C6BE','#2E6C97'],
 };
 
 function CaseStudies({ items, onOpen, embedded }) {
@@ -255,56 +309,48 @@ function CaseStudies({ items, onOpen, embedded }) {
 function MissionCard({ item, onOpen }) {
   const [h, setH] = useStateS(false);
   const g = MISSION_G[item.id] || MISSION_G.celio;
-  const imageSrc = item.thumb || item.hero;
-
   return (
     <button data-hot onClick={onOpen} onMouseEnter={()=>setH(true)} onMouseLeave={()=>setH(false)}
       className="rs-mc" style={{ position:'relative', width:'100%', height:'100%', textAlign:'left', overflow:'hidden',
-        display:'flex', flexDirection:'column', gap:'1.2rem', cursor:'pointer',
+        display:'flex', flexDirection:'column', gap:'1.2rem',
         padding:'clamp(1.4rem,2.2vw,1.9rem)', border:`var(--hair) solid ${h ? 'var(--accent-line)' : 'var(--border)'}`,
         borderRadius:'var(--radius-md)', background: h ? 'var(--bg-inset)' : 'var(--bg-raised)',
         transform: h ? 'translateY(-3px)' : 'none',
         transition:'background var(--dur-2) var(--ease-soft), border-color var(--dur-2) var(--ease-soft), transform var(--dur-3) var(--ease-out)' }}>
-      
       {/* patch glow bleed */}
       <span aria-hidden="true" style={{ position:'absolute', top:-70, right:-70, width:220, height:220, borderRadius:'50%',
         background:`radial-gradient(closest-side, ${g[1]}, transparent 70%)`, opacity: h ? 0.20 : 0.09,
         filter:'blur(26px)', transition:'opacity var(--dur-3) var(--ease-out)', pointerEvents:'none' }} />
-
       {/* patch + code */}
-      <div style={{ position:'relative', display:'flex', alignItems:'center', justifyContent:'space-between', gap:'1rem' }}>
+      <span style={{ position:'relative', display:'flex', alignItems:'center', justifyContent:'space-between', gap:'1rem' }}>
         <span className="rs-patch" style={{ '--p1':g[0], '--p2':g[1], '--p3':g[2],
-          width: h ? 62 : 56, height: h ? 62 : 56, transition:'all var(--dur-3) var(--ease-out)' }}>
+          width: h ? 60 : 54, height: h ? 60 : 54, transition:'all var(--dur-3) var(--ease-out)' }}>
           <span className="rs-patch-core" /><span className="rs-patch-ring" />
         </span>
-        <div style={{ display:'flex', flexDirection:'column', alignItems:'flex-end', gap:'0.3rem' }}>
+        <span style={{ display:'flex', flexDirection:'column', alignItems:'flex-end', gap:'0.3rem' }}>
           <span style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)',
             color: h ? 'var(--accent)' : 'var(--text-faint)', transition:'color var(--dur-2) var(--ease-soft)' }}>{item.code}</span>
-          <span style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', color:'var(--text-faint)' }}>{item.domain}</span>
-        </div>
-      </div>
-
-      {/* title + summary */}
-      <div style={{ position:'relative', display:'block', flex:1 }}>
-        <h3 style={{ display:'block', fontFamily:'var(--font-display)', fontWeight:'var(--fw-semibold)', fontSize:'var(--text-h3)',
-          letterSpacing:'var(--track-tight)', color:'var(--text-strong)', margin:'0 0 0.6rem 0' }}>{item.title}</h3>
-        <p style={{ display:'block', fontSize:'var(--text-sm)', lineHeight:'var(--leading-sm)', color:'var(--text-muted)', margin:0 }}>{item.summary || item.blurb}</p>
-      </div>
-
-      {/* tags & primary CTA */}
-      <div style={{ position:'relative', display:'flex', alignItems:'center', justifyContent:'space-between', gap:'0.75rem',
-        borderTop:'var(--hair) solid var(--border)', paddingTop:'0.9rem' }}>
-        <div style={{ display:'flex', gap:'0.4rem', flexWrap:'wrap' }}>
-          {(item.tags || item.disciplines || []).slice(0,3).map((d)=>(
-            <span key={d} style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)',
-              textTransform:'uppercase', color:'var(--text-muted)', background:'var(--bg-inset)', padding:'0.2rem 0.5rem', borderRadius:'var(--radius-pill)', border:'1px solid var(--border)' }}>{d}</span>
-          ))}
-        </div>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', textTransform:'uppercase', letterSpacing:'0.06em',
-          color: h ? 'var(--accent)' : 'var(--text-muted)', fontWeight:600, display:'inline-flex', alignItems:'center', gap:'0.25rem', transition:'color 0.2s ease' }}>
-          Full Case Study <span style={{ transform: h ? 'translateX(3px) translateY(-1px)' : 'none', transition:'transform 0.2s ease' }}>↗</span>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', color:'var(--text-faint)' }}>{item.year}</span>
         </span>
-      </div>
+      </span>
+      {/* title + blurb */}
+      <span style={{ position:'relative', display:'block', flex:1 }}>
+        <span style={{ display:'block', fontFamily:'var(--font-display)', fontWeight:'var(--fw-semibold)', fontSize:'var(--text-h3)',
+          letterSpacing:'var(--track-tight)', color:'var(--text-strong)', marginBottom:'0.6rem' }}>{item.title}</span>
+        <span style={{ display:'block', fontSize:'var(--text-sm)', lineHeight:'var(--leading-sm)', color:'var(--text-muted)' }}>{item.blurb}</span>
+      </span>
+      {/* telemetry footer */}
+      <span style={{ position:'relative', display:'flex', alignItems:'center', justifyContent:'space-between', gap:'0.75rem',
+        borderTop:'var(--hair) solid var(--border)', paddingTop:'0.9rem' }}>
+        <span style={{ display:'flex', gap:'0.4rem', flexWrap:'wrap' }}>
+          {item.disciplines.slice(0,2).map((d)=>(
+            <span key={d} style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)',
+              textTransform:'uppercase', color:'var(--text-muted)' }}>{d}</span>
+          ))}
+        </span>
+        <span aria-hidden="true" style={{ fontFamily:'var(--font-mono)', fontSize:'0.95rem', color: h ? 'var(--accent)' : 'var(--text-muted)',
+          transform: h ? 'translateX(4px)' : 'none', transition:'transform var(--dur-3) var(--ease-out), color var(--dur-2) var(--ease-soft)' }}>→</span>
+      </span>
       <style>{`
         .rs-patch{ position:relative; border-radius:50%; flex:none; display:block; }
         .rs-patch-core{ position:absolute; inset:0; border-radius:50%; overflow:hidden;

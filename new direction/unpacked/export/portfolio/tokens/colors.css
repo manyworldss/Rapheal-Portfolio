@@ -5,19 +5,19 @@
    Light + dark via [data-theme]; the dark theme IS the film mode.
    ============================================================ */
 :root {
-  /* ---- Paper (crisp light canvas) ---- */
-  --paper:          #F8FAFC;   /* primary canvas — clean slate */
-  --paper-raised:   #FFFFFF;   /* lifted surface / card field */
-  --paper-sunk:     #E2E8F0;   /* recessed / inset wells */
-  --white:          #FFFFFF;
+  /* ---- Paper (warm light canvas) ---- */
+  --paper:          #F0ECE3;   /* primary canvas — warm oat */
+  --paper-raised:   #F7F4ED;   /* lifted surface / card field */
+  --paper-sunk:     #E7E1D6;   /* recessed / inset wells */
+  --white:          #FCFAF5;
 
-  /* ---- Ink (high contrast text on paper) ---- */
-  --ink:            #0F172A;   /* primary text — deep slate */
-  --ink-2:          #1E293B;   /* secondary text */
-  --ash:            #475569;   /* muted body / metadata */
-  --smoke:          #64748B;   /* tertiary / disabled */
-  --line:           rgba(15, 23, 42, 0.14);   /* crisp hairline on paper */
-  --line-2:         rgba(15, 23, 42, 0.28);
+  /* ---- Ink (text on paper) ---- */
+  --ink:            #17140F;   /* primary text — warm near-black */
+  --ink-2:          #2A251E;   /* carbon — secondary headings */
+  --ash:            #6B6457;   /* muted body / metadata */
+  --smoke:          #9C9587;   /* tertiary / disabled / placeholder */
+  --line:           rgba(23, 20, 15, 0.12);   /* hairline on paper */
+  --line-2:         rgba(23, 20, 15, 0.24);
 
   /* ---- Void (deep space canvas — the default mode) ---- */
   --void:           #05070C;   /* deep space black */

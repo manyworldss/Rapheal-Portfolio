@@ -1,6 +1,6 @@
 /* ============================================================
    Portfolio — shared helpers. Minimal, engineering-grade.
-   Scroll reveals + light theme boot. Dynamic Starfield & Cursor.
+   Scroll reveals + light theme boot. No decorative cursor/curtain.
    ============================================================ */
 const { useState, useEffect, useRef } = React;
 
@@ -9,6 +9,7 @@ function useReveal() {
   const [shown, setShown] = useState(false);
   useEffect(() => {
     const el = ref.current; if (!el) { setShown(true); return; }
+    // If already in (or above) the viewport at mount, reveal on next frame.
     const r = el.getBoundingClientRect();
     if (r.top < window.innerHeight * 0.92) {
       const id = requestAnimationFrame(() => setShown(true));
@@ -18,6 +19,7 @@ function useReveal() {
       es.forEach((e) => { if (e.isIntersecting) { setShown(true); io.disconnect(); } });
     }, { threshold: 0.16 });
     io.observe(el);
+    // Safety fallback: never leave content invisible.
     const t = setTimeout(() => setShown(true), 1200);
     return () => { io.disconnect(); clearTimeout(t); };
   }, []);
@@ -37,7 +39,7 @@ function Reveal({ children, delay = 0, y = '18px', as = 'div', style = {}, ...re
   );
 }
 
-/* ---- Space field: sparse drifting stars, star-chart grid, comet-trail cursor ---- */
+/* ---- Space field: sparse drifting stars, faint nebula, comet-trail cursor ---- */
 function BlueprintBg() {
   const cv = useRef(null);
   useEffect(() => {
@@ -52,13 +54,14 @@ function BlueprintBg() {
       w = canvas.clientWidth; h = canvas.clientHeight;
       canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const n = Math.round((w * h) / 11000);
+      // sparse: ~1 star per 14k px², three depth layers
+      const n = Math.round((w * h) / 14000);
       stars = Array.from({ length: n }, () => {
         const layer = Math.random() < 0.62 ? 0 : (Math.random() < 0.7 ? 1 : 2);
         return {
           x: Math.random() * w, y: Math.random() * h,
-          r: layer === 2 ? 1.6 + Math.random() * 1.0 : layer === 1 ? 1.1 + Math.random() * 0.5 : 0.6 + Math.random() * 0.45,
-          a: layer === 2 ? 0.85 : layer === 1 ? 0.6 : 0.4,
+          r: layer === 2 ? 1.5 + Math.random() * 0.9 : layer === 1 ? 1.0 + Math.random() * 0.5 : 0.5 + Math.random() * 0.45,
+          a: layer === 2 ? 0.75 : layer === 1 ? 0.5 : 0.3,
           vx: (layer + 1) * 0.008 + Math.random() * 0.006,
           tw: Math.random() < 0.22 ? 0.6 + Math.random() * 1.4 : 0,
           ph: Math.random() * Math.PI * 2,
@@ -72,7 +75,7 @@ function BlueprintBg() {
         for (let i = 0; i < 2; i++) {
           trail.push({ x: mx + (Math.random() - 0.5) * 5, y: my + (Math.random() - 0.5) * 5,
             vx: (Math.random() - 0.5) * 0.5, vy: (Math.random() - 0.5) * 0.5 + 0.16,
-            life: 1, r: 0.8 + Math.random() * 1.6 });
+            life: 1, r: 0.7 + Math.random() * 1.5 });
         }
         if (trail.length > 240) trail.splice(0, trail.length - 240);
       }
@@ -82,57 +85,35 @@ function BlueprintBg() {
       t += 1;
       const light = document.documentElement.dataset.theme === 'light';
       ctx.clearRect(0, 0, w, h);
-
-      // Celestial star-chart grid in light mode or faint coordinate lines in dark mode
-      ctx.lineWidth = 1;
-      ctx.strokeStyle = light ? 'rgba(15, 23, 42, 0.04)' : 'rgba(232, 241, 248, 0.03)';
-      const gridSize = 160;
-      for (let x = 0; x < w; x += gridSize) {
-        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
-      }
-      for (let y = 0; y < h; y += gridSize) {
-        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
-      }
-
-      // Stars
+      // stars
       for (const s of stars) {
         if (!reduce) { s.x += s.vx; if (s.x > w + 2) s.x = -2; }
         let a = s.a;
         if (s.tw && !reduce) a *= 0.55 + 0.45 * Math.sin(t * 0.012 * s.tw + s.ph);
-        ctx.globalAlpha = light ? Math.max(0, a * 0.75) : Math.max(0, a);
-        ctx.fillStyle = light ? '#0F172A' : '#E8F1F8';
+        ctx.globalAlpha = Math.max(0, a);
+        ctx.fillStyle = light ? '#2E4257' : '#E8F1F8';
         ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, 6.283); ctx.fill();
-        if (s.r > 1.3) {
-          ctx.globalAlpha = light ? a * 0.12 : a * 0.20;
-          ctx.fillStyle = light ? '#0284C7' : '#7EC8F0';
+        if (s.r > 1.3) { // faint bloom on the brightest
+          ctx.globalAlpha = a * 0.16;
           ctx.beginPath(); ctx.arc(s.x, s.y, s.r * 3.6, 0, 6.283); ctx.fill();
         }
       }
-
-      // Comet trail
+      // comet trail
       for (let i = trail.length - 1; i >= 0; i--) {
         const p = trail[i];
         p.x += p.vx; p.y += p.vy; p.vy += 0.006; p.life -= 0.022;
         if (p.life <= 0) { trail.splice(i, 1); continue; }
-        ctx.globalAlpha = light ? p.life * 0.85 : p.life * 0.75;
-        ctx.fillStyle = light ? (p.life > 0.62 ? '#0284C7' : '#0F172A') : (p.life > 0.62 ? '#DDF1FC' : '#7EC8F0');
+        ctx.globalAlpha = p.life * 0.72;
+        ctx.fillStyle = light ? (p.life > 0.62 ? '#4A7FA8' : '#2E6C97') : (p.life > 0.62 ? '#DDF1FC' : '#7EC8F0');
         ctx.beginPath(); ctx.arc(p.x, p.y, p.r * p.life, 0, 6.283); ctx.fill();
       }
-
-      // Cursor halo head
+      // cursor head
       if (mx > -900 && !coarse) {
-        const g = ctx.createRadialGradient(mx, my, 0, mx, my, 14);
-        if (light) {
-          g.addColorStop(0, 'rgba(15,23,42,0.45)');
-          g.addColorStop(0.5, 'rgba(2,132,199,0.25)');
-          g.addColorStop(1, 'rgba(2,132,199,0)');
-        } else {
-          g.addColorStop(0, 'rgba(232,241,248,0.55)');
-          g.addColorStop(0.5, 'rgba(126,200,240,0.25)');
-          g.addColorStop(1, 'rgba(126,200,240,0)');
-        }
+        const g = ctx.createRadialGradient(mx, my, 0, mx, my, 12);
+        if (light) { g.addColorStop(0, 'rgba(46,108,151,0.34)'); g.addColorStop(1, 'rgba(46,108,151,0)'); }
+        else { g.addColorStop(0, 'rgba(232,241,248,0.5)'); g.addColorStop(1, 'rgba(126,200,240,0)'); }
         ctx.globalAlpha = 1; ctx.fillStyle = g;
-        ctx.beginPath(); ctx.arc(mx, my, 14, 0, 6.283); ctx.fill();
+        ctx.beginPath(); ctx.arc(mx, my, 12, 0, 6.283); ctx.fill();
       }
       ctx.globalAlpha = 1;
       raf = requestAnimationFrame(draw);
@@ -149,7 +130,7 @@ function BlueprintBg() {
       <canvas ref={cv} className="rs-stars" />
       <style>{`
         .rs-stars{ position:absolute; inset:0; width:100%; height:100%; }
-        [data-theme="light"] .rs-stars{ opacity:0.85; }
+        [data-theme="light"] .rs-stars{ opacity:0.22; }
       `}</style>
     </div>
   );
@@ -192,7 +173,7 @@ function useMagnetic(strength = 0.28) {
   return ref;
 }
 
-/* ---- Glass sphere ---- */
+/* ---- Glass sphere: warm clay/pine swirl under a glossy shell ---- */
 function Sphere({ size = 160, style = {} }) {
   return (
     <div className="rs-sphere" style={{ width:size, height:size, ...style }}>
@@ -217,7 +198,7 @@ function Sphere({ size = 160, style = {} }) {
   );
 }
 
-/* ---- Hero orb ---- */
+/* ---- Hero orb: a large partial sphere anchored off the right edge for depth ---- */
 function HeroOrb() {
   return (
     <div aria-hidden="true" className="rs-hero-orb">
@@ -234,7 +215,7 @@ function HeroOrb() {
   );
 }
 
-/* ---- Intro curtain ---- */
+/* ---- Intro curtain: sphere assembles + a 00→100 counter, then wipes up ---- */
 function IntroCurtain() {
   const [n, setN] = useState(0);
   const [lifted, setLifted] = useState(false);

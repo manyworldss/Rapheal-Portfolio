@@ -1,114 +1,268 @@
 /* ============================================================
-   APP - Root Application & Case Studies Data
-   Refocused on Human Factors Psychology, UX & Systems Engineering.
+   Portfolio, data + panel content + composition.
+   Human Factors Psychology · AI Reliability · Systems.
    ============================================================ */
-const { useState: useAppState, useEffect: useAppEffect } = React;
+const { useState: useAppState } = React;
 
 const WORK = [
   {
-    id: 'reach',
-    code: 'CS-01',
-    title: 'Reach: Clinical Rehab & Motor Recovery System',
-    domain: 'Human Factors · Clinical Systems',
-    tags: ['Human Factors', 'Clinical Ergonomics', 'Cognitive Workload', 'Full-Stack'],
+    id: 'reach', code: 'CS-01', title: 'Reach', year: '2025',
+    disciplines: ['Human Factors', 'Clinical Systems', 'Full-Stack'],
     thumb: './assets/work/reach-card.jpg',
-    page: 'reach.html',
-    summary: 'A clinical caseload and outcome-tracking platform for rehab therapists treating upper-extremity motor recovery after stroke, built so clinicians can parse recovery trajectories in seconds.',
-    problem: `Standardized outcome measures (Fugl-Meyer Assessment, Action Research Arm Test) are critical for tracking stroke recovery but are documented inconsistently due to high time pressure and fragmented clinical systems. Furthermore, home exercise adherence—the primary driver of long-term recovery—is invisible between sessions, forcing therapists to make clinical decisions without reliable workload data.`,
-    constraints: `Strict clinical time limits per patient (typically 30–45 minutes total session time), zero tolerance for complex data entry during patient interaction, heterogeneous severity levels (mild, moderate, severe), and non-standardized EHR integration requirements.`,
-    approach: `Conducted iterative co-design sessions with three licensed occupational therapists. Engineered an outcome-driven architecture where baseline assessment scores (FMA-UE) automatically route patients into severity-banded programs. Implemented an early-warning signal that surfaces patients whose home adherence drops below 60%, and auto-generates EMR documentation blurbs to eliminate redundant typing.`,
-    outcome: `Reduced clinical charting overhead, eliminated double-entry of outcome metrics, and provided therapists with an instant glance of caseload trajectory before patient entry.`,
-    lessonsLearned: `Tools designed for high-stress human environments must carry the documentation burden automatically; if an interface requires extra manual input during a high-workload task, clinicians will abandon it.`
+    hero: './assets/work/reach-card.jpg',
+    blurb: 'A caseload and outcome-tracking system for rehabilitation therapists treating upper-extremity motor recovery after stroke, built so a clinician can parse patient recovery trajectories in seconds.',
+    sections: {
+      'Problem': 'Rehab therapists carry large caseloads and monitor recovery trajectories across many patients simultaneously. Standardized outcome measures like the Fugl-Meyer Assessment are documented inconsistently due to severe session time pressure. Existing EHR tools bury data across separate tabs, forcing clinicians to reconstruct patient trajectories by hand under high stress.',
+      'Constraints': [
+        'Clinicians must read the interface between patient appointments, in seconds, not minutes.',
+        'Recovery data is non-linear and noisy, making single-session snapshots unreliable.',
+        'Patient-safety domain: an interface that masks a declining patient creates severe use-error risks.',
+        'Built solo, full-stack, adhering to clinical ergonomics standards.',
+      ],
+      'Approach': 'Engineered around the clinician glance rather than traditional EHR database layouts. Recovery scores automatically plot against baseline severity bands, surfacing deviations without manual calculation. Assigned home programs display adherence metrics inline, and remote-monitoring trajectory changes trigger early-warning alerts for high-risk patients.',
+      'Outcome': 'Delivered a functional platform where therapists scan an entire caseload in seconds, identify off-track trajectories immediately, and review per-patient adherence without double-entry overhead. Validated directly against therapist charting workflows.',
+      'Lessons Learned': 'In safety-adjacent clinical software, the central challenge is deciding what to omit. Every unnecessary element competing for clinician attention costs precious seconds on every patient daily. Cognitive restraint is the core usability feature.',
+    },
+    meta: [
+      { k: 'Role', v: 'Human Factors · Clinical Systems · Full-Stack Development' },
+      { k: 'Domain', v: 'Clinical rehabilitation · stroke recovery' },
+      { k: 'Year', v: '2025' },
+      { k: 'Status', v: 'Prototype, in validation' },
+    ],
   },
   {
-    id: 'celio',
-    code: 'CS-02',
-    title: 'Celio: Offline-First Critical Information System',
-    domain: 'Cognitive Reliability · Medical Safety',
-    tags: ['Offline Systems', 'Cognitive Load', 'WebLLM', 'Fail-Safe UX'],
+    id: 'celio', code: 'CS-02', title: 'Celio', year: '2025',
+    disciplines: ['Human Factors', 'Offline-First', 'Full-Stack'],
     thumb: './assets/work/celio-landing.png',
-    page: 'celio.html',
-    summary: 'An offline-first communication and travel platform tackling the severe cognitive load and risk of medical miscommunication for Celiacs travelling in low-connectivity environments.',
-    problem: `Celiac travelers face acute anxiety and high medical risk (severe autoimmune reactions) when communicating dietary requirements in foreign languages. Server-dependent translation tools fail in remote regions or low-connectivity dining environments, creating a severe single point of failure.`,
-    constraints: `Zero internet dependency requirement (must work reliably in airplane mode or remote areas), low latency execution on mobile hardware, zero hallucination tolerance for medical dietary cards, and simple, high-visibility contrast UI suitable for noisy or stressful environments.`,
-    approach: `Engineered an offline-first architecture utilizing WebLLM for client-side local model inference, eliminating cloud API calls. Built a deterministic 12-language Translation Card system with local text-to-speech, exportable directly to native Apple & Google Wallet passes for offline verification.`,
-    outcome: `Delivered sub-second translation rendering and offline AI query responses with 0% server latency, ensuring patients maintain critical communication capabilities regardless of network availability.`,
-    lessonsLearned: `For safety-critical human tasks, offline-first reliability is not a feature—it is the core safety requirement. High-anxiety users demand deterministic, non-probabilistic fallbacks.`
+    hero: './assets/work/celio-landing.png',
+    blurb: 'An offline-first platform reducing the cognitive load and medical anxiety of international travel for Celiac patients, turning a high-stakes interaction into a single confident card.',
+    sections: {
+      'Problem': 'For individuals with Celiac disease, ordering food abroad is a critical medical decision made across foreign language barriers, often with zero cellular connectivity. Severe autoimmune reactions make miscommunication dangerous, yet generic translation tools fail in offline dining environments.',
+      'Constraints': [
+        'Must function 100% offline with zero internet dependency in remote areas or airplane mode.',
+        'Critical interactions occur under social pressure within seconds.',
+        'Zero hallucination tolerance: medical dietary translation must be unambiguous.',
+        'Privacy: health context must remain strictly on-device without cloud logging.',
+      ],
+      'Approach': 'Engineered an offline-first architecture utilizing WebLLM for client-side local inference, eliminating cloud API calls entirely. Built a deterministic 12-language Translation Card system with local text-to-speech, exportable directly to native Apple & Google Wallet passes for immediate offline presentation.',
+      'Outcome': 'Achieved sub-second translation rendering and offline AI query responses with zero server latency, ensuring travelers maintain reliable communication tools regardless of network availability.',
+      'Lessons Learned': 'Designing for safety-critical human tasks requires building for worst-case conditions rather than ideal demos. High-anxiety users in unfamiliar environments demand deterministic, non-probabilistic fallbacks.',
+    },
+    meta: [
+      { k: 'Role', v: 'Human Factors · Research · Full-Stack Development' },
+      { k: 'Stack', v: 'Django · Alpine.js · WebLLM · Web Speech API · Wallet APIs' },
+      { k: 'Domain', v: 'Consumer health · travel safety' },
+      { k: 'Year', v: '2025' },
+    ],
   },
   {
-    id: 'materialsiq',
-    code: 'CS-03',
-    title: 'MaterialIQ: Objective Quality in the Shopping Cart',
-    domain: 'AI Quality Analysis · Browser Extension',
-    tags: ['Browser Extension', 'AI Parsing', 'Quality Analysis', 'FastAPI'],
+    id: 'materialsiq', code: 'CS-03', title: 'MaterialIQ', year: '2025',
+    disciplines: ['AI Quality Analysis', 'Browser Extension', 'FastAPI'],
     thumb: './images/materialsIQ/hero.png',
-    page: 'materialsiq.html',
-    summary: 'An AI-powered browser extension that analyzes product quality, material composition, and value for money in real time while shopping online.',
-    problem: `Consumers spend hundreds of dollars on products assuming high quality, often struggling to understand material blends, construction details, and fair pricing. Without objective data, price is often falsely equated with durability.`,
-    constraints: `The tool must parse unstructured e-commerce product descriptions and specifications in real time directly within the browser, requiring low-latency inference and clear, transparent rule-based scoring engines so users understand exactly how scores are derived.`,
-    approach: `Developed an AI-powered Chrome extension backed by FastAPI. The system extracts fiber composition and fabric weight to calculate a Material Quality Score, infers a Durability Estimate from construction cues, and computes an objective Value Score to determine if the item is worth its asking price.`,
-    outcome: `Launched MaterialIQ (Beta) on the Chrome Web Store with Skimlinks integration, providing shoppers with instant, transparent scoring directly in their shopping carts to remove purchasing uncertainty.`,
-    lessonsLearned: `Building consumer trust requires extreme transparency in algorithmic scoring. Users do not trust a black-box "Quality Score"—they need to see the exact fiber breakdowns and rule-based logic that drove the calculation.`
+    hero: './images/materialsIQ/hero.png',
+    blurb: 'An AI-powered browser extension analyzing product quality, material composition, and value for money in real time while shopping online.',
+    sections: {
+      'Problem': 'Consumers spend significant money assuming product durability, often struggling to parse complex fiber blends, fabric weight, and construction details. Price is frequently conflated with quality due to a lack of objective, transparent evaluation metrics in online retail environments.',
+      'Constraints': [
+        'Must parse unstructured e-commerce product listings instantly within the browser viewport.',
+        'Low-latency inference requirements to prevent disrupting consumer browsing flow.',
+        'Scoring rules must be completely transparent to prevent black-box distrust.',
+      ],
+      'Approach': 'Developed a browser extension powered by a FastAPI backend. The system extracts fiber percentages and weight specs to compute a Material Quality Score, estimates construction durability, and calculates an objective Value Score comparing retail price against material worth.',
+      'Outcome': 'Released MaterialIQ (Beta) on the Chrome Web Store, providing shoppers with instant, transparent quality breakdowns directly in their shopping carts to reduce purchasing uncertainty.',
+      'Lessons Learned': 'Building user trust in algorithmic scoring requires absolute algorithmic transparency. Users reject black-box scores; showing the exact fiber breakdown and rule-based logic validates the evaluation.',
+    },
+    meta: [
+      { k: 'Role', v: 'AI Quality Analysis · Extension Architecture · Backend Engineering' },
+      { k: 'Stack', v: 'Chrome Extension API · FastAPI · Python · Skimlinks' },
+      { k: 'Domain', v: 'Consumer AI · quality analysis' },
+      { k: 'Year', v: '2025' },
+    ],
   },
   {
-    id: 'prox',
-    code: 'PX-04',
-    title: 'Prox: Onboarding UX Redesign',
-    domain: 'Onboarding UX · Mobile App',
-    tags: ['Onboarding', 'iOS', 'Capacitor', 'Product Design'],
+    id: 'prox', code: 'CS-04', title: 'Prox', year: '2024',
+    disciplines: ['Onboarding UX', 'iOS', 'Capacitor'],
     thumb: './images/prox/08-deals-ready.png',
-    page: 'prox.html',
-    summary: 'A complete redesign of the first-time user experience for an iOS grocery-savings app, addressing a strict technical constraint that caused severe user drop-off.',
-    problem: `On first sign-up, the app must gather real-time price data for local stores, which takes 3 to 5 minutes. The original flow threw a static loading spinner, appearing broken to new users and resulting in high drop-off rates before they could see value.`,
-    constraints: `The 3-5 minute data pull is unavoidable and must happen in real time. The app runs on Capacitor for iOS, requiring designs that account for cross-platform quirks while still feeling native, polished, and responsive.`,
-    approach: `Shifted the psychological framing of the wait. Instead of a forced pause, I designed an upfront preferences flow (store selection, dietary needs) that masks the initial loading time and makes the wait feel personalized and productive. Introduced an "honest" transparent setup framework that gave users permission to leave while data loaded.`,
-    outcome: `Delivered an end-to-end 14-screen onboarding redesign. Implemented interactive features like a potential savings slider, deferred location permissions to build trust incrementally, and a tangible payoff screen when deals are ready.`,
-    lessonsLearned: `You cannot always engineer away friction, but you can design how users perceive it. Giving users context, progress indicators, and an explanation for the wait turns frustration into anticipation.`
-  }
+    hero: './images/prox/08-deals-ready.png',
+    blurb: 'A complete redesign of the first-time user experience for an iOS grocery-savings application, mitigating a 3-5 minute technical loading constraint.',
+    sections: {
+      'Problem': 'During initial sign-up, the app fetches real-time store inventory and local pricing data, requiring an unavoidable 3 to 5 minute background data pull. The original design displayed a static loading spinner, causing high user drop-off as users assumed the application was broken.',
+      'Constraints': [
+        'The 3-5 minute initial data pull is technically unavoidable.',
+        'Runs on Capacitor for iOS, requiring native-feeling responsiveness on cross-platform code.',
+        'High drop-off rates during first-launch setup.',
+      ],
+      'Approach': 'Reframed the wait time by designing a structured preferences flow (store selection, dietary restrictions) that occupies the user productively while data downloads in the background. Introduced transparent status indicators and deferred location permissions to establish trust incrementally.',
+      'Outcome': 'Delivered an end-to-end 14-screen onboarding redesign. Increased user activation by transforming forced waiting into an engaging setup sequence with interactive savings previews.',
+      'Lessons Learned': 'When technical constraints create friction, design must manage user perception. Clear feedback, progress indicators, and productive task framing turn user impatience into anticipation.',
+    },
+    meta: [
+      { k: 'Role', v: 'UX Lead · Product Designer · Contract' },
+      { k: 'Context', v: 'Prox Mobile App · iOS / Capacitor' },
+      { k: 'Scope', v: '14-screen onboarding flow' },
+      { k: 'Year', v: '2024' },
+    ],
+  },
 ];
 
-function App() {
-  const [activePanel, setActivePanel] = useAppState(null);
-  const [activeCaseStudyId, setActiveCaseStudyId] = useAppState(null);
+function AboutContent() {
+  return (
+    <div>
+      <PanelTitle index="About">Human factors, from the ground up.</PanelTitle>
+      <div style={{ display:'flex', flexDirection:'column', gap:'1.2rem' }}>
+        <p style={{ fontSize:'var(--text-body)', lineHeight:'var(--leading-body)', color:'var(--text)' }}>
+          I build full-stack systems and study the people who operate them. That combination lets me speak the
+          language of engineering while advocating for the human on the other side of the screen: 
+          the operator, the clinician, the reviewer, or the astronaut.
+        </p>
+        <p style={{ fontSize:'var(--text-body)', lineHeight:'var(--leading-body)', color:'var(--text)' }}>
+          I am formalizing that work through an accelerated B.S./M.S. in Human Factors Psychology at
+          Embry-Riddle Aeronautical University, focused on high-stakes environments: reducing cognitive load, eliminating
+          use-error, and building trust in safety-critical systems.
+        </p>
+      </div>
+      <div style={{ marginTop:'2rem', display:'grid', gridTemplateColumns:'1fr', gap:'1.1rem' }}>
+        {[
+          ['Education', 'B.S./M.S. Human Factors Psychology, Embry-Riddle Aeronautical University (Accelerated)'],
+          ['Focus', 'Aerospace human factors · AI reliability · human-automation interaction · systems safety · technical operations'],
+          ['Toolkit', 'Mixed-methods research · full-stack development · A/B testing · behavioral analytics · cognitive ergonomics'],
+        ].map(([k,v])=>(
+          <div key={k} style={{ borderTop:'var(--hair) solid var(--border)', paddingTop:'0.9rem' }}>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', textTransform:'uppercase', color:'var(--accent)', marginBottom:'0.4rem' }}>{k}</div>
+            <div style={{ fontSize:'var(--text-sm)', lineHeight:1.6, color:'var(--text)' }}>{v}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
-  const handleOpen = (id) => {
-    if (id === 'home') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else if (id === 'work') {
-      const el = document.querySelector('#case-studies');
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
-    } else if (['about', 'resume', 'contact'].includes(id)) {
-      setActivePanel(id);
+function ContactContent() {
+  const links = [
+    ['Email', 'raphealsuber@gmail.com', 'mailto:raphealsuber@gmail.com'],
+    ['LinkedIn', 'in/raphealsuber', 'https://www.linkedin.com/in/raphealsuber/'],
+    ['GitHub', 'manyworldss', 'https://github.com/manyworldss'],
+  ];
+  return (
+    <div>
+      <PanelTitle index="Contact">Let's talk.</PanelTitle>
+      <p style={{ fontSize:'var(--text-body)', lineHeight:'var(--leading-body)', color:'var(--text-muted)', marginBottom:'2rem', maxWidth:'42ch' }}>
+        Open to roles in human factors, AI reliability, technical operations, and systems engineering across aerospace, health, and complex operations.
+      </p>
+      <div style={{ display:'flex', flexDirection:'column' }}>
+        {links.map(([l,v,h],i)=>(
+          <a key={l} data-hot href={h} target="_blank" rel="noopener" style={{ display:'flex', alignItems:'center', justifyContent:'space-between',
+            padding:'1.2rem 0', borderTop:'var(--hair) solid var(--border)', borderBottom: i===links.length-1?'var(--hair) solid var(--border)':'none' }}>
+            <span style={{ fontFamily:'var(--font-display)', fontWeight:'var(--fw-semibold)', fontSize:'var(--text-h3)', color:'var(--text-strong)' }}>{l}</span>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', color:'var(--text-faint)' }}>{v} →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function SectionView({ eyebrow, title, onBack, children }) {
+  return (
+    <div className="rs-viewin" style={{ position:'relative', minHeight:'100vh', width:'100%',
+      maxWidth:'var(--page-max)', margin:'0 auto', padding:'calc(var(--topbar-h) + clamp(1.5rem,4vh,2.5rem)) var(--gutter) clamp(3rem,7vh,6rem)' }}>
+      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:'1rem', marginBottom:'clamp(2rem,5vw,3.5rem)' }}>
+        <button data-hot onClick={onBack} style={{ display:'inline-flex', alignItems:'center', gap:'0.6rem',
+          fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', textTransform:'uppercase',
+          color:'var(--text-muted)', border:'var(--hair) solid var(--border-strong)', borderRadius:'var(--radius-pill)', padding:'0.5rem 1rem' }}>
+          <span style={{ color:'var(--accent)' }}>←</span> Console
+        </button>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', textTransform:'uppercase', color:'var(--text-faint)' }}>{eyebrow}</span>
+      </div>
+      {title && (
+        <h1 style={{ fontFamily:'var(--font-display)', fontWeight:'var(--fw-display)', fontSize:'var(--text-display)',
+          lineHeight:'var(--leading-display)', letterSpacing:'var(--track-display)', color:'var(--text-strong)',
+          margin:'0 0 clamp(2rem,4vw,3rem)', maxWidth:'20ch' }}>{title}</h1>
+      )}
+      {children}
+      <style>{`
+        @keyframes rsViewIn{ from{ opacity:0; transform:translateY(26px); } to{ opacity:1; transform:none; } }
+        .rs-viewin{ animation:rsViewIn 0.7s cubic-bezier(0.16,1,0.3,1) both; }
+        @media (prefers-reduced-motion: reduce){ .rs-viewin{ animation:none; } }
+      `}</style>
+    </div>
+  );
+}
+
+function App() {
+  const [view, setView] = useAppState('home');
+  const [openCase, setOpenCase] = useAppState(null);
+  const [reading, setReading] = useAppState(false);
+  const [warp, setWarp] = useAppState({ active:false, color:'rgba(126,200,240,0.55)' });
+
+  const goTo = (id, color) => {
+    if (id === view) return;
+    setWarp({ active:true, color: color || 'rgba(126,200,240,0.55)' });
+    setTimeout(() => { setView(id); window.scrollTo(0,0); }, 460);
+    setTimeout(() => setWarp((w) => ({ ...w, active:false })), 620);
+  };
+  const onOpen = (id, color) => {
+    if (id === 'home') return goTo('home', color);
+    if (id === 'work' || id === 'science' || id === 'art' || id === 'about' || id === 'contact') return goTo(id, color);
+    // Direct navigation to single condensed full-page case study
+    const pageMap = {
+      reach: 'reach.html',
+      celio: 'celio.html',
+      materialsiq: 'materialsiq.html',
+      prox: 'prox.html'
+    };
+    if (pageMap[id]) {
+      window.location.href = pageMap[id];
+    } else {
+      setOpenCase(WORK.find((w) => w.id === id));
     }
   };
 
-  const selectedCaseStudy = WORK.find((w) => w.id === activeCaseStudyId);
-
   return (
     <React.Fragment>
-      <Cursor />
-      <AmbientBackground />
-      <Nav activeTab={activePanel} onOpen={handleOpen} />
-
-      <main id="top">
-        <Hero onOpen={handleOpen} />
-        <CaseStudies items={WORK} onSelectCaseStudy={(id) => setActiveCaseStudyId(id)} />
-        <Footer onOpen={handleOpen} />
+      <BlueprintBg />
+      <ScrollProgress />
+      <IntroCurtain />
+      <Nav onOpen={onOpen} reading={reading} onToggleReading={()=>setReading(r=>!r)} onHome={()=>goTo('home')} view={view} />
+      <main id="top" style={{ position:'relative', zIndex:1 }}>
+        {view === 'home' && <Hero onOpen={onOpen} />}
+        {view === 'work' && (
+          <SectionView eyebrow="CH 01 / Case Studies" onBack={()=>goTo('home')}>
+            <CaseStudies items={WORK} onOpen={onOpen} embedded />
+          </SectionView>
+        )}
+        {view === 'science' && (
+          <SectionView eyebrow="CH 02 / Science" onBack={()=>goTo('home')}>
+            <Science embedded />
+          </SectionView>
+        )}
+        {view === 'art' && (
+          <SectionView eyebrow="CH 03 / Art" onBack={()=>goTo('home')}>
+            <Currently embedded />
+          </SectionView>
+        )}
+        {view === 'about' && (
+          <SectionView eyebrow="CH 04 / About" title="About" onBack={()=>goTo('home')}>
+            <AboutContent />
+          </SectionView>
+        )}
+        {view === 'contact' && (
+          <SectionView eyebrow="CH 05 / Contact" title="Let's build something reliable." onBack={()=>goTo('home')}>
+            <ContactContent />
+          </SectionView>
+        )}
       </main>
 
-      <Panel open={activePanel === 'about'} onClose={() => setActivePanel(null)}>
-        <AboutContent />
-      </Panel>
+      {/* warp transition */}
+      <div aria-hidden="true" style={{ position:'fixed', inset:0, zIndex:1200, pointerEvents:'none',
+        opacity: warp.active ? 1 : 0, transition:`opacity ${warp.active ? 0.24 : 0.4}s var(--ease-out)` }}>
+        <div style={{ position:'absolute', inset:0, background:'#05070C', opacity: warp.active ? 0.86 : 0, transition:'opacity 0.3s ease' }} />
+        <div style={{ position:'absolute', top:'50%', left:'50%', width:'160vmax', height:'160vmax', marginLeft:'-80vmax', marginTop:'-80vmax',
+          borderRadius:'50%', background:`radial-gradient(closest-side, ${warp.color}, transparent 70%)`,
+          transform: warp.active ? 'scale(1)' : 'scale(0.05)', transition:'transform 0.6s cubic-bezier(0.16,1,0.3,1)', filter:'blur(24px)' }} />
+      </div>
 
-      <Panel open={activePanel === 'resume'} onClose={() => setActivePanel(null)}>
-        <ResumeContent />
-      </Panel>
-
-      <Panel open={activePanel === 'contact'} onClose={() => setActivePanel(null)}>
-        <ContactContent />
-      </Panel>
-
-      <CaseStudyOverlay caseStudy={selectedCaseStudy} onClose={() => setActiveCaseStudyId(null)} />
+      {/* no overlay modal — single condensed full page for each case study */}
     </React.Fragment>
   );
 }

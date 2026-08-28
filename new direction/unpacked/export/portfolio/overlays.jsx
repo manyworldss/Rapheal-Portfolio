@@ -49,10 +49,6 @@ function CaseBody({ item, onClose, reading, scrollRoot }) {
         backdropFilter:'blur(12px)', borderBottom:'var(--hair) solid var(--border)' }}>
         <span style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', textTransform:'uppercase', color:'var(--accent)' }}>{item.code} · {item.year}</span>
         <div style={{ display:'flex', alignItems:'center', gap:'0.9rem' }}>
-          <a href={item.page || `${item.id}.html`} style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', textTransform:'uppercase', letterSpacing:'0.08em',
-            color:'var(--accent)', fontWeight:600, border:'1px solid var(--accent-line)', borderRadius:'var(--radius-pill)', padding:'0.45rem 0.9rem', textDecoration:'none', background:'var(--sky-wash)' }}>
-            Full Page ↗
-          </a>
           <button data-hot onClick={onClose} style={{ fontFamily:'var(--font-sans)', fontSize:'var(--text-sm)', fontWeight:'var(--fw-medium)',
             color:'var(--text-strong)', border:'var(--hair) solid var(--border-strong)', borderRadius:'var(--radius-sm)', padding:'0.5rem 1rem' }}>Close</button>
         </div>

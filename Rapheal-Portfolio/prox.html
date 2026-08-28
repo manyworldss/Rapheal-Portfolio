@@ -3,7 +3,7 @@
 
 <head>
     <script>
-      (function(){ try { var t = localStorage.getItem('rs-theme'); document.documentElement.dataset.theme = t === 'light' ? 'light' : 'dark'; } catch(e){} })();
+      (function(){ try { var t = localStorage.getItem('rs-theme'); document.documentElement.dataset.theme = t === 'light' ? 'light' : 'dark'; } catch(e){ document.documentElement.dataset.theme = 'dark'; } })();
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -45,10 +45,37 @@
             <a href="materialsiq.html" class="chapter-link">CS-03 / MATERIALIQ</a>
             <a href="prox.html" class="chapter-link active-chapter">PX-04 / PROX</a>
         </nav>
-        <div class="topbar-actions">
-            <a href="index.html" class="back-trigger">← BACK TO HOME [ESC]</a>
+        <div class="topbar-actions" style="display:flex; align-items:center; gap:1rem;">
+            <button id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle Theme"
+              style="display:inline-flex; align-items:center; gap:0.4rem; font-family:var(--font-mono); font-size:0.72rem; font-weight:500; letter-spacing:0.06em; text-transform:uppercase; padding:0.35rem 0.75rem; border-radius:999px; border:1px solid var(--border-strong); background:var(--bg-raised); color:var(--text-strong); cursor:pointer;">
+              <span id="theme-icon">☀️</span> <span id="theme-text">Light Mode</span>
+            </button>
+            <a href="index.html" class="back-trigger">← BACK TO HOME</a>
         </div>
     </header>
+    <script>
+      function applyTheme(theme) {
+        var t = (theme === 'light') ? 'light' : 'dark';
+        document.documentElement.dataset.theme = t;
+        var icon = document.getElementById('theme-icon');
+        var text = document.getElementById('theme-text');
+        if (icon && text) {
+          if (t === 'dark') { icon.textContent = '☀️'; text.textContent = 'Light Mode'; }
+          else { icon.textContent = '🌙'; text.textContent = 'Dark Mode'; }
+        }
+      }
+      function toggleTheme() {
+        var cur = document.documentElement.dataset.theme || 'dark';
+        var next = (cur === 'dark') ? 'light' : 'dark';
+        try { localStorage.setItem('rs-theme', next); } catch(e){}
+        applyTheme(next);
+      }
+      (function(){
+        var saved = 'dark';
+        try { saved = localStorage.getItem('rs-theme') || 'dark'; } catch(e){}
+        applyTheme(saved);
+      })();
+    </script>
 
     <main class="container book-layout">
 
@@ -79,6 +106,10 @@
                     <strong>Year</strong>
                     2026
                 </div>
+            </div>
+            <div class="header-actions">
+                <a href="demo/prox-onboarding-demo.html" target="_blank" class="cta-button cta-primary">✨ View Interactive Prototype ↗</a>
+                <button onclick="window.print()" class="cta-button cta-secondary" id="download-pdf-btn">Download UX Report ↓</button>
             </div>
         </header>
 
