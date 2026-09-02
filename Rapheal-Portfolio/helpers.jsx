@@ -37,118 +37,269 @@ function Reveal({ children, delay = 0, y = '18px', as = 'div', style = {}, ...re
   );
 }
 
-/* ---- Space field: sparse drifting stars, star-chart grid, comet-trail cursor ---- */
+/* ---- Creative Celestial Space Engine: 3D parallax, diffraction glints, constellation lines, meteors ---- */
 function BlueprintBg() {
   const cv = useRef(null);
   useEffect(() => {
     const canvas = cv.current; if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { alpha: true });
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const coarse = window.matchMedia('(pointer: coarse)').matches;
-    let w = 0, h = 0, dpr = Math.min(2, devicePixelRatio || 1), raf = 0, t = 0;
-    let stars = [], trail = [], mx = -999, my = -999;
+    let w = 0, h = 0, dpr = Math.min(2, window.devicePixelRatio || 1), raf = 0, t = 0;
+    let stars = [], meteors = [], mx = -999, my = -999, targetMx = -999, targetMy = -999;
+    let nextMeteorTime = 180 + Math.random() * 240;
+
+    // Helper: 4-point telescope diffraction spike for bright celestial bodies
+    const drawSpike = (x, y, r, a, color) => {
+      const len = r * 5.2;
+      ctx.globalAlpha = a * 0.45;
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 0.75;
+      ctx.beginPath();
+      ctx.moveTo(x - len, y); ctx.lineTo(x + len, y);
+      ctx.moveTo(x, y - len); ctx.lineTo(x, y + len);
+      ctx.stroke();
+    };
 
     const build = () => {
-      w = canvas.clientWidth; h = canvas.clientHeight;
-      canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+      w = canvas.clientWidth || window.innerWidth;
+      h = canvas.clientHeight || window.innerHeight;
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(h * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const n = Math.round((w * h) / 11000);
+
+      // Balanced density: tuned for 60fps on retina and mobile
+      const densityDivisor = coarse ? 14000 : 8500;
+      const n = Math.min(180, Math.round((w * h) / densityDivisor));
+
       stars = Array.from({ length: n }, () => {
-        const layer = Math.random() < 0.62 ? 0 : (Math.random() < 0.7 ? 1 : 2);
+        // Layer 0: distant micro-stars (55%), Layer 1: midground (32%), Layer 2: bright beacons (13%)
+        const rand = Math.random();
+        const layer = rand < 0.55 ? 0 : (rand < 0.87 ? 1 : 2);
         return {
-          x: Math.random() * w, y: Math.random() * h,
-          r: layer === 2 ? 1.6 + Math.random() * 1.0 : layer === 1 ? 1.1 + Math.random() * 0.5 : 0.6 + Math.random() * 0.45,
-          a: layer === 2 ? 0.85 : layer === 1 ? 0.6 : 0.4,
-          vx: (layer + 1) * 0.008 + Math.random() * 0.006,
-          tw: Math.random() < 0.22 ? 0.6 + Math.random() * 1.4 : 0,
-          ph: Math.random() * Math.PI * 2,
+          x: Math.random() * w,
+          y: Math.random() * h,
+          layer,
+          r: layer === 2 ? 1.8 + Math.random() * 0.9 : layer === 1 ? 1.1 + Math.random() * 0.5 : 0.55 + Math.random() * 0.45,
+          baseAlpha: layer === 2 ? 0.88 : layer === 1 ? 0.62 : 0.38,
+          vx: (layer + 1) * 0.012 + Math.random() * 0.008,
+          vy: (Math.random() - 0.5) * 0.006,
+          twinkleSpeed: 0.015 + Math.random() * 0.025,
+          twinklePhase: Math.random() * Math.PI * 2,
+          hasSpikes: layer === 2 && Math.random() < 0.65,
+          hueShift: Math.random() < 0.28 ? 'blue' : (Math.random() < 0.16 ? 'cyan' : 'white'),
         };
       });
     };
 
+    const spawnMeteor = () => {
+      if (reduce) return;
+      const startX = Math.random() * (w * 0.8) + (w * 0.1);
+      const startY = Math.random() * (h * 0.4);
+      const angle = (Math.PI / 4) + (Math.random() - 0.5) * 0.25; // ~45 deg descent
+      const speed = 7 + Math.random() * 6;
+      meteors.push({
+        x: startX,
+        y: startY,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        len: 70 + Math.random() * 80,
+        life: 1.0,
+        decay: 0.014 + Math.random() * 0.012,
+        r: 1.4 + Math.random() * 0.8,
+      });
+    };
+
     const onMove = (e) => {
-      mx = e.clientX; my = e.clientY;
-      if (!coarse && !reduce) {
-        for (let i = 0; i < 2; i++) {
-          trail.push({ x: mx + (Math.random() - 0.5) * 5, y: my + (Math.random() - 0.5) * 5,
-            vx: (Math.random() - 0.5) * 0.5, vy: (Math.random() - 0.5) * 0.5 + 0.16,
-            life: 1, r: 0.8 + Math.random() * 1.6 });
-        }
-        if (trail.length > 240) trail.splice(0, trail.length - 240);
-      }
+      targetMx = e.clientX;
+      targetMy = e.clientY;
     };
 
     const draw = () => {
       t += 1;
+      // Smooth cursor interpolation
+      mx += (targetMx - mx) * 0.08;
+      my += (targetMy - my) * 0.08;
+
       const light = document.documentElement.dataset.theme === 'light';
       ctx.clearRect(0, 0, w, h);
 
-      // Celestial star-chart grid in light mode or faint coordinate lines in dark mode
-      ctx.lineWidth = 1;
-      ctx.strokeStyle = light ? 'rgba(15, 23, 42, 0.04)' : 'rgba(232, 241, 248, 0.03)';
-      const gridSize = 160;
-      for (let x = 0; x < w; x += gridSize) {
-        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
-      }
-      for (let y = 0; y < h; y += gridSize) {
-        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+      // 1. Atmospheric Deep-Space Nebulae (subtle cosmic gradient dust)
+      if (!light) {
+        const neb1 = ctx.createRadialGradient(w * 0.25, h * 0.3, 0, w * 0.25, h * 0.3, Math.max(w, h) * 0.55);
+        neb1.addColorStop(0, 'rgba(18, 51, 58, 0.18)');
+        neb1.addColorStop(0.6, 'rgba(27, 35, 64, 0.08)');
+        neb1.addColorStop(1, 'rgba(5, 7, 12, 0)');
+        ctx.fillStyle = neb1;
+        ctx.fillRect(0, 0, w, h);
+
+        const neb2 = ctx.createRadialGradient(w * 0.75, h * 0.65, 0, w * 0.75, h * 0.65, Math.max(w, h) * 0.45);
+        neb2.addColorStop(0, 'rgba(46, 108, 151, 0.12)');
+        neb2.addColorStop(0.7, 'rgba(18, 24, 38, 0.04)');
+        neb2.addColorStop(1, 'rgba(5, 7, 12, 0)');
+        ctx.fillStyle = neb2;
+        ctx.fillRect(0, 0, w, h);
       }
 
-      // Stars
-      for (const s of stars) {
-        if (!reduce) { s.x += s.vx; if (s.x > w + 2) s.x = -2; }
-        let a = s.a;
-        if (s.tw && !reduce) a *= 0.55 + 0.45 * Math.sin(t * 0.012 * s.tw + s.ph);
-        ctx.globalAlpha = light ? Math.max(0, a * 0.75) : Math.max(0, a);
-        ctx.fillStyle = light ? '#0F172A' : '#E8F1F8';
-        ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, 6.283); ctx.fill();
-        if (s.r > 1.3) {
-          ctx.globalAlpha = light ? a * 0.12 : a * 0.20;
+      // 2. Faint Astronomical Coordinate Grid
+      ctx.lineWidth = 0.5;
+      ctx.strokeStyle = light ? 'rgba(15, 23, 42, 0.035)' : 'rgba(126, 200, 240, 0.025)';
+      const step = 140;
+      ctx.beginPath();
+      for (let x = 0; x < w; x += step) { ctx.moveTo(x, 0); ctx.lineTo(x, h); }
+      for (let y = 0; y < h; y += step) { ctx.moveTo(0, y); ctx.lineTo(w, y); }
+      ctx.stroke();
+
+      // 3. Dynamic Constellation Connections
+      const maxConnDist = coarse ? 55 : 85;
+      const connDistSq = maxConnDist * maxConnDist;
+      ctx.lineWidth = 0.65;
+      for (let i = 0; i < stars.length; i++) {
+        const a = stars[i];
+        if (a.layer === 0) continue; // Only mid and foreground stars form constellations
+        for (let j = i + 1; j < stars.length; j++) {
+          const b = stars[j];
+          if (b.layer === 0) continue;
+          const dx = a.x - b.x;
+          const dy = a.y - b.y;
+          const d2 = dx * dx + dy * dy;
+          if (d2 < connDistSq) {
+            const prox = 1 - (d2 / connDistSq);
+            let alpha = prox * (light ? 0.07 : 0.11);
+            // Interactive mouse proximity boost
+            if (mx > 0) {
+              const mdx = (a.x + b.x) * 0.5 - mx;
+              const mdy = (a.y + b.y) * 0.5 - my;
+              if (mdx * mdx + mdy * mdy < 20000) {
+                alpha *= 2.2;
+              }
+            }
+            ctx.globalAlpha = Math.min(0.35, alpha);
+            ctx.strokeStyle = light ? '#0284C7' : '#7EC8F0';
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      // 4. Render Stars with Depth & Telescope Spikes
+      for (let i = 0; i < stars.length; i++) {
+        const s = stars[i];
+        if (!reduce) {
+          s.x += s.vx;
+          s.y += s.vy;
+          if (s.x > w + 4) s.x = -4;
+          if (s.y > h + 4) s.y = -4;
+          if (s.y < -4) s.y = h + 4;
+        }
+
+        let a = s.baseAlpha;
+        if (!reduce) {
+          a *= (0.65 + 0.35 * Math.sin(t * s.twinkleSpeed + s.twinklePhase));
+        }
+
+        const starColor = light
+          ? (s.hueShift === 'blue' ? '#0369A1' : (s.hueShift === 'cyan' ? '#0891B2' : '#0F172A'))
+          : (s.hueShift === 'blue' ? '#A8DCF7' : (s.hueShift === 'cyan' ? '#9BDCD6' : '#FFFFFF'));
+
+        // Core star point
+        ctx.globalAlpha = light ? Math.min(1, a * 0.85) : Math.min(1, a);
+        ctx.fillStyle = starColor;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Atmospheric halo & optical spikes for major beacons
+        if (s.layer === 2) {
+          // Soft outer glow
+          ctx.globalAlpha = light ? a * 0.16 : a * 0.24;
           ctx.fillStyle = light ? '#0284C7' : '#7EC8F0';
-          ctx.beginPath(); ctx.arc(s.x, s.y, s.r * 3.6, 0, 6.283); ctx.fill();
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r * 3.8, 0, Math.PI * 2);
+          ctx.fill();
+
+          // 4-point telescope glint
+          if (s.hasSpikes && !reduce) {
+            drawSpike(s.x, s.y, s.r, a, light ? '#0284C7' : '#DDF1FC');
+          }
         }
       }
 
-      // Comet trail
-      for (let i = trail.length - 1; i >= 0; i--) {
-        const p = trail[i];
-        p.x += p.vx; p.y += p.vy; p.vy += 0.006; p.life -= 0.022;
-        if (p.life <= 0) { trail.splice(i, 1); continue; }
-        ctx.globalAlpha = light ? p.life * 0.85 : p.life * 0.75;
-        ctx.fillStyle = light ? (p.life > 0.62 ? '#0284C7' : '#0F172A') : (p.life > 0.62 ? '#DDF1FC' : '#7EC8F0');
-        ctx.beginPath(); ctx.arc(p.x, p.y, p.r * p.life, 0, 6.283); ctx.fill();
+      // 5. Shooting Meteors
+      if (t >= nextMeteorTime) {
+        spawnMeteor();
+        nextMeteorTime = t + (coarse ? 400 : 220) + Math.random() * 320;
       }
 
-      // Cursor halo head
-      if (mx > -900 && !coarse) {
-        const g = ctx.createRadialGradient(mx, my, 0, mx, my, 14);
-        if (light) {
-          g.addColorStop(0, 'rgba(15,23,42,0.45)');
-          g.addColorStop(0.5, 'rgba(2,132,199,0.25)');
-          g.addColorStop(1, 'rgba(2,132,199,0)');
-        } else {
-          g.addColorStop(0, 'rgba(232,241,248,0.55)');
-          g.addColorStop(0.5, 'rgba(126,200,240,0.25)');
-          g.addColorStop(1, 'rgba(126,200,240,0)');
+      for (let i = meteors.length - 1; i >= 0; i--) {
+        const m = meteors[i];
+        m.x += m.vx;
+        m.y += m.vy;
+        m.life -= m.decay;
+
+        if (m.life <= 0 || m.x > w + 100 || m.y > h + 100) {
+          meteors.splice(i, 1);
+          continue;
         }
-        ctx.globalAlpha = 1; ctx.fillStyle = g;
-        ctx.beginPath(); ctx.arc(mx, my, 14, 0, 6.283); ctx.fill();
+
+        const headX = m.x;
+        const headY = m.y;
+        const tailX = m.x - (m.vx / Math.hypot(m.vx, m.vy)) * m.len * m.life;
+        const tailY = m.y - (m.vy / Math.hypot(m.vx, m.vy)) * m.len * m.life;
+
+        const grad = ctx.createLinearGradient(tailX, tailY, headX, headY);
+        grad.addColorStop(0, 'rgba(126, 200, 240, 0)');
+        grad.addColorStop(0.7, light ? `rgba(2, 132, 199, ${m.life * 0.4})` : `rgba(168, 220, 247, ${m.life * 0.5})`);
+        grad.addColorStop(1, light ? `rgba(15, 23, 42, ${m.life * 0.95})` : `rgba(255, 255, 255, ${m.life})`);
+
+        ctx.globalAlpha = 1;
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = m.r * m.life;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(tailX, tailY);
+        ctx.lineTo(headX, headY);
+        ctx.stroke();
+
+        // Meteor luminous head
+        ctx.fillStyle = '#FFFFFF';
+        ctx.beginPath();
+        ctx.arc(headX, headY, m.r * 1.1, 0, Math.PI * 2);
+        ctx.fill();
       }
+
       ctx.globalAlpha = 1;
       raf = requestAnimationFrame(draw);
     };
 
-    build(); draw();
+    build();
+    draw();
+
     const onResize = () => build();
-    addEventListener('resize', onResize);
-    addEventListener('mousemove', onMove, { passive: true });
-    return () => { cancelAnimationFrame(raf); removeEventListener('resize', onResize); removeEventListener('mousemove', onMove); };
+    const onVisibilityChange = () => {
+      if (document.hidden) cancelAnimationFrame(raf);
+      else raf = requestAnimationFrame(draw);
+    };
+
+    window.addEventListener('resize', onResize, { passive: true });
+    window.addEventListener('mousemove', onMove, { passive: true });
+    document.addEventListener('visibilitychange', onVisibilityChange);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('resize', onResize);
+      window.removeEventListener('mousemove', onMove);
+      document.removeEventListener('visibilitychange', onVisibilityChange);
+    };
   }, []);
+
   return (
     <div aria-hidden="true" style={{ position:'fixed', inset:0, zIndex:0, pointerEvents:'none', overflow:'hidden' }}>
       <canvas ref={cv} className="rs-stars" />
       <style>{`
-        .rs-stars{ position:absolute; inset:0; width:100%; height:100%; }
+        .rs-stars{ position:absolute; inset:0; width:100%; height:100%; will-change:transform; }
         [data-theme="light"] .rs-stars{ opacity:0.85; }
       `}</style>
     </div>

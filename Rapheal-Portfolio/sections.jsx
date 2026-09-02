@@ -145,11 +145,11 @@ function KioskHero({ onOpen }) {
         .k-node:hover .k-orb{ transform:scale(1.18); filter:saturate(1.2) brightness(1.08); }
         .k-node:hover .k-orb .halo{ opacity:1; }
         .k-node:hover .k-lab{ color:var(--accent) !important; }
-        .k-mob-card:hover { transform:translateY(-2px); border-color:var(--accent-line) !important; background:var(--bg-raised) !important; }
+        .k-mob-card:active { transform:scale(0.98); background:var(--bg-inset) !important; }
         @media (prefers-reduced-motion: reduce){ .k-orb .ball::before,.k-orb .ball::after,.k-orb .glint,.k-orb .halo{ animation:none !important; } }
         @media (max-width:820px){
           .k-field{ display:none !important; }
-          .k-id{ position:relative !important; top:auto !important; transform:none !important; padding-top:calc(var(--topbar-h) + 1.5rem) !important; padding-bottom:3rem !important; max-width:none !important; }
+          .k-id{ position:relative !important; top:auto !important; transform:none !important; padding-top:calc(var(--topbar-h) + env(safe-area-inset-top, 0px) + 1rem) !important; padding-bottom:calc(env(safe-area-inset-bottom, 0px) + 2.5rem) !important; max-width:none !important; }
           .k-mobile-menu{ display:flex !important; }
         }
       `}</style>
@@ -158,7 +158,7 @@ function KioskHero({ onOpen }) {
       <div aria-hidden="true" style={{ position:'absolute', inset:0, zIndex:1, pointerEvents:'none', background:'radial-gradient(140% 120% at 60% 45%, transparent 46%, var(--hero-vig) 100%)' }} />
 
       {/* top telemetry readout */}
-      <div style={{ position:'absolute', top:'calc(var(--topbar-h) + 0.75rem)', left:'var(--gutter)', zIndex:6, fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'0.22em', textTransform:'uppercase', color:'var(--text-faint)', lineHeight:1.8 }}>
+      <div style={{ position:'absolute', top:'calc(var(--topbar-h) + env(safe-area-inset-top, 0px) + 0.6rem)', left:'var(--gutter)', zIndex:6, fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'0.22em', textTransform:'uppercase', color:'var(--text-faint)', lineHeight:1.8 }}>
         SELECT PATH · CH {active ? active.n : '00'} / {active ? active.label.toUpperCase() : 'STANDBY'}
       </div>
 
@@ -267,7 +267,7 @@ function CaseStudies({ items, onOpen, embedded }) {
         <span style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)',
           textTransform:'uppercase', color:'var(--text-faint)' }}>{String(items.length).padStart(2,'0')} on file</span>
       </Reveal>
-      <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(300px, 1fr))', gap:'clamp(1rem,2vw,1.5rem)' }}>
+      <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap:'clamp(1rem,2vw,1.5rem)' }}>
         {items.map((it, i) => (
           <Reveal key={it.id} delay={i*80}>
             <MissionCard item={it} onOpen={() => onOpen(it.id)} />
@@ -317,18 +317,42 @@ function MissionCard({ item, onOpen }) {
         <p style={{ display:'block', fontSize:'var(--text-sm)', lineHeight:'var(--leading-sm)', color:'var(--text-muted)', margin:0 }}>{item.summary || item.blurb}</p>
       </div>
 
-      {/* tags & primary CTA */}
-      <div style={{ position:'relative', display:'flex', alignItems:'center', justifyContent:'space-between', gap:'0.75rem',
-        borderTop:'var(--hair) solid var(--border)', paddingTop:'0.9rem' }}>
-        <div style={{ display:'flex', gap:'0.4rem', flexWrap:'wrap' }}>
-          {(item.tags || item.disciplines || []).slice(0,3).map((d)=>(
-            <span key={d} style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)',
-              textTransform:'uppercase', color:'var(--text-muted)', background:'var(--bg-inset)', padding:'0.2rem 0.5rem', borderRadius:'var(--radius-pill)', border:'1px solid var(--border)' }}>{d}</span>
+      {/* keywords / topic badges with spacious, comfortable layout */}
+      <div style={{ position:'relative', display:'flex', flexDirection:'column', gap:'0.65rem',
+        borderTop:'1px solid var(--border)', paddingTop:'1rem', marginTop:'auto' }}>
+        <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between' }}>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:'0.65rem', letterSpacing:'0.14em', textTransform:'uppercase', color:'var(--text-faint)' }}>
+            Focus &amp; Disciplines
+          </span>
+        </div>
+        <div style={{ display:'flex', gap:'0.55rem', flexWrap:'wrap', alignItems:'center' }}>
+          {(item.tags || item.disciplines || []).map((d)=>(
+            <span key={d} style={{
+              fontFamily:'var(--font-mono)',
+              fontSize:'0.72rem',
+              fontWeight: 500,
+              letterSpacing:'0.04em',
+              color: h ? 'var(--text-strong)' : 'var(--text-muted)',
+              background: h ? 'var(--bg-raised)' : 'var(--bg-inset)',
+              padding:'0.42rem 0.85rem',
+              borderRadius:'6px',
+              border:'1px solid var(--border-strong)',
+              transition:'all 0.2s ease',
+              lineHeight: 1.3,
+            }}>{d}</span>
           ))}
         </div>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', textTransform:'uppercase', letterSpacing:'0.06em',
-          color: h ? 'var(--accent)' : 'var(--text-muted)', fontWeight:600, display:'inline-flex', alignItems:'center', gap:'0.25rem', transition:'color 0.2s ease' }}>
-          Full Case Study <span style={{ transform: h ? 'translateX(3px) translateY(-1px)' : 'none', transition:'transform 0.2s ease' }}>↗</span>
+      </div>
+
+      {/* bottom primary action row */}
+      <div style={{ position:'relative', display:'flex', alignItems:'center', justifyContent:'space-between',
+        borderTop:'1px solid var(--border)', paddingTop:'0.9rem', marginTop:'0.2rem' }}>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:'0.68rem', letterSpacing:'0.12em', textTransform:'uppercase', color:'var(--text-faint)' }}>
+          Documented Dossier
+        </span>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:'0.76rem', textTransform:'uppercase', letterSpacing:'0.08em',
+          color: h ? 'var(--accent)' : 'var(--text-strong)', fontWeight:600, display:'inline-flex', alignItems:'center', gap:'0.4rem', transition:'all 0.2s ease' }}>
+          Full Case Study <span style={{ transform: h ? 'translateX(3px) translateY(-1px)' : 'none', transition:'transform 0.2s ease', color:'var(--accent)' }}>↗</span>
         </span>
       </div>
       <style>{`

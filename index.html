@@ -1,14 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="refresh" content="0; url=./Rapheal-Portfolio/index.html">
-<title>Rapheal Suber - Human Factors Psychology &amp; Systems Reliability</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Rapheal Suber — Human Factors Psychology &amp; Systems</title>
+<meta name="description" content="Portfolio of Rapheal Suber — Human Factors Psychology, AI Reliability, and Systems Thinking.">
+<meta name="theme-color" content="#05070C">
+
+<!-- Performance Preconnects -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://unpkg.com" crossorigin>
+
 <script>
-  window.location.href = "./Rapheal-Portfolio/index.html";
+  (function(){
+    try {
+      var t = localStorage.getItem('rs-theme');
+      document.documentElement.dataset.theme = (t === 'light') ? 'light' : 'dark';
+    } catch(e) {
+      document.documentElement.dataset.theme = 'dark';
+    }
+  })();
 </script>
+<link rel="stylesheet" href="./styles.css">
+<style>
+  html, body {
+    background: var(--bg);
+    min-height: 100vh;
+    min-height: 100dvh;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+  #root {
+    position: relative;
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+</style>
 </head>
 <body>
-<p>Redirecting to <a href="./Rapheal-Portfolio/index.html">Rapheal Suber Portfolio</a>...</p>
+<div id="root"></div>
+
+<!-- Fast React Production Build (Zero Runtime Babel) -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+<script src="./app.bundle.js" defer></script>
 </body>
 </html>

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 
 <head>
     <script>
-      (function(){ try { var t = localStorage.getItem('rs-theme'); document.documentElement.dataset.theme = t === 'dark' ? 'dark' : 'light'; } catch(e){} })();
+      (function(){ try { var t = localStorage.getItem('rs-theme'); document.documentElement.dataset.theme = t === 'light' ? 'light' : 'dark'; } catch(e){ document.documentElement.dataset.theme = 'dark'; } })();
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="css/case-study.css">
     <style>
       body { font-family: var(--font-sans); background: var(--bg); color: var(--text-strong); margin: 0; padding: 0; line-height: 1.6; }
-      .topbar { position: fixed; top: 0; left: 0; right: 0; height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(1.25rem, 4vw, 3rem); background: rgba(var(--bg-rgb, 250, 250, 250), 0.92); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); z-index: 800; }
+      .topbar { position: fixed; top: 0; left: 0; right: 0; height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(1.25rem, 4vw, 3rem); background: color-mix(in srgb, var(--bg) 85%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); z-index: 800; }
       .book-layout { max-width: 900px; margin: 90px auto 80px; padding: 0 clamp(1.25rem, 4vw, 2.5rem); }
       
       .cs-category { font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: var(--track-label); display: block; margin-bottom: 0.75rem; }
@@ -30,7 +30,7 @@
       
       .header-actions { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin-bottom: 3rem; }
       .cta-button { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: var(--track-label); text-transform: uppercase; padding: 0.75rem 1.4rem; border-radius: var(--radius-md); text-decoration: none; cursor: pointer; transition: all 0.2s ease; }
-      .cta-primary { background-color: var(--text-strong); color: #FFFFFF; border: none; }
+      .cta-primary { background-color: var(--text-strong); color: var(--bg); border: none; }
       .cta-primary:hover { opacity: 0.9; }
       .cta-secondary { background-color: transparent; color: var(--text-strong); border: 1px solid var(--border-strong); }
       .cta-secondary:hover { background-color: var(--bg-inset); }
@@ -39,20 +39,20 @@
       .full-width-image img { width: 100%; height: auto; display: block; }
       .caption { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); margin-bottom: 2.5rem; display: block; line-height: 1.5; padding: 0.6rem 0; border-bottom: 1px solid var(--border); }
 
-      .cs-section { border-top: 1px solid var(--border); padding-top: 2.5rem; margin-top: 3.5rem; }
+      .cs-section { border-top: 1px solid var(--border); padding-top: 2.5rem; margin-top: 3.5rem; opacity: 1; transform: none; }
       .section-header h2 { font-family: var(--font-display); font-weight: 700; font-size: var(--text-h2); color: var(--text-strong); margin: 0 0 1.5rem 0; }
       .section-body { font-size: var(--text-body); line-height: var(--leading-body); color: var(--text-muted); }
-      .section-body p { margin-bottom: 1.25rem; }
+      .section-body p { margin-bottom: 1.25rem; color: var(--text-muted); }
 
       .insight-grid, .insight-grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; margin: 1.75rem 0; }
       .insight-card { background: var(--bg-raised); border: 1px solid var(--border); padding: 1.5rem; border-radius: var(--radius-md); }
       .insight-card h3 { font-family: var(--font-mono); font-size: 0.8125rem; color: var(--accent); margin: 0 0 0.6rem 0; text-transform: uppercase; letter-spacing: var(--track-label); }
       .insight-card p { margin: 0; font-size: 0.875rem; line-height: 1.65; color: var(--text-muted); }
 
-      .finding-list { display: flex; flexDirection: column; gap: 1.25rem; margin: 1.75rem 0; }
+      .finding-list { display: flex; flex-direction: column; gap: 1.25rem; margin: 1.75rem 0; }
       .finding-item { display: flex; gap: 1.25rem; padding: 1.25rem; background: var(--bg-raised); border: 1px solid var(--border); border-radius: var(--radius-md); align-items: flex-start; }
-      .finding-number { font-family: var(--font-mono); font-size: 1rem; fontWeight: 700; color: var(--accent); min-width: 2rem; }
-      .finding-content h3 { font-family: var(--font-display); font-size: 1.05rem; fontWeight: 600; color: var(--text-strong); margin: 0 0 0.4rem 0; }
+      .finding-number { font-family: var(--font-mono); font-size: 1rem; font-weight: 700; color: var(--accent); min-width: 2rem; }
+      .finding-content h3 { font-family: var(--font-display); font-size: 1.05rem; font-weight: 600; color: var(--text-strong); margin: 0 0 0.4rem 0; }
       .finding-content p { margin: 0; font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; }
 
       .tech-stack-block { background: var(--bg-raised); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.5rem; margin-top: 2.5rem; }
@@ -76,10 +76,37 @@
             <a href="materialsiq.html" class="chapter-link">CS-03 / MATERIALIQ</a>
             <a href="prox.html" class="chapter-link">PX-04 / PROX</a>
         </nav>
-        <div class="topbar-actions">
-            <a href="index.html" class="back-trigger">← BACK TO HOME [ESC]</a>
+        <div class="topbar-actions" style="display:flex; align-items:center; gap:1rem;">
+            <button id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle Theme"
+              style="display:inline-flex; align-items:center; gap:0.4rem; font-family:var(--font-mono); font-size:0.72rem; font-weight:500; letter-spacing:0.06em; text-transform:uppercase; padding:0.35rem 0.75rem; border-radius:999px; border:1px solid var(--border-strong); background:var(--bg-raised); color:var(--text-strong); cursor:pointer;">
+              <span id="theme-icon">☀️</span> <span id="theme-text">Light Mode</span>
+            </button>
+            <a href="index.html" class="back-trigger">← BACK TO HOME</a>
         </div>
     </header>
+    <script>
+      function applyTheme(theme) {
+        var t = (theme === 'light') ? 'light' : 'dark';
+        document.documentElement.dataset.theme = t;
+        var icon = document.getElementById('theme-icon');
+        var text = document.getElementById('theme-text');
+        if (icon && text) {
+          if (t === 'dark') { icon.textContent = '☀️'; text.textContent = 'Light Mode'; }
+          else { icon.textContent = '🌙'; text.textContent = 'Dark Mode'; }
+        }
+      }
+      function toggleTheme() {
+        var cur = document.documentElement.dataset.theme || 'dark';
+        var next = (cur === 'dark') ? 'light' : 'dark';
+        try { localStorage.setItem('rs-theme', next); } catch(e){}
+        applyTheme(next);
+      }
+      (function(){
+        var saved = 'dark';
+        try { saved = localStorage.getItem('rs-theme') || 'dark'; } catch(e){}
+        applyTheme(saved);
+      })();
+    </script>
 
     <main class="container book-layout">
         <header class="cs-header">
@@ -103,7 +130,7 @@
                 </div>
             </div>
             <div class="header-actions">
-                <a href="https://reach-health.up.railway.app/" target="_blank" class="cta-button cta-primary">View Live App ↗</a>
+                <a href="https://reach-health.up.railway.app/" target="_blank" class="cta-button cta-primary">🚀 View Live App ↗</a>
                 <button onclick="window.print()" class="cta-button cta-secondary" id="download-pdf-btn">Download Research PDF ↓</button>
             </div>
         </header>
