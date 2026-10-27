@@ -1,188 +1,294 @@
 /* ============================================================
-   Portfolio, overlays: case-study takeover + slide-over panels.
+   OVERLAYS - Panels for About, Resume, Contact & Case Studies.
+   Geist & Monochrome Engineering Aesthetics.
    ============================================================ */
-const { useEffect: useEffectO } = React;
+const { useState: useStateO, useEffect: useEffectO } = React;
 
-function useLockScroll(active) {
-  useEffectO(() => {
-    if (!active) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = prev; };
-  }, [active]);
-}
-function useEsc(onClose, active) {
-  useEffectO(() => {
-    if (!active) return;
-    const h = (e) => { if (e.key === 'Escape') onClose(); };
-    addEventListener('keydown', h); return () => removeEventListener('keydown', h);
-  }, [active, onClose]);
-}
-
-/* ---- Case-study takeover ---- */
-function CaseOverlay({ item, onClose, reading }) {
-  const active = !!item;
-  const scrollRoot = React.useRef(null);
-  useLockScroll(active);
-  useEsc(onClose, active);
-  return (
-    <div aria-hidden={!active} style={{ position:'fixed', inset:0, zIndex:1000, pointerEvents: active?'auto':'none' }}>
-      <div onClick={onClose} style={{ position:'absolute', inset:0, background:'rgba(10,10,11,0.55)',
-        backdropFilter: active ? 'blur(3px)' : 'none',
-        opacity: active?1:0, transition:'opacity var(--dur-3) var(--ease-out)' }} />
-      <div ref={scrollRoot} style={{ position:'absolute', inset:0, background:'var(--bg)', color:'var(--text-strong)', overflowY:'auto',
-        transform: active?'translateY(0)':'translateY(1.5%)', opacity: active?1:0,
-        transition:'transform var(--dur-5) var(--ease-io), opacity var(--dur-4) var(--ease-out)' }}>
-        {item && <CaseBody item={item} onClose={onClose} reading={reading} scrollRoot={scrollRoot} />}
-      </div>
-    </div>
-  );
-}
-
-function CaseBody({ item, onClose, reading, scrollRoot }) {
-  const SECTIONS = ['Problem', 'Constraints', 'Approach', 'Outcome', 'Lessons Learned'];
-  return (
-    <div>
-      {/* top bar */}
-      <div style={{ position:'sticky', top:0, zIndex:5, display:'flex', alignItems:'center', justifyContent:'space-between',
-        height:'var(--topbar-h)', padding:'0 var(--gutter)', background:'color-mix(in srgb, var(--bg) 86%, transparent)',
-        backdropFilter:'blur(12px)', borderBottom:'var(--hair) solid var(--border)' }}>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', textTransform:'uppercase', color:'var(--accent)' }}>{item.code} · {item.year}</span>
-        <div style={{ display:'flex', alignItems:'center', gap:'0.9rem' }}>
-          <a href={item.page || `${item.id}.html`} style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', textTransform:'uppercase', letterSpacing:'0.08em',
-            color:'var(--accent)', fontWeight:600, border:'1px solid var(--accent-line)', borderRadius:'var(--radius-pill)', padding:'0.45rem 0.9rem', textDecoration:'none', background:'var(--sky-wash)' }}>
-            Full Page ↗
-          </a>
-          <button data-hot onClick={onClose} style={{ fontFamily:'var(--font-sans)', fontSize:'var(--text-sm)', fontWeight:'var(--fw-medium)',
-            color:'var(--text-strong)', border:'var(--hair) solid var(--border-strong)', borderRadius:'var(--radius-sm)', padding:'0.5rem 1rem' }}>Close</button>
-        </div>
-      </div>
-
-      {/* masthead */}
-      <div style={{ maxWidth:'var(--page-max)', margin:'0 auto', width:'100%', padding:'clamp(2.5rem,6vw,5rem) var(--gutter) clamp(2rem,4vw,3rem)' }}>
-        <div style={{ display:'flex', gap:'0.5rem', flexWrap:'wrap', marginBottom:'1.6rem' }}>
-          {item.disciplines.map((d)=>(
-            <span key={d} style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', textTransform:'uppercase',
-              color:'var(--text-muted)', border:'var(--hair) solid var(--border)', borderRadius:'var(--radius-pill)', padding:'0.35rem 0.8rem' }}>{d}</span>
-          ))}
-        </div>
-        <h2 style={{ fontFamily:'var(--font-display)', fontWeight:'var(--fw-display)', fontSize:'var(--text-hero)', lineHeight:'var(--leading-hero)',
-          letterSpacing:'var(--track-hero)', color:'var(--text-strong)', margin:'0 0 1.2rem', maxWidth:'16ch' }}>{item.title}</h2>
-        <p style={{ fontSize:'var(--text-body-lg)', lineHeight:'var(--leading-body-lg)', color:'var(--text-muted)', maxWidth:'62ch', margin:0 }}>{item.blurb}</p>
-      </div>
-
-      {/* media */}
-      {(item.hero || item.thumb) && (
-        <div style={{ maxWidth:'var(--page-max)', margin:'0 auto', width:'100%', padding:'0 var(--gutter)' }}>
-          <div style={{ width:'100%', aspectRatio:'16/9', maxHeight:'70vh', overflow:'hidden', background:'var(--bg-inset)',
-            border:'var(--hair) solid var(--border)', borderRadius:'var(--radius-lg)' }}>
-            <img src={item.hero || item.thumb} alt={item.title} style={{ width:'100%', height:'100%', objectFit:'cover', objectPosition:'top' }} />
-          </div>
-        </div>
-      )}
-
-      {/* body: meta rail + 5 engineering sections */}
-      <div style={{ maxWidth:'var(--page-max)', margin:'0 auto', width:'100%', padding:'clamp(3rem,6vw,5rem) var(--gutter)',
-        display:'grid', gridTemplateColumns:'minmax(0,15rem) minmax(0,1fr)', gap:'clamp(2rem,6vw,6rem)', alignItems:'start' }}>
-        {/* meta rail (sticky) */}
-        <div style={{ display:'flex', flexDirection:'column', gap:'1.4rem', position:'sticky', top:'calc(var(--topbar-h) + 2rem)' }}>
-          {item.meta.map((m)=>(
-            <div key={m.k} style={{ borderTop:'var(--hair) solid var(--border)', paddingTop:'0.8rem' }}>
-              <div style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', textTransform:'uppercase', color:'var(--text-faint)', marginBottom:'0.4rem' }}>{m.k}</div>
-              <div style={{ fontSize:'var(--text-sm)', color:'var(--text-strong)', lineHeight:1.5 }}>{m.v}</div>
-            </div>
-          ))}
-        </div>
-        {/* stages: launch sequence — each ignites as it scrolls in */}
-        <div style={{ display:'flex', flexDirection:'column', gap:'clamp(2rem,4vw,3.25rem)' }}>
-          {SECTIONS.filter((s)=>item.sections[s]).map((s, i, arr) => (
-            <LaunchStage key={s} label={s} n={i+1} total={arr.length} scrollRoot={scrollRoot} content={item.sections[s]} />
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* ---- Launch stage: ignites (bar fills, content rises) when scrolled into view ---- */
-function LaunchStage({ label, n, total, content, scrollRoot }) {
-  const ref = React.useRef(null);
-  const [lit, setLit] = React.useState(false);
-  React.useEffect(() => {
-    const el = ref.current; if (!el) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { setLit(true); return; }
-    const root = scrollRoot && scrollRoot.current ? scrollRoot.current : null;
-    const io = new IntersectionObserver((es) => {
-      es.forEach((e) => { if (e.isIntersecting) { setLit(true); io.disconnect(); } });
-    }, { root, threshold: 0.3 });
-    io.observe(el);
-    const t = setTimeout(() => setLit(true), 2200);
-    return () => { io.disconnect(); clearTimeout(t); };
-  }, [scrollRoot]);
-  return (
-    <div ref={ref} style={{ display:'grid', gridTemplateColumns:'auto 1fr', gap:'1.3rem', alignItems:'start' }}>
-      {/* ignition rail */}
-      <span style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:'0.6rem', paddingTop:'0.35rem' }}>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)',
-          color: lit ? 'var(--accent)' : 'var(--text-faint)', transition:'color 0.5s var(--ease-out)', fontVariantNumeric:'tabular-nums' }}>
-          {String(n).padStart(2,'0')}
-        </span>
-        {n < total && (
-          <span aria-hidden="true" style={{ width:1, flex:1, minHeight:38, background:'var(--border)', position:'relative', overflow:'hidden' }}>
-            <span style={{ position:'absolute', inset:0, background:'var(--accent)', transformOrigin:'50% 0',
-              transform:`scaleY(${lit ? 1 : 0})`, transition:'transform 0.85s var(--ease-out) 0.12s' }} />
-          </span>
-        )}
-      </span>
-      <div style={{ opacity: lit ? 1 : 0, transform: lit ? 'none' : 'translateY(20px)',
-        transition:'opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out)' }}>
-        <h3 style={{ fontFamily:'var(--font-display)', fontWeight:'var(--fw-semibold)', fontSize:'var(--text-h3)',
-          letterSpacing:'var(--track-tight)', color:'var(--text-strong)', margin:'0 0 0.7rem' }}>{label}</h3>
-        {Array.isArray(content) ? (
-          <ul style={{ margin:0, paddingLeft:'1.1rem', display:'flex', flexDirection:'column', gap:'0.5rem' }}>
-            {content.map((li, k)=>(
-              <li key={k} style={{ fontSize:'var(--text-body)', lineHeight:'var(--leading-body)', color:'var(--text)',
-                opacity: lit ? 1 : 0, transform: lit ? 'none' : 'translateY(10px)',
-                transition:`opacity 0.6s var(--ease-out) ${120 + k*80}ms, transform 0.6s var(--ease-out) ${120 + k*80}ms` }}>{li}</li>
-            ))}
-          </ul>
-        ) : (
-          <p style={{ fontSize:'var(--text-body)', lineHeight:'var(--leading-body)', color:'var(--text)', margin:0, maxWidth:'64ch' }}>{content}</p>
-        )}
-      </div>
-    </div>
-  );
-}
-
-/* ---- Slide-over panel ---- */
+/* ---- Generic Slide-Over Panel ---- */
 function Panel({ open, onClose, children }) {
-  const active = !!open;
-  useLockScroll(active);
-  useEsc(onClose, active);
+  useEffectO(() => {
+    const handleKeyDown = (e) => { if (e.key === 'Escape') onClose(); };
+    if (open) {
+      document.body.style.overflow = 'hidden';
+      window.addEventListener('keydown', handleKeyDown);
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [open]);
+
+  if (!open) return null;
+
   return (
-    <div aria-hidden={!active} style={{ position:'fixed', inset:0, zIndex:1000, pointerEvents: active?'auto':'none' }}>
-      <div onClick={onClose} style={{ position:'absolute', inset:0, background:'rgba(10,10,11,0.4)',
-        opacity: active?1:0, transition:'opacity var(--dur-3) var(--ease-out)' }} />
-      <aside style={{ position:'absolute', top:0, right:0, height:'100%', width:'min(560px, 100%)', background:'var(--bg)',
-        borderLeft:'var(--hair) solid var(--border)', transform: active?'translateX(0)':'translateX(100%)',
-        transition:'transform var(--dur-5) var(--ease-io)', overflowY:'auto', display:'flex', flexDirection:'column' }}>
-        <div style={{ display:'flex', justifyContent:'flex-end', padding:'1.5rem var(--gutter) 0' }}>
-          <button data-hot onClick={onClose} style={{ width:34, height:34, display:'flex', alignItems:'center', justifyContent:'center',
-            color:'var(--text-strong)', border:'var(--hair) solid var(--border-strong)', borderRadius:'var(--radius-sm)' }}>✕</button>
+    <div style={{
+      position: 'fixed', inset: 0, zIndex: 1000,
+      display: 'flex', justifyContent: 'flex-end',
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      backdropFilter: 'blur(6px)', WebkitBackdropFilter: 'blur(6px)',
+      animation: 'fadeIn 0.2s ease-out'
+    }} onClick={onClose}>
+      <style>{`
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+      `}</style>
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          width: '100%', maxWidth: '720px', height: '100%',
+          backgroundColor: 'var(--bg-raised)', borderLeft: '1px solid var(--border)',
+          overflowY: 'auto', padding: 'clamp(2rem, 5vw, 3.5rem)',
+          display: 'flex', flexDirection: 'column', gap: '2rem',
+          boxShadow: '0 20px 40px rgba(0, 0, 0, 0.2)',
+          animation: 'slideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1)'
+        }}
+      >
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <button
+            onClick={onClose}
+            style={{
+              fontFamily: 'var(--font-mono)', fontSize: '0.75rem', letterSpacing: 'var(--track-label)',
+              textTransform: 'uppercase', color: 'var(--text-muted)', backgroundColor: 'var(--bg-inset)',
+              border: '1px solid var(--border)', borderRadius: 'var(--radius-sm)', padding: '0.4rem 0.8rem',
+              cursor: 'pointer', display: 'flex', alignItems: 'baseline', gap: '0.4rem'
+            }}
+          >
+            ← Close [ESC]
+          </button>
         </div>
-        <div style={{ padding:'1rem var(--gutter) clamp(3rem,6vw,4rem)' }}>{children}</div>
-      </aside>
+
+        <div>
+          {children}
+        </div>
+      </div>
     </div>
   );
 }
 
 function PanelTitle({ index, children }) {
   return (
-    <div style={{ marginBottom:'2rem' }}>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', textTransform:'uppercase', color:'var(--accent)', marginBottom:'0.9rem' }}>{index}</div>
-      <h2 style={{ fontFamily:'var(--font-display)', fontWeight:'var(--fw-display)', fontSize:'var(--text-h1)', letterSpacing:'var(--track-tight)', color:'var(--text-strong)', margin:0 }}>{children}</h2>
+    <div style={{ marginBottom: '2rem' }}>
+      <div style={{
+        fontFamily: 'var(--font-mono)', fontSize: '0.75rem', letterSpacing: 'var(--track-label)',
+        textTransform: 'uppercase', color: 'var(--accent)', marginBottom: '0.4rem'
+      }}>
+        {index}
+      </div>
+      <h2 style={{
+        fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'var(--text-h1)',
+        lineHeight: 'var(--leading-h1)', color: 'var(--text-strong)', margin: 0
+      }}>
+        {children}
+      </h2>
     </div>
   );
 }
 
-Object.assign(window, { CaseOverlay, Panel, PanelTitle });
+/* ---- About Content ---- */
+function AboutContent() {
+  return (
+    <div>
+      <PanelTitle index="01 / Background">About</PanelTitle>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+        <p style={{ fontSize: 'var(--text-body)', lineHeight: 'var(--leading-body)', color: 'var(--text-strong)' }}>
+          I study human performance, cognition, and systems error prevention to make technical tools and complex workflows safe and reliable.
+        </p>
+        <p style={{ fontSize: 'var(--text-body)', lineHeight: 'var(--leading-body)', color: 'var(--text-muted)' }}>
+          I am pursuing an accelerated B.S./M.S. degree in Human Factors Psychology at Embry-Riddle Aeronautical University. My focus lies at the intersection of human cognitive ergonomics, AI reliability auditing, and technical operations-designing workflows that fail gracefully when humans are under stress or high workload.
+        </p>
+        <p style={{ fontSize: 'var(--text-body)', lineHeight: 'var(--leading-body)', color: 'var(--text-muted)' }}>
+          Having engineered full-stack applications and performed empirical evaluations on LLM models, I bridge engineering teams and human factors principles to turn complex system requirements into predictable human-system performance.
+        </p>
+      </div>
+
+      <div style={{ marginTop: '2.5rem', borderTop: '1px solid var(--border)', paddingTop: '1.5rem' }}>
+        <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: '0.8rem' }}>
+          Education
+        </div>
+        <div style={{ fontSize: 'var(--text-body)', fontWeight: 600, color: 'var(--text-strong)' }}>
+          B.S. / M.S. Human Factors Psychology
+        </div>
+        <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.875rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
+          Embry-Riddle Aeronautical University · Accelerated Program
+        </div>
+      </div>
+
+      <div style={{ marginTop: '2rem', borderTop: '1px solid var(--border)', paddingTop: '1.5rem' }}>
+        <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '0.8rem' }}>
+          Core Competencies
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1rem' }}>
+          {[
+            ['Human Factors', 'Cognitive Task Analysis', 'Usability Testing', 'Error Classification'],
+            ['AI Reliability', 'LLM Evaluation', 'Safety Auditing', 'Edge-Case Analysis'],
+            ['Systems Ops', 'Workflow Automation', 'Technical Support', 'Documentation']
+          ].map((col, idx) => (
+            <div key={idx} style={{ backgroundColor: 'var(--bg-inset)', padding: '1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-strong)', marginBottom: '0.5rem' }}>{col[0]}</div>
+              {col.slice(1).map((item) => (
+                <div key={item} style={{ fontSize: '0.8125rem', color: 'var(--text-muted)', margin: '0.25rem 0' }}>{item}</div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div style={{ marginTop: '2rem', borderTop: '1px solid var(--border)', paddingTop: '1.25rem' }}>
+        <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6875rem', color: 'var(--text-faint)', textTransform: 'uppercase', letterSpacing: 'var(--track-label)' }}>
+          Personal Notes &amp; Pursuits
+        </div>
+        <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)', margin: '0.5rem 0 0 0', lineHeight: 1.5 }}>
+          Flight &amp; space systems, endurance running, culinary experimentation, and reading foundational texts on systems thinking.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+
+/* ---- Resume Content ---- */
+function ResumeContent() {
+  return (
+    <div>
+      <PanelTitle index="03 / Credentials">Resume</PanelTitle>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', padding: '1rem 1.25rem', backgroundColor: 'var(--bg-inset)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}>
+        <div>
+          <div style={{ fontWeight: 600, fontSize: '0.9375rem', color: 'var(--text-strong)' }}>Rapheal Suber - Curriculum Vitae</div>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-muted)' }}>Human Factors &amp; AI Reliability Focus</div>
+        </div>
+        <a
+          href="reach.html"
+          target="_blank"
+          style={{
+            fontFamily: 'var(--font-mono)', fontSize: '0.75rem', textTransform: 'uppercase',
+            color: '#FFFFFF', backgroundColor: 'var(--text-strong)', padding: '0.5rem 1rem',
+            borderRadius: 'var(--radius-sm)', textDecoration: 'none', letterSpacing: 'var(--track-label)'
+          }}
+        >
+          View / Print PDF
+        </a>
+      </div>
+
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+        <div>
+          <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--accent)', letterSpacing: 'var(--track-label)', marginBottom: '0.75rem' }}>
+            Education
+          </h3>
+          <div style={{ fontSize: '0.9375rem', fontWeight: 600, color: 'var(--text-strong)' }}>
+            Accelerated B.S. / M.S. in Human Factors Psychology
+          </div>
+          <div style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>
+            Embry-Riddle Aeronautical University
+          </div>
+        </div>
+
+        <div>
+          <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--accent)', letterSpacing: 'var(--track-label)', marginBottom: '0.75rem' }}>
+            Technical &amp; Research Domains
+          </h3>
+          <ul style={{ paddingLeft: '1.2rem', margin: 0, color: 'var(--text-muted)', fontSize: '0.875rem', lineHeight: '1.7' }}>
+            <li>Human Factors Engineering &amp; Cognitive Ergonomics</li>
+            <li>AI Evaluation &amp; Safety Taxonomy Scoring</li>
+            <li>Workflow Automation &amp; System Telemetry</li>
+            <li>Clinical SaaS &amp; Medical Outcome Tracking</li>
+            <li>Python, JavaScript/TypeScript, React, Django, SQL</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ---- Contact Content ---- */
+function ContactContent() {
+  const links = [
+    ['Email', 'raphealsuber@gmail.com', 'mailto:raphealsuber@gmail.com'],
+    ['LinkedIn', 'linkedin.com/in/raphealsuber', 'https://www.linkedin.com/in/raphealsuber/'],
+    ['GitHub', 'github.com/manyworldss', 'https://github.com/manyworldss'],
+  ];
+
+  return (
+    <div>
+      <PanelTitle index="04 / Connect">Contact</PanelTitle>
+      <p style={{ fontSize: 'var(--text-body)', lineHeight: 'var(--leading-body)', color: 'var(--text-muted)', marginBottom: '2rem' }}>
+        Open to technical opportunities in Human Factors, AI Reliability, Manufacturing, Technical Operations, and Systems Improvement.
+      </p>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        {links.map(([label, value, href]) => (
+          <a
+            key={label}
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+              padding: '1.25rem', borderRadius: 'var(--radius-md)',
+              backgroundColor: 'var(--bg-inset)', border: '1px solid var(--border)',
+              textDecoration: 'none', color: 'inherit', transition: 'border-color 0.2s ease'
+            }}
+          >
+            <div>
+              <div style={{ fontSize: '0.75rem', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', color: 'var(--accent)', letterSpacing: 'var(--track-label)' }}>{label}</div>
+              <div style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--text-strong)', marginTop: '0.2rem' }}>{value}</div>
+            </div>
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.875rem', color: 'var(--text-muted)' }}>→</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ---- Case Study Overlay ---- */
+function CaseStudyOverlay({ caseStudy, onClose }) {
+  if (!caseStudy) return null;
+
+  return (
+    <Panel open={!!caseStudy} onClose={onClose}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+        <div>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: 'var(--track-label)', marginBottom: '0.5rem' }}>
+            {caseStudy.code} · {caseStudy.domain}
+          </div>
+          <h1 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'var(--text-h1)', lineHeight: 'var(--leading-h1)', color: 'var(--text-strong)', margin: 0 }}>
+            {caseStudy.title}
+          </h1>
+          {caseStudy.page && (
+            <a
+              href={caseStudy.page}
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
+                marginTop: '1rem', fontFamily: 'var(--font-mono)', fontSize: '0.75rem',
+                color: 'var(--accent)', textDecoration: 'none', textTransform: 'uppercase'
+              }}
+            >
+              Open Full Standalone Report ↗
+            </a>
+          )}
+        </div>
+
+        {/* 5 Engineering Headings */}
+        {[
+          ['01. Problem', caseStudy.problem],
+          ['02. Constraints', caseStudy.constraints],
+          ['03. Approach', caseStudy.approach],
+          ['04. Outcome', caseStudy.outcome],
+          ['05. Lessons Learned', caseStudy.lessonsLearned]
+        ].map(([title, content]) => (
+          <div key={title} style={{ borderTop: '1px solid var(--border)', paddingTop: '1.25rem' }}>
+            <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8125rem', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: '0.75rem' }}>
+              {title}
+            </h3>
+            <div style={{ fontSize: 'var(--text-body)', lineHeight: 'var(--leading-body)', color: 'var(--text-muted)', whiteSpace: 'pre-line' }}>
+              {content}
+            </div>
+          </div>
+        ))}
+      </div>
+    </Panel>
+  );
+}
+
+Object.assign(window, { Panel, AboutContent, ResumeContent, ContactContent, CaseStudyOverlay });
