@@ -4,6 +4,60 @@
    ============================================================ */
 const { useState: useStateS, useEffect: useEffectS } = React;
 
+/* ---- Nav ---- */
+function Nav({ onOpen, onHome, view }) {
+  const [scrolled, setScrolled] = useStateS(false);
+  useEffectS(() => {
+    const fn = () => setScrolled(window.scrollY > 12);
+    fn();
+    window.addEventListener('scroll', fn, { passive: true });
+    return () => window.removeEventListener('scroll', fn);
+  }, []);
+  const items = [['work','Case Studies'],['currently','Currently'],['about','About'],['contact','Contact']];
+  const isHome = view === 'home';
+  return (
+    <header style={{ position:'fixed', top:0, left:0, right:0, height:'var(--topbar-h)', zIndex:20,
+      background: (!isHome && scrolled) ? 'var(--bg-glass)' : 'transparent',
+      backdropFilter: (!isHome && scrolled) ? 'blur(18px) saturate(140%)' : 'none',
+      borderBottom: (!isHome && scrolled) ? 'var(--hair) solid var(--border)' : 'var(--hair) solid transparent',
+      transition:'background var(--dur-3) var(--ease-soft), border-color var(--dur-3) var(--ease-soft)',
+      pointerEvents: isHome ? 'none' : 'auto' }}>
+      <style>{`
+        .rs-nav-inner { max-width:var(--page-max); margin:0 auto; height:100%; padding:0 var(--gutter); display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+        .rs-nav-links { display:flex; align-items:center; gap:clamp(1.2rem,2.4vw,2.2rem); }
+        @media (max-width: 680px) {
+          .rs-nav-inner { gap:0.5rem; }
+          .rs-nav-links { gap:0.85rem; overflow-x:auto; max-width:100%; padding:0.25rem 0; scrollbar-width:none; -ms-overflow-style:none; }
+          .rs-nav-links::-webkit-scrollbar { display:none; }
+          .rs-nav-links button, .rs-nav-links a { flex-shrink:0; font-size:0.78rem !important; }
+        }
+      `}</style>
+      <div className="rs-nav-inner">
+        {!isHome ? (
+          <button data-hot onClick={onHome} style={{ display:'inline-flex', alignItems:'center', gap:'0.65rem',
+            fontFamily:'var(--font-display)', fontSize:'0.95rem', fontWeight:'var(--fw-semibold)', letterSpacing:'-0.01em',
+            color:'var(--text-strong)', flexShrink:0 }}>
+            <span style={{ width:7, height:7, borderRadius:999, background:'var(--accent)' }} />
+            <span>Rapheal Suber</span>
+          </button>
+        ) : <span />}
+        <nav className="rs-nav-links" style={{ pointerEvents:'auto' }}>
+          {!isHome && items.map(([id, label]) => <NavLink key={id} label={label} active={view===id} onClick={() => onOpen(id)} />)}
+          <ThemeToggle />
+        </nav>
+      </div>
+    </header>
+  );
+}
+function NavLink({ label, active, onClick }) {
+  const [h, setH] = useStateS(false);
+  return (
+    <button data-hot onClick={onClick} onMouseEnter={()=>setH(true)} onMouseLeave={()=>setH(false)}
+      style={{ fontSize:'var(--text-sm)', color: (h || active) ? 'var(--text-strong)' : 'var(--text-muted)',
+        transition:'color var(--dur-2) var(--ease-soft)' }}>{label}</button>
+  );
+}
+
 /* ---- Hero ---- */
 function Hero({ onOpen }) {
   return <KioskHero onOpen={onOpen} />;
@@ -116,7 +170,7 @@ function KioskHero({ onOpen }) {
         .k-node:hover .k-orb{ transform:scale(1.1); filter:saturate(1.08) brightness(1.05); }
         .k-node:hover .k-orb .halo{ opacity:0.85; }
         .k-node:hover .k-orb .ring{ opacity:1; animation-duration:12s; }
-        .k-node:hover .k-lab{ color:#C98A63 !important; }
+        .k-node:hover .k-lab{ color:var(--accent) !important; }
         .k-node .k-lab, .k-node .k-meta{ transition:color .45s var(--ease-soft), transform .6s cubic-bezier(0.19,1,0.22,1); }
         .k-node:hover .k-lab, .k-node:hover .k-meta{ transform:translateX(5px); }
         .k-aur span{ filter:blur(46px); will-change:transform; }
@@ -124,9 +178,16 @@ function KioskHero({ onOpen }) {
         @media (prefers-reduced-motion: reduce){ .k-orb .ball::before,.k-orb .ball::after,.k-orb .glint,.k-orb .halo,.k-aur span{ animation:none !important; } }
         @media (max-width:920px){
           .k-field{ display:none !important; }
-          .k-id{ position:relative !important; top:auto !important; transform:none !important; max-width:none !important;
-            padding:clamp(3rem,8vh,5rem) var(--gutter) 4rem; }
-          .k-mob{ display:block; margin-top:2.4rem; }
+          .k-telemetry-tl{ top:calc(var(--topbar-h) + 0.5rem) !important; font-size:0.65rem !important; }
+          .k-id{ position:relative !important; top:auto !important; left:auto !important; transform:none !important; max-width:none !important;
+            padding:calc(var(--topbar-h) + 3.2rem) var(--gutter) 4.5rem; }
+          .k-mob{ display:grid; grid-template-columns:1fr; gap:0.65rem; margin-top:2rem; }
+          .k-mob-card{ display:flex; align-items:center; justify-content:space-between; gap:1rem;
+            padding:0.9rem 1.05rem; border:1px solid var(--k-hair); border-radius:14px;
+            background:rgba(255,255,255,0.025); backdrop-filter:blur(10px); text-decoration:none;
+            transition:transform 0.2s ease, border-color 0.2s ease, background 0.2s ease; }
+          [data-theme="light"] .k-mob-card{ background:rgba(23,20,15,0.03); }
+          .k-mob-card:active{ transform:scale(0.985); border-color:var(--accent); }
         }
       `}</style>
 
@@ -141,18 +202,15 @@ function KioskHero({ onOpen }) {
       <div aria-hidden="true" style={{ position:'absolute', inset:0, zIndex:5, pointerEvents:'none', background:'repeating-linear-gradient(0deg, transparent 0 3px, var(--k-scan) 3px 4px)' }} />
 
       {/* corner telemetry */}
-      <div style={{ position:'absolute', top:'clamp(1.5rem,3.5vh,2.5rem)', left:'var(--gutter)', zIndex:6, fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'0.22em', textTransform:'uppercase', color:'var(--k-faint)', lineHeight:1.8 }}>
+      <div className="k-telemetry-tl" style={{ position:'absolute', top:'clamp(1.5rem,3.5vh,2.5rem)', left:'var(--gutter)', zIndex:6, fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'0.22em', textTransform:'uppercase', color:'var(--k-faint)', lineHeight:1.8 }}>
         RS · SELECT PATH<br/>CH {active ? active.n : '00'} / {active ? active.label.toUpperCase() : 'STANDBY'}
-      </div>
-      <div style={{ position:'absolute', top:'clamp(1.5rem,3.5vh,2.5rem)', right:'var(--gutter)', zIndex:6, textAlign:'right', fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'0.22em', textTransform:'uppercase', color:'var(--k-faint)', lineHeight:1.8 }}>
-        EST. 2026
       </div>
       <div style={{ position:'absolute', bottom:'clamp(1.6rem,4vh,2rem)', right:'var(--gutter)', zIndex:6, fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'0.22em', color:'var(--k-ghost)' }}>{clock}</div>
 
       {/* identity */}
       <div className="k-id" style={{ position:'absolute', zIndex:4, left:'var(--gutter)', top:'50%', transform:'translateY(-50%)', maxWidth:'clamp(320px, 36vw, 440px)' }}>
-        <Reveal as="div" delay={40} style={{ display:'flex', alignItems:'center', gap:'10px', fontFamily:'var(--font-mono)', fontSize:'var(--text-label)', letterSpacing:'0.32em', textTransform:'uppercase', color:'#C98A63', marginBottom:'22px' }}>
-          <span style={{ width:24, height:1, background:'#C98A63' }} /> Portfolio — Select a channel
+        <Reveal as="div" delay={40} style={{ display:'flex', alignItems:'center', gap:'10px', fontFamily:'var(--font-mono)', fontSize:'var(--text-label)', letterSpacing:'0.32em', textTransform:'uppercase', color:'var(--accent)', marginBottom:'22px' }}>
+          <span style={{ width:24, height:1, background:'var(--accent)' }} /> Portfolio — Select a channel
         </Reveal>
         <Reveal delay={120}>
           <h1 style={{ fontFamily:'var(--font-display)', fontWeight:300, fontSize:'clamp(2.6rem,6.4vw,5rem)', lineHeight:0.92, letterSpacing:'-0.025em', textTransform:'uppercase', margin:0 }}>
@@ -166,17 +224,20 @@ function KioskHero({ onOpen }) {
           Human Factors Psychology student with experience across human-AI interaction, evaluation methodology, user research, and technical systems. Designing and evaluating technology where human capability and system complexity meet.
         </Reveal>
 
-        {/* mobile channel list — the constellation field is desktop-only */}
+        {/* mobile channel list — interactive sphere cards on mobile */}
         <div className="k-mob">
           {KIOSK_NODES.map((d) => (
-            <a key={d.id} href="#" onClick={(e)=>{ e.preventDefault(); onOpen(d.id, d.glow); }}
-              style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:'1rem',
-                padding:'1rem 0', borderTop:'1px solid var(--k-hair)', textDecoration:'none' }}>
-              <span style={{ display:'flex', alignItems:'baseline', gap:'0.9rem' }}>
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'0.2em', color:'var(--k-faint)' }}>CH {d.n}</span>
-                <span style={{ fontFamily:'var(--font-display)', fontWeight:500, fontSize:'1.15rem', color:'var(--k-fg)' }}>{d.label}</span>
+            <a key={d.id} href="#" className="k-mob-card" onClick={(e)=>{ e.preventDefault(); onOpen(d.id, d.glow); }}>
+              <span style={{ display:'flex', alignItems:'center', gap:'0.95rem' }}>
+                <span className="k-orb" style={{ width:38, height:38, flexShrink:0, '--g1':d.g[0], '--g2':d.g[1], '--g3':d.g[2], '--glow':d.glow }}>
+                  <span className="ball"></span><span className="shell"></span><span className="grain"></span><span className="ring"></span>
+                </span>
+                <span>
+                  <span style={{ display:'block', fontFamily:'var(--font-mono)', fontSize:'0.68rem', letterSpacing:'0.18em', color:'var(--k-faint)' }}>CH {d.n}</span>
+                  <span style={{ display:'block', fontFamily:'var(--font-display)', fontWeight:500, fontSize:'1.08rem', color:'var(--k-fg)', marginTop:'1px' }}>{d.label}</span>
+                </span>
               </span>
-              <span aria-hidden="true" style={{ fontFamily:'var(--font-mono)', color:'#C98A63' }}>→</span>
+              <span aria-hidden="true" style={{ fontFamily:'var(--font-mono)', fontSize:'1rem', color:'var(--accent)' }}>→</span>
             </a>
           ))}
         </div>
@@ -299,4 +360,4 @@ function Footer({ onOpen }) {
   );
 }
 
-Object.assign(window, { Hero, CaseStudies, Footer, PrimaryBtn });
+Object.assign(window, { Nav, Hero, CaseStudies, Footer, PrimaryBtn });
