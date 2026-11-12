@@ -1,187 +1,247 @@
 /* ============================================================
-   HELPERS - Micro-interactions, Cursor Ring & Ambient Background.
-   Linear / Apple Minimal Aesthetic.
+   Portfolio — shared helpers.
+   Scroll reveals, the atmospheric aurora backdrop, the glass
+   sphere primitive, theme toggle, and the intro curtain.
    ============================================================ */
 const { useState, useEffect, useRef } = React;
 
-/* ---- reveal-on-scroll hook ---- */
 function useReveal() {
   const ref = useRef(null);
   const [shown, setShown] = useState(false);
   useEffect(() => {
-    const el = ref.current; if (!el) return;
+    const el = ref.current; if (!el) { setShown(true); return; }
+    // If already in (or above) the viewport at mount, reveal on next frame.
+    const r = el.getBoundingClientRect();
+    if (r.top < window.innerHeight * 0.92) {
+      const id = requestAnimationFrame(() => setShown(true));
+      return () => cancelAnimationFrame(id);
+    }
     const io = new IntersectionObserver((es) => {
       es.forEach((e) => { if (e.isIntersecting) { setShown(true); io.disconnect(); } });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.16 });
     io.observe(el);
-    return () => io.disconnect();
+    // Safety fallback: never leave content invisible.
+    const t = setTimeout(() => setShown(true), 1200);
+    return () => { io.disconnect(); clearTimeout(t); };
   }, []);
   return [ref, shown];
 }
 
-function Reveal({ children, delay = 0, y = '14px', as = 'div', style = {}, ...rest }) {
+function Reveal({ children, delay = 0, y = '18px', as = 'div', style = {}, ...rest }) {
   const [ref, shown] = useReveal();
   const Tag = as;
   return (
     <Tag ref={ref} style={{
       opacity: shown ? 1 : 0,
       transform: shown ? 'none' : `translateY(${y})`,
-      transition: `opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms`,
+      transition: `opacity 0.7s var(--ease-out) ${delay}ms, transform 0.7s var(--ease-out) ${delay}ms`,
       ...style,
     }} {...rest}>{children}</Tag>
   );
 }
 
-/* ---- Precision Cursor ---- */
-function Cursor() {
-  const dotRef = useRef(null);
-  const ringRef = useRef(null);
-
+/* ---- Blueprint backdrop: slow clay/pine aurora + cursor spotlight ---- */
+function BlueprintBg() {
+  const spot = useRef(null);
   useEffect(() => {
     if (window.matchMedia('(pointer: coarse)').matches) return;
-
-    let x = window.innerWidth / 2, y = window.innerHeight / 2;
-    let rx = x, ry = y;
-    let running = false;
-    let raf = null;
-
-    const onMouseMove = (e) => {
-      x = e.clientX;
-      y = e.clientY;
-      if (dotRef.current) {
-        dotRef.current.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-      }
-      if (!running) {
-        running = true;
-        animate();
+    // The spotlight repaints a full-viewport gradient, so only run the easing
+    // loop while the cursor is actually settling — never as an idle rAF.
+    let raf = 0, tx = -999, ty = -999, x = -999, y = -999;
+    const paint = () => {
+      if (spot.current) {
+        spot.current.style.background = `radial-gradient(440px circle at ${x.toFixed(0)}px ${y.toFixed(0)}px, rgba(201,138,99,0.13), rgba(127,161,137,0.05) 44%, transparent 66%)`;
       }
     };
-
-    const animate = () => {
-      const dx = x - rx;
-      const dy = y - ry;
-      rx += dx * 0.22;
-      ry += dy * 0.22;
-
-      if (ringRef.current) {
-        ringRef.current.style.transform = `translate3d(${rx}px, ${ry}px, 0)`;
-      }
-
-      if (Math.abs(dx) > 0.05 || Math.abs(dy) > 0.05) {
-        raf = requestAnimationFrame(animate);
-      } else {
-        running = false;
-      }
+    const loop = () => {
+      x += (tx - x) * 0.12; y += (ty - y) * 0.12;
+      paint();
+      if (Math.abs(tx - x) < 0.5 && Math.abs(ty - y) < 0.5) { raf = 0; return; }
+      raf = requestAnimationFrame(loop);
     };
-
-    const onMouseOver = (e) => {
-      const isHot = !!e.target.closest('a, button, [data-hot], .case-study-card');
-      if (ringRef.current) {
-        ringRef.current.setAttribute('data-hot', isHot ? 'true' : 'false');
-      }
-    };
-
-    window.addEventListener('mousemove', onMouseMove, { passive: true });
-    window.addEventListener('mouseover', onMouseOver, { passive: true });
-
-    return () => {
-      window.removeEventListener('mousemove', onMouseMove);
-      window.removeEventListener('mouseover', onMouseOver);
-      if (raf) cancelAnimationFrame(raf);
-    };
+    const move = (e) => { tx = e.clientX; ty = e.clientY; if (!raf) raf = requestAnimationFrame(loop); };
+    addEventListener('mousemove', move, { passive: true });
+    return () => { cancelAnimationFrame(raf); removeEventListener('mousemove', move); };
   }, []);
-
   return (
-    <div aria-hidden="true">
+    <div aria-hidden="true" style={{ position:'fixed', inset:0, zIndex:0, pointerEvents:'none', overflow:'hidden' }}>
+      <div className="rs-aur">
+        <span className="a a1" /><span className="a a2" /><span className="a a3" />
+      </div>
+      <div ref={spot} className="rs-spot" />
       <style>{`
-        @media (pointer: fine) {
-          body, a, button { cursor: default; }
-        }
-        .cursor-ring-elem {
-          position: fixed; top: 0; left: 0;
-          width: 26px; height: 26px;
-          margin-left: -13px; margin-top: -13px;
-          border-radius: 999px;
-          border: 1px solid var(--border-strong);
-          pointer-events: none; z-index: 9998;
-          transition: width 0.25s ease, height 0.25s ease, margin 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
-        }
-        .cursor-ring-elem[data-hot="true"] {
-          width: 44px; height: 44px;
-          margin-left: -22px; margin-top: -22px;
-          border-color: var(--accent);
-          background-color: var(--accent-wash);
-        }
-        .cursor-dot-elem {
-          position: fixed; top: 0; left: 0;
-          width: 4px; height: 4px;
-          margin-left: -2px; margin-top: -2px;
-          border-radius: 999px;
-          background-color: var(--accent);
-          pointer-events: none; z-index: 9999;
-        }
+        /* Blur lives on each blob, not the container: a filtered parent would
+           have to re-rasterise the whole viewport on every animation frame,
+           whereas a promoted blob layer is just transformed by the compositor. */
+        .rs-aur{ position:absolute; inset:-25%; opacity:0.42; }
+        .rs-aur .a{ position:absolute; border-radius:50%; filter:blur(60px); will-change:transform; }
+        .rs-aur .a1{ width:64vw; height:64vw; left:2%; top:-14%; background:radial-gradient(closest-side, rgba(166,96,60,0.72), transparent 70%); animation:rsD1 26s ease-in-out infinite; }
+        .rs-aur .a2{ width:58vw; height:58vw; right:-6%; top:22%; background:radial-gradient(closest-side, rgba(51,81,63,0.78), transparent 70%); animation:rsD2 32s ease-in-out infinite; }
+        .rs-aur .a3{ width:46vw; height:46vw; left:34%; bottom:-16%; background:radial-gradient(closest-side, rgba(201,138,99,0.52), transparent 70%); animation:rsD3 38s ease-in-out infinite; }
+        .rs-spot{ position:absolute; inset:0; background:radial-gradient(420px circle at -999px -999px, rgba(201,138,99,0.12), rgba(127,161,137,0.04) 44%, transparent 66%); }
+        @keyframes rsD1{ 0%,100%{ transform:translate(0,0) scale(1);} 50%{ transform:translate(10%,8%) scale(1.2);} }
+        @keyframes rsD2{ 0%,100%{ transform:translate(0,0) scale(1.1);} 50%{ transform:translate(-10%,-8%) scale(0.9);} }
+        @keyframes rsD3{ 0%,100%{ transform:translate(0,0) scale(0.95);} 50%{ transform:translate(8%,-10%) scale(1.25);} }
+        [data-theme="light"] .rs-aur{ opacity:0.28; }
+        @media (prefers-reduced-motion: reduce){ .rs-aur .a{ animation:none; } }
       `}</style>
-      <div ref={dotRef} className="cursor-dot-elem" />
-      <div ref={ringRef} className="cursor-ring-elem" />
     </div>
   );
 }
 
-/* ---- Subtle Ambient Background Spotlight & Grid ---- */
-function AmbientBackground() {
-  const bgRef = useRef(null);
-
+/* ---- Scroll progress hairline ---- */
+function ScrollProgress() {
+  const ref = useRef(null);
   useEffect(() => {
-    const handleMove = (e) => {
-      if (!bgRef.current) return;
-      const { clientX, clientY } = e;
-      bgRef.current.style.setProperty('--mouse-x', `${clientX}px`);
-      bgRef.current.style.setProperty('--mouse-y', `${clientY}px`);
+    const onScroll = () => {
+      const h = document.documentElement;
+      const p = h.scrollTop / ((h.scrollHeight - h.clientHeight) || 1);
+      if (ref.current) ref.current.style.transform = `scaleX(${Math.min(1, Math.max(0, p))})`;
     };
-    window.addEventListener('mousemove', handleMove, { passive: true });
-    return () => window.removeEventListener('mousemove', handleMove);
+    addEventListener('scroll', onScroll, { passive: true }); onScroll();
+    return () => removeEventListener('scroll', onScroll);
   }, []);
+  return <div ref={ref} aria-hidden="true" style={{ position:'fixed', top:0, left:0, right:0, height:2, zIndex:900,
+    transformOrigin:'0 50%', transform:'scaleX(0)', background:'var(--signal)',
+    transition:'transform 0.1s linear' }} />;
+}
 
+/* ---- Magnetic hover (fine pointers only) ---- */
+function useMagnetic(strength = 0.28) {
+  const ref = useRef(null);
+  useEffect(() => {
+    const el = ref.current; if (!el) return;
+    if (window.matchMedia('(pointer: coarse)').matches || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const move = (e) => {
+      const r = el.getBoundingClientRect();
+      const x = (e.clientX - r.left - r.width / 2) * strength;
+      const y = (e.clientY - r.top - r.height / 2) * strength;
+      el.style.transform = `translate(${x.toFixed(2)}px, ${y.toFixed(2)}px)`;
+    };
+    const leave = () => { el.style.transform = 'translate(0,0)'; };
+    el.addEventListener('mousemove', move);
+    el.addEventListener('mouseleave', leave);
+    return () => { el.removeEventListener('mousemove', move); el.removeEventListener('mouseleave', leave); };
+  }, [strength]);
+  return ref;
+}
+
+/* ---- Channel sphere: dense volumetric glass. Same optical language as
+   the kiosk orbs — rim light from behind-right, whisper specular, fine
+   grain to kill the CGI plastic sheen, optional instrument ring. ---- */
+function Sphere({ size = 160, ring = false, style = {} }) {
   return (
-    <div ref={bgRef} aria-hidden="true" style={{
-      position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: -1, overflow: 'hidden'
-    }}>
+    <div className="rs-sphere-wrap" style={{ width:size, height:size, ...style }}>
+      <div className="rs-sphere">
+        <div className="rs-sphere-grad" />
+        <div className="rs-sphere-shade" />
+        <div className="rs-sphere-spec" />
+        <div className="rs-sphere-grain" />
+      </div>
+      {ring && <div className="rs-sphere-ring" />}
       <style>{`
-        .ambient-grid {
-          position: absolute; inset: 0;
-          background-image: radial-gradient(var(--border) 1px, transparent 1px);
-          background-size: 32px 32px;
-          opacity: 0.35;
-          mask-image: radial-gradient(circle 600px at var(--mouse-x, 50vw) var(--mouse-y, 30vh), #000 0%, transparent 80%);
-          -webkit-mask-image: radial-gradient(circle 600px at var(--mouse-x, 50vw) var(--mouse-y, 30vh), #000 0%, transparent 80%);
-          transition: opacity 0.3s ease;
-        }
-        .ambient-glow-1 {
-          position: absolute; top: -10vw; right: -10vw;
-          width: 50vw; height: 50vw;
-          border-radius: 999px;
-          background: radial-gradient(circle, var(--accent-wash), transparent 70%);
-          opacity: 0.6; filter: blur(60px);
-          animation: floatSlow 20s ease-in-out infinite alternate;
-        }
-        .ambient-glow-2 {
-          position: absolute; bottom: -10vw; left: -10vw;
-          width: 45vw; height: 45vw;
-          border-radius: 999px;
-          background: radial-gradient(circle, rgba(113, 113, 122, 0.06), transparent 70%);
-          opacity: 0.5; filter: blur(80px);
-          animation: floatSlow 25s ease-in-out infinite alternate-reverse;
-        }
-        @keyframes floatSlow {
-          0% { transform: translate(0, 0) scale(1); }
-          100% { transform: translate(3vw, 4vw) scale(1.08); }
-        }
+        .rs-sphere-wrap{ position:relative; }
+        .rs-sphere{ position:absolute; inset:0; border-radius:50%; overflow:hidden; isolation:isolate; }
+        .rs-sphere::after{ content:''; position:absolute; inset:0; border-radius:50%; z-index:4;
+          box-shadow: inset -2px -3px 7px rgba(255,255,255,0.20),
+                      inset -9px -13px 28px rgba(255,255,255,0.05),
+                      inset 10px 12px 34px rgba(0,0,0,0.40),
+                      inset 0 0 0 1px rgba(240,236,227,0.10); }
+        .rs-sphere-grad{ position:absolute; inset:-35%; z-index:0;
+          background:conic-gradient(from 0deg, var(--clay), var(--pine-soft), var(--clay-soft), var(--pine-deep), var(--clay));
+          filter:blur(16px) saturate(1.1); animation:rsSpin 34s linear infinite; will-change:transform; }
+        .rs-sphere-shade{ position:absolute; inset:0; z-index:1; border-radius:50%;
+          background:radial-gradient(72% 72% at 50% 120%, rgba(0,0,0,0.60), transparent 58%); }
+        .rs-sphere-spec{ position:absolute; inset:0; z-index:2; border-radius:50%;
+          background:radial-gradient(38% 34% at 33% 24%, rgba(255,255,255,0.13), transparent 66%); }
+        .rs-sphere-grain{ position:absolute; inset:0; z-index:3; border-radius:50%; opacity:0.13;
+          background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E");
+          background-size:120px 120px; }
+        .rs-sphere-ring{ position:absolute; inset:-14%; border-radius:50%; pointer-events:none;
+          border:1px solid rgba(240,236,227,0.06);
+          border-top-color:var(--clay-soft); border-right-color:rgba(240,236,227,0.13);
+          animation:rsSpin 40s linear infinite; will-change:transform; }
+        @keyframes rsSpin{ to{ transform:rotate(360deg); } }
+        @media (prefers-reduced-motion: reduce){ .rs-sphere-grad, .rs-sphere-ring{ animation:none; } }
       `}</style>
-      <div className="ambient-grid" />
-      <div className="ambient-glow-1" />
-      <div className="ambient-glow-2" />
     </div>
   );
 }
 
-Object.assign(window, { useReveal, Reveal, Cursor, AmbientBackground });
+/* ---- Intro curtain: sphere assembles + a 00→100 counter, then wipes up ---- */
+function IntroCurtain() {
+  const [n, setN] = useState(0);
+  const [lifted, setLifted] = useState(false);
+  const [gone, setGone] = useState(false);
+  const [skip] = useState(() => {
+    try { if (sessionStorage.getItem('rs-intro')) return true; } catch (e) {}
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  });
+  useEffect(() => {
+    try { sessionStorage.setItem('rs-intro', '1'); } catch (e) {}
+    if (skip) { setLifted(true); setGone(true); return; }
+    let v = 0;
+    const tick = setInterval(() => {
+      v = Math.min(100, v + Math.round(3 + Math.random() * 6));
+      setN(v);
+      if (v >= 100) {
+        clearInterval(tick);
+        setTimeout(() => setLifted(true), 320);
+        setTimeout(() => setGone(true), 320 + 1100);
+      }
+    }, 34);
+    return () => clearInterval(tick);
+  }, [skip]);
+  if (gone) return null;
+  return (
+    <div aria-hidden="true" style={{ position:'fixed', inset:0, zIndex:9500, background:'var(--bg)',
+      display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:'2.2rem',
+      transform: lifted ? 'translateY(-100%)' : 'none',
+      transition:'transform 1.1s var(--ease-io)' }}>
+      <div style={{ opacity: lifted ? 0 : 1, transform: `scale(${lifted ? 0.9 : 1})`,
+        transition:'opacity 0.5s var(--ease-out), transform 0.9s var(--ease-out)' }}>
+        <Sphere size="clamp(120px, 22vw, 180px)" ring />
+      </div>
+      <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:'0.9rem',
+        opacity: lifted ? 0 : 1, transition:'opacity 0.4s var(--ease-out)' }}>
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)',
+          textTransform:'uppercase', color:'var(--text-muted)' }}>Rapheal Suber</div>
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-h2)', fontWeight:'var(--fw-regular)',
+          color:'var(--text-strong)', fontVariantNumeric:'tabular-nums', letterSpacing:'var(--track-tight)' }}>
+          {String(n).padStart(3,'0')}
+        </div>
+        <div style={{ width:180, maxWidth:'40vw', height:1, background:'var(--border)', position:'relative', overflow:'hidden' }}>
+          <div style={{ position:'absolute', inset:0, transformOrigin:'0 50%', transform:`scaleX(${n/100})`,
+            background:'var(--clay-soft)', transition:'transform 0.1s linear' }} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ---- Theme toggle pill (Light / Dark mode) ---- */
+function ThemeToggle() {
+  const [theme, setTheme] = useState(() => {
+    try { return localStorage.getItem('rs-theme') || 'dark'; } catch (e) { return 'dark'; }
+  });
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    try { localStorage.setItem('rs-theme', theme); } catch (e) {}
+  }, [theme]);
+  const next = theme === 'dark' ? 'light' : 'dark';
+  return (
+    <button data-hot onClick={() => setTheme(next)}
+      aria-label={`Switch to ${next} mode`}
+      style={{ display:'inline-flex', alignItems:'center', gap:'0.45rem',
+        fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)',
+        textTransform:'uppercase', color:'var(--text-strong)',
+        background:'var(--bg-raised)', border:'var(--hair) solid var(--border-strong)',
+        borderRadius:'var(--radius-pill)', padding:'0.38rem 0.78rem', cursor:'pointer',
+        boxShadow:'var(--shadow-sm)', transition:'border-color var(--dur-2) var(--ease-soft), background var(--dur-2) var(--ease-soft)' }}>
+      <span aria-hidden="true" style={{ fontSize:'0.82rem', lineHeight:1 }}>{theme === 'dark' ? '☀️' : '🌙'}</span>
+      <span>{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
+    </button>
+  );
+}
+
+Object.assign(window, { Reveal, useReveal, BlueprintBg, ScrollProgress, useMagnetic, Sphere, IntroCurtain, ThemeToggle });

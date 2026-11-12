@@ -445,7 +445,7 @@ html, body { background: var(--bg); }
 /* ============================================================
    Portfolio — shared helpers.
    Scroll reveals, the atmospheric aurora backdrop, the glass
-   sphere primitive, and the intro curtain.
+   sphere primitive, theme toggle, and the intro curtain.
    ============================================================ */
 const { useState, useEffect, useRef } = React;
 
@@ -663,7 +663,32 @@ function IntroCurtain() {
   );
 }
 
-Object.assign(window, { Reveal, useReveal, BlueprintBg, ScrollProgress, useMagnetic, Sphere, IntroCurtain });
+/* ---- Theme toggle pill (Light / Dark mode) ---- */
+function ThemeToggle() {
+  const [theme, setTheme] = useState(() => {
+    try { return localStorage.getItem('rs-theme') || 'dark'; } catch (e) { return 'dark'; }
+  });
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    try { localStorage.setItem('rs-theme', theme); } catch (e) {}
+  }, [theme]);
+  const next = theme === 'dark' ? 'light' : 'dark';
+  return (
+    <button data-hot onClick={() => setTheme(next)}
+      aria-label={`Switch to ${next} mode`}
+      style={{ display:'inline-flex', alignItems:'center', gap:'0.45rem',
+        fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)',
+        textTransform:'uppercase', color:'var(--text-strong)',
+        background:'var(--bg-raised)', border:'var(--hair) solid var(--border-strong)',
+        borderRadius:'var(--radius-pill)', padding:'0.38rem 0.78rem', cursor:'pointer',
+        boxShadow:'var(--shadow-sm)', transition:'border-color var(--dur-2) var(--ease-soft), background var(--dur-2) var(--ease-soft)' }}>
+      <span aria-hidden="true" style={{ fontSize:'0.82rem', lineHeight:1 }}>{theme === 'dark' ? '☀️' : '🌙'}</span>
+      <span>{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
+    </button>
+  );
+}
+
+Object.assign(window, { Reveal, useReveal, BlueprintBg, ScrollProgress, useMagnetic, Sphere, IntroCurtain, ThemeToggle });
 
 </script>
 <script type="text/babel">
