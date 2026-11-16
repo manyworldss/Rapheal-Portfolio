@@ -23,7 +23,7 @@ const WORK = [
         "Patient-safety domain: an interface that hides a declining patient is a use-error, not a design nitpick.",
         "Built solo, full-stack, on an accelerated timeline."
       ],
-      "Approach": "Shaped by structured feedback sessions with three occupational therapists across outpatient, home health, and telehealth settings. Applied human-factors principles, severity-banded patient routing and a 60% adherence-auditing threshold, to reduce clinician cognitive load and flag stalled home programs early. Information architecture is ordered by clinical urgency, so attention lands where it matters first.",
+      "Approach": "Shaped by structured feedback sessions with three occupational therapists across outpatient, home health, and telehealth settings. Applied human-factors principles, severity-banded patient routing and a 60% adherence-auditing threshold, to reduce clinician cognitive load and flag stalled home programs early. Information architecture is ordered by clinical urgency, so attention lands where it matters first. Monitoring features are grounded in the 2026 Remote Therapeutic Monitoring billing codes used by clinics.",
       "Outcome": "A working platform where a therapist can scan a caseload and identify off-track patients at a glance, with drill-down into per-patient trajectories and program adherence. Validated against the clinical review workflow it replaces.",
       "Lessons Learned": "In a safety-adjacent tool, the hard problem is not visualization, it is deciding what to omit. Every element competing for the clinician’s attention costs a fraction of a second on every patient, every day. Restraint is the feature."
     },
@@ -46,11 +46,9 @@ const WORK = [
       }
     ],
     "stack": [
-      "React 18",
+      "React",
       "TypeScript",
-      "Vite",
-      "Tailwind CSS",
-      "Recharts"
+      "Supabase"
     ],
     "insights": [
       {
@@ -106,14 +104,22 @@ const WORK = [
         "Make room for a reply, rather than treating communication as a one-way card.",
         "Keep the public website focused on explaining the iOS product."
       ],
-      "Approach": "Celio evolved from a Django web app into a focused iPhone experience. The current direction centers on presenting a clear dietary card, choosing the other person’s language, and supporting a two-way exchange. The marketing site uses phone-screen mockups to explain the interaction before someone installs the app.",
-      "Outcome": "The iOS app is in TestFlight, with an App Store release coming soon. The public repository now contains a lightweight static marketing site. The former Django version is preserved under the django-web-app-final tag.",
+      "Approach": "Ran 10+ interviews and surveyed 100+ people with celiac disease about dining barriers while traveling. Built a native iOS app in Swift and SwiftUI from those findings, then iterated on beta feedback. The current direction centers on presenting a clear dietary card, choosing the other person’s language, and supporting a two-way exchange. The marketing site explains that focused experience before someone installs the app.",
+      "Outcome": "The native iOS app is in TestFlight with 50+ beta users across 3+ countries, with an App Store release coming soon. The public repository now contains a lightweight static marketing site. The former Django version is preserved under the django-web-app-final tag.",
       "Lessons Learned": "A focused communication aid is easier to explain and use than a collection of travel features. The central design question is whether two people can understand one another in the moment they need to."
     },
     "meta": [
       {
         "k": "Role",
         "v": "Product design · Research · Development"
+      },
+      {
+        "k": "Research",
+        "v": "10+ interviews · 100+ people surveyed"
+      },
+      {
+        "k": "Beta",
+        "v": "50+ users · 3+ countries"
       },
       {
         "k": "Product",
@@ -129,7 +135,8 @@ const WORK = [
       }
     ],
     "stack": [
-      "iOS",
+      "Swift",
+      "SwiftUI",
       "HTML",
       "CSS",
       "JavaScript"
@@ -181,13 +188,13 @@ const WORK = [
         "Make exceptions visible where staff already work: inside Excel."
       ],
       "Approach": "Designed a guided three-step interface in plain English. A deterministic rules engine normalizes names, parses quantities, and calculates customer and supplier quality and on-time delivery metrics. Staff can review before-and-after figures, update an existing YTD workbook, or build a fresh report from a master template.",
-      "Outcome": "The repository reports processing 9,000+ rows across four reporting workbooks in under 60 seconds. The tool runs locally and records exceptions in a human-readable Outliers tab, giving staff a way to review the automation in their familiar workbook.",
+      "Outcome": "Built a tool that turns 9,000+ log rows into audit reports in seconds for 12 staff across two sites. The local workflow records corrections in a human-readable Excel tab, giving staff a way to review the automation in their familiar workbook.",
       "Lessons Learned": "Automation has to make sense to the person who inherits it. Plain-language steps, visible exceptions, and preservation of familiar spreadsheets matter as much as processing speed."
     },
     "meta": [
       {
-        "k": "Client",
-        "v": "Birk Aerosystems"
+        "k": "Role",
+        "v": "Engineering Intern, Aerospace Interiors"
       },
       {
         "k": "Focus",
@@ -200,6 +207,14 @@ const WORK = [
       {
         "k": "Media",
         "v": "Project photos and screenshots to be added"
+      },
+      {
+        "k": "Period",
+        "v": "Oct. 2026 – Present"
+      },
+      {
+        "k": "Team",
+        "v": "12 staff · 2 sites"
       }
     ],
     "stack": [
@@ -231,7 +246,7 @@ const WORK = [
     "id": "prox",
     "code": "PX-04",
     "title": "Prox",
-    "year": "2025",
+    "year": "2026",
     "disciplines": [
       "Onboarding UX",
       "iOS",
@@ -249,14 +264,14 @@ const WORK = [
         "Runs on Capacitor for iOS, requiring designs that account for cross-platform quirks while feeling native.",
         "Permission prompts must be deferred until value is established."
       ],
-      "Approach": "Worked directly with the founder and engineering team to design two distinct onboarding strategies. The \"Honest\" approach tells users what is happening, shows real-time progress, and gives permission to leave while data loads (sending a push notification when ready). The \"Exclusivity\" approach reframes the wait as a reserved queue spot with founding member cards and referral incentives.",
-      "Outcome": "Delivered an end-to-end 14-screen onboarding redesign. Implemented interactive features like a potential savings slider, deferred location permissions to build trust incrementally, and a tangible payoff screen when deals are ready. The company shipped the Honest approach.",
+      "Approach": "Worked directly with the founder and engineering team to design two distinct onboarding strategies. The \"Honest\" approach tells users what is happening, shows real-time progress, and gives permission to leave while data loads (sending a push notification when ready). The \"Exclusivity\" approach reframes the wait as a reserved queue spot with founding member cards and referral incentives. Research included interviews, in-app and email surveys, and A/B tests with 250–300 monthly users.",
+      "Outcome": "Rebuilt onboarding with 65% drop-off into a 12-screen flow. Sign-ups rose 30–40%, and 500+ users were onboarded. Shipped SwiftUI features and extended the iOS design system, translating Figma designs into production code. The company shipped the Honest approach.",
       "Lessons Learned": "You cannot always engineer away friction, but you can design how users perceive it. Giving users context, progress indicators, and an explanation for the wait turns frustration into anticipation."
     },
     "meta": [
       {
         "k": "Role",
-        "v": "UX Designer · Contractor"
+        "v": "UX Engineer · Contractor"
       },
       {
         "k": "Context",
@@ -264,11 +279,11 @@ const WORK = [
       },
       {
         "k": "Deliverables",
-        "v": "14-screen onboarding flow · Interactive prototypes · Capacitor iOS"
+        "v": "12-screen onboarding flow · SwiftUI features · iOS design system"
       },
       {
         "k": "Period",
-        "v": "Apr 2024 – Jul 2024"
+        "v": "Apr. 2026 – June 2026"
       }
     ],
     "stack": [

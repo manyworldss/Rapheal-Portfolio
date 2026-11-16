@@ -13,14 +13,15 @@ function AboutContent() {
           I am a Human Factors Psychology student with experience across human-AI interaction, evaluation methodology, user research, and technical systems. I am focused on designing and evaluating technology and workflow systems where human capability and system complexity meet.
         </p>
         <p style={{ fontFamily:'var(--font-body)', fontSize:'var(--text-body-lg)', lineHeight:'var(--leading-body-lg)', color:'var(--text)' }}>
-          Currently finishing an accelerated B.S./M.S. in Human Factors Psychology at Embry-Riddle Aeronautical University. My background in full-stack engineering, Python, SQL, and data analysis allows me to run deep technical evaluations, build rigorous prototypes, and design intuitive, error-resistant systems for high-stakes environments.
+          I am pursuing a B.S. in Human Factors Psychology at Embry-Riddle Aeronautical University, expected March 2028. I also work as an Engineering Intern in Aerospace Interiors at Birk Aerosystems, building tools that make complex quality and engineering workflows easier to use.
         </p>
       </div>
       <div style={{ marginTop:'clamp(2.5rem,5vw,3.5rem)', display:'grid', gridTemplateColumns:'1fr', gap:'1.1rem', maxWidth:'60ch' }}>
         {[
-          ['Education', 'Accelerated B.S./M.S. Human Factors Psychology, Embry-Riddle Aeronautical University'],
+          ['Education', 'B.S. Human Factors Psychology (STEM) · Embry-Riddle Aeronautical University · Expected March 2028 · GPA 3.7/4.0'],
+          ['Coursework', 'HCI · Cognitive Systems Engineering · Research Methods · Technical Writing · HFES member'],
           ['Focus', 'Human-AI interaction · evaluation methodology · user research · technical systems'],
-          ['Toolkit', 'Cognitive task analysis · usability testing · Python · SQL · React · Figma · structured evaluation'],
+          ['Toolkit', 'Interviews · surveys · usability testing · heuristic evaluation · A/B testing · rubric design · Python · PowerShell · Swift / SwiftUI · React / TypeScript'],
         ].map(([k,v])=>(
           <div key={k} style={{ borderTop:'var(--hair) solid var(--border)', paddingTop:'0.9rem' }}>
             <div style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', textTransform:'uppercase', color:'var(--accent)', marginBottom:'0.4rem' }}>{k}</div>
@@ -28,6 +29,17 @@ function AboutContent() {
           </div>
         ))}
       </div>
+      <section className="experience-list" aria-labelledby="experience-heading">
+        <p className="console-label">EXPERIENCE / SELECTED CHAPTERS</p>
+        <h2 id="experience-heading">Where I've worked.</h2>
+        {[
+          ['Birk Aerosystems', 'Engineering Intern, Aerospace Interiors', 'Oct. 2026 – Present', 'Built audit automation for 12 staff at two sites, a FastAPI and PyMuPDF drawing-review app for human verification, and five custom private jet interior components in CATIA.'],
+          ['Handshake AI', 'AI Evaluation Specialist · Contract', 'Oct. 2025 – Oct. 2026', 'Evaluated 500+ AI outputs weekly. Built an interaction bug taxonomy adopted by a 12-person team and wrote seven communication rubrics used by hundreds of contractors.'],
+          ['Prox', 'UX Engineer · Contract', 'Apr. 2026 – June 2026', 'Research with 250–300 monthly users informed a 12-screen onboarding flow. Sign-ups rose 30–40%, with 500+ users onboarded. Shipped SwiftUI features and extended the iOS design system.'],
+          ['Wazzle AI', 'Software Engineer · Part Time', 'Aug. 2023 – Sept. 2025', 'Synthesized 50+ customer conversations and support tickets. Onboarding changes cut related support requests by 35%; helped trace and fix a six-second signup delay in Django.'],
+          ['Greenville County', 'Technical Support Engineer', 'June 2018 – Dec. 2022', 'Cut device setup from two hours to under 20 minutes for 150+ annual hires. Updated 200+ polling devices and delivered 20+ statewide election technology sessions to 300+ attendees.'],
+        ].map(([company,role,period,description])=><article key={company}><div><h3>{company}</h3><span>{period}</span></div><p className="experience-role">{role}</p><p>{description}</p></article>)}
+      </section>
     </div>
   );
 }

@@ -257,7 +257,7 @@ function CaseBody({ item, onClose }) {
           </div>
           <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:'0.6rem', marginTop:'0.6rem' }}>
             <span style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', color:'var(--text-muted)' }}>
-              Prox Onboarding Walkthrough — 14-screen flow recording
+              Prox Onboarding Walkthrough — prototype recording
             </span>
           </div>
         </div>
