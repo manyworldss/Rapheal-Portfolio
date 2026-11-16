@@ -57,7 +57,7 @@ function ScrollProgress() {
     return () => removeEventListener('scroll', onScroll);
   }, []);
   return <div ref={ref} aria-hidden="true" style={{ position:'fixed', top:0, left:0, right:0, height:2, zIndex:900,
-    transformOrigin:'0 50%', transform:'scaleX(0)', background:'var(--signal)',
+    transformOrigin:'0 50%', transform:'scaleX(0)', background:'var(--accent)',
     transition:'transform 0.1s linear' }} />;
 }
 
@@ -185,16 +185,10 @@ function ThemeToggle() {
   }, [theme]);
   const next = theme === 'dark' ? 'light' : 'dark';
   return (
-    <button data-hot onClick={() => setTheme(next)}
-      aria-label={`Switch to ${next} mode`}
-      style={{ display:'inline-flex', alignItems:'center', gap:'0.45rem',
-        fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)',
-        textTransform:'uppercase', color:'var(--text-strong)',
-        background:'var(--bg-raised)', border:'var(--hair) solid var(--border-strong)',
-        borderRadius:'var(--radius-pill)', padding:'0.38rem 0.78rem', cursor:'pointer',
-        boxShadow:'var(--shadow-sm)', transition:'border-color var(--dur-2) var(--ease-soft), background var(--dur-2) var(--ease-soft)' }}>
-      <span aria-hidden="true" style={{ fontSize:'0.82rem', lineHeight:1 }}>{theme === 'dark' ? '☀️' : '🌙'}</span>
-      <span>{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
+    <button data-hot onClick={() => setTheme(next)} className="theme-toggle"
+      aria-label={`Switch to ${next} mode`}>
+      <span aria-hidden="true" className="theme-toggle-icon">◐</span>
+      <span className="theme-toggle-label">{theme === 'dark' ? 'Light mode' : 'Dark mode'}</span>
     </button>
   );
 }

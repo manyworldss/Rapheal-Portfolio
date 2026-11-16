@@ -1,8 +1,7 @@
 /* ============================================================
-   Currently / Lately — a rotating shelf of the art that stays
+   Currently playing: a rotating shelf of the art that stays
    with me. One featured pick with a personal note plus a daily
-   index of the rest. Refreshes on its own each day; shuffle to
-   re-roll. Warm and personal, not a title dump.
+   index of the rest. Refreshes each day; shuffle to re-roll.
    ============================================================ */
 const { useState: useCurState } = React;
 
@@ -59,111 +58,86 @@ const SHELF = [
 
 function dayIndex() { return Math.floor(Date.now() / 86400000); }
 
-function Currently({ embedded }) {
+/* A small ASCII icon per medium, drawn on the "now playing" screen. */
+const MEDIUM_ART = {
+  film: String.raw`  .----.        .----.
+ ( (()) )------( (()) )
+  '----'        '----'
+ ______________________
+|[] [] [] [] [] [] [] []|
+|_______________________|`,
+  series: String.raw`        \      /
+         \    /
+  .-------\--/-------.
+  | .--------------. |
+  | |              | |
+  | '--------------' |
+  '------------------'`,
+  book: String.raw`   ___________ ___________
+  |  ~~~~~~~  |  ~~~~~~~  |
+  |  ~~~~~~~  |  ~~~~~~~  |
+  |  ~~~~~~~  |  ~~~~~~~  |
+  |___________|___________|`,
+  sound: String.raw`      .-------.
+    .'  .---.  '.
+   /   / .-. \   \
+  |   | ( o ) |   |
+   \   \ '-' /   /
+    '.  '---'  .'
+      '-------'`,
+};
+const pad2c = n => String(n).padStart(2, '0');
+
+function Currently() {
   const [roll, setRoll] = useCurState(0);
   const seed = dayIndex() + roll;
-  const feat = FEATURED[seed % FEATURED.length];
+  const pick = seed % FEATURED.length;
+  const feat = FEATURED[pick];
   const shelf = [];
   for (let i = 0; i < 7; i++) shelf.push(SHELF[(seed * 3 + i * 5) % SHELF.length]);
   const [fLabel, fHref] = LINKS[feat.m](feat.t);
 
   return (
-    <section id="currently" style={{ borderTop: embedded ? 'none' : 'var(--hair) solid var(--border)' }}>
-      <div style={{ maxWidth:'var(--page-max)', margin:'0 auto', width:'100%', padding: embedded ? 0 : 'clamp(4rem,8vw,7rem) var(--gutter)' }}>
-        <Reveal style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-end', gap:'1rem', flexWrap:'wrap',
-          borderBottom:'var(--hair) solid var(--border)', paddingBottom:'1.4rem', marginBottom:'clamp(2rem,4vw,3.2rem)' }}>
-          <div>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)',
-              textTransform:'uppercase', color:'var(--accent)', marginBottom:'0.9rem' }}>This is my kind of art</div>
-            <h2 style={{ fontFamily:'var(--font-display)', fontWeight:'var(--fw-display)', fontSize:'var(--text-display)',
-              letterSpacing:'var(--track-display)', color:'var(--text-strong)', margin:0 }}>Currently / Lately</h2>
+    <section id="currently" className="now-playing">
+      <div className="np-feature">
+        <a className="lcd-screen np-screen" href={fHref} target="_blank" rel="noopener" aria-label={'Open ' + feat.t + ' in ' + fLabel}>
+          <div className="lcd-status"><span>Now playing · {MEDIUM_LABEL[feat.m]}</span><span>{feat.yr}</span></div>
+          <pre aria-hidden="true" className="ascii-scene np-art">{MEDIUM_ART[feat.m]}</pre>
+          <div className="np-title">{feat.t}</div>
+          <div className="np-by">{feat.by}</div>
+          <div className="lcd-bottom"><span>Pick {pad2c(pick + 1)} / {pad2c(FEATURED.length)}</span><span>{fLabel} ↗</span></div>
+        </a>
+        <div className="np-note">
+          <p className="console-label">Why it stays with me</p>
+          <h2>{feat.t}</h2>
+          <p className="np-meta">{feat.by} · {MEDIUM_LABEL[feat.m]} · {feat.yr}</p>
+          <p className="np-quote">{feat.note}</p>
+          <div className="np-actions">
+            <a className="console-button" href={fHref} target="_blank" rel="noopener">Open in {fLabel} ↗</a>
+            <button className="console-button" onClick={() => setRoll(r => r + 1)}><span aria-hidden="true">↻</span> Shuffle</button>
           </div>
-          <p style={{ fontFamily:'var(--font-body)', fontSize:'var(--text-sm)', lineHeight:'var(--leading-sm)', color:'var(--text-muted)', maxWidth:'34ch', margin:0 }}>
-            The films, shows, books, and records I keep coming back to. A different set surfaces each day.
-          </p>
-        </Reveal>
-
-        {/* Featured pick */}
-        <Reveal delay={80}>
-          <div className="rs-cur-feat" style={{ display:'grid', gridTemplateColumns:'minmax(0,0.95fr) minmax(0,1.05fr)',
-            gap:'clamp(1.5rem,4vw,3.5rem)', alignItems:'stretch' }}>
-            <a data-hot href={fHref} target="_blank" rel="noopener" className="rs-cur-poster" aria-label={feat.t}>
-              <div className="rs-cur-poster-inner">
-                <Sphere size="min(46%, 220px)" ring style={{ position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-50%)' }} />
-                <div style={{ position:'absolute', top:'clamp(1.2rem,3vw,2rem)', left:'clamp(1.2rem,3vw,2rem)', right:'clamp(1.2rem,3vw,2rem)',
-                  display:'flex', justifyContent:'space-between', fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)',
-                  letterSpacing:'var(--track-micro)', textTransform:'uppercase', color:'var(--on-dark-muted)', zIndex:2 }}>
-                  <span>{MEDIUM_LABEL[feat.m]}</span><span>{feat.yr}</span>
-                </div>
-                <div style={{ position:'absolute', bottom:'clamp(1.2rem,3vw,2rem)', left:'clamp(1.2rem,3vw,2rem)', right:'clamp(1.2rem,3vw,2rem)', zIndex:2 }}>
-                  <div style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)',
-                    textTransform:'uppercase', color:'var(--clay-soft)' }}>Featured today · {fLabel} →</div>
-                </div>
-              </div>
-            </a>
-            <div style={{ display:'flex', flexDirection:'column', justifyContent:'center', paddingTop:'0.5rem' }}>
-              <h3 style={{ fontFamily:'var(--font-display)', fontWeight:'var(--fw-display)', fontSize:'var(--text-h1)',
-                lineHeight:'var(--leading-h1)', letterSpacing:'var(--track-tight)', color:'var(--text-strong)', margin:'0 0 0.6rem' }}>{feat.t}</h3>
-              <div style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)',
-                textTransform:'uppercase', color:'var(--text-muted)', marginBottom:'1.4rem' }}>{feat.by} · {MEDIUM_LABEL[feat.m]} · {feat.yr}</div>
-              <p style={{ fontFamily:'var(--font-body)', fontSize:'var(--text-body-lg)', lineHeight:'var(--leading-body-lg)', color:'var(--text)', margin:'0 0 1.8rem', maxWidth:'46ch' }}>{feat.note}</p>
-              <div style={{ display:'flex', gap:'0.8rem', flexWrap:'wrap' }}>
-                <a data-hot href={fHref} target="_blank" rel="noopener" style={{ fontFamily:'var(--font-sans)', fontSize:'var(--text-sm)',
-                  fontWeight:'var(--fw-medium)', color:'var(--text-on-inverse)', background:'var(--text-strong)',
-                  borderRadius:'var(--radius-sm)', padding:'0.7rem 1.3rem' }}>Open in {fLabel}</a>
-                <button data-hot onClick={()=>setRoll(r=>r+1)} style={{ fontFamily:'var(--font-sans)', fontSize:'var(--text-sm)',
-                  fontWeight:'var(--fw-medium)', color:'var(--text-strong)', background:'transparent',
-                  border:'var(--hair) solid var(--border-strong)', borderRadius:'var(--radius-sm)', padding:'0.7rem 1.3rem',
-                  display:'inline-flex', alignItems:'center', gap:'0.5rem' }}>
-                  <span style={{ color:'var(--accent)' }}>↻</span> Shuffle
-                </button>
-              </div>
-            </div>
-          </div>
-        </Reveal>
-
-        {/* The shelf index */}
-        <Reveal delay={140} style={{ marginTop:'clamp(2.5rem,5vw,4rem)' }}>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)',
-            textTransform:'uppercase', color:'var(--text-faint)', marginBottom:'0.4rem' }}>Also on the shelf</div>
-          <div>
-            {shelf.map((s, i) => {
-              const [lbl, href] = LINKS[s.m](s.t);
-              return <ShelfRow key={s.t + i} title={s.t} medium={MEDIUM_LABEL[s.m]} lbl={lbl} href={href} />;
-            })}
-          </div>
-        </Reveal>
+        </div>
       </div>
-      <style>{`
-        .rs-cur-poster{ display:block; border-radius:var(--radius-md); overflow:hidden; text-decoration:none; }
-        .rs-cur-poster-inner{ position:relative; width:100%; aspect-ratio:4/5; min-height:320px; background:var(--obsidian);
-          overflow:hidden; transition:transform 0.5s var(--ease-out); }
-        .rs-cur-poster:hover .rs-cur-poster-inner{ transform:scale(1.012); }
-        @media (max-width:820px){ .rs-cur-feat{ grid-template-columns:1fr !important; } .rs-cur-poster-inner{ aspect-ratio:16/10; min-height:260px; } }
-      `}</style>
-    </section>
-  );
-}
 
-function ShelfRow({ title, medium, lbl, href }) {
-  const [h, setH] = useCurState(false);
-  return (
-    <a data-hot href={href} target="_blank" rel="noopener"
-      onMouseEnter={()=>setH(true)} onMouseLeave={()=>setH(false)}
-      style={{ display:'grid', gridTemplateColumns:'1fr auto auto', alignItems:'center', gap:'clamp(1rem,3vw,2.5rem)',
-        padding:'1.05rem clamp(0.4rem,1.2vw,1rem)', borderTop:'var(--hair) solid var(--border)',
-        background: h ? 'var(--bg-inset)' : 'transparent', borderRadius:'var(--radius-md)',
-        transition:'background var(--dur-2) var(--ease-soft)', textDecoration:'none' }}>
-      <span style={{ fontFamily:'var(--font-display)', fontWeight:'var(--fw-medium)', fontSize:'var(--text-h3)',
-        color:'var(--text-strong)', transform: h ? 'translateX(4px)' : 'none', transition:'transform var(--dur-3) var(--ease-out)' }}>{title}</span>
-      <span style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)',
-        textTransform:'uppercase', color:'var(--text-muted)' }}>{medium}</span>
-      <span style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)',
-        textTransform:'uppercase', color: h ? 'var(--accent)' : 'var(--text-faint)', display:'inline-flex', alignItems:'center', gap:'0.5rem',
-        transition:'color var(--dur-2) var(--ease-soft)' }}>{lbl}
-        <span aria-hidden="true" style={{ transform: h ? 'translateX(3px)' : 'none', transition:'transform var(--dur-3) var(--ease-out)' }}>→</span>
-      </span>
-    </a>
+      <div className="np-shelf">
+        <p className="console-label">Also on the shelf</p>
+        <ol>
+          {shelf.map((s, i) => {
+            const [lbl, href] = LINKS[s.m](s.t);
+            return (
+              <li key={s.t + i}>
+                <a href={href} target="_blank" rel="noopener">
+                  <span className="np-idx" aria-hidden="true">{pad2c(i + 1)}</span>
+                  <span className="np-name">{s.t}</span>
+                  <span className="np-medium">{MEDIUM_LABEL[s.m]}</span>
+                  <span className="np-src">{lbl} ↗</span>
+                </a>
+              </li>
+            );
+          })}
+        </ol>
+      </div>
+    </section>
   );
 }
 
