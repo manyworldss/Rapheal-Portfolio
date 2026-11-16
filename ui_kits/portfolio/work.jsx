@@ -346,27 +346,61 @@ const WORK = [
     "id": "runa",
     "code": "NEXT-05",
     "title": "Runa",
-    "year": "Upcoming",
+    "year": "In progress",
     "upcoming": true,
     "disciplines": [
-      "Upcoming Project"
+      "macOS",
+      "Writing",
+      "Human-Centered Design"
     ],
-    "blurb": "The next project. A place for the story, process, and visuals as they become ready to share.",
+    "blurb": "A native Mac companion in progress, designed to help people think clearly, manage competing priorities, write in their own voice, and use their time more intentionally.",
     "sections": {
-      "Approach": "Runa is upcoming. Project details and visuals will be added here."
+      "Problem": "Writing, competing priorities, and an overloaded schedule can make it difficult to think clearly. Runa began as an idea for a writing assistant that learns a person’s voice from examples and offers scaffolding while leaving the creative and intellectual work to them.",
+      "Constraints": [
+        "No outside data collection or tracking, ever.",
+        "No screen monitoring, keystroke logging, browser history, or tracking of other applications.",
+        "Personalization is limited to information the user gives Runa and activity inside Runa.",
+        "Any in-app behavioral data must be transparent, controllable, and useful to the user.",
+        "No diagnosis or claims of treating ADHD."
+      ],
+      "Approach": "The concept brings voice-aware writing support together with task management, reminders, workload awareness, and personalized insights. It is being shaped as a thoughtful native Mac partner that helps someone decide what matters and move forward without becoming another application that demands their attention. The project is in progress; these are design intentions rather than released features."
     },
     "meta": [
       {
         "k": "Status",
-        "v": "Upcoming"
+        "v": "In progress · Concept and product direction"
       },
       {
-        "k": "Details",
-        "v": "Coming soon"
+        "k": "Platform",
+        "v": "Native Mac companion"
+      },
+      {
+        "k": "Focus",
+        "v": "Writing · Priorities · Intentional use of time"
+      },
+      {
+        "k": "Data boundary",
+        "v": "User-provided information and activity inside Runa only"
       }
     ],
     "photoSlots": [
-      "Runa / project preview"
+      "Runa / writing experience",
+      "Runa / priorities and workload"
+    ],
+    "status": "In progress",
+    "insights": [
+      {
+        "title": "01 / Keep the author in charge",
+        "desc": "Learn from writing examples and offer scaffolding while leaving the creative and intellectual work to the person."
+      },
+      {
+        "title": "02 / Make room to think",
+        "desc": "Explore tasks, reminders, and workload awareness as support for clearer priorities and more intentional time."
+      },
+      {
+        "title": "03 / Keep boundaries visible",
+        "desc": "No outside tracking. Any in-app behavioral data must be transparent, controllable, and useful."
+      }
     ]
   }
 ];
