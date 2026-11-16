@@ -14,7 +14,7 @@ const root = path.resolve(__dirname, '..');
 const R = f => fs.readFileSync(path.join(root, f), 'utf8');
 
 // ---- CSS: combine tokens + base ----
-let css = ['tokens/colors.css','tokens/typography.css','tokens/spacing.css','tokens/motion.css','tokens/base.css']
+let css = ['tokens/colors.css','tokens/typography.css','tokens/spacing.css','tokens/motion.css','tokens/base.css','tokens/console.css']
   .map(R).join('\n\n');
 
 // Clean up any loose @import statements in tokens and place the single Google Font import cleanly at the top
@@ -47,6 +47,7 @@ let standaloneWork = rawWork.replace(/['"](\.\.\/\.\.\/(?:assets\/work|Rapheal-P
   }
   return match;
 });
+standaloneWork = standaloneWork.replace(/"caseStudyUrl": "([^"]+)"/g, '"caseStudyUrl": "../../$1"');
 standaloneWork = standaloneWork.replace(/['"]\.\.\/\.\.\/Rapheal-Portfolio\/images\/prox\/onboarding-walkthrough\.mp4['"]/g, "'../../images/prox/onboarding-walkthrough.mp4'");
 
 // Guard: nothing inlined may contain a script-closing sequence
@@ -70,7 +71,8 @@ const makeHtml = (workCode, isStandalone = false) => `<!-- @dsCard group="Portfo
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rapheal Suber — Human Factors &amp; UX Systems</title>
 <meta name="description" content="Portfolio of Rapheal Suber — Human Factors Psychology & UX Systems Designer, specializing in clinical software, accessibility, and high-stakes interaction design.">
-<meta name="theme-color" content="#0e0e10">
+<meta name="theme-color" content="#141814">
+<link rel="icon" href="${isStandalone ? '../../' : ''}favicon.svg" type="image/svg+xml">
 
 <!-- Open Graph / Social Sharing -->
 <meta property="og:type" content="website">
@@ -123,3 +125,12 @@ if (fs.existsSync(path.join(root, 'Rapheal-Portfolio'))) {
 
 console.log('wrote optimized index.html — ' + (rootHtml.length/1024).toFixed(1) + ' KB (super fast payload)');
 console.log('wrote export/portfolio/index.html — ' + (standaloneHtml.length/1024).toFixed(1) + ' KB (standalone bundle)');
+
+// Keep the legacy nested entry point in sync with the canonical sources.
+require('./build-project-pages.js');
+const mirrors = ['ui_kits/portfolio/app.jsx','ui_kits/portfolio/helpers.jsx','ui_kits/portfolio/sections.jsx','ui_kits/portfolio/overlays.jsx','ui_kits/portfolio/work.jsx','tokens/console.css','styles.css','css/global.css','css/project-console.css','js/project-console.js','scripts/build-standalone.js','scripts/build-project-pages.js','celio.html','birk.html','runa.html','favicon.svg','assets/work/celio-ios-site.png','assets/work/celio-ios-exchange.png','export/portfolio/index.html'];
+for(const file of mirrors) {
+ const target=path.join(root,'Rapheal-Portfolio',file);
+ fs.mkdirSync(path.dirname(target),{recursive:true});
+ fs.copyFileSync(path.join(root,file),target);
+}

@@ -82,21 +82,29 @@ function ImageLightbox({ src, caption, onClose }) {
 /* ---- Case-study takeover ---- */
 function CaseOverlay({ item, onClose }) {
   const active = !!item;
+  const panel = React.useRef(null);
   useLockScroll(active);
   useEsc(onClose, active);
-  return (
-    <div aria-hidden={!active} style={{ position:'fixed', inset:0, zIndex:1000, pointerEvents: active?'auto':'none' }}>
-      <div onClick={onClose} style={{ position:'absolute', inset:0, background:'rgba(11,9,6,0.62)',
-        backdropFilter: active ? 'blur(4px)' : 'none',
-        opacity: active?1:0, transition:'opacity 0.5s var(--ease-out)' }} />
-      <div style={{ position:'absolute', inset:0, background:'var(--bg)', color:'var(--text-strong)', overflowY:'auto',
-        transform: active ? 'translate3d(0,0,0) scale(1)' : 'translate3d(0,2.5%,0) scale(0.985)',
-        opacity: active?1:0, transformOrigin:'50% 100%', willChange:'transform',
-        transition:'transform 0.78s cubic-bezier(0.19,1,0.22,1), opacity 0.46s var(--ease-out)' }}>
-        {item && <CaseBody key={item.id} item={item} onClose={onClose} />}
-      </div>
-    </div>
-  );
+  React.useEffect(() => {
+    if (!active) return;
+    const previous = document.activeElement;
+    const node = panel.current;
+    node.scrollTop = 0;
+    node.focus();
+    const trap = e => {
+      if (e.key !== 'Tab') return;
+      const targets = [...node.querySelectorAll('a[href],button,video[controls],[tabindex="0"]')].filter(el=>el.getClientRects().length);
+      const first=targets[0], last=targets[targets.length-1];
+      if(e.shiftKey && (document.activeElement===first || document.activeElement===node)){e.preventDefault();last?.focus();}
+      else if(!e.shiftKey && (document.activeElement===last || document.activeElement===node)){e.preventDefault();first?.focus();}
+    };
+    node.addEventListener('keydown',trap);
+    return()=>{node.removeEventListener('keydown',trap);previous?.focus();};
+  },[active]);
+  if(!item) return null;
+  return <div ref={panel} className="rs-case-body" role="dialog" aria-modal="true" aria-label={item.title+' case study'} tabIndex={-1} style={{position:'fixed',inset:0,zIndex:1000,background:'var(--bg)',color:'var(--text-strong)',overflowY:'auto'}}>
+    <CaseBody key={item.id} item={item} onClose={onClose}/>
+  </div>;
 }
 
 function CaseBody({ item, onClose }) {
@@ -169,7 +177,7 @@ function CaseBody({ item, onClose }) {
             <a data-hot href={item.liveUrl} target="_blank" rel="noopener" style={{ display:'inline-flex', alignItems:'center', gap:'0.4rem',
               fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', textTransform:'uppercase',
               color:'var(--text-strong)', border:'var(--hair) solid var(--accent)', borderRadius:'var(--radius-sm)', padding:'0.4rem 0.8rem', background:'var(--accent-wash)' }}>
-              Live App <span aria-hidden="true">↗</span>
+              {item.liveLabel || "Live App"} <span aria-hidden="true">↗</span>
             </a>
           )}
           {item.repoUrl && (
@@ -210,7 +218,7 @@ function CaseBody({ item, onClose }) {
               <a data-hot href={item.liveUrl} target="_blank" rel="noopener" style={{ display:'inline-flex', alignItems:'center', gap:'0.5rem',
                 fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', textTransform:'uppercase',
                 color:'var(--text-on-inverse)', background:'var(--text-strong)', borderRadius:'var(--radius-sm)', padding:'0.7rem 1.3rem', textDecoration:'none' }}>
-                View Live App ↗
+                {item.liveLabel || "View Live App"} ↗
               </a>
             )}
             {item.caseStudyUrl && (
@@ -336,6 +344,8 @@ function CaseBody({ item, onClose }) {
               </div>
             </div>
           ))}
+
+          {item.photoSlots && <div><h3 style={{fontSize:'var(--text-h3)'}}>Project visuals</h3><div className="photo-slots">{item.photoSlots.map((label,i)=><div className="photo-slot" key={label}><span aria-hidden="true">[ + ]</span><strong>{label}</strong><p>{item.upcoming ? 'Coming soon' : 'Photo / screenshot to be added'}</p></div>)}</div></div>}
 
           {/* Multi-screen Gallery if present */}
           {item.gallery && item.gallery.length > 0 && (

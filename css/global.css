@@ -11,7 +11,6 @@
 
     /* Text */
     --text-primary:  var(--text-strong);
-    --text-muted:    var(--text-muted);
     --text-dim:      var(--text-faint);
 
     /* Red -> Accent (Clay) */

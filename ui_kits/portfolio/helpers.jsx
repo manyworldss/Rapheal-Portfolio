@@ -42,54 +42,9 @@ function Reveal({ children, delay = 0, y = '18px', as = 'div', style = {}, ...re
 
 /* ---- Blueprint backdrop: slow clay/pine aurora + cursor spotlight ---- */
 function BlueprintBg() {
-  const spot = useRef(null);
-  useEffect(() => {
-    if (window.matchMedia('(pointer: coarse)').matches) return;
-    // The spotlight repaints a full-viewport gradient, so only run the easing
-    // loop while the cursor is actually settling — never as an idle rAF.
-    let raf = 0, tx = -999, ty = -999, x = -999, y = -999;
-    const paint = () => {
-      if (spot.current) {
-        spot.current.style.background = `radial-gradient(440px circle at ${x.toFixed(0)}px ${y.toFixed(0)}px, rgba(201,138,99,0.13), rgba(127,161,137,0.05) 44%, transparent 66%)`;
-      }
-    };
-    const loop = () => {
-      x += (tx - x) * 0.12; y += (ty - y) * 0.12;
-      paint();
-      if (Math.abs(tx - x) < 0.5 && Math.abs(ty - y) < 0.5) { raf = 0; return; }
-      raf = requestAnimationFrame(loop);
-    };
-    const move = (e) => { tx = e.clientX; ty = e.clientY; if (!raf) raf = requestAnimationFrame(loop); };
-    addEventListener('mousemove', move, { passive: true });
-    return () => { cancelAnimationFrame(raf); removeEventListener('mousemove', move); };
-  }, []);
-  return (
-    <div aria-hidden="true" style={{ position:'fixed', inset:0, zIndex:0, pointerEvents:'none', overflow:'hidden' }}>
-      <div className="rs-aur">
-        <span className="a a1" /><span className="a a2" /><span className="a a3" />
-      </div>
-      <div ref={spot} className="rs-spot" />
-      <style>{`
-        /* Blur lives on each blob, not the container: a filtered parent would
-           have to re-rasterise the whole viewport on every animation frame,
-           whereas a promoted blob layer is just transformed by the compositor. */
-        .rs-aur{ position:absolute; inset:-25%; opacity:0.42; }
-        .rs-aur .a{ position:absolute; border-radius:50%; filter:blur(60px); will-change:transform; }
-        .rs-aur .a1{ width:64vw; height:64vw; left:2%; top:-14%; background:radial-gradient(closest-side, rgba(166,96,60,0.72), transparent 70%); animation:rsD1 26s ease-in-out infinite; }
-        .rs-aur .a2{ width:58vw; height:58vw; right:-6%; top:22%; background:radial-gradient(closest-side, rgba(51,81,63,0.78), transparent 70%); animation:rsD2 32s ease-in-out infinite; }
-        .rs-aur .a3{ width:46vw; height:46vw; left:34%; bottom:-16%; background:radial-gradient(closest-side, rgba(201,138,99,0.52), transparent 70%); animation:rsD3 38s ease-in-out infinite; }
-        .rs-spot{ position:absolute; inset:0; background:radial-gradient(420px circle at -999px -999px, rgba(201,138,99,0.12), rgba(127,161,137,0.04) 44%, transparent 66%); }
-        @keyframes rsD1{ 0%,100%{ transform:translate(0,0) scale(1);} 50%{ transform:translate(10%,8%) scale(1.2);} }
-        @keyframes rsD2{ 0%,100%{ transform:translate(0,0) scale(1.1);} 50%{ transform:translate(-10%,-8%) scale(0.9);} }
-        @keyframes rsD3{ 0%,100%{ transform:translate(0,0) scale(0.95);} 50%{ transform:translate(8%,-10%) scale(1.25);} }
-        [data-theme="light"] .rs-aur{ opacity:0.28; }
-        @media (prefers-reduced-motion: reduce){ .rs-aur .a{ animation:none; } }
-      `}</style>
-    </div>
-  );
+  return <div aria-hidden="true" className="console-backdrop" />;
 }
 
-/* ---- Scroll progress hairline ---- */
 function ScrollProgress() {
   const ref = useRef(null);
   useEffect(() => {

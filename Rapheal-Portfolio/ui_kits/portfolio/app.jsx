@@ -60,7 +60,7 @@ function SectionView({ eyebrow, title, onBack, children }) {
   return (
     <div className="rs-viewin" style={{ position:'relative', minHeight:'100vh', width:'100%',
       maxWidth:'var(--page-max)', margin:'0 auto', padding:'calc(var(--topbar-h) + clamp(1.5rem,4vh,2.5rem)) var(--gutter) clamp(3rem,7vh,6rem)' }}>
-      <div className="rs-viewin-1" style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:'1rem', marginBottom:'clamp(2rem,5vw,3.5rem)' }}>
+      <div className="rs-viewin-1" style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:'1rem', marginBottom:'1.5rem' }}>
         <button data-hot onClick={onBack} className="rs-back" style={{ display:'inline-flex', alignItems:'center', gap:'0.6rem',
           fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', textTransform:'uppercase',
           color:'var(--text-muted)', border:'var(--hair) solid var(--border-strong)', borderRadius:'var(--radius-pill)', padding:'0.5rem 1rem' }}>
@@ -94,16 +94,14 @@ function SectionView({ eyebrow, title, onBack, children }) {
 }
 
 function App() {
-  const [view, setView] = useAppState('home');
+  const [view, setView] = useAppState(['work','about','currently','contact'].includes(location.hash.slice(1)) ? location.hash.slice(1) : 'home');
   const [openCase, setOpenCase] = useAppState(null);
-  const [warp, setWarp] = useAppState({ active:false, color:'rgba(201,138,99,0.55)' });
 
   const goTo = (id, color) => {
     if (id === view) return;
-    setWarp({ active:true, color: color || 'rgba(201,138,99,0.55)' });
-    // Swap under the bloom's peak, then let it fall away over the new screen.
-    setTimeout(() => { setView(id); requestAnimationFrame(() => window.scrollTo(0,0)); }, 430);
-    setTimeout(() => setWarp((w) => ({ ...w, active:false })), 560);
+    setView(id);
+    history.replaceState(null, '', id === 'home' ? location.pathname : '#'+id);
+    requestAnimationFrame(() => window.scrollTo(0,0));
   };
   const onOpen = (id, color) => {
     if (id === 'home') return goTo('home', color);
@@ -118,7 +116,7 @@ function App() {
           so the site backdrop only renders behind the section views. */}
       {view !== 'home' && <BlueprintBg />}
       <ScrollProgress />
-      <IntroCurtain />
+
       <Nav onOpen={onOpen} onHome={()=>goTo('home')} view={view} />
       <main id="top" style={{ position:'relative', zIndex:1 }}>
         {view === 'home' && <Hero onOpen={onOpen} />}
@@ -144,17 +142,6 @@ function App() {
           </SectionView>
         )}
       </main>
-
-      {/* Channel warp: a bloom in the target channel's own colour. */}
-      <div aria-hidden="true" style={{ position:'fixed', inset:0, zIndex:1200, pointerEvents:'none',
-        opacity: warp.active ? 1 : 0, transition:`opacity ${warp.active ? 0.2 : 0.52}s var(--ease-out)` }}>
-        <div style={{ position:'absolute', inset:0, background:'#0B0906', opacity: warp.active ? 0.88 : 0,
-          transition:`opacity ${warp.active ? 0.26 : 0.5}s var(--ease-soft)` }} />
-        <div style={{ position:'absolute', top:'50%', left:'50%', width:'170vmax', height:'170vmax', marginLeft:'-85vmax', marginTop:'-85vmax',
-          borderRadius:'50%', background:`radial-gradient(closest-side, ${warp.color}, transparent 68%)`,
-          transform: warp.active ? 'scale(1)' : 'scale(0.04)',
-          transition:`transform ${warp.active ? 0.72 : 0.5}s cubic-bezier(0.22,1,0.28,1)`, filter:'blur(26px)', willChange:'transform' }} />
-      </div>
 
       <CaseOverlay item={openCase} onClose={() => setOpenCase(null)} />
     </React.Fragment>
