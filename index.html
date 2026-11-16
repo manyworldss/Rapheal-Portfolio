@@ -496,7 +496,7 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 .console-button:hover{border-color:var(--accent);background:var(--accent-wash)}
 .cartridge-copy .console-button{margin-top:auto}
 .media-placeholder{height:100%;display:grid;place-content:center;text-align:center;color:var(--accent);gap:13px;background:var(--bg-inset)}
-.media-placeholder .ascii-scene{transform:translateX(var(--rail-shift,0px));transition:transform .15s linear;opacity:.65;font-size:8px}
+.media-placeholder .ascii-scene{transform:translateX(calc(var(--card-px,0px) * 2));transition:transform .15s linear;opacity:.65;font-size:8px}
 .media-placeholder>span{font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;position:relative}
 .media-placeholder small{font-size:10px;color:var(--text-muted)}
 .library-bottom{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-top:16px;color:var(--text-muted);font-size:9px}
@@ -861,7 +861,6 @@ function CaseStudies({ items, onOpen }) {
       let nearest=0, distance=Infinity;
       cards.forEach((card,i)=>{const delta=card.offsetLeft-node.offsetLeft-node.scrollLeft;const d=Math.abs(delta);if(d<distance){distance=d;nearest=i;}if(!media.matches)card.style.setProperty('--card-px',Math.max(-14,Math.min(14,delta*.025))+'px');});
       setActive(nearest);
-      if(!media.matches) node.style.setProperty('--rail-shift',node.scrollLeft*-0.08+'px');
     };
     const scroll=()=>{if(!raf)raf=requestAnimationFrame(update);};
     node.addEventListener('scroll',scroll,{passive:true});update();
@@ -926,12 +925,14 @@ function useLockScroll(active) {
     return () => { document.body.style.overflow = prev; };
   }, [active]);
 }
-function useEsc(onClose, active) {
+// `topmost` overlays (the image lightbox) listen in the capture phase and stop
+// the event, so Escape closes only the lightbox, not the case study under it.
+function useEsc(onClose, active, topmost = false) {
   useEffectO(() => {
     if (!active) return;
-    const h = (e) => { if (e.key === 'Escape') onClose(); };
-    addEventListener('keydown', h); return () => removeEventListener('keydown', h);
-  }, [active, onClose]);
+    const h = (e) => { if (e.key !== 'Escape') return; if (topmost) e.stopPropagation(); onClose(); };
+    addEventListener('keydown', h, topmost); return () => removeEventListener('keydown', h, topmost);
+  }, [active, onClose, topmost]);
 }
 
 /* ---- Lightbox Modal with Interactive 2x Zoom ---- */
@@ -939,7 +940,7 @@ function ImageLightbox({ src, caption, onClose }) {
   const active = !!src;
   const [scale, setScale] = useStateO(1);
   useLockScroll(active);
-  useEsc(onClose, active);
+  useEsc(onClose, active, true);
 
   useEffectO(() => {
     if (active) setScale(1);
@@ -1969,16 +1970,36 @@ function SectionView({ eyebrow, title, onBack, children }) {
   );
 }
 
+const APP_VIEWS = ['work','about','currently','contact'];
+const viewFromHash = () => {
+  const h = location.hash.slice(1);
+  return APP_VIEWS.includes(h) ? h : (h === '' ? 'home' : null);
+};
+
 function App() {
-  const [view, setView] = useAppState(['work','about','currently','contact'].includes(location.hash.slice(1)) ? location.hash.slice(1) : 'home');
+  const [view, setView] = useAppState(viewFromHash() || 'home');
   const [openCase, setOpenCase] = useAppState(null);
 
   const goTo = (id, color) => {
     if (id === view) return;
     setView(id);
-    history.replaceState(null, '', id === 'home' ? location.pathname : '#'+id);
+    history.pushState(null, '', id === 'home' ? location.pathname + location.search : '#'+id);
     requestAnimationFrame(() => window.scrollTo(0,0));
   };
+
+  // Keep the view in sync with Back/Forward and hand-typed hashes.
+  React.useEffect(() => {
+    const sync = () => {
+      const next = viewFromHash();
+      if (!next) return;
+      setOpenCase(null);
+      setView(next);
+      requestAnimationFrame(() => window.scrollTo(0,0));
+    };
+    addEventListener('popstate', sync);
+    addEventListener('hashchange', sync);
+    return () => { removeEventListener('popstate', sync); removeEventListener('hashchange', sync); };
+  }, []);
   const onOpen = (id, color) => {
     if (id === 'home') return goTo('home', color);
     if (id === 'work' || id === 'currently' || id === 'about' || id === 'contact') return goTo(id, color);

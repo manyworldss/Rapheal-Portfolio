@@ -105,16 +105,36 @@ function SectionView({ eyebrow, title, onBack, children }) {
   );
 }
 
+const APP_VIEWS = ['work','about','currently','contact'];
+const viewFromHash = () => {
+  const h = location.hash.slice(1);
+  return APP_VIEWS.includes(h) ? h : (h === '' ? 'home' : null);
+};
+
 function App() {
-  const [view, setView] = useAppState(['work','about','currently','contact'].includes(location.hash.slice(1)) ? location.hash.slice(1) : 'home');
+  const [view, setView] = useAppState(viewFromHash() || 'home');
   const [openCase, setOpenCase] = useAppState(null);
 
   const goTo = (id, color) => {
     if (id === view) return;
     setView(id);
-    history.replaceState(null, '', id === 'home' ? location.pathname : '#'+id);
+    history.pushState(null, '', id === 'home' ? location.pathname + location.search : '#'+id);
     requestAnimationFrame(() => window.scrollTo(0,0));
   };
+
+  // Keep the view in sync with Back/Forward and hand-typed hashes.
+  React.useEffect(() => {
+    const sync = () => {
+      const next = viewFromHash();
+      if (!next) return;
+      setOpenCase(null);
+      setView(next);
+      requestAnimationFrame(() => window.scrollTo(0,0));
+    };
+    addEventListener('popstate', sync);
+    addEventListener('hashchange', sync);
+    return () => { removeEventListener('popstate', sync); removeEventListener('hashchange', sync); };
+  }, []);
   const onOpen = (id, color) => {
     if (id === 'home') return goTo('home', color);
     if (id === 'work' || id === 'currently' || id === 'about' || id === 'contact') return goTo(id, color);

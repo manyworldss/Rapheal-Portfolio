@@ -130,7 +130,6 @@ function CaseStudies({ items, onOpen }) {
       let nearest=0, distance=Infinity;
       cards.forEach((card,i)=>{const delta=card.offsetLeft-node.offsetLeft-node.scrollLeft;const d=Math.abs(delta);if(d<distance){distance=d;nearest=i;}if(!media.matches)card.style.setProperty('--card-px',Math.max(-14,Math.min(14,delta*.025))+'px');});
       setActive(nearest);
-      if(!media.matches) node.style.setProperty('--rail-shift',node.scrollLeft*-0.08+'px');
     };
     const scroll=()=>{if(!raf)raf=requestAnimationFrame(update);};
     node.addEventListener('scroll',scroll,{passive:true});update();

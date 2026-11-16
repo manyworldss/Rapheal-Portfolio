@@ -14,12 +14,14 @@ function useLockScroll(active) {
     return () => { document.body.style.overflow = prev; };
   }, [active]);
 }
-function useEsc(onClose, active) {
+// `topmost` overlays (the image lightbox) listen in the capture phase and stop
+// the event, so Escape closes only the lightbox, not the case study under it.
+function useEsc(onClose, active, topmost = false) {
   useEffectO(() => {
     if (!active) return;
-    const h = (e) => { if (e.key === 'Escape') onClose(); };
-    addEventListener('keydown', h); return () => removeEventListener('keydown', h);
-  }, [active, onClose]);
+    const h = (e) => { if (e.key !== 'Escape') return; if (topmost) e.stopPropagation(); onClose(); };
+    addEventListener('keydown', h, topmost); return () => removeEventListener('keydown', h, topmost);
+  }, [active, onClose, topmost]);
 }
 
 /* ---- Lightbox Modal with Interactive 2x Zoom ---- */
@@ -27,7 +29,7 @@ function ImageLightbox({ src, caption, onClose }) {
   const active = !!src;
   const [scale, setScale] = useStateO(1);
   useLockScroll(active);
-  useEsc(onClose, active);
+  useEsc(onClose, active, true);
 
   useEffectO(() => {
     if (active) setScale(1);
