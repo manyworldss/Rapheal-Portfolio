@@ -235,11 +235,6 @@ function CaseBody({ item, onClose }) {
                 View Repository ↗
               </a>
             )}
-            <button onClick={()=>window.print()} style={{ display:'inline-flex', alignItems:'center', gap:'0.5rem',
-              fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', textTransform:'uppercase',
-              color:'var(--text-muted)', border:'var(--hair) solid var(--border)', borderRadius:'var(--radius-sm)', padding:'0.7rem 1.3rem', background:'transparent', cursor:'pointer' }}>
-              Download PDF ↓
-            </button>
           </div>
         )}
       </div>
