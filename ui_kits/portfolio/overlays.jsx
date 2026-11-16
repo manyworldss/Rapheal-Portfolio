@@ -227,7 +227,7 @@ function CaseBody({ item, onClose }) {
               <a data-hot href={item.caseStudyUrl} style={{ display:'inline-flex', alignItems:'center', gap:'0.5rem',
                 fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', textTransform:'uppercase',
                 color:'var(--text-strong)', border:'var(--hair-2) solid var(--border-strong)', borderRadius:'var(--radius-sm)', padding:'0.7rem 1.3rem', textDecoration:'none' }}>
-                Full Article / Study ↗
+                Read the full write-up ↗
               </a>
             )}
             {item.repoUrl && (
@@ -294,7 +294,7 @@ function CaseBody({ item, onClose }) {
           {/* Key Insights Grid if present */}
           {item.insights && (
             <div>
-              <div style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', textTransform:'uppercase', color:'var(--accent)', marginBottom:'0.7rem' }}>Key Insights & Architecture</div>
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:'var(--text-micro)', letterSpacing:'var(--track-micro)', textTransform:'uppercase', color:'var(--accent)', marginBottom:'0.7rem' }}>Key decisions</div>
               <div className="rs-insight-grid">
                 {item.insights.map((ins, idx)=>(
                   <div key={idx} className="rs-insight-card">
@@ -347,7 +347,7 @@ function CaseBody({ item, onClose }) {
           {/* Multi-screen Gallery if present */}
           {item.gallery && item.gallery.length > 0 && (
             <div style={{ borderTop:'var(--hair) solid var(--border)', paddingTop:'2rem', marginTop:'1rem' }}>
-              <h3 style={{ fontFamily:'var(--font-display)', fontWeight:'var(--fw-semibold)', fontSize:'var(--text-h3)', letterSpacing:'var(--track-tight)', color:'var(--text-strong)', marginBottom:'1.2rem' }}>Screen Gallery & Artifacts</h3>
+              <h3 style={{ fontFamily:'var(--font-display)', fontWeight:'var(--fw-semibold)', fontSize:'var(--text-h3)', letterSpacing:'var(--track-tight)', color:'var(--text-strong)', marginBottom:'1.2rem' }}>Screens and artifacts</h3>
               <div className="rs-gallery-grid">
                 {item.gallery.map((g, idx)=>(
                   <div key={idx} className="rs-gallery-card" onClick={() => setZoomTarget({ src: g.src, caption: g.caption })}>

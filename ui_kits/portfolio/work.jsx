@@ -244,7 +244,7 @@ const WORK = [
   },
   {
     "id": "prox",
-    "code": "PX-04",
+    "code": "CS-04",
     "title": "Prox",
     "year": "2026",
     "disciplines": [
@@ -344,7 +344,7 @@ const WORK = [
   },
   {
     "id": "runa",
-    "code": "NEXT-05",
+    "code": "CS-05",
     "title": "Runa",
     "year": "In progress",
     "upcoming": true,
