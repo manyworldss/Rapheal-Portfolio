@@ -304,9 +304,12 @@ function Hero({ onOpen }) {
 
 function PrimaryBtn({ children, onClick }) { return <button className="console-button" onClick={onClick}>{children} →</button>; }
 
-const CARTRIDGE_STATUS = { reach:'Live demo', celio:'iOS / TestFlight', birk:'Internal tool', prox:'Client project' };
+const CARTRIDGE_STATUS = { reach:'Research prototype', celio:'iOS / Closed beta', birk:'Internal tools', prox:'Client project' };
 
-function CaseStudies({ items, onOpen }) {
+function CaseStudies({ items: all, onOpen }) {
+  // Finished work goes on the shelf; anything still upcoming gets a short teaser below it.
+  const items = all.filter(w => !w.upcoming);
+  const next = all.find(w => w.upcoming);
   const rail = React.useRef(null);
   const [active,setActive] = useStateS(0);
   useEffectS(() => {
@@ -340,6 +343,11 @@ function CaseStudies({ items, onOpen }) {
       </article>)}
     </div>
     <div className="library-bottom"><span>Swipe, scroll, or use ← →</span><div className="library-dots">{items.map((it,i)=><button key={it.id} aria-label={'Go to '+it.title} aria-current={i===active?'true':undefined} onClick={()=>select(i)}/>)}</div><span aria-live="polite">{items[active].title}</span></div>
+    {next && <aside className="next-cartridge" aria-label="In progress">
+      <span className="console-label">In progress</span>
+      <p><strong>{next.title}.</strong> {next.blurb}</p>
+      <button className="console-button" onClick={()=>onOpen(next.id)}>Read the concept →</button>
+    </aside>}
   </section>;
 }
 

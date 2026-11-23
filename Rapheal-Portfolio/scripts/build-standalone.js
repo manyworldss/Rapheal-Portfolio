@@ -128,7 +128,7 @@ console.log('wrote export/portfolio/index.html — ' + (standaloneHtml.length/10
 
 // Keep the legacy nested entry point in sync with the canonical sources.
 require('./build-project-pages.js');
-const mirrors = ['ui_kits/portfolio/app.jsx','ui_kits/portfolio/helpers.jsx','ui_kits/portfolio/sections.jsx','ui_kits/portfolio/overlays.jsx','ui_kits/portfolio/currently.jsx','ui_kits/portfolio/index.html','ui_kits/portfolio/work.jsx','tokens/console.css','styles.css','css/global.css','css/project-console.css','js/project-console.js','scripts/build-standalone.js','scripts/build-project-pages.js','reach.html','prox.html','celio.html','birk.html','runa.html','favicon.svg','assets/work/celio-ios-site.png','assets/work/celio-ios-exchange.png','export/portfolio/index.html'];
+const mirrors = ['ui_kits/portfolio/app.jsx','ui_kits/portfolio/helpers.jsx','ui_kits/portfolio/sections.jsx','ui_kits/portfolio/overlays.jsx','ui_kits/portfolio/currently.jsx','ui_kits/portfolio/index.html','ui_kits/portfolio/work.jsx','tokens/console.css','styles.css','css/global.css','css/project-console.css','js/project-console.js','scripts/build-standalone.js','scripts/build-project-pages.js','reach.html','prox.html','celio.html','birk.html','north-star.html','runa.html','favicon.svg','assets/work/celio-ios-site.png','assets/work/celio-ios-exchange.png','export/portfolio/index.html'];
 for(const file of mirrors) {
  const target=path.join(root,'Rapheal-Portfolio',file);
  fs.mkdirSync(path.dirname(target),{recursive:true});

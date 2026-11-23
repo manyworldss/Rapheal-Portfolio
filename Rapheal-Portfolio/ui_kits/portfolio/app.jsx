@@ -36,7 +36,7 @@ function AboutContent() {
         <p className="console-label">Experience</p>
         <h2 id="experience-heading">Where I’ve worked</h2>
         {[
-          ['Birk Aerosystems', 'Engineering Intern, Aerospace Interiors', 'Oct. 2026 – Present', 'Built audit automation for 12 staff at two sites, a FastAPI and PyMuPDF drawing-review app for human verification, and five custom private jet interior components in CATIA.'],
+          ['Birk Aerosystems', 'Engineering Intern, Aerospace Interiors', 'Oct. 2026 – Present', 'Built an internal audit tool for 12 staff at two sites, a supplier certification tracker with automated renewal reminders, a FastAPI and PyMuPDF drawing-review app for human verification, and five custom private jet interior components in CATIA.'],
           ['Handshake AI', 'AI Evaluation Specialist · Contract', 'Oct. 2025 – Oct. 2026', 'Evaluated 500+ AI outputs weekly. Built an interaction bug taxonomy adopted by a 12-person team and wrote seven communication rubrics used by hundreds of contractors.'],
           ['Prox', 'UX Engineer · Contract', 'Apr. 2026 – June 2026', 'Research with 250–300 monthly users informed a 12-screen onboarding flow. Sign-ups rose 30–40%, with 500+ users onboarded. Shipped SwiftUI features and extended the iOS design system.'],
           ['Wazzle AI', 'Software Engineer · Part Time', 'Aug. 2023 – Sept. 2025', 'Synthesized 50+ customer conversations and support tickets. Onboarding changes cut related support requests by 35%; helped trace and fix a six-second signup delay in Django.'],
@@ -175,7 +175,7 @@ function App() {
         {view === 'work' && (
           <SectionView channel="01" label="Case Studies" title="Case studies"
             intro="A few projects I’ve worked on, including one I’m still building. Pick a cartridge to see what I did and why."
-            status={WORK.length + ' cartridges'} onBack={home}>
+            status={WORK.filter((w) => !w.upcoming).length + ' cartridges'} onBack={home}>
             <CaseStudies items={WORK} onOpen={onOpen} />
             <Footer onOpen={onOpen} current="work" />
           </SectionView>
