@@ -70,20 +70,20 @@ const makeHtml = (workCode, isStandalone = false) => `<!-- @dsCard group="Portfo
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rapheal Suber — Human Factors &amp; UX Systems</title>
-<meta name="description" content="Portfolio of Rapheal Suber — Human Factors Psychology & UX Systems Designer, specializing in clinical software, accessibility, and high-stakes interaction design.">
+<meta name="description" content="Rapheal Suber’s portfolio. Software development, human factors, UX research, and product design.">
 <meta name="theme-color" content="#141814">
 <link rel="icon" href="${isStandalone ? '../../' : ''}favicon.svg" type="image/svg+xml">
 
 <!-- Open Graph / Social Sharing -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="Rapheal Suber — Human Factors &amp; UX Systems">
-<meta property="og:description" content="Portfolio of Rapheal Suber — Human Factors Psychology & UX Systems Designer, specializing in clinical software, accessibility, and high-stakes interaction design.">
+<meta property="og:description" content="Rapheal Suber’s portfolio. Software development, human factors, UX research, and product design.">
 <meta property="og:site_name" content="Rapheal Suber Portfolio">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Rapheal Suber — Human Factors &amp; UX Systems">
-<meta name="twitter:description" content="Portfolio of Rapheal Suber — Human Factors Psychology & UX Systems Designer, specializing in clinical software, accessibility, and high-stakes interaction design.">
+<meta name="twitter:description" content="Rapheal Suber’s portfolio. Software development, human factors, UX research, and product design.">
 
 <!-- Performance Preconnects -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -128,7 +128,7 @@ console.log('wrote export/portfolio/index.html — ' + (standaloneHtml.length/10
 
 // Keep the legacy nested entry point in sync with the canonical sources.
 require('./build-project-pages.js');
-const mirrors = ['ui_kits/portfolio/app.jsx','ui_kits/portfolio/helpers.jsx','ui_kits/portfolio/sections.jsx','ui_kits/portfolio/overlays.jsx','ui_kits/portfolio/work.jsx','tokens/console.css','styles.css','css/global.css','css/project-console.css','js/project-console.js','scripts/build-standalone.js','scripts/build-project-pages.js','celio.html','birk.html','runa.html','favicon.svg','assets/work/celio-ios-site.png','assets/work/celio-ios-exchange.png','export/portfolio/index.html'];
+const mirrors = ['ui_kits/portfolio/app.jsx','ui_kits/portfolio/helpers.jsx','ui_kits/portfolio/sections.jsx','ui_kits/portfolio/overlays.jsx','ui_kits/portfolio/currently.jsx','ui_kits/portfolio/index.html','ui_kits/portfolio/work.jsx','tokens/console.css','styles.css','css/global.css','css/project-console.css','js/project-console.js','scripts/build-standalone.js','scripts/build-project-pages.js','reach.html','prox.html','celio.html','birk.html','runa.html','favicon.svg','assets/work/celio-ios-site.png','assets/work/celio-ios-exchange.png','export/portfolio/index.html'];
 for(const file of mirrors) {
  const target=path.join(root,'Rapheal-Portfolio',file);
  fs.mkdirSync(path.dirname(target),{recursive:true});

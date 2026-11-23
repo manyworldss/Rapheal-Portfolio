@@ -14,18 +14,18 @@ const WORK = [
     "hero": "../../Rapheal-Portfolio/images/reach_hero.png",
     "liveUrl": "https://reach-health.up.railway.app/",
     "caseStudyUrl": "reach.html",
-    "blurb": "A clinician-facing platform for stroke motor recovery that unifies standardized outcome measures with home-program adherence tracking, built so a therapist can see who is off-track and who needs attention in seconds.",
+    "blurb": "A platform I built to help occupational therapists track stroke recovery, review home exercise adherence, and identify patients who may need additional attention.",
     "sections": {
-      "Problem": "Rehab therapists carry large caseloads and monitor recovery across many patients at once. Standardized outcome measures (FMA-UE, ARAT, Box & Blocks) are documented inconsistently because capture is slow and scores end up scattered across disconnected systems. Existing tools bury the signal; trajectories, adherence, and remote-monitoring status live in separate views, so deciding who needs attention first means reconstructing each patient by hand under time pressure.",
+      "Problem": "Occupational therapists often manage several patients at once. Standardized assessments such as the FMA-UE, ARAT, and Box & Blocks can be difficult to document consistently, and home exercise data may live somewhere else entirely. I wanted to bring that information together so therapists could spend less time piecing together a patient’s progress.",
       "Constraints": [
-        "Clinicians read the interface between appointments, in seconds, not minutes.",
+        "Therapists may only have a few seconds to review the interface between appointments.",
         "Recovery data is noisy and non-linear; a single session tells you little.",
-        "Patient-safety domain: an interface that hides a declining patient is a use-error, not a design nitpick.",
-        "Built solo, full-stack, on an accelerated timeline."
+        "The interface needs to make declining patient progress easy to identify.",
+        "I built the prototype independently on a short timeline."
       ],
-      "Approach": "Shaped by structured feedback sessions with three occupational therapists across outpatient, home health, and telehealth settings. Applied human-factors principles, severity-banded patient routing and a 60% adherence-auditing threshold, to reduce clinician cognitive load and flag stalled home programs early. Information architecture is ordered by clinical urgency, so attention lands where it matters first. Monitoring features are grounded in the 2026 Remote Therapeutic Monitoring billing codes used by clinics.",
-      "Outcome": "A working platform where a therapist can scan a caseload and identify off-track patients at a glance, with drill-down into per-patient trajectories and program adherence. Validated against the clinical review workflow it replaces.",
-      "Lessons Learned": "In a safety-adjacent tool, the hard problem is not visualization, it is deciding what to omit. Every element competing for the clinician’s attention costs a fraction of a second on every patient, every day. Restraint is the feature."
+      "Approach": "I worked with three occupational therapists across outpatient, home health, and telehealth settings. Their feedback helped me organize patients by severity and clinical urgency. I also added a flag for home program adherence below 60% and incorporated remote therapeutic monitoring features based on the 2026 billing codes.",
+      "Outcome": "I built a working prototype with a caseload overview, individual recovery histories, and home program adherence tracking. I used clinician feedback to evaluate how the interface fits their existing workflow.",
+      "Lessons Learned": "Working with occupational therapists changed how I approached Reach. I initially focused on presenting recovery data, but I realized that clinicians also needed help determining which patients required their attention first."
     },
     "meta": [
       {
@@ -56,12 +56,12 @@ const WORK = [
         "desc": "FMA-UE scores automatically segment patients into Mild, Moderate, or Severe baseline programs. The clinician logs an assessment, and the system assigns the appropriate program."
       },
       {
-        "title": "2. Broad, Banded Pathways",
-        "desc": "Within each severity band, pathways fit real life: occupation-based daily living, fine motor dexterity, return to work, left neglect, and shoulder protection."
+        "title": "2. Recovery pathways",
+        "desc": "Programs include daily living, fine motor skills, return to work, left neglect, and shoulder protection."
       },
       {
         "title": "3. Adherence as an Early Warning",
-        "desc": "Reach tracks active reps, mental practice, and assisted tasks. When adherence drops below 60%, it surfaces the patient as a stalled home program before a wasted visit."
+        "desc": "Reach tracks exercise repetitions, mental practice, and assisted tasks. Adherence below 60% flags a patient for review."
       }
     ],
     "gallery": [
@@ -95,18 +95,18 @@ const WORK = [
     "liveLabel": "Marketing website",
     "repoUrl": "https://github.com/manyworldss/Celio",
     "caseStudyUrl": "celio.html",
-    "blurb": "An offline iPhone app that helps people with celiac disease explain their needs to the person cooking their food, in their language, and hear back. No account. Less friction at the table.",
+    "blurb": "An offline iPhone app that helps people with celiac disease explain their dietary needs in another language and get a response from the person preparing their food.",
     "sections": {
-      "Problem": "Explaining celiac disease across a language barrier is more than translating a sentence. The person preparing the food needs to understand the restriction and cross-contact, while the person asking needs a clear way to hear back. That exchange happens at restaurants, dinner parties, and on delivery orders.",
+      "Problem": "Explaining celiac disease in another language can be difficult, especially when the person preparing your food is unfamiliar with cross-contact. A translation card can explain what you cannot eat, but it leaves you with another problem: how do you understand the response? I wanted Celio to help with that part of the conversation as well.",
       "Constraints": [
         "Work offline, without an account or a reliable connection.",
         "Keep the dietary message readable when a phone is handed to someone else.",
-        "Make room for a reply, rather than treating communication as a one-way card.",
+        "Allow the other person to respond in their language.",
         "Keep the public website focused on explaining the iOS product."
       ],
-      "Approach": "Ran 10+ interviews and surveyed 100+ people with celiac disease about dining barriers while traveling. Built a native iOS app in Swift and SwiftUI from those findings, then iterated on beta feedback. The current direction centers on presenting a clear dietary card, choosing the other person’s language, and supporting a two-way exchange. The marketing site explains that focused experience before someone installs the app.",
-      "Outcome": "The native iOS app is in TestFlight with 50+ beta users across 3+ countries, with an App Store release coming soon. The public repository now contains a lightweight static marketing site. The former Django version is preserved under the django-web-app-final tag.",
-      "Lessons Learned": "A focused communication aid is easier to explain and use than a collection of travel features. The central design question is whether two people can understand one another in the moment they need to."
+      "Approach": "I interviewed more than 10 people and surveyed over 100 people with celiac disease about their experiences dining while traveling. I built the iOS app in Swift and SwiftUI and used beta feedback to refine it. The main interaction is now a dietary card followed by a two-way exchange in the other person’s language.",
+      "Outcome": "I moved the project from Django to a native iPhone app. The public repository now hosts the marketing website, and the original web app is available under the django-web-app-final tag.",
+      "Lessons Learned": "I spent a great deal of time exploring what Celio could become. I eventually decided to focus on the conversation between the person with celiac disease and the person preparing their food, rather than trying to build an entire travel app."
     },
     "meta": [
       {
@@ -148,10 +148,10 @@ const WORK = [
       },
       {
         "title": "02 / Exchange",
-        "desc": "The interaction makes room for the other person to reply, completing the conversation."
+        "desc": "The person preparing the food can respond rather than simply read the card."
       },
       {
-        "title": "03 / Stay available",
+        "title": "03 / Offline access",
         "desc": "Offline access and no account keep the tool ready when connectivity is limited."
       }
     ],
@@ -176,20 +176,20 @@ const WORK = [
       "Workflow Design",
       "Automation"
     ],
-    "blurb": "A local audit automation tool for aerospace quality teams. A guided three-step workflow turns shipping, receiving, and quality logs into monthly and year-to-date Excel reports.",
+    "blurb": "An internal Windows tool I built to automate monthly and year-to-date quality reporting from aerospace shipping, receiving, and quality logs.",
     "repoUrl": "https://github.com/manyworldss/birk-internal-tool",
     "caseStudyUrl": "birk.html",
     "sections": {
-      "Problem": "Monthly audit preparation required quality staff to reconcile more than 9,000 rows of shipping, receiving, and RMA-NCR logs. Misspelled supplier names, mixed-unit quantities, and historical spreadsheets made the work slow and difficult to check.",
+      "Problem": "The quality team had to review more than 9,000 rows of shipping, receiving, and RMA-NCR data for monthly audits. Supplier names were sometimes misspelled, quantities used different units, and historical spreadsheets had to be maintained. Much of the work involved checking and correcting data manually.",
       "Constraints": [
         "No in-house software developers to maintain a server or troubleshoot terminal commands.",
         "Keep source files read-only and preserve existing Excel formulas, charts, and historical months.",
         "Support California and Florida sites with an entirely local workflow.",
-        "Make exceptions visible where staff already work: inside Excel."
+        "Show exceptions in Excel so staff can review them."
       ],
-      "Approach": "Designed a guided three-step interface in plain English. A deterministic rules engine normalizes names, parses quantities, and calculates customer and supplier quality and on-time delivery metrics. Staff can review before-and-after figures, update an existing YTD workbook, or build a fresh report from a master template.",
-      "Outcome": "Built a tool that turns 9,000+ log rows into audit reports in seconds for 12 staff across two sites. The local workflow records corrections in a human-readable Excel tab, giving staff a way to review the automation in their familiar workbook.",
-      "Lessons Learned": "Automation has to make sense to the person who inherits it. Plain-language steps, visible exceptions, and preservation of familiar spreadsheets matter as much as processing speed."
+      "Approach": "I built a three-step workflow that normalizes supplier names, parses quantities, and calculates customer and supplier quality and on-time delivery metrics. Staff can compare the figures before updating an existing year-to-date workbook or generating a new report from a template. I also added an Excel tab for exceptions that require review.",
+      "Outcome": "The tool can process more than 9,000 rows and generate audit reports in seconds. It was built for 12 staff across two sites, using their existing Excel workflow. Staff can review corrections directly in the workbook.",
+      "Lessons Learned": "One of my biggest considerations was how the team would maintain this software without a dedicated developer. It needed to be easy to run, and if something went wrong, the staff needed to understand why."
     },
     "meta": [
       {
@@ -224,15 +224,15 @@ const WORK = [
     ],
     "insights": [
       {
-        "title": "01 / Guide",
+        "title": "01 / Three-step workflow",
         "desc": "Three steps explain what happens and why, without requiring command-line knowledge."
       },
       {
-        "title": "02 / Preserve",
+        "title": "02 / Protect existing workbooks",
         "desc": "Read-only source handling and targeted workbook updates protect formulas and historical records."
       },
       {
-        "title": "03 / Review",
+        "title": "03 / Review exceptions",
         "desc": "Exceptions appear in an Excel Outliers tab instead of a separate technical log."
       }
     ],
@@ -256,17 +256,17 @@ const WORK = [
     "hero": "../../Rapheal-Portfolio/images/prox/08-deals-ready.png",
     "video": "../../Rapheal-Portfolio/images/prox/onboarding-walkthrough.mp4",
     "caseStudyUrl": "prox.html",
-    "blurb": "A complete redesign of the first-time user experience for an iOS grocery-savings app, addressing a strict 3–5 minute data-loading constraint.",
+    "blurb": "I redesigned the onboarding experience for an iOS grocery-savings app that needs three to five minutes to gather local prices when someone signs up.",
     "sections": {
-      "Problem": "On first sign-up, Prox must gather real-time price data for local stores in the user's area, which takes 3 to 5 minutes. The original flow threw a static loading spinner, appearing broken to new users and resulting in high drop-off rates before seeing value.",
+      "Problem": "Prox needs three to five minutes to gather local grocery prices during sign-up. The original onboarding flow showed a loading spinner without much explanation, and many new users left before seeing their first deals.",
       "Constraints": [
         "The 3–5 minute data pull is unavoidable and must happen in real time.",
-        "Runs on Capacitor for iOS, requiring designs that account for cross-platform quirks while feeling native.",
+        "The app runs on Capacitor for iOS, so designs need to account for its limitations.",
         "Permission prompts must be deferred until value is established."
       ],
-      "Approach": "Worked directly with the founder and engineering team to design two distinct onboarding strategies. The \"Honest\" approach tells users what is happening, shows real-time progress, and gives permission to leave while data loads (sending a push notification when ready). The \"Exclusivity\" approach reframes the wait as a reserved queue spot with founding member cards and referral incentives. Research included interviews, in-app and email surveys, and A/B tests with 250–300 monthly users.",
-      "Outcome": "Rebuilt onboarding with 65% drop-off into a 12-screen flow. Sign-ups rose 30–40%, and 500+ users were onboarded. Shipped SwiftUI features and extended the iOS design system, translating Figma designs into production code. The company shipped the Honest approach.",
-      "Lessons Learned": "You cannot always engineer away friction, but you can design how users perceive it. Giving users context, progress indicators, and an explanation for the wait turns frustration into anticipation."
+      "Approach": "I worked with the founder and engineering team on two approaches. The first explained the wait, showed progress, and let users leave while the app gathered prices. The second used an early-access queue, founding member cards, and referrals. Interviews, surveys, and A/B testing with 250–300 monthly users informed the work.",
+      "Outcome": "I redesigned the onboarding into a 12-screen flow. The previous flow had a 65% drop-off rate; sign-ups rose 30–40%, and more than 500 users were onboarded. I also implemented SwiftUI features and contributed to the iOS design system. The company shipped the honest approach.",
+      "Lessons Learned": "The three-to-five-minute wait was something we had to work around. I think the honest approach was the right decision because users could understand what the app was doing and leave instead of sitting through a loading screen."
     },
     "meta": [
       {
@@ -296,12 +296,12 @@ const WORK = [
       {
         "label": "Honest (Chosen)",
         "src": "../../Rapheal-Portfolio/images/prox/05-building-prox-honest.png",
-        "desc": "Transparent setup framing that explains the live price pull and gives users permission to leave while data loads."
+        "desc": "Shows progress while prices load and lets users leave and receive a notification when their deals are ready."
       },
       {
         "label": "Exclusivity",
         "src": "../../Rapheal-Portfolio/images/prox/06-early-access.png",
-        "desc": "Invite-only queue framing with founding member spots, live countdown, and referral incentives."
+        "desc": "An early-access queue with founding member spots, a countdown, and referral incentives."
       }
     ],
     "gallery": [
@@ -353,9 +353,9 @@ const WORK = [
       "Writing",
       "Human-Centered Design"
     ],
-    "blurb": "A native Mac companion in progress, designed to help people think clearly, manage competing priorities, write in their own voice, and use their time more intentionally.",
+    "blurb": "A Mac app I am exploring to help people organize their thoughts, write in their own voice, and manage their time and priorities.",
     "sections": {
-      "Problem": "Writing, competing priorities, and an overloaded schedule can make it difficult to think clearly. Runa began as an idea for a writing assistant that learns a person’s voice from examples and offers scaffolding while leaving the creative and intellectual work to them.",
+      "Problem": "Runa started with a problem I had myself. I wanted help organizing my thoughts and writing more efficiently without losing my own voice. I am now exploring how that same idea could extend to managing my time and priorities.",
       "Constraints": [
         "No outside data collection or tracking, ever.",
         "No screen monitoring, keystroke logging, browser history, or tracking of other applications.",
@@ -363,7 +363,7 @@ const WORK = [
         "Any in-app behavioral data must be transparent, controllable, and useful to the user.",
         "No diagnosis or claims of treating ADHD."
       ],
-      "Approach": "The concept brings voice-aware writing support together with task management, reminders, workload awareness, and personalized insights. It is being shaped as a thoughtful native Mac partner that helps someone decide what matters and move forward without becoming another application that demands their attention. The project is in progress; these are design intentions rather than released features."
+      "Approach": "I am exploring a native Mac app that learns from writing samples and helps with outlining, editing, tasks, and reminders. I want the person using it to remain responsible for the ideas and writing. I am still working through the design, so these are planned features rather than released functionality."
     },
     "meta": [
       {
@@ -394,8 +394,8 @@ const WORK = [
         "desc": "Learn from writing examples and offer scaffolding while leaving the creative and intellectual work to the person."
       },
       {
-        "title": "02 / Make room to think",
-        "desc": "Explore tasks, reminders, and workload awareness as support for clearer priorities and more intentional time."
+        "title": "02 / Tasks and priorities",
+        "desc": "Explore how tasks, reminders, and workload information can help people decide what to work on next."
       },
       {
         "title": "03 / Keep boundaries visible",

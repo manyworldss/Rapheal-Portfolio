@@ -12,10 +12,10 @@ function AboutContent() {
       <div className="about-grid">
         <div className="about-intro">
           <p>
-            I am a Human Factors Psychology student with experience across human-AI interaction, evaluation methodology, user research, and technical systems. I am focused on designing and evaluating technology and workflow systems where human capability and system complexity meet.
+            My background is in software development and technical systems, and I study Human Factors Psychology at Embry-Riddle. I’m interested in understanding how people use technology and applying what I learn to the software I build.
           </p>
           <p>
-            I am pursuing a B.S. in Human Factors Psychology at Embry-Riddle Aeronautical University, expected March 2028. I also work as an Engineering Intern in Aerospace Interiors at Birk Aerosystems, building tools that make complex quality and engineering workflows easier to use.
+            I joined Birk Aerosystems as an engineering intern and have since shifted toward developing internal software. I currently build tools to automate manual processes and make quality and engineering work easier for the team.
           </p>
         </div>
         <div className="spec-sheet">
@@ -34,7 +34,7 @@ function AboutContent() {
       </div>
       <section className="experience-list" aria-labelledby="experience-heading">
         <p className="console-label">Experience</p>
-        <h2 id="experience-heading">Where I've worked.</h2>
+        <h2 id="experience-heading">Where I’ve worked</h2>
         {[
           ['Birk Aerosystems', 'Engineering Intern, Aerospace Interiors', 'Oct. 2026 – Present', 'Built audit automation for 12 staff at two sites, a FastAPI and PyMuPDF drawing-review app for human verification, and five custom private jet interior components in CATIA.'],
           ['Handshake AI', 'AI Evaluation Specialist · Contract', 'Oct. 2025 – Oct. 2026', 'Evaluated 500+ AI outputs weekly. Built an interaction bug taxonomy adopted by a 12-person team and wrote seven communication rubrics used by hundreds of contractors.'],
@@ -63,7 +63,7 @@ function ContactContent({ onOpen }) {
       const sel = getSelection(); sel.removeAllRanges(); sel.addRange(range);
     }
   };
-  const roles = ['Human Factors Engineering', 'UX Research', 'Product Design', 'Human-Systems Integration'];
+  const roles = ['Software Engineering', 'Human Factors Engineering', 'UX Research', 'Product Design', 'Human-Systems Integration'];
   return (
     <div className="contact-grid">
       <div className="lcd-screen contact-card">
@@ -174,14 +174,14 @@ function App() {
         {view === 'home' && <Hero onOpen={onOpen} />}
         {view === 'work' && (
           <SectionView channel="01" label="Case Studies" title="Case studies"
-            intro="Four built projects and one in progress, from the first interview to working software. Pick a cartridge to open the full story."
+            intro="A few projects I’ve worked on, including one I’m still building. Pick a cartridge to see what I did and why."
             status={WORK.length + ' cartridges'} onBack={home}>
             <CaseStudies items={WORK} onOpen={onOpen} />
             <Footer onOpen={onOpen} current="work" />
           </SectionView>
         )}
         {view === 'about' && (
-          <SectionView channel="02" label="About" title="Human factors, systems, and the people who use them." onBack={home}>
+          <SectionView channel="02" label="About" title="A little about me" onBack={home}>
             <AboutContent />
             <Footer onOpen={onOpen} current="about" />
           </SectionView>
@@ -196,10 +196,10 @@ function App() {
         )}
         {view === 'contact' && (
           <SectionView channel="04" label="Contact" title="Let's work together."
-            intro="Hiring for human factors, UX research, or product design? Email is the best way to reach me."
+            intro="If you have a role or project you think I’d be a good fit for, email is the best way to reach me."
             onBack={home}>
             <ContactContent onOpen={onOpen} />
-            <div className="signoff-foot standalone"><span>© 2026 Rapheal Suber</span><span>Built with curiosity. Designed for people.</span></div>
+            <div className="signoff-foot standalone"><span>© 2026 Rapheal Suber</span><span>Designed and built by me.</span></div>
           </SectionView>
         )}
       </main>

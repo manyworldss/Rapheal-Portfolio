@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reach Case Study | Rapheal Suber</title>
-    <meta name="description" content="Reach Case Study: A caseload and outcome-tracking platform for therapists treating upper-extremity motor recovery after stroke, built with a human-factors-first focus.">
+    <meta name="description" content="Reach Case Study: A platform for occupational therapists to track upper-extremity stroke recovery, outcome assessments, and home exercise adherence.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -112,9 +112,9 @@
     <main class="container book-layout">
         <header class="cs-header">
             <span class="cs-category">Clinical SaaS / Stroke Rehabilitation &amp; Human Factors</span>
-            <h1 class="cs-title">Reach: Making Recovery Legible for Rehab Clinicians</h1>
+            <h1 class="cs-title">Reach: Tracking Stroke Recovery</h1>
             <p class="cs-subtitle">
-                I built Reach to make upper-extremity stroke recovery legible and actionable for rehab therapists, bringing a patient's measured outcomes, expected recovery arc, and home-program adherence into one clear view so clinicians can see in seconds who needs attention first and whether recovery is on track.
+                I built Reach to help occupational therapists track upper-extremity stroke recovery. It brings assessment scores, expected recovery, and home exercise adherence into one place so therapists can identify patients who may need additional attention.
             </p>
             <div class="cs-meta">
                 <div class="meta-item">
@@ -146,14 +146,14 @@
             <section class="cs-section">
                 <div class="section-header">
                     <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: var(--track-label);">01. Problem</span>
-                    <h2>The Challenge: Recovery Data That Lives Everywhere and Nowhere</h2>
+                    <h2>The problem with tracking recovery</h2>
                 </div>
                 <div class="section-body">
                     <p>
                         Standardized outcome measures such as the Fugl-Meyer Assessment (FMA-UE), the Action Research Arm Test (ARAT), and Box and Blocks are the gold standard for tracking motor recovery after stroke. In practice, clinicians document them inconsistently because capture is slow and the scores end up scattered across disconnected systems.
                     </p>
                     <p>
-                        Home exercise adherence makes up the other half of recovery, yet it is almost invisible between visits. A therapist often walks into a session without a clear read on whether the home program is actually being done. Reach exists to close that gap by connecting both halves into one clinician-facing interface while preventing the same scores from being typed twice.
+                        Home exercise adherence is the other half of recovery, but therapists rarely have visibility into it between visits. Often a therapist starts a session without knowing whether the patient has been doing the home program. I built Reach to bring assessment scores and home exercise tracking into one interface so therapists do not have to enter the same information twice.
                     </p>
                 </div>
             </section>
@@ -162,31 +162,31 @@
             <section class="cs-section">
                 <div class="section-header">
                     <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: var(--track-label);">02. Constraints &amp; Systems Strategy</span>
-                    <h2>One Interface, Driven by Outcomes</h2>
+                    <h2>Using assessment scores to guide treatment</h2>
                 </div>
                 <div class="section-body">
                     <p>
-                        Rather than another generic charting tool, Reach is built around the way recovery is actually measured. Assessment scores drive everything downstream, so the clinician logs data once and the system does the routing.
+                        Reach is built around standardized recovery measures. When a therapist logs an assessment score, the system uses it to suggest the baseline program.
                     </p>
                     <div class="insight-grid-3">
                         <div class="insight-card">
                             <h3>1. Outcome-Driven Severity</h3>
-                            <p>FMA-UE scores automatically segment patients into Mild, Moderate, or Severe baseline programs. The clinician logs an assessment, and the system assigns the appropriate program rather than leaving them to build one from scratch.</p>
+                            <p>FMA-UE scores group patients into Mild, Moderate, or Severe baseline programs so therapists do not have to build each program from scratch.</p>
                         </div>
                         <div class="insight-card">
-                            <h3>2. Broad, Banded Pathways</h3>
-                            <p>Within each severity band, pathways fit the patient's real life: occupation-based daily living, fine motor and dexterity, return to work, left neglect, and anti-subluxation shoulder protection.</p>
+                            <h3>2. Recovery pathways</h3>
+                            <p>Within each severity band, programs cover daily living, fine motor skills and dexterity, return to work, left neglect, and anti-subluxation shoulder protection.</p>
                         </div>
                         <div class="insight-card">
                             <h3>3. Adherence as an Early Warning</h3>
-                            <p>Reach tracks active reps, mental practice, and assisted daily tasks. When adherence drops below 60 percent, it surfaces the patient as a stalled home program before a wasted visit confirms it.</p>
+                            <p>Reach tracks active reps, mental practice, and assisted daily tasks. When adherence drops below 60 percent, it surfaces the patient as a stalled home program so the therapist can review the patient’s progress before the next visit.</p>
                         </div>
                     </div>
 
                     <div class="full-width-image">
                         <img src="images/reach_program.jpg" alt="Reach Programs and Pathways: FMA-UE scores route patients into severity-banded programs">
                     </div>
-                    <span class="caption">Programs and Pathways: an FMA-UE score routes each patient into a Mild, Moderate, or Severe band, then a tailored pathway matches the goal to the person in front of you.</span>
+                    <span class="caption">Programs and Pathways: an FMA-UE score places each patient into a Mild, Moderate, or Severe band, paired with a pathway based on their recovery goals.</span>
                 </div>
             </section>
 
@@ -194,11 +194,11 @@
             <section class="cs-section">
                 <div class="section-header">
                     <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: var(--track-label);">03. Approach &amp; Human Factors Discovery</span>
-                    <h2>Designed Around Three Occupational Therapists</h2>
+                    <h2>What I learned from three occupational therapists</h2>
                 </div>
                 <div class="section-body">
                     <p>
-                        Reach was shaped through direct, iterative feedback from three occupational therapists, so the product aligns with real clinical workflows and the human factors of a busy session rather than my assumptions about them.
+                        I worked through multiple rounds of feedback with three occupational therapists so the interface would fit their actual clinical workflow during busy sessions.
                     </p>
 
                     <div class="insight-grid">
@@ -222,11 +222,11 @@
             <section class="cs-section">
                 <div class="section-header">
                     <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: var(--track-label);">04. Outcome &amp; What Got Built</span>
-                    <h2>Human Factors &amp; Product Implementation</h2>
+                    <h2>How clinician feedback shaped the software</h2>
                 </div>
                 <div class="section-body">
                     <p>
-                        Each piece of clinician feedback maps to a concrete decision in the product. The result is an interface that does the routing and the writing the clinician would otherwise carry in their head.
+                        Each piece of clinician feedback maps to a concrete decision in the product. I used that feedback to simplify patient routing and reduce repetitive documentation.
                     </p>
                     <div class="finding-list">
                         <div class="finding-item">
@@ -254,7 +254,7 @@
                             <div class="finding-number">04</div>
                             <div class="finding-content">
                                 <h3>Copy-and-paste documentation</h3>
-                                <p>High-quality progress notes are generated for each selected pathway, ready to paste straight into the clinic's electronic medical record, which removes the most repetitive part of charting.</p>
+                                <p>Progress notes are generated for each selected pathway so therapists can paste them into the clinic's electronic medical record instead of writing the same summary manually.</p>
                             </div>
                         </div>
                         <div class="finding-item">
@@ -269,7 +269,7 @@
                     <div class="full-width-image">
                         <img src="images/reach_patient.jpg" alt="Reach patient companion app interface showing daily plan and check-in">
                     </div>
-                    <span class="caption">The patient companion app: a plain-language daily plan with a quick check-in, a guided session one movement at a time, and streak-based encouragement built to make home practice easy to show up for.</span>
+                    <span class="caption">The patient companion app: a plain-language daily plan with a quick check-in, step-by-step guided movements, and basic progress tracking to support home practice.</span>
                 </div>
             </section>
 
@@ -277,11 +277,11 @@
             <section class="cs-section">
                 <div class="section-header">
                     <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: var(--track-label);">05. Lessons Learned</span>
-                    <h2>Outcomes, Learnings, and Growth</h2>
+                    <h2>What I learned</h2>
                 </div>
                 <div class="section-body">
                     <p>
-                        Reach took a clinical focus from the first sketch. Designing it around standardized measures and the daily occupations of stroke survivors - dressing, writing, eating, and typing - kept the work grounded in what recovery actually looks like instead of a narrow return-to-work frame. The clearest lesson was that the people doing the documenting have to design it with you, otherwise you build a tool that is technically correct and clinically unusable.
+                        I designed Reach around standardized clinical measures and everyday activities like dressing, writing, eating, and typing, rather than focusing only on return to work. Working with therapists helped me understand what I would have missed if I had designed the platform on my own.
                     </p>
                     <div style="margin: 1.5rem 0;">
                         <a href="https://reach-health.up.railway.app/" target="_blank" class="cta-button cta-primary">Try Reach Live App ↗</a>

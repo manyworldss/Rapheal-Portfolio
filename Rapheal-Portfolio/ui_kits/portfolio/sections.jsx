@@ -291,14 +291,14 @@ function Hero({ onOpen }) {
       <div className="lcd-screen">
         <div className="lcd-status"><span>PLAYER 01</span><span>● SYSTEM READY</span></div>
         <div className="lcd-content">
-          <div className="lcd-copy"><p className="console-label">Hello, I'm</p><h1>Rapheal<br/>Suber<span className="pixel-cursor">_</span></h1><p className="lcd-role">Human factors.<br/>Human-centered software.</p><p className="lcd-intro">I research, design, and build tools for the moments when clarity matters most.</p><button className="start-button" onClick={()=>onOpen('work')}>▶ EXPLORE MY WORK</button></div>
+          <div className="lcd-copy"><p className="console-label">Hello, I'm</p><h1>Rapheal<br/>Suber<span className="pixel-cursor">_</span></h1><p className="lcd-role">Human factors.<br/>Human-centered software.</p><p className="lcd-intro">I study human factors and build software. I’m interested in how people use technology and how we can make it easier to use.</p><button className="start-button" onClick={()=>onOpen('work')}>▶ EXPLORE MY WORK</button></div>
           <div className="lcd-art"><RallyGame onOpen={onOpen} /></div>
         </div>
         <div className="lcd-bottom"><span>SELECT A CHANNEL TO BEGIN</span><span>© 2026 RS</span></div>
       </div>
       <div className="console-controls"><div className="d-pad" aria-hidden="true">✚</div><nav aria-label="Portfolio channels" className="channel-buttons">{CHANNELS.map(([id,num,label])=><button key={id} onClick={()=>onOpen(id)}><span>{num}</span>{label}<b aria-hidden="true">↗</b></button>)}</nav><div className="speaker" aria-hidden="true">/////</div></div>
     </div>
-    <div className="console-home-foot"><span>BUILT WITH CURIOSITY. DESIGNED FOR PEOPLE.</span><a href="https://github.com/manyworldss" target="_blank" rel="noopener">GITHUB ↗</a></div>
+    <div className="console-home-foot"><span>DESIGNED AND BUILT BY ME</span><a href="https://github.com/manyworldss" target="_blank" rel="noopener">GITHUB ↗</a></div>
   </section>;
 }
 
@@ -352,7 +352,7 @@ function Footer({ onOpen, current }) {
         <div className="signoff-body">
           <div>
             <h2>Have a role or project in mind?</h2>
-            <p>I'm open to roles in human factors, UX research, and product design. Send me a note and I'll get back to you.</p>
+            <p>I'm open to software engineering, human factors, UX research, and product design roles. Feel free to reach out if you think we’d be a good fit.</p>
           </div>
           <div className="signoff-actions">
             <button className="start-button" onClick={()=>onOpen('contact')}>▶ Get in touch</button>
@@ -360,7 +360,7 @@ function Footer({ onOpen, current }) {
           </div>
         </div>
       </div>
-      <div className="signoff-foot"><span>© 2026 Rapheal Suber</span><span>Built with curiosity. Designed for people.</span></div>
+      <div className="signoff-foot"><span>© 2026 Rapheal Suber</span><span>Designed and built by me.</span></div>
     </footer>
   );
 }
