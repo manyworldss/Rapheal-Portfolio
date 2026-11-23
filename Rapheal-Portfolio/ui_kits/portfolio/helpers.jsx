@@ -193,4 +193,109 @@ function ThemeToggle() {
   );
 }
 
-Object.assign(window, { Reveal, useReveal, BlueprintBg, ScrollProgress, useMagnetic, Sphere, IntroCurtain, ThemeToggle });
+/* ---- Game motion: small ASCII loops and LCD text effects ----
+   Everything here holds still when the visitor prefers reduced
+   motion, and stops ticking while off screen or in a hidden tab. */
+const REDUCED_Q = '(prefers-reduced-motion: reduce)';
+function useReducedMotion() {
+  const [reduced, setReduced] = useState(() => window.matchMedia(REDUCED_Q).matches);
+  useEffect(() => {
+    const m = window.matchMedia(REDUCED_Q);
+    const fn = () => setReduced(m.matches);
+    m.addEventListener ? m.addEventListener('change', fn) : m.addListener(fn);
+    return () => { m.removeEventListener ? m.removeEventListener('change', fn) : m.removeListener(fn); };
+  }, []);
+  return reduced;
+}
+
+/* Counts frames at `fps` while the element in `ref` is on screen. */
+function useTicker(ref, fps) {
+  const reduced = useReducedMotion();
+  const [tick, setTick] = useState(0);
+  useEffect(() => {
+    if (reduced) return;
+    let onScreen = true, id = 0;
+    const run = () => {
+      clearInterval(id);
+      if (onScreen && !document.hidden) id = setInterval(() => setTick((t) => t + 1), 1000 / fps);
+    };
+    const io = ref.current ? new IntersectionObserver(([e]) => { onScreen = e.isIntersecting; run(); }) : null;
+    if (io) io.observe(ref.current);
+    document.addEventListener('visibilitychange', run);
+    run();
+    return () => { clearInterval(id); if (io) io.disconnect(); document.removeEventListener('visibilitychange', run); };
+  }, [reduced, fps]);
+  return [tick, reduced];
+}
+
+/* Plays a list of ASCII frames (or a frame function) on a loop. Frame 0 is the still. */
+function AsciiLoop({ frames, fps = 6, className = '', as: Tag = 'pre' }) {
+  const ref = useRef(null);
+  const [tick] = useTicker(ref, fps);
+  const text = typeof frames === 'function' ? frames(tick) : frames[tick % frames.length];
+  return <Tag ref={ref} aria-hidden="true" className={'ascii-scene ' + className}>{text}</Tag>;
+}
+
+/* Types a line out like an LCD, then leaves a blinking caret. The untyped
+   rest stays in the layout (invisible) so nothing shifts while it types. */
+function TypeOn({ text, speed = 55, delay = 180 }) {
+  const reduced = useReducedMotion();
+  const [n, setN] = useState(reduced ? text.length : 0);
+  useEffect(() => {
+    if (reduced) { setN(text.length); return; }
+    setN(0);
+    let i = 0, id = 0;
+    const t = setTimeout(() => {
+      id = setInterval(() => { i += 1; setN(i); if (i >= text.length) clearInterval(id); }, speed);
+    }, delay);
+    return () => { clearTimeout(t); clearInterval(id); };
+  }, [text, reduced]);
+  return (
+    <React.Fragment>
+      <span className="sr-only">{text}</span>
+      <span aria-hidden="true">{text.slice(0, n)}<span className="type-caret">_</span><span className="type-rest">{text.slice(n)}</span></span>
+    </React.Fragment>
+  );
+}
+
+/* Decodes text from random glyphs, left to right, whenever it changes. */
+const SCRAMBLE_GLYPHS = '#%&*+=-/<>?_';
+function Scramble({ text, duration = 650 }) {
+  const reduced = useReducedMotion();
+  const [out, setOut] = useState(text);
+  useEffect(() => {
+    if (reduced) { setOut(text); return; }
+    const start = performance.now();
+    let raf = 0, last = 0;
+    const step = (now) => {
+      const p = Math.min(1, (now - start) / duration);
+      if (now - last > 40 || p === 1) {
+        last = now;
+        const fixed = Math.floor(p * text.length);
+        let s = '';
+        for (let i = 0; i < text.length; i++) {
+          s += (i < fixed || text[i] === ' ') ? text[i] : SCRAMBLE_GLYPHS[(Math.random() * SCRAMBLE_GLYPHS.length) | 0];
+        }
+        setOut(s);
+      }
+      if (p < 1) raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, [text, reduced]);
+  return <React.Fragment><span className="sr-only">{text}</span><span aria-hidden="true">{out}</span></React.Fragment>;
+}
+
+/* LCD static, sized to match a piece of ASCII art. */
+function asciiNoise(art) {
+  const rows = art.split('\n');
+  const w = Math.max(...rows.map((r) => r.length));
+  const chars = '   ..::-=+*#';
+  return rows.map(() => Array.from({ length: w }, () => chars[(Math.random() * chars.length) | 0]).join('')).join('\n');
+}
+
+/* A status light: the same dot as before, now blinking. */
+function Led() { return <span className="led" aria-hidden="true">●</span>; }
+
+Object.assign(window, { Reveal, useReveal, BlueprintBg, ScrollProgress, useMagnetic, Sphere, IntroCurtain, ThemeToggle,
+  useReducedMotion, useTicker, AsciiLoop, TypeOn, Scramble, asciiNoise, Led });

@@ -58,34 +58,100 @@ const SHELF = [
 
 function dayIndex() { return Math.floor(Date.now() / 86400000); }
 
-/* A small ASCII icon per medium, drawn on the "now playing" screen. */
-const MEDIUM_ART = {
-  film: String.raw`  .----.        .----.
- ( (()) )------( (()) )
-  '----'        '----'
- ______________________
-|[] [] [] [] [] [] [] []|
-|_______________________|`,
-  series: String.raw`        \      /
-         \    /
-  .-------\--/-------.
-  | .--------------. |
-  | |              | |
-  | '--------------' |
-  '------------------'`,
-  book: String.raw`   ___________ ___________
-  |  ~~~~~~~  |  ~~~~~~~  |
-  |  ~~~~~~~  |  ~~~~~~~  |
-  |  ~~~~~~~  |  ~~~~~~~  |
-  |___________|___________|`,
-  sound: String.raw`      .-------.
-    .'  .---.  '.
-   /   / .-. \   \
-  |   | ( o ) |   |
-   \   \ '-' /   /
-    '.  '---'  .'
-      '-------'`,
-};
+/* Animated ASCII per medium, drawn on the "now playing" screen.
+   A frame is a string, or a function for frames with random static.
+   Frame 0 of each medium is the still shown with reduced motion. */
+const npNoiseRow = (n) => Array.from({ length: n }, () => " .:'-=+*"[(Math.random() * 8) | 0]).join('');
+
+/* Film: two reels turning while the strip runs underneath. */
+const REEL_PLUS = ['  .-----.  ', ' /   |   \\ ', '|  --o--  |', ' \\   |   / ', "  '-----'  "];
+const REEL_X    = ['  .-----.  ', ' /  \\ /  \\ ', '|    o    |', ' \\  / \\  / ', "  '-----'  "];
+function filmFrames() {
+  const out = [];
+  for (let f = 0; f < 6; f++) {
+    const reel = f % 2 ? REEL_X : REEL_PLUS;
+    const rows = reel.map((r, i) => r + (i === 2 ? '--' : '  ') + r);
+    const strip = '[] '.repeat(10).slice(f % 3, f % 3 + 23);
+    rows.push(' ' + '_'.repeat(23), '|' + strip + '|', '|' + '_'.repeat(23) + '|');
+    out.push(rows.join('\n'));
+  }
+  return out;
+}
+
+/* Series: a marquee and a bouncing dot on screen, then a channel change through static. */
+function seriesFrames() {
+  const top = ['        \\      /', '         \\    /', '  .-------\\--/-------.', '  | .--------------. |'];
+  const bottom = ["  | '--------------' |", "  '------------------'"];
+  const tv = (a, b) => [...top, '  | |' + a + '| |', '  | |' + b + '| |', ...bottom].join('\n');
+  const marquee = '  NOW SHOWING  *  EPISODE 01  *';
+  const out = [];
+  for (let f = 0; f < 26; f++) {
+    const a = (marquee + marquee).slice(f % marquee.length, f % marquee.length + 14);
+    const p = f <= 13 ? f : 26 - f;
+    out.push(tv(a, ' '.repeat(p) + 'o' + ' '.repeat(13 - p)));
+  }
+  for (let f = 0; f < 3; f++) out.push(() => tv(npNoiseRow(14), npNoiseRow(14)));
+  return out;
+}
+
+/* Book: lines get read left page then right, then the page turns. */
+function bookFrames() {
+  const line = (k) => '  ' + '='.repeat(k) + '~'.repeat(7 - k) + '  ';
+  const book = (L, R, Lb = '___________', Rb = '___________') =>
+    ['   ___________ ___________', ...[0, 1, 2].map((r) => '  |' + L[r] + '|' + R[r] + '|'), '  |' + Lb + '|' + Rb + '|'].join('\n');
+  const fresh = [0, 1, 2].map(() => line(0)), done = [0, 1, 2].map(() => line(7));
+  const out = [book(fresh, fresh), book(fresh, fresh)];
+  for (let row = 0; row < 6; row++) {
+    for (const k of [2, 4, 6, 7]) {
+      const read = (r) => line(r < row ? 7 : r === row ? k : 0);
+      out.push(book([0, 1, 2].map(read), [3, 4, 5].map(read)));
+    }
+  }
+  for (const w of [9, 6, 3, 1]) {
+    out.push(book(done, fresh.map((t) => ' '.repeat(w - 1) + '|' + t.slice(w)), undefined, '_'.repeat(w - 1) + '|' + '_'.repeat(11 - w)));
+  }
+  for (const w of [3, 6, 9]) {
+    out.push(book(done.map((t) => t.slice(0, 11 - w) + '|' + ' '.repeat(w - 1)), fresh, '_'.repeat(11 - w) + '|' + '_'.repeat(w - 1)));
+  }
+  return out;
+}
+
+/* Record: two glints travel the groove so the vinyl reads as spinning. */
+const RECORD = [
+  "      .-------.",
+  "    .'  .---.  '.",
+  "   /   / .-. \\   \\",
+  "  |   | ( o ) |   |",
+  "   \\   \\ '-' /   /",
+  "    '.  '---'  .'",
+  "      '-------'",
+];
+const GROOVE = [[1, 13], [2, 15], [3, 16], [4, 15], [5, 13], [5, 7], [4, 5], [3, 4], [2, 5], [1, 7]];
+function soundFrames() {
+  return GROOVE.map((_, f) => {
+    const rows = RECORD.map((r) => r.split(''));
+    for (const [r, c] of [GROOVE[f], GROOVE[(f + 5) % GROOVE.length]]) rows[r][c] = '*';
+    return rows.map((r) => r.join('')).join('\n');
+  });
+}
+
+const MEDIUM_FRAMES = { film: filmFrames(), series: seriesFrames(), book: bookFrames(), sound: soundFrames() };
+const npFrameText = (fr) => (typeof fr === 'function' ? fr() : fr);
+
+/* The art on the LCD. A new pick tunes in through a few frames of static. */
+function NowPlayingArt({ medium, pickKey }) {
+  const ref = React.useRef(null);
+  const [tick, reduced] = useTicker(ref, 7);
+  const frames = MEDIUM_FRAMES[medium];
+  const tuned = React.useRef({ key: pickKey, at: 0 });
+  if (tuned.current.key !== pickKey) tuned.current = { key: pickKey, at: tick };
+  const since = tick - tuned.current.at, TUNE = 4;
+  const text = reduced ? npFrameText(frames[0])
+    : since < TUNE ? asciiNoise(npFrameText(frames[0]))
+    : npFrameText(frames[(since - TUNE) % frames.length]);
+  return <pre ref={ref} aria-hidden="true" className="ascii-scene np-art">{text}</pre>;
+}
+
 const pad2c = n => String(n).padStart(2, '0');
 
 function Currently() {
@@ -100,14 +166,14 @@ function Currently() {
   return (
     <section id="currently" className="now-playing">
       <div className="np-feature">
-        <a className="lcd-screen np-screen" href={fHref} target="_blank" rel="noopener" aria-label={'Open ' + feat.t + ' in ' + fLabel}>
-          <div className="lcd-status"><span>Now playing · {MEDIUM_LABEL[feat.m]}</span><span>{feat.yr}</span></div>
-          <pre aria-hidden="true" className="ascii-scene np-art">{MEDIUM_ART[feat.m]}</pre>
-          <div className="np-title">{feat.t}</div>
+        <a className="lcd-screen lcd-live np-screen" href={fHref} target="_blank" rel="noopener" aria-label={'Open ' + feat.t + ' in ' + fLabel}>
+          <div className="lcd-status"><span><Led /> Now playing · {MEDIUM_LABEL[feat.m]}</span><span>{feat.yr}</span></div>
+          <NowPlayingArt medium={feat.m} pickKey={seed} />
+          <div className="np-title"><Scramble text={feat.t} /></div>
           <div className="np-by">{feat.by}</div>
           <div className="lcd-bottom"><span>Pick {pad2c(pick + 1)} / {pad2c(FEATURED.length)}</span><span>{fLabel} ↗</span></div>
         </a>
-        <div className="np-note">
+        <div className="np-note np-swap" key={seed}>
           <p className="console-label">Why it stays with me</p>
           <h2>{feat.t}</h2>
           <p className="np-meta">{feat.by} · {MEDIUM_LABEL[feat.m]} · {feat.yr}</p>
@@ -125,14 +191,14 @@ function Currently() {
           {shelf.map((s, i) => {
             const [lbl, href] = LINKS[s.m](s.t);
             return (
-              <li key={s.t + i}>
+              <Reveal as="li" key={seed + ':' + s.t + i} delay={i * 60} y="10px">
                 <a href={href} target="_blank" rel="noopener">
                   <span className="np-idx" aria-hidden="true">{pad2c(i + 1)}</span>
                   <span className="np-name">{s.t}</span>
                   <span className="np-medium">{MEDIUM_LABEL[s.m]}</span>
                   <span className="np-src">{lbl} ↗</span>
                 </a>
-              </li>
+              </Reveal>
             );
           })}
         </ol>

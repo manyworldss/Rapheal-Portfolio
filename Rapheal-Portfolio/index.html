@@ -648,6 +648,41 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 }
 @media(prefers-reduced-motion:reduce){.rally-blink{animation:none}}
 
+/* ---- Game motion ----
+   Small, discrete movements in the console's own language: blinking
+   carets and status lights, LCD scanlines, cartridges sliding into the
+   shelf. The reduced-motion rule above switches all of it off. */
+@keyframes caretBlink{50%{opacity:0}}
+@keyframes ledBlink{0%,55%{opacity:1}56%,100%{opacity:.25}}
+@keyframes printIn{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes scanSweep{from{transform:translateY(-100%)}to{transform:translateY(500%)}}
+@keyframes rowIn{from{opacity:0;transform:translateY(10px)}}
+@keyframes popIn{from{opacity:0;transform:scale(.85)}}
+@keyframes cartIn{from{opacity:0;transform:translateY(22px)}}
+@keyframes flick{0%{opacity:.15}30%{opacity:1}55%{opacity:.35}100%{opacity:1}}
+@keyframes pressNudge{0%,49%{transform:none}50%,100%{transform:translateX(3px)}}
+.pixel-cursor,.type-caret{animation:caretBlink 1.05s steps(1,end) infinite}
+.type-caret{font-size:.65em;margin-left:.04em}
+.type-rest{visibility:hidden}
+.led{display:inline-block;margin-right:.4em;animation:ledBlink 1.8s steps(1,end) infinite}
+.press{display:inline-block;animation:pressNudge 1.1s steps(1,end) infinite}
+.lcd-live::before,.lcd-live::after{content:'';position:absolute;left:0;right:0;pointer-events:none}
+.lcd-live::before{top:0;bottom:0;background:repeating-linear-gradient(to bottom,#2534210a 0 1px,transparent 1px 3px)}
+.lcd-live::after{top:0;height:22%;background:linear-gradient(to bottom,transparent,#25342112 50%,transparent);animation:scanSweep 7s linear infinite}
+.banner-body{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:20px 40px}
+.banner-art{font-size:11px;line-height:1.3;color:var(--screen-ink);opacity:.8;padding-bottom:4px}
+.banner-intro{animation:printIn .8s steps(32,end) var(--print-delay,.5s) backwards}
+.cartridge-rail{padding-top:12px}
+.cartridge{animation:cartIn .6s cubic-bezier(.2,.8,.2,1) backwards;animation-delay:calc(var(--i,0) * 90ms + 120ms);transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s}
+.cartridge:hover{transform:translateY(-6px);box-shadow:4px 10px 0 var(--bg-inset)}
+.cartridge.is-active .media-index{animation:flick .45s steps(1,end)}
+.flick{display:inline-block;animation:flick .4s steps(1,end)}
+.library-dots button[aria-current]::after{animation:ledBlink 1.8s steps(1,end) infinite}
+.inline-loop{display:inline;font-size:inherit;line-height:inherit;margin-left:.7em;color:inherit}
+.np-swap{animation:rowIn .45s cubic-bezier(.2,.8,.2,1) backwards}
+.pop-in{animation:popIn .3s steps(3,end) backwards;animation-delay:calc(var(--i,0) * 80ms + 450ms)}
+@media(max-width:760px){.banner-body{grid-template-columns:1fr}.banner-art{display:none}}
+
 html, body { background: var(--bg); }
 #root { position: relative; }
 </style>
@@ -853,7 +888,112 @@ function ThemeToggle() {
   );
 }
 
-Object.assign(window, { Reveal, useReveal, BlueprintBg, ScrollProgress, useMagnetic, Sphere, IntroCurtain, ThemeToggle });
+/* ---- Game motion: small ASCII loops and LCD text effects ----
+   Everything here holds still when the visitor prefers reduced
+   motion, and stops ticking while off screen or in a hidden tab. */
+const REDUCED_Q = '(prefers-reduced-motion: reduce)';
+function useReducedMotion() {
+  const [reduced, setReduced] = useState(() => window.matchMedia(REDUCED_Q).matches);
+  useEffect(() => {
+    const m = window.matchMedia(REDUCED_Q);
+    const fn = () => setReduced(m.matches);
+    m.addEventListener ? m.addEventListener('change', fn) : m.addListener(fn);
+    return () => { m.removeEventListener ? m.removeEventListener('change', fn) : m.removeListener(fn); };
+  }, []);
+  return reduced;
+}
+
+/* Counts frames at `fps` while the element in `ref` is on screen. */
+function useTicker(ref, fps) {
+  const reduced = useReducedMotion();
+  const [tick, setTick] = useState(0);
+  useEffect(() => {
+    if (reduced) return;
+    let onScreen = true, id = 0;
+    const run = () => {
+      clearInterval(id);
+      if (onScreen && !document.hidden) id = setInterval(() => setTick((t) => t + 1), 1000 / fps);
+    };
+    const io = ref.current ? new IntersectionObserver(([e]) => { onScreen = e.isIntersecting; run(); }) : null;
+    if (io) io.observe(ref.current);
+    document.addEventListener('visibilitychange', run);
+    run();
+    return () => { clearInterval(id); if (io) io.disconnect(); document.removeEventListener('visibilitychange', run); };
+  }, [reduced, fps]);
+  return [tick, reduced];
+}
+
+/* Plays a list of ASCII frames (or a frame function) on a loop. Frame 0 is the still. */
+function AsciiLoop({ frames, fps = 6, className = '', as: Tag = 'pre' }) {
+  const ref = useRef(null);
+  const [tick] = useTicker(ref, fps);
+  const text = typeof frames === 'function' ? frames(tick) : frames[tick % frames.length];
+  return <Tag ref={ref} aria-hidden="true" className={'ascii-scene ' + className}>{text}</Tag>;
+}
+
+/* Types a line out like an LCD, then leaves a blinking caret. The untyped
+   rest stays in the layout (invisible) so nothing shifts while it types. */
+function TypeOn({ text, speed = 55, delay = 180 }) {
+  const reduced = useReducedMotion();
+  const [n, setN] = useState(reduced ? text.length : 0);
+  useEffect(() => {
+    if (reduced) { setN(text.length); return; }
+    setN(0);
+    let i = 0, id = 0;
+    const t = setTimeout(() => {
+      id = setInterval(() => { i += 1; setN(i); if (i >= text.length) clearInterval(id); }, speed);
+    }, delay);
+    return () => { clearTimeout(t); clearInterval(id); };
+  }, [text, reduced]);
+  return (
+    <React.Fragment>
+      <span className="sr-only">{text}</span>
+      <span aria-hidden="true">{text.slice(0, n)}<span className="type-caret">_</span><span className="type-rest">{text.slice(n)}</span></span>
+    </React.Fragment>
+  );
+}
+
+/* Decodes text from random glyphs, left to right, whenever it changes. */
+const SCRAMBLE_GLYPHS = '#%&*+=-/<>?_';
+function Scramble({ text, duration = 650 }) {
+  const reduced = useReducedMotion();
+  const [out, setOut] = useState(text);
+  useEffect(() => {
+    if (reduced) { setOut(text); return; }
+    const start = performance.now();
+    let raf = 0, last = 0;
+    const step = (now) => {
+      const p = Math.min(1, (now - start) / duration);
+      if (now - last > 40 || p === 1) {
+        last = now;
+        const fixed = Math.floor(p * text.length);
+        let s = '';
+        for (let i = 0; i < text.length; i++) {
+          s += (i < fixed || text[i] === ' ') ? text[i] : SCRAMBLE_GLYPHS[(Math.random() * SCRAMBLE_GLYPHS.length) | 0];
+        }
+        setOut(s);
+      }
+      if (p < 1) raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, [text, reduced]);
+  return <React.Fragment><span className="sr-only">{text}</span><span aria-hidden="true">{out}</span></React.Fragment>;
+}
+
+/* LCD static, sized to match a piece of ASCII art. */
+function asciiNoise(art) {
+  const rows = art.split('\n');
+  const w = Math.max(...rows.map((r) => r.length));
+  const chars = '   ..::-=+*#';
+  return rows.map(() => Array.from({ length: w }, () => chars[(Math.random() * chars.length) | 0]).join('')).join('\n');
+}
+
+/* A status light: the same dot as before, now blinking. */
+function Led() { return <span className="led" aria-hidden="true">●</span>; }
+
+Object.assign(window, { Reveal, useReveal, BlueprintBg, ScrollProgress, useMagnetic, Sphere, IntroCurtain, ThemeToggle,
+  useReducedMotion, useTicker, AsciiLoop, TypeOn, Scramble, asciiNoise, Led });
 
 </script>
 <script type="text/babel">
@@ -1148,9 +1288,9 @@ function Hero({ onOpen }) {
     <div className="handheld">
       <div className="handheld-rim"><span><i /> HUMAN FACTORS / INTERACTIVE PORTFOLIO</span><span>01 — 04</span></div>
       <div className="lcd-screen">
-        <div className="lcd-status"><span>PLAYER 01</span><span>● SYSTEM READY</span></div>
+        <div className="lcd-status"><span>PLAYER 01</span><span><Led />SYSTEM READY</span></div>
         <div className="lcd-content">
-          <div className="lcd-copy"><p className="console-label">Hello, I'm</p><h1>Rapheal<br/>Suber<span className="pixel-cursor">_</span></h1><p className="lcd-role">Human factors.<br/>Human-centered software.</p><p className="lcd-intro">I study human factors and build software. I’m interested in how people use technology and how we can make it easier to use.</p><button className="start-button" onClick={()=>onOpen('work')}>▶ EXPLORE MY WORK</button></div>
+          <div className="lcd-copy"><p className="console-label">Hello, I'm</p><h1>Rapheal<br/>Suber<span className="pixel-cursor">_</span></h1><p className="lcd-role">Human factors.<br/>Human-centered software.</p><p className="lcd-intro">I study human factors and build software. I’m interested in how people use technology and how we can make it easier to use.</p><button className="start-button" onClick={()=>onOpen('work')}><span className="press" aria-hidden="true">▶</span> EXPLORE MY WORK</button></div>
           <div className="lcd-art"><RallyGame onOpen={onOpen} /></div>
         </div>
         <div className="lcd-bottom"><span>SELECT A CHANNEL TO BEGIN</span><span>© 2026 RS</span></div>
@@ -1193,9 +1333,9 @@ function CaseStudies({ items: all, onOpen }) {
     node.scrollTo({left:card.offsetLeft-node.offsetLeft,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
   };
   return <section id="work" className="project-library">
-    <div className="library-toolbar"><span className="library-count">Cartridge {pad2(active+1)} / {pad2(items.length)}</span><div><button aria-label="Previous project" disabled={active===0} onClick={()=>select(active-1)}>←</button><button aria-label="Next project" disabled={active===items.length-1} onClick={()=>select(active+1)}>→</button></div></div>
+    <div className="library-toolbar"><span className="library-count">Cartridge <span key={active} className="flick">{pad2(active+1)}</span> / {pad2(items.length)}</span><div><button aria-label="Previous project" disabled={active===0} onClick={()=>select(active-1)}>←</button><button aria-label="Next project" disabled={active===items.length-1} onClick={()=>select(active+1)}>→</button></div></div>
     <div className="cartridge-rail" ref={rail} role="region" aria-label="Case studies, scroll horizontally" tabIndex="0" onKeyDown={e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();select(active+(e.key==='ArrowRight'?1:-1));}}}>
-      {items.map((item,i)=><article className={'cartridge cartridge-'+item.id} key={item.id}>
+      {items.map((item,i)=><article className={'cartridge cartridge-'+item.id+(i===active?' is-active':'')} style={{'--i':i}} key={item.id}>
         <div className="cartridge-heading"><span>{item.code}</span><span>{item.status || CARTRIDGE_STATUS[item.id] || 'Case study'}</span><span aria-hidden="true">▥</span></div>
         <div className="cartridge-media">{item.thumb?<img src={item.thumb} alt={item.title+' project preview'} loading={i<2?'eager':'lazy'}/>:<div className="media-placeholder"><AsciiScene/><span>{item.upcoming?'NEXT CARTRIDGE / RUNA':'BIRK / PHOTO ARCHIVE'}<br/><small>{item.upcoming?'Concept in progress / visuals to come':'Screenshots to be added'}</small></span></div>}<span className="media-index" aria-hidden="true">{pad2(i+1)}</span></div>
         <div className="cartridge-copy"><div className="console-label">{item.disciplines.join(' / ')}</div><h2>{item.title}</h2><p>{item.blurb}</p><button className="console-button" onClick={()=>onOpen(item.id)}>{item.upcoming?'Explore the concept':'Open case study'} →</button></div>
@@ -1203,7 +1343,7 @@ function CaseStudies({ items: all, onOpen }) {
     </div>
     <div className="library-bottom"><span>Swipe, scroll, or use ← →</span><div className="library-dots">{items.map((it,i)=><button key={it.id} aria-label={'Go to '+it.title} aria-current={i===active?'true':undefined} onClick={()=>select(i)}/>)}</div><span aria-live="polite">{items[active].title}</span></div>
     {next && <aside className="next-cartridge" aria-label="In progress">
-      <span className="console-label">In progress</span>
+      <span className="console-label">In progress<AsciiLoop as="span" className="inline-loop" fps={4} frames={['[    ]','[#   ]','[##  ]','[### ]','[####]','[####]']} /></span>
       <p><strong>{next.title}.</strong> {next.blurb}</p>
       <button className="console-button" onClick={()=>onOpen(next.id)}>Read the concept →</button>
     </aside>}
@@ -1214,15 +1354,15 @@ function CaseStudies({ items: all, onOpen }) {
 function Footer({ onOpen, current }) {
   return (
     <footer className="signoff">
-      <div className="lcd-screen signoff-panel">
-        <div className="lcd-status"><span>Next step</span><span>● Open to roles</span></div>
+      <div className="lcd-screen lcd-live signoff-panel">
+        <div className="lcd-status"><span>Next step</span><span><Led />Open to roles</span></div>
         <div className="signoff-body">
           <div>
             <h2>Have a role or project in mind?</h2>
             <p>I'm open to software engineering, human factors, UX research, and product design roles. Feel free to reach out if you think we’d be a good fit.</p>
           </div>
           <div className="signoff-actions">
-            <button className="start-button" onClick={()=>onOpen('contact')}>▶ Get in touch</button>
+            <button className="start-button" onClick={()=>onOpen('contact')}><span className="press" aria-hidden="true">▶</span> Get in touch</button>
             {current !== 'work' && <button className="start-button ghost" onClick={()=>onOpen('work')}>See case studies →</button>}
           </div>
         </div>
@@ -1667,34 +1807,100 @@ const SHELF = [
 
 function dayIndex() { return Math.floor(Date.now() / 86400000); }
 
-/* A small ASCII icon per medium, drawn on the "now playing" screen. */
-const MEDIUM_ART = {
-  film: String.raw`  .----.        .----.
- ( (()) )------( (()) )
-  '----'        '----'
- ______________________
-|[] [] [] [] [] [] [] []|
-|_______________________|`,
-  series: String.raw`        \      /
-         \    /
-  .-------\--/-------.
-  | .--------------. |
-  | |              | |
-  | '--------------' |
-  '------------------'`,
-  book: String.raw`   ___________ ___________
-  |  ~~~~~~~  |  ~~~~~~~  |
-  |  ~~~~~~~  |  ~~~~~~~  |
-  |  ~~~~~~~  |  ~~~~~~~  |
-  |___________|___________|`,
-  sound: String.raw`      .-------.
-    .'  .---.  '.
-   /   / .-. \   \
-  |   | ( o ) |   |
-   \   \ '-' /   /
-    '.  '---'  .'
-      '-------'`,
-};
+/* Animated ASCII per medium, drawn on the "now playing" screen.
+   A frame is a string, or a function for frames with random static.
+   Frame 0 of each medium is the still shown with reduced motion. */
+const npNoiseRow = (n) => Array.from({ length: n }, () => " .:'-=+*"[(Math.random() * 8) | 0]).join('');
+
+/* Film: two reels turning while the strip runs underneath. */
+const REEL_PLUS = ['  .-----.  ', ' /   |   \\ ', '|  --o--  |', ' \\   |   / ', "  '-----'  "];
+const REEL_X    = ['  .-----.  ', ' /  \\ /  \\ ', '|    o    |', ' \\  / \\  / ', "  '-----'  "];
+function filmFrames() {
+  const out = [];
+  for (let f = 0; f < 6; f++) {
+    const reel = f % 2 ? REEL_X : REEL_PLUS;
+    const rows = reel.map((r, i) => r + (i === 2 ? '--' : '  ') + r);
+    const strip = '[] '.repeat(10).slice(f % 3, f % 3 + 23);
+    rows.push(' ' + '_'.repeat(23), '|' + strip + '|', '|' + '_'.repeat(23) + '|');
+    out.push(rows.join('\n'));
+  }
+  return out;
+}
+
+/* Series: a marquee and a bouncing dot on screen, then a channel change through static. */
+function seriesFrames() {
+  const top = ['        \\      /', '         \\    /', '  .-------\\--/-------.', '  | .--------------. |'];
+  const bottom = ["  | '--------------' |", "  '------------------'"];
+  const tv = (a, b) => [...top, '  | |' + a + '| |', '  | |' + b + '| |', ...bottom].join('\n');
+  const marquee = '  NOW SHOWING  *  EPISODE 01  *';
+  const out = [];
+  for (let f = 0; f < 26; f++) {
+    const a = (marquee + marquee).slice(f % marquee.length, f % marquee.length + 14);
+    const p = f <= 13 ? f : 26 - f;
+    out.push(tv(a, ' '.repeat(p) + 'o' + ' '.repeat(13 - p)));
+  }
+  for (let f = 0; f < 3; f++) out.push(() => tv(npNoiseRow(14), npNoiseRow(14)));
+  return out;
+}
+
+/* Book: lines get read left page then right, then the page turns. */
+function bookFrames() {
+  const line = (k) => '  ' + '='.repeat(k) + '~'.repeat(7 - k) + '  ';
+  const book = (L, R, Lb = '___________', Rb = '___________') =>
+    ['   ___________ ___________', ...[0, 1, 2].map((r) => '  |' + L[r] + '|' + R[r] + '|'), '  |' + Lb + '|' + Rb + '|'].join('\n');
+  const fresh = [0, 1, 2].map(() => line(0)), done = [0, 1, 2].map(() => line(7));
+  const out = [book(fresh, fresh), book(fresh, fresh)];
+  for (let row = 0; row < 6; row++) {
+    for (const k of [2, 4, 6, 7]) {
+      const read = (r) => line(r < row ? 7 : r === row ? k : 0);
+      out.push(book([0, 1, 2].map(read), [3, 4, 5].map(read)));
+    }
+  }
+  for (const w of [9, 6, 3, 1]) {
+    out.push(book(done, fresh.map((t) => ' '.repeat(w - 1) + '|' + t.slice(w)), undefined, '_'.repeat(w - 1) + '|' + '_'.repeat(11 - w)));
+  }
+  for (const w of [3, 6, 9]) {
+    out.push(book(done.map((t) => t.slice(0, 11 - w) + '|' + ' '.repeat(w - 1)), fresh, '_'.repeat(11 - w) + '|' + '_'.repeat(w - 1)));
+  }
+  return out;
+}
+
+/* Record: two glints travel the groove so the vinyl reads as spinning. */
+const RECORD = [
+  "      .-------.",
+  "    .'  .---.  '.",
+  "   /   / .-. \\   \\",
+  "  |   | ( o ) |   |",
+  "   \\   \\ '-' /   /",
+  "    '.  '---'  .'",
+  "      '-------'",
+];
+const GROOVE = [[1, 13], [2, 15], [3, 16], [4, 15], [5, 13], [5, 7], [4, 5], [3, 4], [2, 5], [1, 7]];
+function soundFrames() {
+  return GROOVE.map((_, f) => {
+    const rows = RECORD.map((r) => r.split(''));
+    for (const [r, c] of [GROOVE[f], GROOVE[(f + 5) % GROOVE.length]]) rows[r][c] = '*';
+    return rows.map((r) => r.join('')).join('\n');
+  });
+}
+
+const MEDIUM_FRAMES = { film: filmFrames(), series: seriesFrames(), book: bookFrames(), sound: soundFrames() };
+const npFrameText = (fr) => (typeof fr === 'function' ? fr() : fr);
+
+/* The art on the LCD. A new pick tunes in through a few frames of static. */
+function NowPlayingArt({ medium, pickKey }) {
+  const ref = React.useRef(null);
+  const [tick, reduced] = useTicker(ref, 7);
+  const frames = MEDIUM_FRAMES[medium];
+  const tuned = React.useRef({ key: pickKey, at: 0 });
+  if (tuned.current.key !== pickKey) tuned.current = { key: pickKey, at: tick };
+  const since = tick - tuned.current.at, TUNE = 4;
+  const text = reduced ? npFrameText(frames[0])
+    : since < TUNE ? asciiNoise(npFrameText(frames[0]))
+    : npFrameText(frames[(since - TUNE) % frames.length]);
+  return <pre ref={ref} aria-hidden="true" className="ascii-scene np-art">{text}</pre>;
+}
+
 const pad2c = n => String(n).padStart(2, '0');
 
 function Currently() {
@@ -1709,14 +1915,14 @@ function Currently() {
   return (
     <section id="currently" className="now-playing">
       <div className="np-feature">
-        <a className="lcd-screen np-screen" href={fHref} target="_blank" rel="noopener" aria-label={'Open ' + feat.t + ' in ' + fLabel}>
-          <div className="lcd-status"><span>Now playing · {MEDIUM_LABEL[feat.m]}</span><span>{feat.yr}</span></div>
-          <pre aria-hidden="true" className="ascii-scene np-art">{MEDIUM_ART[feat.m]}</pre>
-          <div className="np-title">{feat.t}</div>
+        <a className="lcd-screen lcd-live np-screen" href={fHref} target="_blank" rel="noopener" aria-label={'Open ' + feat.t + ' in ' + fLabel}>
+          <div className="lcd-status"><span><Led /> Now playing · {MEDIUM_LABEL[feat.m]}</span><span>{feat.yr}</span></div>
+          <NowPlayingArt medium={feat.m} pickKey={seed} />
+          <div className="np-title"><Scramble text={feat.t} /></div>
           <div className="np-by">{feat.by}</div>
           <div className="lcd-bottom"><span>Pick {pad2c(pick + 1)} / {pad2c(FEATURED.length)}</span><span>{fLabel} ↗</span></div>
         </a>
-        <div className="np-note">
+        <div className="np-note np-swap" key={seed}>
           <p className="console-label">Why it stays with me</p>
           <h2>{feat.t}</h2>
           <p className="np-meta">{feat.by} · {MEDIUM_LABEL[feat.m]} · {feat.yr}</p>
@@ -1734,14 +1940,14 @@ function Currently() {
           {shelf.map((s, i) => {
             const [lbl, href] = LINKS[s.m](s.t);
             return (
-              <li key={s.t + i}>
+              <Reveal as="li" key={seed + ':' + s.t + i} delay={i * 60} y="10px">
                 <a href={href} target="_blank" rel="noopener">
                   <span className="np-idx" aria-hidden="true">{pad2c(i + 1)}</span>
                   <span className="np-name">{s.t}</span>
                   <span className="np-medium">{MEDIUM_LABEL[s.m]}</span>
                   <span className="np-src">{lbl} ↗</span>
                 </a>
-              </li>
+              </Reveal>
             );
           })}
         </ol>
@@ -2299,7 +2505,7 @@ function AboutContent() {
           ['Prox', 'UX Engineer · Contract', 'Apr. 2026 – June 2026', 'Research with 250–300 monthly users informed a 12-screen onboarding flow. Sign-ups rose 30–40%, with 500+ users onboarded. Shipped SwiftUI features and extended the iOS design system.'],
           ['Wazzle AI', 'Software Engineer · Part Time', 'Aug. 2023 – Sept. 2025', 'Synthesized 50+ customer conversations and support tickets. Onboarding changes cut related support requests by 35%; helped trace and fix a six-second signup delay in Django.'],
           ['Greenville County', 'Technical Support Engineer', 'June 2018 – Dec. 2022', 'Cut device setup from two hours to under 20 minutes for 150+ annual hires. Updated 200+ polling devices and delivered 20+ statewide election technology sessions to 300+ attendees.'],
-        ].map(([company,role,period,description],i)=><article key={company}><span className="experience-index" aria-hidden="true">{String(i+1).padStart(2,'0')}</span><div><div className="experience-head"><h3>{company}</h3><span>{period}</span></div><p className="experience-role">{role}</p><p>{description}</p></div></article>)}
+        ].map(([company,role,period,description],i)=><Reveal as="article" key={company} delay={i*70} y="12px"><span className="experience-index" aria-hidden="true">{String(i+1).padStart(2,'0')}</span><div><div className="experience-head"><h3>{company}</h3><span>{period}</span></div><p className="experience-role">{role}</p><p>{description}</p></div></Reveal>)}
       </section>
     </div>
   );
@@ -2324,15 +2530,15 @@ function ContactContent({ onOpen }) {
   const roles = ['Software Engineering', 'Human Factors Engineering', 'UX Research', 'Product Design', 'Human-Systems Integration'];
   return (
     <div className="contact-grid">
-      <div className="lcd-screen contact-card">
-        <div className="lcd-status"><span>Player 2</span><span>● Ready</span></div>
+      <div className="lcd-screen lcd-live contact-card">
+        <div className="lcd-status"><span>Player 2</span><span><Led />Ready</span></div>
         <div className="contact-card-body">
           <p className="console-label">Open to roles in</p>
-          <ul className="role-list">{roles.map(r => <li key={r}>{r}</li>)}</ul>
+          <ul className="role-list">{roles.map((r, i) => <li key={r} className="pop-in" style={{ '--i': i }}>{r}</li>)}</ul>
           <p className="console-label">Email me</p>
           <p id="contact-email" className="contact-email">{CONTACT_EMAIL}</p>
           <div className="contact-actions">
-            <a className="start-button" href={'mailto:' + CONTACT_EMAIL}>▶ Send an email</a>
+            <a className="start-button" href={'mailto:' + CONTACT_EMAIL}><span className="press" aria-hidden="true">▶</span> Send an email</a>
             <button className="start-button ghost" onClick={copy}>{copied ? '✓ Copied' : 'Copy address'}</button>
           </div>
           <span role="status" className="sr-only">{copied ? 'Email address copied' : ''}</span>
@@ -2353,7 +2559,82 @@ function ContactContent({ onOpen }) {
   );
 }
 
-function SectionView({ channel, label, title, intro, status = 'Ready', onBack, children }) {
+/* ---- Banner sprites: one small ASCII loop per channel ---- */
+const bannerPad = (s, w) => s + ' '.repeat(Math.max(0, w - s.length));
+
+/* Case studies: a cartridge drops into the console, loads, and ejects. */
+function cartridgeFrames() {
+  const labels = WORK.filter((w) => !w.upcoming).map((w) => w.code.replace('-', '').slice(0, 4));
+  const blank = ' '.repeat(20), out = [];
+  labels.forEach((label) => {
+    const cart = ['     .--------.     ', '     |  ____  |     ', '     | |' + label + '| |     ', "     '--------'     "];
+    const frame = (y, msg) => {
+      const rows = [blank, blank, blank, blank];
+      cart.forEach((line, j) => { if (y + j < 4) rows[y + j] = line; });
+      rows.push(' ___[__________]___ ', '|' + ' '.repeat(18) + '|', '| ' + bannerPad(msg, 16) + ' |', '|' + '_'.repeat(18) + '|');
+      return rows.join('\n');
+    };
+    out.push(frame(0, '> INSERT'), frame(0, '> INSERT'), frame(1, '> INSERT'), frame(2, '> INSERT'), frame(3, '> INSERT'));
+    for (let k = 0; k <= 4; k++) out.push(frame(3, 'LOAD [' + '#'.repeat(k) + ' '.repeat(4 - k) + ']'));
+    out.push(frame(3, '> START'), frame(3, ''), frame(3, '> START'), frame(3, '> START'));
+    out.push(frame(2, '  EJECT'), frame(1, '  EJECT'), frame(0, '  EJECT'));
+  });
+  return out;
+}
+
+/* About: player one walks to the star while the XP bar fills, then levels up. */
+function walkerFrames() {
+  const out = [];
+  const scene = (head, x, arms, legs, xp, top) => [
+    bannerPad(top, 20), head, bannerPad(' '.repeat(x) + arms, 20), bannerPad(' '.repeat(x) + legs, 20),
+    ' ' + '='.repeat(18) + ' ', bannerPad(' XP [' + '#'.repeat(xp) + '-'.repeat(12 - xp) + ']', 20),
+  ].join('\n');
+  for (let x = 1; x <= 15; x++) {
+    const head = bannerPad(' '.repeat(x) + ' o ', 20).split('');
+    if (x < 15) head[17] = '*';
+    out.push(scene(head.join(''), x, '/|\\', x % 2 ? '/ \\' : ' | ', Math.round(((x - 1) / 14) * 12), ' PLAYER 1'));
+  }
+  for (let b = 0; b < 5; b++) {
+    out.push(scene(bannerPad(' '.repeat(15) + '\\o/', 20), 15, ' | ', '/ \\', 12, b % 2 ? ' PLAYER 1' : ' PLAYER 1  LEVEL UP!'));
+  }
+  return out;
+}
+
+/* Currently: equalizer bars. */
+function equalizerFrames() {
+  const out = [];
+  for (let f = 0; f < 24; f++) {
+    const h = [0, 1, 2, 3, 4, 5, 6].map((i) => 1 + Math.round(4 * Math.abs(Math.sin(f * 0.55 + i * 1.7) * Math.cos(f * 0.21 + i * 0.6))));
+    const rows = [];
+    for (let r = 5; r >= 1; r--) rows.push(h.map((v) => (v >= r ? '##' : '  ')).join(' '));
+    rows.push('-'.repeat(20));
+    out.push(rows.join('\n'));
+  }
+  return out;
+}
+
+/* Contact: an envelope sends out a signal, with a blinking prompt. */
+function signalFrames() {
+  const env = [' .--------. ', ' |\\      /| ', " | '.__.' | ", " '--------' "];
+  const out = [];
+  for (let f = 0; f < 8; f++) {
+    const waves = [0, 1, 2].map((i) => (i < Math.min(f, 3) ? ')  ' : '   ')).join('');
+    out.push([env[0], env[1] + ' ' + waves, env[2] + ' ' + waves, env[3], f % 2 ? '' : ' > PRESS START']
+      .map((r) => bannerPad(r, 22)).join('\n'));
+  }
+  return out;
+}
+
+const BANNER_ART = {
+  work:      { frames: cartridgeFrames(), fps: 5 },
+  about:     { frames: walkerFrames(),    fps: 6 },
+  currently: { frames: equalizerFrames(), fps: 6 },
+  contact:   { frames: signalFrames(),    fps: 4 },
+};
+
+function SectionView({ channel, label, title, intro, status = 'Ready', art, onBack, children }) {
+  // The intro prints in once the title has finished typing.
+  const printDelay = 180 + title.length * 55 + 120;
   return (
     <div className="rs-viewin section-view">
       <div className="rs-viewin-1 section-topbar">
@@ -2361,10 +2642,15 @@ function SectionView({ channel, label, title, intro, status = 'Ready', onBack, c
       </div>
       <header className="rs-viewin-2 screen-shell">
         <div className="handheld-rim"><span><i /> Rapheal Suber / Portfolio</span><span>CH {channel} / 04</span></div>
-        <div className="lcd-screen screen-banner">
-          <div className="lcd-status"><span>CH {channel} / {label}</span><span>● {status}</span></div>
-          <h1>{title}</h1>
-          {intro && <p>{intro}</p>}
+        <div className="lcd-screen lcd-live screen-banner">
+          <div className="lcd-status"><span>CH {channel} / {label}</span><span><Led />{status}</span></div>
+          <div className="banner-body">
+            <div>
+              <h1><TypeOn text={title} /></h1>
+              {intro && <p className="banner-intro" style={{ '--print-delay': printDelay + 'ms' }}>{intro}</p>}
+            </div>
+            {art && <AsciiLoop className="banner-art" frames={art.frames} fps={art.fps} />}
+          </div>
         </div>
       </header>
       <div className="rs-viewin-3">{children}</div>
@@ -2431,7 +2717,7 @@ function App() {
       <main id="top" style={{ position:'relative', zIndex:1 }}>
         {view === 'home' && <Hero onOpen={onOpen} />}
         {view === 'work' && (
-          <SectionView channel="01" label="Case Studies" title="Case studies"
+          <SectionView channel="01" label="Case Studies" title="Case studies" art={BANNER_ART.work}
             intro="A few projects I’ve worked on, including one I’m still building. Pick a cartridge to see what I did and why."
             status={WORK.filter((w) => !w.upcoming).length + ' cartridges'} onBack={home}>
             <CaseStudies items={WORK} onOpen={onOpen} />
@@ -2439,13 +2725,13 @@ function App() {
           </SectionView>
         )}
         {view === 'about' && (
-          <SectionView channel="02" label="About" title="A little about me" onBack={home}>
+          <SectionView channel="02" label="About" title="A little about me" art={BANNER_ART.about} onBack={home}>
             <AboutContent />
             <Footer onOpen={onOpen} current="about" />
           </SectionView>
         )}
         {view === 'currently' && (
-          <SectionView channel="03" label="Currently" title="Currently playing"
+          <SectionView channel="03" label="Currently" title="Currently playing" art={BANNER_ART.currently}
             intro="The films, shows, books, and records I keep coming back to. A new pick loads each day."
             status="New pick daily" onBack={home}>
             <Currently />
@@ -2453,7 +2739,7 @@ function App() {
           </SectionView>
         )}
         {view === 'contact' && (
-          <SectionView channel="04" label="Contact" title="Let's work together."
+          <SectionView channel="04" label="Contact" title="Let's work together." art={BANNER_ART.contact}
             intro="If you have a role or project you think I’d be a good fit for, email is the best way to reach me."
             onBack={home}>
             <ContactContent onOpen={onOpen} />

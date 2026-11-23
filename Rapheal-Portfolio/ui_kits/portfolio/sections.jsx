@@ -289,9 +289,9 @@ function Hero({ onOpen }) {
     <div className="handheld">
       <div className="handheld-rim"><span><i /> HUMAN FACTORS / INTERACTIVE PORTFOLIO</span><span>01 — 04</span></div>
       <div className="lcd-screen">
-        <div className="lcd-status"><span>PLAYER 01</span><span>● SYSTEM READY</span></div>
+        <div className="lcd-status"><span>PLAYER 01</span><span><Led />SYSTEM READY</span></div>
         <div className="lcd-content">
-          <div className="lcd-copy"><p className="console-label">Hello, I'm</p><h1>Rapheal<br/>Suber<span className="pixel-cursor">_</span></h1><p className="lcd-role">Human factors.<br/>Human-centered software.</p><p className="lcd-intro">I study human factors and build software. I’m interested in how people use technology and how we can make it easier to use.</p><button className="start-button" onClick={()=>onOpen('work')}>▶ EXPLORE MY WORK</button></div>
+          <div className="lcd-copy"><p className="console-label">Hello, I'm</p><h1>Rapheal<br/>Suber<span className="pixel-cursor">_</span></h1><p className="lcd-role">Human factors.<br/>Human-centered software.</p><p className="lcd-intro">I study human factors and build software. I’m interested in how people use technology and how we can make it easier to use.</p><button className="start-button" onClick={()=>onOpen('work')}><span className="press" aria-hidden="true">▶</span> EXPLORE MY WORK</button></div>
           <div className="lcd-art"><RallyGame onOpen={onOpen} /></div>
         </div>
         <div className="lcd-bottom"><span>SELECT A CHANNEL TO BEGIN</span><span>© 2026 RS</span></div>
@@ -334,9 +334,9 @@ function CaseStudies({ items: all, onOpen }) {
     node.scrollTo({left:card.offsetLeft-node.offsetLeft,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
   };
   return <section id="work" className="project-library">
-    <div className="library-toolbar"><span className="library-count">Cartridge {pad2(active+1)} / {pad2(items.length)}</span><div><button aria-label="Previous project" disabled={active===0} onClick={()=>select(active-1)}>←</button><button aria-label="Next project" disabled={active===items.length-1} onClick={()=>select(active+1)}>→</button></div></div>
+    <div className="library-toolbar"><span className="library-count">Cartridge <span key={active} className="flick">{pad2(active+1)}</span> / {pad2(items.length)}</span><div><button aria-label="Previous project" disabled={active===0} onClick={()=>select(active-1)}>←</button><button aria-label="Next project" disabled={active===items.length-1} onClick={()=>select(active+1)}>→</button></div></div>
     <div className="cartridge-rail" ref={rail} role="region" aria-label="Case studies, scroll horizontally" tabIndex="0" onKeyDown={e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();select(active+(e.key==='ArrowRight'?1:-1));}}}>
-      {items.map((item,i)=><article className={'cartridge cartridge-'+item.id} key={item.id}>
+      {items.map((item,i)=><article className={'cartridge cartridge-'+item.id+(i===active?' is-active':'')} style={{'--i':i}} key={item.id}>
         <div className="cartridge-heading"><span>{item.code}</span><span>{item.status || CARTRIDGE_STATUS[item.id] || 'Case study'}</span><span aria-hidden="true">▥</span></div>
         <div className="cartridge-media">{item.thumb?<img src={item.thumb} alt={item.title+' project preview'} loading={i<2?'eager':'lazy'}/>:<div className="media-placeholder"><AsciiScene/><span>{item.upcoming?'NEXT CARTRIDGE / RUNA':'BIRK / PHOTO ARCHIVE'}<br/><small>{item.upcoming?'Concept in progress / visuals to come':'Screenshots to be added'}</small></span></div>}<span className="media-index" aria-hidden="true">{pad2(i+1)}</span></div>
         <div className="cartridge-copy"><div className="console-label">{item.disciplines.join(' / ')}</div><h2>{item.title}</h2><p>{item.blurb}</p><button className="console-button" onClick={()=>onOpen(item.id)}>{item.upcoming?'Explore the concept':'Open case study'} →</button></div>
@@ -344,7 +344,7 @@ function CaseStudies({ items: all, onOpen }) {
     </div>
     <div className="library-bottom"><span>Swipe, scroll, or use ← →</span><div className="library-dots">{items.map((it,i)=><button key={it.id} aria-label={'Go to '+it.title} aria-current={i===active?'true':undefined} onClick={()=>select(i)}/>)}</div><span aria-live="polite">{items[active].title}</span></div>
     {next && <aside className="next-cartridge" aria-label="In progress">
-      <span className="console-label">In progress</span>
+      <span className="console-label">In progress<AsciiLoop as="span" className="inline-loop" fps={4} frames={['[    ]','[#   ]','[##  ]','[### ]','[####]','[####]']} /></span>
       <p><strong>{next.title}.</strong> {next.blurb}</p>
       <button className="console-button" onClick={()=>onOpen(next.id)}>Read the concept →</button>
     </aside>}
@@ -355,15 +355,15 @@ function CaseStudies({ items: all, onOpen }) {
 function Footer({ onOpen, current }) {
   return (
     <footer className="signoff">
-      <div className="lcd-screen signoff-panel">
-        <div className="lcd-status"><span>Next step</span><span>● Open to roles</span></div>
+      <div className="lcd-screen lcd-live signoff-panel">
+        <div className="lcd-status"><span>Next step</span><span><Led />Open to roles</span></div>
         <div className="signoff-body">
           <div>
             <h2>Have a role or project in mind?</h2>
             <p>I'm open to software engineering, human factors, UX research, and product design roles. Feel free to reach out if you think we’d be a good fit.</p>
           </div>
           <div className="signoff-actions">
-            <button className="start-button" onClick={()=>onOpen('contact')}>▶ Get in touch</button>
+            <button className="start-button" onClick={()=>onOpen('contact')}><span className="press" aria-hidden="true">▶</span> Get in touch</button>
             {current !== 'work' && <button className="start-button ghost" onClick={()=>onOpen('work')}>See case studies →</button>}
           </div>
         </div>
